@@ -43,9 +43,9 @@
 .LatexAbstractText{
     margin-top:10px;
     font-family: CMR;
-    font-size: 18px;
+    font-size: 15px;
     text-align: center;
-    text-align: justify;
+    font-style: italic;    
     text-indent: 20px
 }
 
@@ -64,7 +64,7 @@ h1, .Section{
     font-family: CMB;
     font-size: 33px;
     text-align: Left;
-    margin-top: 13px;
+    margin-top: 45px;
     margin-bottom: 20px;
     letter-spacing: -1px;
 }
@@ -79,19 +79,24 @@ h2, .SubSection{
     letter-spacing: -1px;
 }
 
-p, .BodyText {
+p, .BodyText, a, li {
     font-family: CMR;
-    font-size: 22px;
+    font-size: 20px;
     text-align: Left;
-    margin-top: 13px;
-    margin-bottom: 45px;
     line-height: 125%;
     column-count: 1;
 }
 
+p{
+    margin: 0 13px 0 45px;
+}
+
+ul{
+    margin-bottom: 20px;
+}
+
 .BodyText2Col{
     font-family: CMR;
-    font-size: 23px;
     text-align: Left;
     margin-top: 13px;
     margin-bottom: 45px;
@@ -101,7 +106,6 @@ p, .BodyText {
 
 .BodyText3Col{
     font-family: CMR;
-    font-size: 23px;
     text-align: Left;
     margin-top: 13px;
     margin-bottom: 45px;
@@ -159,6 +163,8 @@ p, .BodyText {
     font-size: 33px;
 }
 
+
+
 /**************************************
     $NAVIGATION
 /**************************************/
@@ -187,14 +193,15 @@ ul.site-nav {
 .site-nav{
     display: inline-flex;
     list-style: none;
-    font-family: 'CMB';
-    letter-spacing: -0.5px;
     text-decoration: none; 
 }
 
 nav ul li a{ 
     margin: 0 1.5rem 0 0;
     text-decoration: none;
+    font-family: 'CMB';
+    letter-spacing: -0.5px;
+    font-size: 15px;    
 
 }
 
