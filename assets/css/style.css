@@ -1,0 +1,250 @@
+@font-face {
+    font-family: CMR;
+    src: url(../fonts/cmuserif_roman_macroman/cmunrm-webfont.woff);
+  }
+  @font-face {
+    font-family: CMB;
+    src: url(../fonts/cmuserif_bold_macroman/cmunbx-webfont.woff);
+  }
+
+
+.LatexTitle{
+    font-family: CMR;
+    /*font-size: 40px;*/
+    font-size: 55px;
+    /*padding-top: 40vh;*/
+    padding-top: 10vh;
+    text-align: center;
+    /*margin-bottom: 20px;*/
+}
+
+.LatexName{
+    font-family: CMR;
+    font-size: 27px;
+    text-align: center;
+    margin-bottom: 13px;
+}
+.LatexDate{
+    font-family: CMR;
+    font-size: 27px;
+    text-align: center;
+    margin-top: 13px;
+    margin-bottom: 45px;
+}
+
+.LatexAbstract{
+    font-family: CMB;
+    font-weight: bold;
+    font-size: 25px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.LatexAbstractText{
+    margin-top:10px;
+    font-family: CMR;
+    font-size: 18px;
+    text-align: center;
+    text-align: justify;
+    text-indent: 20px
+}
+
+.Margins{
+    padding-left: 21%;
+    width: 58%;
+}
+
+.AbstractMargins{
+    padding-left: 6%;
+    width: 88%;
+    padding-bottom: 15px;
+}
+
+h1, .Section{
+    font-family: CMB;
+    font-size: 33px;
+    text-align: Left;
+    margin-top: 13px;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+}
+
+
+h2, .SubSection{
+    font-family: CMB;
+    font-size: 26px;
+    text-align: Left;
+    margin-top: 13px;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+}
+
+p, .BodyText {
+    font-family: CMR;
+    font-size: 22px;
+    text-align: Left;
+    margin-top: 13px;
+    margin-bottom: 45px;
+    line-height: 125%;
+    column-count: 1;
+}
+
+.BodyText2Col{
+    font-family: CMR;
+    font-size: 23px;
+    text-align: Left;
+    margin-top: 13px;
+    margin-bottom: 45px;
+    line-height: 125%;
+    column-count: 2;
+}
+
+.BodyText3Col{
+    font-family: CMR;
+    font-size: 23px;
+    text-align: Left;
+    margin-top: 13px;
+    margin-bottom: 45px;
+    line-height: 125%;
+    column-count: 3;
+}
+
+.Justified{
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.footerSize{
+    height: 30vh;
+    width: 100%;
+}
+
+.tiny{
+    font-size: 8px;
+}
+
+.scriptsize{
+    font-size: 11px;
+}
+
+.footnotesize{
+    font-size: 13px;
+}
+
+.small{
+    font-size: 15px;
+}
+
+.normalsize{
+    font-size: 18px;
+}
+
+.large{
+    font-size: 19px;
+}
+
+.Large{
+    font-size: 23px;
+}
+
+.LARGE{
+    font-size: 28px;
+}
+
+.huge{
+    font-size: 33px;
+}
+
+.HUGE{
+    font-size: 33px;
+}
+
+/**************************************
+    $NAVIGATION
+/**************************************/
+nav {
+    margin-top: 1rem;
+}
+/*
+ul.site-nav {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            display: inline-block;
+            margin: 0 1.5rem 0 0;
+            font-family: 'CMB';
+            letter-spacing: -0.5px;
+        }
+
+        a,a:visited {
+            text-decoration: none;
+        }
+    }
+}
+*/
+.site-nav{
+    display: inline-flex;
+    list-style: none;
+    font-family: 'CMB';
+    letter-spacing: -0.5px;
+    text-decoration: none; 
+}
+
+nav ul li a{ 
+    margin: 0 1.5rem 0 0;
+    text-decoration: none;
+
+}
+
+nav ul li a:visited{ 
+    color:black;
+
+}
+
+
+/**************************************
+    $MEDIA QUERIES - TABLET
+/**************************************/
+@media(max-width: 850px) {
+
+    body {
+        padding: 10px;
+        width: calc(100% - 20px);
+    }
+
+    h2.title { margin-top: 2rem; }
+
+    p,table,blockquote,pre,img,hr,.mini-note,ul li,ol li {
+        max-width: 100%;
+    }
+
+    .MathJax_SVG_Display {
+        max-width: 100% !important;
+    }
+
+
+    figure {
+        flex-direction: column;
+    }
+
+    /*span*/.marginnote,
+    /*span*/.sidenote,
+    figcaption {
+        display: block;
+        left: auto;
+        margin-top: 1rem;
+        position: relative;
+        top: auto;
+        width: 100%;
+    }
+
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    body{background:#191919;filter:invert(1);}
+    .highlight{border-color: grey !important;}
+    img,iframe,.highlight,a:hover,a:focus{filter:invert(1);}
+}
