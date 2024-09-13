@@ -247,11 +247,18 @@ nav ul li a:visited{
         width: 100%;
     }
 
+    .Margins{
+        padding-left: 1%;
+        width: 100%;
+    }
+
 }
 
 /* Dark Mode */
+/*
 @media (prefers-color-scheme: dark) {
     body{background:#191919;filter:invert(1);}
     .highlight{border-color: grey !important;}
     img,iframe,.highlight,a:hover,a:focus{filter:invert(1);}
 }
+*/
