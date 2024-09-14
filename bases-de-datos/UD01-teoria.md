@@ -8,14 +8,15 @@ abstract: Sinopsis de la unidad 01
 ---
 
 # Índice
-1. Introducción.
-2. Sistemas de Almacenamiento Lógico y sus Características (CEa).
-3. Modelos de Bases de Datos: Relacionales, No Relacionales y Otros (CEb).
-4. Bases de Datos según la Ubicación de la Información: Locales y Distribuidas (CEc, CEg).
-5. La Utilidad de los Sistemas Gestores de Bases de Datos (SGBD) (CEd).
-6. Clasificación de los Sistemas Gestores de Bases de Datos (CEe).
-7. Elementos de un Sistema Gestor de Bases de Datos y su Función (CEf).
-8. Fragmentación de la Información y Políticas de Distribución (CEh).
+1. [Introducción](#1-introducción)
+2. [Sistemas de Almacenamiento Lógico y sus Características (CEa)](#2-sistemas-de-almacenamiento-lógico-y-sus-características)
+3. [Modelos de Bases de Datos: Relacionales, No Relacionales y Otros (CEb)](#3-modelos-de-bases-de-datos-relacionales-no-relacionales-y-otros)
+4. [Bases de Datos según la Ubicación de la Información: Locales y Distribuidas (CEc, CEg)](#4-bases-de-datos-según-la-ubicación-de-la-información-locales-y-distribuidas)
+5. [La Utilidad de los Sistemas Gestores de Bases de Datos (SGBD) (CEd)](#5-la-utilidad-de-los-sistemas-gestores-de-bases-de-datos-sgbd)
+6. [Clasificación de los Sistemas Gestores de Bases de Datos (CEe)](#6-clasificación-de-los-sistemas-gestores-de-bases-de-datos-sgbd)
+7. [Elementos de un Sistema Gestor de Bases de Datos y su Función (CEf)](#7-elementos-de-un-sistema-gestor-de-bases-de-datos-y-su-función)
+8. [Fragmentación de la Información y Políticas de Distribución (CEh)](#8-fragmentación-de-la-información-y-políticas-de-distribución)
+
 
 # 1. Introducción
 
@@ -32,6 +33,8 @@ Este capítulo se centrará en analizar los **elementos clave de las bases de da
 Además, profundizaremos en las diferencias entre los distintos tipos de bases de datos según su **modelo de datos** y su **ubicación**, y clasificaremos los **Sistemas Gestores de Bases de Datos** en función de su arquitectura y funcionalidad. Esto nos permitirá reconocer la importancia de cada uno de los elementos que componen un SGBD y cómo su correcta implementación puede mejorar el rendimiento y la eficiencia de una base de datos.
 
 En resumen, este capítulo proporcionará una visión completa y detallada sobre las bases de datos, sus componentes, y la importancia de los SGBD en la gestión de la información, con el fin de que el lector sea capaz de analizar, diseñar y gestionar bases de datos de manera efectiva.
+
+---
 
 ***Ejercicio 1.1:*** *Debate sobre el papel de los SGBD en la vida cotidiana. Identifica y discute diferentes aplicaciones de bases de datos en la vida diaria (redes sociales, sistemas bancarios, aplicaciones móviles, etc.). Dividirse en grupos y elegir un sistema en particular para analizar cómo las bases de datos juegan un papel crucial en su funcionamiento.*
 
@@ -70,6 +73,13 @@ A lo largo de este capítulo, hemos empezado a reconocer cómo el almacenamiento
 
 Con esto en mente, en los siguientes apartados exploraremos más profundamente cómo estos **SGBD** clasifican, organizan y gestionan los datos, evaluando su utilidad y las diferentes arquitecturas que existen para soportar una gran variedad de aplicaciones empresariales.
 
+---
+
+***Ejercicio 2.1:*** *Diseña un diagrama de almacenamiento lógico en tabla.
+Piensa en la base de datos de una tienda online, y diseña un diagrama básico de las tablas que crees que se necesitarían teniendo en cuenta las 3 entidades siguientes: clientes, productos, pedidos. Deberas pensar en cómo organizar los datos lógicamente, si tuvieses que escoger un dato clave de cada entidad, ¿cuál sería?. Si tuvieses que escoger un dato que relacione a las entidades, ¿cuál sería?. ¿Cómo crees que se relacionarían las entidades?. (No te preocupes si no se te ocurre nada, esto se verá con detenimiento en los próximos temas).*
+
+***Ejercicio 2.2:*** *Imagina una tabla de datos ficticia organizada en índices. Luego, imagina consultas (por ejemplo, "buscar todos los pedidos realizados por un cliente") y explica cómo crees que los índices mejoran el tiempo de consulta.*
+
 # 3. Modelos de Bases de Datos: Relacionales, No Relacionales y Otros
 
 La evolución de las bases de datos ha dado lugar a una diversidad de modelos que buscan resolver diferentes necesidades y desafíos en la gestión de la información. En este apartado, exploraremos los principales **modelos de bases de datos**, sus características, y cómo estos se adaptan a distintos contextos de uso. Los modelos más comunes incluyen las bases de datos **relacionales** y **no relacionales**, pero también existen otros modelos híbridos o específicos para ciertos tipos de aplicaciones. Entender las diferencias entre estos modelos es fundamental para seleccionar el adecuado según las necesidades de cada proyecto.
@@ -107,50 +117,76 @@ Por su parte, las **bases de datos NoSQL** son ideales para aplicaciones que req
 
 La elección del **modelo de bases de datos** adecuado depende de varios factores, como el tipo de datos que se manejará, los requisitos de escalabilidad y consistencia, y las características específicas del sistema a desarrollar. En aplicaciones donde la integridad y la consistencia de los datos son primordiales, como en sistemas financieros o de gestión empresarial, el **modelo relacional** será la opción más adecuada. Por el contrario, en aplicaciones que requieren manejar grandes volúmenes de datos no estructurados o semiestructurados y que demandan una alta disponibilidad, las bases de datos **NoSQL** serán la mejor elección.
 
+---
 
-# 4. La Utilidad de los Sistemas Gestores de Bases de Datos (SGBD)
+***Ejercicio 3.1:*** *Investiga en internet sobre un sistema de base de datos relacional (como MySQL) y otro NoSQL (como MongoDB). Luego, realizar una breve presentación donde expliques las ventajas y desventajas de cada uno y propon casos en los que usarías cada modelo.*
 
-Los **Sistemas Gestores de Bases de Datos (SGBD)** han transformado la forma en que las organizaciones gestionan y manipulan grandes cantidades de información. Estos sistemas ofrecen un conjunto de herramientas y servicios que permiten gestionar, consultar y mantener la integridad de los datos de manera eficiente. A lo largo de este apartado, evaluaremos la utilidad de los SGBD y su impacto en diferentes entornos, desde pequeñas aplicaciones hasta complejos sistemas empresariales.
+# 4. Bases de Datos según la Ubicación de la Información: Locales y Distribuidas
 
-## 4.1. Gestión Centralizada de la Información
+La forma en que se distribuye la información en una base de datos afecta directamente tanto al rendimiento como a la accesibilidad y la disponibilidad de los datos. Las **bases de datos** pueden clasificarse en **locales** o **distribuidas** dependiendo de dónde se almacenen los datos y cómo se accede a ellos. En este apartado, examinaremos ambos tipos y sus características, así como la creciente relevancia de las bases de datos distribuidas en entornos empresariales modernos.
 
-Una de las principales utilidades de un **SGBD** es la capacidad de gestionar grandes volúmenes de información de manera **centralizada**. En lugar de tener múltiples sistemas independientes para gestionar datos, los SGBD consolidan todos los datos en una única plataforma. Esto facilita enormemente las tareas de mantenimiento, ya que permite a los administradores gestionar todos los datos desde un solo lugar, garantizando que los datos sean accesibles y estén actualizados en tiempo real.
+## 4.1. Bases de Datos Locales
 
-La centralización también mejora la **coherencia** de los datos, ya que las modificaciones realizadas en una parte del sistema se reflejan de inmediato en todo el conjunto de datos. Esto evita inconsistencias y redundancias, que son comunes en sistemas descentralizados o en aquellos que no utilizan una base de datos central.
+Las **bases de datos locales** son aquellas en las que toda la información se encuentra almacenada en un único servidor o ubicación física. Este tipo de bases de datos es común en entornos más pequeños o centralizados, donde no se requiere una distribución geográfica de los datos. Un ejemplo típico de una base de datos local es un sistema que corre en un solo servidor en el centro de datos de una empresa.
 
-## 4.2. Eficiencia en la Consulta y Manipulación de Datos
+### Ventajas de las Bases de Datos Locales
 
-Los **SGBD** proporcionan mecanismos eficientes para realizar **consultas** y **manipulaciones** de datos. El uso de lenguajes como **SQL** permite que los usuarios accedan rápidamente a grandes cantidades de datos, realicen búsquedas complejas, y extraigan la información relevante en cuestión de segundos. Esta capacidad de consulta eficiente es especialmente útil en entornos empresariales donde se requiere analizar grandes volúmenes de datos para tomar decisiones estratégicas.
+- **Simplicidad**: Las bases de datos locales son más fáciles de gestionar, ya que los datos están centralizados en un único servidor o ubicación, lo que simplifica la administración y el mantenimiento.
+- **Velocidad de acceso**: En entornos controlados y centralizados, el acceso a los datos suele ser rápido, ya que no hay latencias derivadas de la distribución geográfica.
 
-Además, los **SGBD** permiten realizar operaciones de manipulación de datos (inserción, actualización y eliminación) de forma controlada y eficiente. Esto asegura que los datos se mantengan coherentes y que las operaciones concurrentes no generen inconsistencias, gracias al uso de mecanismos como **bloqueos** y **transacciones**.
+### Desventajas de las Bases de Datos Locales
 
-## 4.3. Mantenimiento de la Integridad de los Datos
+- **Escalabilidad limitada**: A medida que crece el volumen de datos o el número de usuarios, puede ser más difícil escalar una base de datos local debido a las limitaciones de un solo servidor.
+- **Falta de redundancia**: Si el servidor local falla, se pierde el acceso a los datos hasta que se restablezca el sistema. Esto genera vulnerabilidad a fallos de hardware y afecta a la disponibilidad de la información.
 
-La **integridad de los datos** es crucial para cualquier sistema que maneje información crítica. Los **SGBD** garantizan la integridad de los datos a través de diversas herramientas y restricciones. Las **claves primarias** y **foráneas** son ejemplos de mecanismos que aseguran que los registros de las tablas se relacionen correctamente y que no existan inconsistencias entre diferentes partes de la base de datos.
+## 4.2. Bases de Datos Distribuidas
 
-Otra característica importante de los SGBD es la capacidad de implementar **reglas de validación**, que permiten garantizar que los datos ingresados cumplan con ciertos criterios predefinidos. Esto ayuda a evitar la entrada de datos erróneos o inválidos, reduciendo los errores en la base de datos.
+Las **bases de datos distribuidas** almacenan los datos en múltiples servidores o ubicaciones físicas diferentes. Los nodos que componen una base de datos distribuida pueden estar dispersos geográficamente y conectados a través de una red. Este enfoque permite gestionar grandes volúmenes de información de manera más eficiente, además de mejorar la disponibilidad y la redundancia de los datos.
 
-## 4.4. Seguridad y Control de Acceso
+### Ventajas de las Bases de Datos Distribuidas
 
-Otro aspecto fundamental en el que los **SGBD** destacan es en la **seguridad** y el **control de acceso**. Los SGBD permiten asignar diferentes niveles de permisos a los usuarios, de modo que solo puedan acceder o modificar la información para la que están autorizados. Esto es particularmente importante en entornos empresariales donde se maneja información sensible o confidencial.
+- **Alta disponibilidad**: Al tener los datos distribuidos en varios nodos, una base de datos distribuida puede seguir funcionando incluso si uno o más nodos fallan, asegurando así la disponibilidad de los datos.
+- **Escalabilidad**: Las bases de datos distribuidas permiten una escalabilidad horizontal, lo que significa que es posible agregar más nodos a medida que crece el volumen de datos o la demanda de procesamiento, lo que mejora el rendimiento del sistema.
+- **Tolerancia a fallos**: Estas bases de datos suelen ser más resistentes a fallos, ya que los datos están replicados en varios nodos. Si un nodo falla, otro puede asumir su función y evitar interrupciones en el servicio.
 
-Las herramientas de control de acceso de los SGBD garantizan que los datos solo sean accesibles por las personas adecuadas, lo que reduce significativamente el riesgo de acceso no autorizado o de manipulación de datos. Además, los sistemas gestores ofrecen registros de auditoría que permiten monitorear qué usuarios acceden a qué datos y qué modificaciones se realizan.
+### Desafíos de las Bases de Datos Distribuidas
 
-## 4.5. Soporte para Transacciones y Recuperación de Fallos
+- **Complejidad**: Administrar una base de datos distribuida es más complejo, ya que implica sincronizar y mantener la consistencia entre nodos dispersos. Además, las consultas y transacciones distribuidas pueden requerir más tiempo para completarse debido a la latencia de red.
+- **Consistencia**: En algunos casos, para mejorar la disponibilidad, se puede sacrificar algo de consistencia en los datos. Esto sigue el principio **CAP** (Consistencia, Disponibilidad y Tolerancia a Particiones), en el que no se pueden garantizar los tres aspectos al mismo tiempo.
 
-Los **SGBD** también proporcionan soporte para el manejo de **transacciones**, que son secuencias de operaciones que deben ejecutarse de manera conjunta y atómica. Esto significa que si una parte de una transacción falla, todo el conjunto de operaciones se revierte, asegurando que la base de datos no quede en un estado inconsistente.
+## 4.3. Modelos de Consistencia en Bases de Datos Distribuidas
 
-Este mecanismo es especialmente útil en sistemas financieros o comerciales, donde las operaciones (como transferencias de dinero o actualización de inventarios) deben completarse completamente o no completarse en absoluto. Junto a esto, los SGBD ofrecen capacidades de **recuperación ante fallos**, lo que permite restaurar la base de datos a un estado consistente después de un error del sistema o de hardware.
+Una de las cuestiones clave en las **bases de datos distribuidas** es cómo mantener la **consistencia** de los datos a través de múltiples nodos. Existen varios modelos de consistencia:
 
-## 4.6. Escalabilidad y Rendimiento en Diferentes Entornos
+- **Consistencia Fuerte**: Garantiza que todos los nodos vean los mismos datos en todo momento. Es más costosa en términos de rendimiento, ya que requiere sincronización constante entre los nodos.
+- **Consistencia Eventual**: Los datos pueden estar temporalmente inconsistentes, pero eventualmente todos los nodos se sincronizarán. Este modelo es común en aplicaciones que requieren alta disponibilidad y escalabilidad, como las redes sociales.
+- **Consistencia Causal**: Basada en la idea de que ciertas operaciones son dependientes de otras. Las actualizaciones solo se propagan cuando tienen sentido lógico hacerlo, lo que reduce la necesidad de sincronización constante.
 
-Otra gran utilidad de los **SGBD** es su capacidad para escalar según las necesidades del sistema. En entornos empresariales, donde los volúmenes de datos pueden crecer exponencialmente, los SGBD están diseñados para soportar grandes cargas de trabajo sin comprometer el rendimiento. Muchos SGBD modernos ofrecen opciones de **escalabilidad vertical** (mejora de hardware) y **escalabilidad horizontal** (adición de servidores), lo que permite a las organizaciones crecer sin interrupciones.
+## 4.4. Utilidad de las Bases de Datos Distribuidas en Entornos Modernos
 
-El rendimiento también es un factor clave, y los **SGBD** permiten optimizar las consultas y operaciones mediante el uso de **índices**, **cachés**, y técnicas avanzadas de **particionamiento de datos**.
+Las bases de datos distribuidas son cada vez más comunes en **entornos empresariales modernos**, especialmente en aplicaciones que necesitan alta disponibilidad, escalabilidad masiva y tolerancia a fallos. Estas bases de datos permiten que empresas globales, como las de comercio electrónico y redes sociales, operen con eficacia a nivel mundial, ofreciendo a los usuarios acceso a la información de forma rápida y confiable, sin importar su ubicación.
 
-## 4.7. Flexibilidad para Integrarse con Otras Tecnologías
+Además, con el auge de los **sistemas en la nube**, muchas organizaciones están adoptando bases de datos distribuidas como parte de su infraestructura. Los proveedores de servicios en la nube, como **Amazon Web Services (AWS)**, **Microsoft Azure**, y **Google Cloud Platform**, ofrecen soluciones distribuidas que permiten almacenar y acceder a datos de manera eficiente en múltiples ubicaciones geográficas, garantizando la continuidad del servicio en caso de fallos regionales.
 
-Finalmente, los **SGBD** destacan por su **flexibilidad** para integrarse con otras tecnologías. Ya sea mediante API, servicios web o lenguajes de programación, los SGBD permiten que las aplicaciones y sistemas externos interactúen con los datos de manera sencilla y eficiente. Esta flexibilidad es esencial para integrar sistemas empresariales complejos y asegurar que todas las partes de la infraestructura de TI trabajen en conjunto de manera coherente.
+## 4.5. Comparativa entre Bases de Datos Locales y Distribuidas
+
+A la hora de elegir entre una **base de datos local** o una **base de datos distribuida**, es esencial considerar los requisitos específicos del proyecto. Las bases de datos locales son adecuadas para aplicaciones con bajos volúmenes de datos y donde la simplicidad y el control son primordiales. Sin embargo, a medida que los sistemas crecen y se distribuyen geográficamente, las bases de datos distribuidas ofrecen mayores ventajas en términos de escalabilidad, disponibilidad y tolerancia a fallos.
+
+Las bases de datos distribuidas no solo permiten manejar grandes volúmenes de datos, sino que también garantizan la continuidad del servicio y la redundancia, lo que es crítico en aplicaciones donde la **alta disponibilidad** es prioritaria.
+
+---
+
+***Ejercicio 4.1:*** *Imagina que trabajas en una pequeña empresa local que utiliza una base de datos local para gestionar sus operaciones. Sin embargo, la empresa ha decidido expandirse y abrir nuevas sedes en diferentes ciudades, lo que requerirá que los datos sean accesibles desde varios lugares geográficos.*
+1. *Enumera las principales diferencias entre el modelo actual de base de datos local y el modelo de base de datos distribuida que podría implementarse tras la expansión.*
+2. *¿Qué ventajas crees que aportaría una base de datos distribuida a la empresa tras su expansión?*
+3. *¿Cuáles serían algunos de los retos que podrían surgir al migrar de un sistema local a uno distribuido?*
+
+
+***Ejercicio 4.2:*** *A continuación, se te presentan tres escenarios en los que se manejan grandes volúmenes de información. Determina si una base de datos distribuida o una base de datos local sería más adecuada en cada uno de ellos, justificando tu respuesta:*
+
+1. *Red Social Global: Una plataforma de red social con millones de usuarios distribuidos por todo el mundo, donde los datos de los perfiles de usuarios y publicaciones deben estar accesibles en tiempo real.*
+2. *Sistema de Facturación Local: Una pequeña empresa que gestiona la facturación de sus servicios desde una única sede, y todos los empleados se conectan a la base de datos desde la misma ubicación física.*
+3. *Comercio Electrónico Internacional: Una tienda en línea con clientes en todo el mundo, que requiere manejar pedidos y consultas de productos en tiempo real, garantizando una alta disponibilidad en todos los países.*
 
 # 5. La Utilidad de los Sistemas Gestores de Bases de Datos (SGBD)
 
@@ -251,6 +287,22 @@ Cada tipo de **SGBD** tiene sus propias ventajas y desventajas, y la elección d
 ## 6.6. Tendencias Futuras en los SGBD
 
 Con el aumento exponencial de los datos y la adopción de tecnologías como **inteligencia artificial** y **big data**, los **SGBD** continúan evolucionando. Se espera que las bases de datos del futuro combinen capacidades de **almacenamiento distribuido**, procesamiento en **tiempo real**, y **machine learning** para optimizar el rendimiento y la toma de decisiones automatizada. Además, el enfoque hacia la **nube** y los sistemas **serverless** (sin servidor) seguirá creciendo, permitiendo a las organizaciones gestionar sus datos de manera más flexible y escalable.
+
+***Ejercicio 6.1:*** ***Elegir el SGBD adecuado.*** *A continuación, se presentan tres escenarios de negocio diferentes. Cada uno tiene sus propios requisitos de almacenamiento, escalabilidad y manejo de datos. Para cada escenario, selecciona el SGBD más adecuado de la lista provista, y justifica tu elección considerando las características de cada sistema.
+
+**SGBD disponibles:**
+- MySQL (relacional)
+- MongoDB (NoSQL, documental)
+- Cassandra (NoSQL, columnares distribuidos)
+- PostgreSQL (relacional avanzado)
+- Redis (NoSQL, clave-valor)
+
+**Escenarios de negocio:**
+- Tienda en línea en expansión. Una tienda en línea está experimentando un crecimiento acelerado en número de usuarios y transacciones. La tienda necesita un SGBD que maneje transacciones con seguridad, pero también **debe escalar fácilmente** para soportar la creciente cantidad de clientes y productos en el catálogo.
+
+- Aplicación móvil para mensajería en tiempo real. Se requiere una base de datos para una aplicación de mensajería instantánea, donde millones de usuarios envían y reciben mensajes en tiempo real. El sistema debe soportar **altos volúmenes de escritura**, ser altamente disponible y manejar una carga masiva distribuida a nivel global.
+
+- Sistema de gestión de inventario en tiempo real. Una empresa necesita un sistema para gestionar el inventario en tiempo real. Los productos se actualizan constantemente, y es importante que las consultas sean **extremadamente rápidas** para garantizar que siempre se refleje el estado actual de los productos disponibles.*
 
 # 7. Elementos de un Sistema Gestor de Bases de Datos y su Función
 
