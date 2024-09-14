@@ -10,8 +10,8 @@ abstract: Sinopsis de la unidad 01
 # Índice
 1. [Introducción](#1-introducción)
 2. [Sistemas de Almacenamiento Lógico y sus Características (CEa)](#2-sistemas-de-almacenamiento-lógico-y-sus-características)
-3. [Bases de datos. Conceptos, usos y ubicación de la información. (CEb)](#3-bases-de-datos-conceptos-usos-y-ubicación-de-la-información)
-4. [Modelos de Bases de Datos: Relacionales, No Relacionales y Otros (CEb)](#3-modelos-de-bases-de-datos-relacionales-no-relacionales-y-otros)
+3. [Bases de datos. Conceptos, usos y ubicación de la información. (CEb)](#3-bases-de-datos-concepto-usos-y-ubicación-de-la-información)
+4. [Modelos de Bases de Datos: Relacionales, No Relacionales y Otros (CEb)](#4-modelos-de-bases-de-datos-relacionales-no-relacionales-y-otros)
 5. [Bases de Datos según la Ubicación de la Información: Locales y Distribuidas (CEc, CEg)](#4-bases-de-datos-según-la-ubicación-de-la-información-locales-y-distribuidas)
 6. [La Utilidad de los Sistemas Gestores de Bases de Datos (SGBD) (CEd)](#5-la-utilidad-de-los-sistemas-gestores-de-bases-de-datos-sgbd)
 6. [Clasificación de los Sistemas Gestores de Bases de Datos (CEe)](#6-clasificación-de-los-sistemas-gestores-de-bases-de-datos-sgbd)
