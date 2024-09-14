@@ -1,6 +1,6 @@
 ---
 layout: default
-title: UD01. Elementos y Utilidad de las Bases de Datos.
+title: UD01. Almacenamiento de la información.
 permalink: /bases-de-datos/ud01/teoria/
 author: Teo Rojas
 date: Septiembre 2024

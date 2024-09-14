@@ -12,7 +12,7 @@ abstract: En Bases de Datos nos sumergiremos en el fascinante universo de la inf
 * [Contenidos básicos.](/bases-de-datos/contenidos-basicos/)
 
 # Índice de Contenidos
-1. [Elementos y Utilidad de las Bases de Datos.](/bases-de-datos/ud01/teoria/)
+1. [Almacenamiento de la información](/bases-de-datos/ud01/teoria/)
 2. Diseño Conceptual. El modelo Entidad-Relación.
 3. Los esquemas relacionales y su transformación.
 4. Definición, manipulación y control de datos.
