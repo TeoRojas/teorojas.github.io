@@ -10,9 +10,10 @@ abstract: Sinopsis de la unidad 01
 # Índice
 1. [Introducción](#1-introducción)
 2. [Sistemas de Almacenamiento Lógico y sus Características (CEa)](#2-sistemas-de-almacenamiento-lógico-y-sus-características)
-3. [Modelos de Bases de Datos: Relacionales, No Relacionales y Otros (CEb)](#3-modelos-de-bases-de-datos-relacionales-no-relacionales-y-otros)
-4. [Bases de Datos según la Ubicación de la Información: Locales y Distribuidas (CEc, CEg)](#4-bases-de-datos-según-la-ubicación-de-la-información-locales-y-distribuidas)
-5. [La Utilidad de los Sistemas Gestores de Bases de Datos (SGBD) (CEd)](#5-la-utilidad-de-los-sistemas-gestores-de-bases-de-datos-sgbd)
+3. [Bases de datos. Conceptos, usos y ubicación de la información. (CEb)](#3-bases-de-datos-conceptos-usos-y-ubicación-de-la-información)
+4. [Modelos de Bases de Datos: Relacionales, No Relacionales y Otros (CEb)](#3-modelos-de-bases-de-datos-relacionales-no-relacionales-y-otros)
+5. [Bases de Datos según la Ubicación de la Información: Locales y Distribuidas (CEc, CEg)](#4-bases-de-datos-según-la-ubicación-de-la-información-locales-y-distribuidas)
+6. [La Utilidad de los Sistemas Gestores de Bases de Datos (SGBD) (CEd)](#5-la-utilidad-de-los-sistemas-gestores-de-bases-de-datos-sgbd)
 6. [Clasificación de los Sistemas Gestores de Bases de Datos (CEe)](#6-clasificación-de-los-sistemas-gestores-de-bases-de-datos-sgbd)
 7. [Elementos de un Sistema Gestor de Bases de Datos y su Función (CEf)](#7-elementos-de-un-sistema-gestor-de-bases-de-datos-y-su-función)
 8. [Fragmentación de la Información y Políticas de Distribución (CEh)](#8-fragmentación-de-la-información-y-políticas-de-distribución)
@@ -80,46 +81,154 @@ Piensa en la base de datos de una tienda online, y diseña un diagrama básico d
 
 ***Ejercicio 2.2:*** *Imagina una tabla de datos ficticia organizada en índices. Luego, imagina consultas (por ejemplo, "buscar todos los pedidos realizados por un cliente") y explica cómo crees que los índices mejoran el tiempo de consulta.*
 
-# 3. Modelos de Bases de Datos: Relacionales, No Relacionales y Otros
+# 3. Bases de datos. Concepto, usos y ubicación de la información
 
-La evolución de las bases de datos ha dado lugar a una diversidad de modelos que buscan resolver diferentes necesidades y desafíos en la gestión de la información. En este apartado, exploraremos los principales **modelos de bases de datos**, sus características, y cómo estos se adaptan a distintos contextos de uso. Los modelos más comunes incluyen las bases de datos **relacionales** y **no relacionales**, pero también existen otros modelos híbridos o específicos para ciertos tipos de aplicaciones. Entender las diferencias entre estos modelos es fundamental para seleccionar el adecuado según las necesidades de cada proyecto.
+A finales de los setenta, la aparición de nuevas tecnologías de manejo de datos a través de los sistemas de bases de datos supuso un considerable cambio. Los sistemas basados en ficheros separados dieron paso a la utilización de sistemas gestores de bases de datos, que son sistemas software centralizados o distribuidos que ofrecen facilidades para la definición de bases de datos, selección de estructuras de datos y búsqueda de forma interactiva o mediante lenguajes de programación.
 
-## 3.1. Bases de Datos Relacionales
+Llegados a este punto, te preguntarás... ¿Qué es una base de datos?
+
+## 3.1. Concepto
+
+**Base de datos:** Es una colección de datos relacionados lógicamente entre sí, con una definición y descripción comunes y que están estructurados de una determinada manera. Es un conjunto estructurado de datos que representa entidades y sus interrelaciones, almacenados con la mínima redundancia y posibilitando el acceso a ellos eficientemente por parte de varias aplicaciones y usuarios.
+
+La base de datos no sólo contiene los datos de la organización, también almacena una descripción de dichos datos. Esta descripción es lo que se denomina **metadatos**, se almacena en el **diccionario de datos o catálogo** y es lo que permite que exista independencia de datos lógica-física.
+
+Una base de datos constará de los siguientes elementos:
+
+- **Entidades:** objeto real o abstracto con características diferenciadoras de otros, del que se almacena información en la base de datos. En una base de datos de una clínica veterinaria, posibles entidades podrían ser: ejemplar, doctor, consulta, etc.
+- **Atributos:** son los datos que se almacenan de la entidad. Cualquier propiedad o característica de una entidad puede ser atributo. Continuando con nuestro ejemplo, podrían ser atributos: raza, color, nombre, número de identificación, etc.
+- **Registros:** donde se almacena la información de cada entidad. Es un conjunto de atributos que contienen los datos que pertenecen a una misma repetición de entidad. En nuestro ejemplo, un registro podría ser: 2123056, Sultán, Podenco, Gris, 23/03/2009.
+- **Campos:** donde se almacenan los atributos de cada registro. Teniendo en cuenta el ejemplo anterior, un campo podría ser el valor Podenco.
+
+## 3.2. Usos
+
+Ya sabemos lo que es una base de datos y sus características principales, pero es necesario conocer quien las usa y para qué.
+
+### ¿Quién utiliza las bases de datos?
+
+Existen cuatro tipos de personas que pueden hacer uso de una base de datos: el administrador, los diseñadores de la base de datos, los programadores de aplicaciones y los usuarios finales.
+
+- **El administrador.** Es la persona encargada de la creación o implementación física de la base de datos. Es quien escoge los tipos de ficheros, los indices que hay que crear, la ubicación de éstos, etc. En general, es quien toma las decisiones relacionadas con el funcionamiento físico del almacenamiento de información. Siempre teniendo en cuenta las posibilidades del sistema de información con el que trabaje. Además el administrador establecerá la política de seguridad y de acceso para garantizar el menor número de problemas.
+- **Los diseñadores.** Son las personas encargadas de diseñar cómo será la base de datos. Llevarán a cabo la identificación de los datos, las relaciones entre ellos, sus restricciones, etc. Para ello han de conocer a fondo los datos y procesos a representar en la base de datos. Si estamos hablando de una empresa, será necesario que conozcan las reglas de negocio en la que ésta se mueve. Para obtener un buen resultado, el diseñador de la base de datos debe implicar en el proceso a todos los usuarios de la base de datos, tan pronto como sea posible.
+- **Los programadores de aplicaciones.** Una vez diseñada y construida la base de datos, los programadores se encargarán de implementar los programas de aplicación que servirán a los usuarios finales. Estos programas de aplicación ofrecerán la posibilidad de realizar consultas de datos, inserción, actualización o eliminación de los mismos. Para desarrollar estos programas se utilizan lenguajes de tercera o cuarta generación.
+- **Los usuarios finales.** Son los clientes finales de la base de datos. Al diseñar, implementar y mantener la base de datos se busca cumplir los requisitos establecidos por el cliente para la gestión de su información.
+
+### ¿Para qué se utilizan las bases de datos?
+
+Enumerar todos y cada uno de los campos donde se utilizan las bases de datos es complejo, aunque seguro que quedarán muchos en el tintero, a continuación se recopilan algunos de los ámbitos donde se aplican.
+
+- Banca: información de clientes, cuentas, transacciones, préstamos, etc.
+- Líneas aéreas: información de clientes, horarios, vuelos, destinos, etc.
+- Universidades: información de estudiantes, carreras, horarios, materias, etc.
+- Transacciones de tarjeta de crédito: para comprar con tarjetas de crédito y la generación de los extractos mensuales.
+- Telecomunicaciones: para guardar registros de llamadas realizadas, generar facturas mensuales, mantener el saldo de las tarjetas telefónicas de prepago y almacenar información sobre las redes.
+- Medicina: información hospitalaria, biomedicina, genética, etc.
+- Justicia y Seguridad: delincuentes, casos, sentencias, investigaciones, etc.
+- Legislación: normativa, registros, etc.
+- Organismos públicos: datos ciudadanos, certificados, etc.
+- Sistemas de posicionamiento geográfico.
+- Hostelería y turismo: reservas de hotel, vuelos, excursiones, etc.
+- Ocio digital: juegos online, apuestas, etc.
+- Cultura: gestión de bibliotecas, museos virtuales, etc.
+- Etc.
+
+## 3.3. Ubicación de la información.
+
+Utilizamos a diario las bases de datos, pero ¿Dónde se encuentra realmente almacenada la información?. Las bases de datos pueden tener un tamaño muy reducido (1 MegaByte o menos) o bien, ser muy voluminosas y complejas (del orden de Terabytes). Sin embargo todas las bases de datos normalmente se almacenan y localizan en discos duros y otros dispositivos de almacenamiento, a los que se accede a través de un ordenador. Una gran base de datos puede necesitar servidores en lugares diferentes, y viceversa, pequeñas bases de datos pueden existir como archivos en el disco duro de un único equipo.
+
+A continuación, se exponen los sistemas de almacenamiento de información más utilizados para el despliegue de bases de datos, comenzaremos por aquellos en los que pueden alojarse bases de datos de tamaño pequeño y mediano, para después analizar los sistemas de alta disponibilidad de grandes servidores.
+
+- Discos SATA: Es una interfaz de transferencia de datos entre la placa base y algunos dispositivos de almacenamiento, como puede ser el disco duro, lectores y regrabadores de CD/DVD/BD, Unidades de Estado Sólido u otros dispositivos. SATA proporciona mayores velocidades, mejor aprovechamiento cuando hay varias unidades, mayor longitud del cable de transmisión de datos y capacidad para conectar unidades al instante, es decir, insertar el dispositivo sin tener que apagar el ordenador. La primera generación especifica en transferencias de 150 Megabytes por segundo, también conocida por SATA 150 MB/s o Serial ATA-150. Actualmente se comercializan dispositivos SATA II, a 300 MB/s, también conocida como Serial ATA-300 y los SATA III con tasas de transferencias de hasta 600 MB/s.
+
+- Discos SCSI: Son interfaces preparadas para discos duros de gran capacidad de almacenamiento y velocidad de rotación. Se presentan bajo tres especificaciones: SCSI Estándar (Standard SCSI), SCSI Rápido (Fast SCSI) y SCSI Ancho-Rápido (Fast-Wide SCSI). Su tiempo medio de acceso puede llegar a 7 milisegundos y su velocidad de transmisión secuencial de información puede alcanzar teóricamente los 5 MB/s en los discos SCSI Estándares, los 10 MBps en los discos SCSI Rápidos y los 20 MBps en los discos SCSI Anchos-Rápidos (SCSI-2). Un controlador SCSI puede manejar hasta 7 discos duros SCSI.
+
+- RAID: acrónimo de Redundant Array of Independent Disks o matriz de discos independientes, es un contenedor de almacenamiento redundante. Se basa en el montaje en conjunto de dos o más discos duros, formando un bloque de trabajo, para obtener desde una ampliación de capacidad a mejoras en velocidad y seguridad de almacenamiento. Según las características que queramos primar, se establecen distintos sistemas de RAID.
+
+- Sistemas NAS: Es el acrónimo de Network Attached Storage ó sistema de almacenamiento masivo en red. Estos sistemas de almacenamiento permiten compartir la capacidad de almacenamiento de un computador (Servidor) con ordenadores personales o servidores clientes a través de una red, haciendo uso de un sistema operativo optimizado para dar acceso a los datos a través de protocolos de comunicación específicos. Suelen ser dispositivos para almacenamiento masivo de datos con capacidades muy altas, de varios Terabytes, generalmente superiores a los discos duros externos y además se diferencian de estos al conectar por red.
+
+- Sistemas SAN: Acrónimo de Storage Area Network o red de área de almacenamiento.Se trata de una red concebida para conectar servidores, matrices (arrays) de discos y librerías de soporte. La arquitectura de este tipo de sistemas permite que los recursos de almacenamiento estén disponibles para varios servidores en una red de área local o amplia. Debido a que la información almacenada no reside directamente en ninguno de los servidores de la red, se optimiza el poder de procesamiento para aplicaciones comerciales y la capacidad de almacenamiento se puede proporcionar en el servidor donde más se necesite.
+
+# 4. Modelos de Bases de Datos: Relacionales, No Relacionales y Otros
+
+La clasificación tradicional de las bases de datos establece tres modelos de bases de datos: **jerárquico, en red y relacional.** En la actualidad el modelo de bases de datos más extendido es el relacional. Aunque, hay que tener en cuenta que dos de sus variantes (modelo de bases de datos distribuidas y orientadas a objetos) son las que se más se están utilizando en los últimos tiempos.
+
+## 4.1. Modelo Jerárquico
+
+Un SGBD jerárquico utiliza jerarquías o árboles para la representación lógica de los datos. Los archivos son organizados en jerarquías, y normalmente cada uno de ellos se corresponde con una de las entidades de la base de datos. Los árboles jerárquicos se representan de forma invertida, con la raíz hacia arriba y las hojas hacia abajo:
+
+Estructura de árbol jerárquico
+
+Un SGBD jerárquico recorre los distintos nodos de un árbol en un preorden que requiere tres pasos:
+
+1. Visitar la raíz.
+2. Visitar el hijo más a la izquierda, si lo hubiera, que no haya sido visitado.
+3. Si todos los descendientes del segmento considerado se han visitado, volver a su padre e ir al punto 1.
+
+Cada nodo del árbol representa un tipo de registro conceptual, es decir, una entidad. A su vez, cada registro o segmento está constituido por un número de campos que los describen – las propiedades o atributos de las entidades. Las relaciones entre entidades están representadas por las ramas. En la Figura 4.8. cada departamento es una entidad que mantiene una relación de uno a muchos con los profesores, que a su vez mantienen una relación de uno a muchos con los cursos que imparten.
+
+A modo de resumen, enumeramos las siguientes características de las bases de datos jerárquicas:
+
+- Los segmentos de un archivo jerárquico están dispuestos en forma de árbol.
+- Los segmentos están enlazados mediante relaciones uno a muchos.
+- Cada nodo consta de uno o más campos.
+- Cada ocurrencia de un registro padre puede tener distinto número de ocurrencias de registros hijos.
+- Cuando se elimina un registro padre se deben eliminar todos los registros hijos (integridad de los datos).
+- Todo registro hijo debe tener un único registro padre excepto la raíz.
+- Las reglas de integridad en el modelo jerárquico prácticamente se reducen a la ya mencionada de eliminación en cadena de arriba a abajo. Las relaciones muchos a muchos no pueden ser implementadas de forma directa. 
+
+## 4.2. Modelo en Red
+
+El modelo de red intenta superar las deficiencias del enfoque jerárquico, permitiendo el tipo de relaciones de muchos a muchos.
+
+Al igual que en la estructura jerárquica, cada nodo puede tener varios hijos pero, a diferencia de ésta, también puede tener varios padres. 
+
+El concepto básico en el enfoque de red es el conjunto (‘set’). Un **conjunto está constituido por dos tipos de registros que mantienen una relación de muchos a muchos.** Para conseguir representar este tipo de relación **es necesario que los dos tipos de registros estén interconectados por medio de un registro conector llamado conjunto conector.** Los conjuntos poseen las siguientes características:
+
+- El registro padre se denomina propietario del conjunto, mientras que el registro hijo se denomina miembro.
+- Un conjunto está formado en un solo registro propietario y uno o más registros miembros.
+- Una ocurrencia de conjuntos es una colección de registros, uno de ellos es el propietario y los otros los miembros.
+- Todos los registros propietarios de ocurrencias del mismo tipo de conjunto deben ser del mismo tipo de registro.
+- El tipo de registro propietario de un tipo de conjunto debe ser distinto de los tipos de los registros miembro.
+- Sólo se permite que un registro miembro aparezca una vez en las ocurrencias de conjuntos del mismo tipo.
+- Un registro miembro puede asociarse con más de un propietario, es decir, puede pertenecer al mismo tiempo a dos o más tipos de conjuntos distintos. 
+- Se pueden definir niveles múltiples de jerarquías donde un tipo de registro puede ser miembro en un conjunto y al mismo tiempo propietario en otro conjunto diferente.
+
+## 4.3. El Modelo Relacional
 
 El **modelo relacional** es uno de los más ampliamente utilizados en la industria debido a su capacidad para organizar datos de manera estructurada y normalizada. En este modelo, los datos se organizan en **tablas** (relaciones), donde cada fila es un registro y cada columna es un atributo. Las relaciones entre las tablas se gestionan mediante claves primarias y foráneas, lo que facilita la consistencia y la integridad referencial de los datos.
 
-Los **Sistemas Gestores de Bases de Datos Relacionales (RDBMS)**, como **MySQL**, **PostgreSQL**, y **Oracle**, utilizan este modelo para gestionar grandes cantidades de datos, permitiendo realizar **consultas SQL** que proporcionan un acceso rápido y eficiente a la información. Entre las principales ventajas del modelo relacional se encuentran su capacidad para manejar datos estructurados y su fuerte consistencia, pero puede presentar limitaciones en escenarios que requieran una escalabilidad horizontal masiva o la gestión de datos no estructurados.
+Por tanto se llamará registro, entidad o tupla a cada fila de la tabla y campo o atributo a cada columna de la tabla. Mira esta información a modo de resumen:
 
-## 3.2. Bases de Datos No Relacionales (NoSQL)
+### Tablas y Atributos ###
 
-Las **bases de datos no relacionales**, conocidas comúnmente como **NoSQL**, han ganado popularidad en los últimos años debido al auge de aplicaciones que requieren manejar grandes volúmenes de datos no estructurados o semi-estructurados, como redes sociales, aplicaciones móviles y sistemas de big data. En contraste con el modelo relacional, las bases de datos NoSQL no utilizan tablas y relaciones estrictas, sino que emplean otros enfoques como:
+- Tabla: Cada tabla representa una entidad o relación en la base de datos y tiene un nombre único. Está compuesta por filas (registros o tuplas) y columnas (atributos).
+- Atributo: Cada columna de una tabla se llama atributo y representa una propiedad específica de la entidad. Los atributos también tienen nombres únicos dentro de una tabla.
+- Registro (Tupla o Entidad): Un registro, también conocido como tupla o entidad, es una fila en una tabla. Representa una instancia individual de la entidad que la tabla describe. Por ejemplo, si tienes una tabla "Alumnos", cada registro en esa tabla sería un alumno específico con sus propios valores para los atributos, como el nombre, apellido_1, apellido_2 y el dni.
 
-- **Almacenamiento de Clave-Valor**: Organizan los datos en pares clave-valor, lo que permite accesos rápidos a información específica. Ejemplo: **Redis**.
-- **Documentales**: Almacenan los datos en documentos (normalmente en formato **JSON**), que permiten flexibilidad en la estructura. Ejemplo: **MongoDB**.
-- **Columnares**: Los datos se almacenan por columnas en lugar de filas, lo que es útil para realizar consultas agregadas en grandes volúmenes de datos. Ejemplo: **Cassandra**.
-- **Grafos**: Modelan los datos en nodos y aristas, lo que permite una representación eficiente de relaciones complejas entre los datos. Ejemplo: **Neo4j**.
+### Requisitos de las Tablas###
+Las tablas en el modelo relacional deben cumplir con ciertos requisitos:
 
-Las bases de datos NoSQL destacan por su capacidad de escalabilidad horizontal, lo que permite que el sistema crezca fácilmente agregando más servidores. Sin embargo, en algunos casos, esta escalabilidad sacrifica la consistencia en favor de la **disponibilidad** y la **tolerancia a fallos**, siguiendo el principio **CAP** (Consistencia, Disponibilidad y Tolerancia a Particiones).
+- Todos los registros son del mismo tipo.
+- La tabla contiene un solo tipo de registro.
+- No existen campos o atributos repetidos.
+- No hay registros duplicados en la tabla.
+- No existe un orden específico para el almacenamiento de los registros.
+- Cada registro o tupla se identifica de manera única mediante una clave, que puede estar formada por uno o varios campos o atributos.
 
-## 3.3. Bases de Datos Híbridas
+### Claves y Dominios ###
 
-Las **bases de datos híbridas** combinan características de los modelos relacionales y no relacionales para aprovechar las ventajas de ambos enfoques. En algunos casos, un sistema puede utilizar un modelo relacional para gestionar datos estructurados y al mismo tiempo emplear un enfoque no relacional para manejar datos no estructurados, permitiendo así una mayor flexibilidad.
-
-Un ejemplo de bases de datos híbridas es **Couchbase**, que ofrece un modelo de almacenamiento de documentos combinado con la posibilidad de realizar consultas estructuradas similares a las que se harían en una base de datos relacional. Estas soluciones son especialmente útiles en entornos donde se manejan tanto datos estructurados como no estructurados en grandes volúmenes y se requiere un acceso flexible y eficiente.
-
-## 3.4. Ventajas y Desventajas de los Modelos Relacionales y No Relacionales
-
-Cada uno de estos modelos tiene sus propias ventajas y desventajas. El **modelo relacional** es adecuado para aplicaciones que requieren consistencia y una estructura clara de los datos, como sistemas bancarios o de gestión empresarial. Sin embargo, las bases de datos relacionales pueden resultar poco eficientes cuando se trata de manejar grandes volúmenes de datos no estructurados o cuando es necesaria una gran escalabilidad horizontal.
-
-Por su parte, las **bases de datos NoSQL** son ideales para aplicaciones que requieren flexibilidad en la estructura de los datos y una escalabilidad masiva, como en el caso de redes sociales o aplicaciones de big data. No obstante, la falta de consistencia fuerte y las dificultades para realizar consultas complejas son desventajas que pueden limitar su uso en ciertos contextos.
-
-## 3.5. Selección del Modelo de Bases de Datos según las Necesidades del Proyecto
-
-La elección del **modelo de bases de datos** adecuado depende de varios factores, como el tipo de datos que se manejará, los requisitos de escalabilidad y consistencia, y las características específicas del sistema a desarrollar. En aplicaciones donde la integridad y la consistencia de los datos son primordiales, como en sistemas financieros o de gestión empresarial, el **modelo relacional** será la opción más adecuada. Por el contrario, en aplicaciones que requieren manejar grandes volúmenes de datos no estructurados o semiestructurados y que demandan una alta disponibilidad, las bases de datos **NoSQL** serán la mejor elección.
+- Clave Primaria: Una clave primaria es un atributo o conjunto de atributos que identifica de manera única cada fila en una tabla. Garantiza la unicidad de los registros y es fundamental para establecer relaciones entre tablas.
+- Dominio: El conjunto de valores que puede tomar un atributo se llama dominio. Define las restricciones de valores que pueden almacenarse en un atributo.
 
 ---
 
-***Ejercicio 3.1:*** *Investiga en internet sobre un sistema de base de datos relacional (como MySQL) y otro NoSQL (como MongoDB). Luego, realizar una breve presentación donde expliques las ventajas y desventajas de cada uno y propon casos en los que usarías cada modelo.*
+***Ejercicio 4.1:*** *Explica la importancia de la clave primaria en una tabla relacional y proporciona un ejemplo de una situación en la que sería crucial tener una clave primaria bien definida.
+Define el término "dominio" en el contexto de una base de datos relacional y proporciona un ejemplo de un dominio válido.
+Imagina una base de datos que almacena información sobre libros en una biblioteca. Diseña una tabla que cumpla con los requisitos de las tablas en el modelo relacional para representar esta información.*
+
+***Ejercicio 4.2:*** *Define el término "dominio" en el contexto de una base de datos relacional y proporciona un ejemplo de un dominio válido.*
+
+***Ejercicio 4.3:*** *Imagina una base de datos que almacena información sobre libros en una biblioteca. Diseña una tabla que cumpla con los requisitos de las tablas en el modelo relacional para representar esta información.*
 
 # 4. Bases de Datos según la Ubicación de la Información: Locales y Distribuidas
 

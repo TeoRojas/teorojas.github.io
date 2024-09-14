@@ -85,6 +85,7 @@ p, .BodyText, a, li {
     text-align: Left;
     line-height: 125%;
     column-count: 1;
+    color: black;
 }
 
 p{
