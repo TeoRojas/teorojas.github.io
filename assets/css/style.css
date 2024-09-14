@@ -221,6 +221,7 @@ nav ul li a:visited{
 /**************************************
     $MEDIA QUERIES - TABLET
 /**************************************/
+/*
 @media(max-width: 850px) {
 
     body {
@@ -243,8 +244,8 @@ nav ul li a:visited{
         flex-direction: column;
     }
 
-    /*span*/.marginnote,
-    /*span*/.sidenote,
+    .marginnote,
+    .sidenote,
     figcaption {
         display: block;
         left: auto;
@@ -254,11 +255,60 @@ nav ul li a:visited{
         width: 100%;
     }
 
-    .Margins{
-        padding-left: 1%;
-        width: 100%;
+    .Margins {
+        padding-left: 1% !important;
+        padding-right: 1% !important; 
+        width: 100% !important;
+        box-sizing: border-box; 
+        display: block; 
+    }
+    
+    
+
+}
+
+*/
+
+/**************************************
+    $MEDIA QUERIES - TABLET (MAX-WIDTH: 850PX)
+/**************************************/
+@media only screen and (max-width: 850px) {
+
+    body {
+        padding: 10px;
+        width: 100%; /* Nos aseguramos de que ocupe todo el ancho */
+        box-sizing: border-box;
     }
 
+    h1, h2, .title {
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    p, table, blockquote, pre, img, hr, .mini-note, ul li, ol li {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .Margins {
+        padding-left: 1%;
+        padding-right: 1%;
+        width: 100%;
+        box-sizing: border-box;
+        display: block;
+    }
+
+    .AbstractMargins {
+        padding-left: 1%;
+        padding-right: 1%;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .footerSize {
+        height: auto;
+        width: 100%;
+    }
 }
 
 /* Dark Mode */
