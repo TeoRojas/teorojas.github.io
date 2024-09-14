@@ -12,11 +12,11 @@ abstract: Sinopsis de la unidad 01
 2. [Sistemas de Almacenamiento Lógico y sus Características (CEa)](#2-sistemas-de-almacenamiento-lógico-y-sus-características)
 3. [Bases de datos. Conceptos, usos y ubicación de la información. (CEb)](#3-bases-de-datos-concepto-usos-y-ubicación-de-la-información)
 4. [Modelos de Bases de Datos: Relacionales, No Relacionales y Otros (CEb)](#4-modelos-de-bases-de-datos-relacionales-no-relacionales-y-otros)
-5. [Bases de Datos según la Ubicación de la Información: Locales y Distribuidas (CEc, CEg)](#4-bases-de-datos-según-la-ubicación-de-la-información-locales-y-distribuidas)
-6. [La Utilidad de los Sistemas Gestores de Bases de Datos (SGBD) (CEd)](#5-la-utilidad-de-los-sistemas-gestores-de-bases-de-datos-sgbd)
+5. [La Utilidad de los Sistemas Gestores de Bases de Datos (SGBD) (CEd)](#5-la-utilidad-de-los-sistemas-gestores-de-bases-de-datos-sgbd)
 6. [Clasificación de los Sistemas Gestores de Bases de Datos (CEe)](#6-clasificación-de-los-sistemas-gestores-de-bases-de-datos-sgbd)
 7. [Elementos de un Sistema Gestor de Bases de Datos y su Función (CEf)](#7-elementos-de-un-sistema-gestor-de-bases-de-datos-y-su-función)
-8. [Fragmentación de la Información y Políticas de Distribución (CEh)](#8-fragmentación-de-la-información-y-políticas-de-distribución)
+8. [Bases de Datos según la Ubicación de la Información: Locales y Distribuidas (CEc, CEg)](#8-bases-de-datos-según-la-ubicación-de-la-información-locales-y-distribuidas)
+9. [Fragmentación de la Información y Políticas de Distribución (CEh)](#9-fragmentación-de-la-información-y-políticas-de-distribución)
 
 
 # 1. Introducción
@@ -199,13 +199,13 @@ El **modelo relacional** es uno de los más ampliamente utilizados en la industr
 
 Por tanto se llamará registro, entidad o tupla a cada fila de la tabla y campo o atributo a cada columna de la tabla. Mira esta información a modo de resumen:
 
-### Tablas y Atributos ###
+### Tablas y Atributos
 
 - Tabla: Cada tabla representa una entidad o relación en la base de datos y tiene un nombre único. Está compuesta por filas (registros o tuplas) y columnas (atributos).
 - Atributo: Cada columna de una tabla se llama atributo y representa una propiedad específica de la entidad. Los atributos también tienen nombres únicos dentro de una tabla.
 - Registro (Tupla o Entidad): Un registro, también conocido como tupla o entidad, es una fila en una tabla. Representa una instancia individual de la entidad que la tabla describe. Por ejemplo, si tienes una tabla "Alumnos", cada registro en esa tabla sería un alumno específico con sus propios valores para los atributos, como el nombre, apellido_1, apellido_2 y el dni.
 
-### Requisitos de las Tablas###
+### Requisitos de las Tablas
 Las tablas en el modelo relacional deben cumplir con ciertos requisitos:
 
 - Todos los registros son del mismo tipo.
@@ -215,7 +215,7 @@ Las tablas en el modelo relacional deben cumplir con ciertos requisitos:
 - No existe un orden específico para el almacenamiento de los registros.
 - Cada registro o tupla se identifica de manera única mediante una clave, que puede estar formada por uno o varios campos o atributos.
 
-### Claves y Dominios ###
+### Claves y Dominios
 
 - Clave Primaria: Una clave primaria es un atributo o conjunto de atributos que identifica de manera única cada fila en una tabla. Garantiza la unicidad de los registros y es fundamental para establecer relaciones entre tablas.
 - Dominio: El conjunto de valores que puede tomar un atributo se llama dominio. Define las restricciones de valores que pueden almacenarse en un atributo.
@@ -230,76 +230,11 @@ Imagina una base de datos que almacena información sobre libros en una bibliote
 
 ***Ejercicio 4.3:*** *Imagina una base de datos que almacena información sobre libros en una biblioteca. Diseña una tabla que cumpla con los requisitos de las tablas en el modelo relacional para representar esta información.*
 
-# 4. Bases de Datos según la Ubicación de la Información: Locales y Distribuidas
-
-La forma en que se distribuye la información en una base de datos afecta directamente tanto al rendimiento como a la accesibilidad y la disponibilidad de los datos. Las **bases de datos** pueden clasificarse en **locales** o **distribuidas** dependiendo de dónde se almacenen los datos y cómo se accede a ellos. En este apartado, examinaremos ambos tipos y sus características, así como la creciente relevancia de las bases de datos distribuidas en entornos empresariales modernos.
-
-## 4.1. Bases de Datos Locales
-
-Las **bases de datos locales** son aquellas en las que toda la información se encuentra almacenada en un único servidor o ubicación física. Este tipo de bases de datos es común en entornos más pequeños o centralizados, donde no se requiere una distribución geográfica de los datos. Un ejemplo típico de una base de datos local es un sistema que corre en un solo servidor en el centro de datos de una empresa.
-
-### Ventajas de las Bases de Datos Locales
-
-- **Simplicidad**: Las bases de datos locales son más fáciles de gestionar, ya que los datos están centralizados en un único servidor o ubicación, lo que simplifica la administración y el mantenimiento.
-- **Velocidad de acceso**: En entornos controlados y centralizados, el acceso a los datos suele ser rápido, ya que no hay latencias derivadas de la distribución geográfica.
-
-### Desventajas de las Bases de Datos Locales
-
-- **Escalabilidad limitada**: A medida que crece el volumen de datos o el número de usuarios, puede ser más difícil escalar una base de datos local debido a las limitaciones de un solo servidor.
-- **Falta de redundancia**: Si el servidor local falla, se pierde el acceso a los datos hasta que se restablezca el sistema. Esto genera vulnerabilidad a fallos de hardware y afecta a la disponibilidad de la información.
-
-## 4.2. Bases de Datos Distribuidas
-
-Las **bases de datos distribuidas** almacenan los datos en múltiples servidores o ubicaciones físicas diferentes. Los nodos que componen una base de datos distribuida pueden estar dispersos geográficamente y conectados a través de una red. Este enfoque permite gestionar grandes volúmenes de información de manera más eficiente, además de mejorar la disponibilidad y la redundancia de los datos.
-
-### Ventajas de las Bases de Datos Distribuidas
-
-- **Alta disponibilidad**: Al tener los datos distribuidos en varios nodos, una base de datos distribuida puede seguir funcionando incluso si uno o más nodos fallan, asegurando así la disponibilidad de los datos.
-- **Escalabilidad**: Las bases de datos distribuidas permiten una escalabilidad horizontal, lo que significa que es posible agregar más nodos a medida que crece el volumen de datos o la demanda de procesamiento, lo que mejora el rendimiento del sistema.
-- **Tolerancia a fallos**: Estas bases de datos suelen ser más resistentes a fallos, ya que los datos están replicados en varios nodos. Si un nodo falla, otro puede asumir su función y evitar interrupciones en el servicio.
-
-### Desafíos de las Bases de Datos Distribuidas
-
-- **Complejidad**: Administrar una base de datos distribuida es más complejo, ya que implica sincronizar y mantener la consistencia entre nodos dispersos. Además, las consultas y transacciones distribuidas pueden requerir más tiempo para completarse debido a la latencia de red.
-- **Consistencia**: En algunos casos, para mejorar la disponibilidad, se puede sacrificar algo de consistencia en los datos. Esto sigue el principio **CAP** (Consistencia, Disponibilidad y Tolerancia a Particiones), en el que no se pueden garantizar los tres aspectos al mismo tiempo.
-
-## 4.3. Modelos de Consistencia en Bases de Datos Distribuidas
-
-Una de las cuestiones clave en las **bases de datos distribuidas** es cómo mantener la **consistencia** de los datos a través de múltiples nodos. Existen varios modelos de consistencia:
-
-- **Consistencia Fuerte**: Garantiza que todos los nodos vean los mismos datos en todo momento. Es más costosa en términos de rendimiento, ya que requiere sincronización constante entre los nodos.
-- **Consistencia Eventual**: Los datos pueden estar temporalmente inconsistentes, pero eventualmente todos los nodos se sincronizarán. Este modelo es común en aplicaciones que requieren alta disponibilidad y escalabilidad, como las redes sociales.
-- **Consistencia Causal**: Basada en la idea de que ciertas operaciones son dependientes de otras. Las actualizaciones solo se propagan cuando tienen sentido lógico hacerlo, lo que reduce la necesidad de sincronización constante.
-
-## 4.4. Utilidad de las Bases de Datos Distribuidas en Entornos Modernos
-
-Las bases de datos distribuidas son cada vez más comunes en **entornos empresariales modernos**, especialmente en aplicaciones que necesitan alta disponibilidad, escalabilidad masiva y tolerancia a fallos. Estas bases de datos permiten que empresas globales, como las de comercio electrónico y redes sociales, operen con eficacia a nivel mundial, ofreciendo a los usuarios acceso a la información de forma rápida y confiable, sin importar su ubicación.
-
-Además, con el auge de los **sistemas en la nube**, muchas organizaciones están adoptando bases de datos distribuidas como parte de su infraestructura. Los proveedores de servicios en la nube, como **Amazon Web Services (AWS)**, **Microsoft Azure**, y **Google Cloud Platform**, ofrecen soluciones distribuidas que permiten almacenar y acceder a datos de manera eficiente en múltiples ubicaciones geográficas, garantizando la continuidad del servicio en caso de fallos regionales.
-
-## 4.5. Comparativa entre Bases de Datos Locales y Distribuidas
-
-A la hora de elegir entre una **base de datos local** o una **base de datos distribuida**, es esencial considerar los requisitos específicos del proyecto. Las bases de datos locales son adecuadas para aplicaciones con bajos volúmenes de datos y donde la simplicidad y el control son primordiales. Sin embargo, a medida que los sistemas crecen y se distribuyen geográficamente, las bases de datos distribuidas ofrecen mayores ventajas en términos de escalabilidad, disponibilidad y tolerancia a fallos.
-
-Las bases de datos distribuidas no solo permiten manejar grandes volúmenes de datos, sino que también garantizan la continuidad del servicio y la redundancia, lo que es crítico en aplicaciones donde la **alta disponibilidad** es prioritaria.
-
----
-
-***Ejercicio 4.1:*** *Imagina que trabajas en una pequeña empresa local que utiliza una base de datos local para gestionar sus operaciones. Sin embargo, la empresa ha decidido expandirse y abrir nuevas sedes en diferentes ciudades, lo que requerirá que los datos sean accesibles desde varios lugares geográficos.*
-1. *Enumera las principales diferencias entre el modelo actual de base de datos local y el modelo de base de datos distribuida que podría implementarse tras la expansión.*
-2. *¿Qué ventajas crees que aportaría una base de datos distribuida a la empresa tras su expansión?*
-3. *¿Cuáles serían algunos de los retos que podrían surgir al migrar de un sistema local a uno distribuido?*
-
-
-***Ejercicio 4.2:*** *A continuación, se te presentan tres escenarios en los que se manejan grandes volúmenes de información. Determina si una base de datos distribuida o una base de datos local sería más adecuada en cada uno de ellos, justificando tu respuesta:*
-
-1. *Red Social Global: Una plataforma de red social con millones de usuarios distribuidos por todo el mundo, donde los datos de los perfiles de usuarios y publicaciones deben estar accesibles en tiempo real.*
-2. *Sistema de Facturación Local: Una pequeña empresa que gestiona la facturación de sus servicios desde una única sede, y todos los empleados se conectan a la base de datos desde la misma ubicación física.*
-3. *Comercio Electrónico Internacional: Una tienda en línea con clientes en todo el mundo, que requiere manejar pedidos y consultas de productos en tiempo real, garantizando una alta disponibilidad en todos los países.*
-
 # 5. La Utilidad de los Sistemas Gestores de Bases de Datos (SGBD)
 
-Los **Sistemas Gestores de Bases de Datos (SGBD)** han transformado la forma en que las organizaciones gestionan y manipulan grandes cantidades de información. Estos sistemas ofrecen un conjunto de herramientas y servicios que permiten gestionar, consultar y mantener la integridad de los datos de manera eficiente. A lo largo de este apartado, evaluaremos la utilidad de los SGBD y su impacto en diferentes entornos, desde pequeñas aplicaciones hasta complejos sistemas empresariales.
+Los **Sistemas Gestores de Bases de Datos (SGBD)** son un conjunto coordinado de programas, procedimientos, lenguajes, etc., que suministra a los usuarios no informáticos, analistas programadores y administradores las herramientas necesarias para describir y manipular los datos almacenados en la base de datos, asegurando su integridad y seguridad.
+
+Éstos han transformado la forma en que las organizaciones gestionan y manipulan grandes cantidades de información. Estos sistemas ofrecen un conjunto de herramientas y servicios que permiten gestionar, consultar y mantener la integridad de los datos de manera eficiente. A lo largo de este apartado, evaluaremos la utilidad de los SGBD y su impacto en diferentes entornos, desde pequeñas aplicaciones hasta complejos sistemas empresariales.
 
 ## 5.1. Gestión Centralizada de la Información
 
@@ -393,26 +328,6 @@ Cada tipo de **SGBD** tiene sus propias ventajas y desventajas, y la elección d
   
 - **Centralizados vs. Distribuidos**: Los SGBD centralizados son más fáciles de administrar pero pueden ser un cuello de botella en términos de escalabilidad. Por otro lado, los SGBD distribuidos son ideales para aplicaciones de gran escala, pero requieren una gestión más compleja de la sincronización y coherencia de los datos.
 
-## 6.6. Tendencias Futuras en los SGBD
-
-Con el aumento exponencial de los datos y la adopción de tecnologías como **inteligencia artificial** y **big data**, los **SGBD** continúan evolucionando. Se espera que las bases de datos del futuro combinen capacidades de **almacenamiento distribuido**, procesamiento en **tiempo real**, y **machine learning** para optimizar el rendimiento y la toma de decisiones automatizada. Además, el enfoque hacia la **nube** y los sistemas **serverless** (sin servidor) seguirá creciendo, permitiendo a las organizaciones gestionar sus datos de manera más flexible y escalable.
-
-***Ejercicio 6.1:*** ***Elegir el SGBD adecuado.*** *A continuación, se presentan tres escenarios de negocio diferentes. Cada uno tiene sus propios requisitos de almacenamiento, escalabilidad y manejo de datos. Para cada escenario, selecciona el SGBD más adecuado de la lista provista, y justifica tu elección considerando las características de cada sistema.
-
-**SGBD disponibles:**
-- MySQL (relacional)
-- MongoDB (NoSQL, documental)
-- Cassandra (NoSQL, columnares distribuidos)
-- PostgreSQL (relacional avanzado)
-- Redis (NoSQL, clave-valor)
-
-**Escenarios de negocio:**
-- Tienda en línea en expansión. Una tienda en línea está experimentando un crecimiento acelerado en número de usuarios y transacciones. La tienda necesita un SGBD que maneje transacciones con seguridad, pero también **debe escalar fácilmente** para soportar la creciente cantidad de clientes y productos en el catálogo.
-
-- Aplicación móvil para mensajería en tiempo real. Se requiere una base de datos para una aplicación de mensajería instantánea, donde millones de usuarios envían y reciben mensajes en tiempo real. El sistema debe soportar **altos volúmenes de escritura**, ser altamente disponible y manejar una carga masiva distribuida a nivel global.
-
-- Sistema de gestión de inventario en tiempo real. Una empresa necesita un sistema para gestionar el inventario en tiempo real. Los productos se actualizan constantemente, y es importante que las consultas sean **extremadamente rápidas** para garantizar que siempre se refleje el estado actual de los productos disponibles.*
-
 # 7. Elementos de un Sistema Gestor de Bases de Datos y su Función
 
 Los **Sistemas Gestores de Bases de Datos (SGBD)** están compuestos por varios elementos fundamentales que permiten su funcionamiento eficiente. Cada uno de estos elementos cumple una función específica, desde el almacenamiento de los datos hasta el control de las transacciones y la seguridad. En este apartado, analizaremos los principales componentes de un SGBD y explicaremos cómo contribuyen al manejo y la organización de los datos.
@@ -459,11 +374,78 @@ En un entorno donde los datos están distribuidos en diferentes ubicaciones fís
 
 Este componente gestiona la **replicación** y **particionamiento** de los datos entre diferentes servidores, lo que permite que los SGBD distribuidos puedan ofrecer mayor escalabilidad, rendimiento y disponibilidad.
 
-# 8. Fragmentación de la Información y Políticas de Distribución
+# 8. Bases de Datos según la Ubicación de la Información: Locales y Distribuidas
+
+La forma en que se distribuye la información en una base de datos afecta directamente tanto al rendimiento como a la accesibilidad y la disponibilidad de los datos. Las **bases de datos** pueden clasificarse en **locales** o **distribuidas** dependiendo de dónde se almacenen los datos y cómo se accede a ellos. En este apartado, examinaremos ambos tipos y sus características, así como la creciente relevancia de las bases de datos distribuidas en entornos empresariales modernos.
+
+## 8.1. Bases de Datos Locales
+
+Las **bases de datos locales** son aquellas en las que toda la información se encuentra almacenada en un único servidor o ubicación física. Este tipo de bases de datos es común en entornos más pequeños o centralizados, donde no se requiere una distribución geográfica de los datos. Un ejemplo típico de una base de datos local es un sistema que corre en un solo servidor en el centro de datos de una empresa.
+
+### Ventajas de las Bases de Datos Locales
+
+- **Simplicidad**: Las bases de datos locales son más fáciles de gestionar, ya que los datos están centralizados en un único servidor o ubicación, lo que simplifica la administración y el mantenimiento.
+- **Velocidad de acceso**: En entornos controlados y centralizados, el acceso a los datos suele ser rápido, ya que no hay latencias derivadas de la distribución geográfica.
+
+### Desventajas de las Bases de Datos Locales
+
+- **Escalabilidad limitada**: A medida que crece el volumen de datos o el número de usuarios, puede ser más difícil escalar una base de datos local debido a las limitaciones de un solo servidor.
+- **Falta de redundancia**: Si el servidor local falla, se pierde el acceso a los datos hasta que se restablezca el sistema. Esto genera vulnerabilidad a fallos de hardware y afecta a la disponibilidad de la información.
+
+## 8.2. Bases de Datos Distribuidas
+
+Las **bases de datos distribuidas** almacenan los datos en múltiples servidores o ubicaciones físicas diferentes. Los nodos que componen una base de datos distribuida pueden estar dispersos geográficamente y conectados a través de una red. Este enfoque permite gestionar grandes volúmenes de información de manera más eficiente, además de mejorar la disponibilidad y la redundancia de los datos.
+
+### Ventajas de las Bases de Datos Distribuidas
+
+- **Alta disponibilidad**: Al tener los datos distribuidos en varios nodos, una base de datos distribuida puede seguir funcionando incluso si uno o más nodos fallan, asegurando así la disponibilidad de los datos.
+- **Escalabilidad**: Las bases de datos distribuidas permiten una escalabilidad horizontal, lo que significa que es posible agregar más nodos a medida que crece el volumen de datos o la demanda de procesamiento, lo que mejora el rendimiento del sistema.
+- **Tolerancia a fallos**: Estas bases de datos suelen ser más resistentes a fallos, ya que los datos están replicados en varios nodos. Si un nodo falla, otro puede asumir su función y evitar interrupciones en el servicio.
+
+### Desafíos de las Bases de Datos Distribuidas
+
+- **Complejidad**: Administrar una base de datos distribuida es más complejo, ya que implica sincronizar y mantener la consistencia entre nodos dispersos. Además, las consultas y transacciones distribuidas pueden requerir más tiempo para completarse debido a la latencia de red.
+- **Consistencia**: En algunos casos, para mejorar la disponibilidad, se puede sacrificar algo de consistencia en los datos. Esto sigue el principio **CAP** (Consistencia, Disponibilidad y Tolerancia a Particiones), en el que no se pueden garantizar los tres aspectos al mismo tiempo.
+
+## 8.3. Modelos de Consistencia en Bases de Datos Distribuidas
+
+Una de las cuestiones clave en las **bases de datos distribuidas** es cómo mantener la **consistencia** de los datos a través de múltiples nodos. Existen varios modelos de consistencia:
+
+- **Consistencia Fuerte**: Garantiza que todos los nodos vean los mismos datos en todo momento. Es más costosa en términos de rendimiento, ya que requiere sincronización constante entre los nodos.
+- **Consistencia Eventual**: Los datos pueden estar temporalmente inconsistentes, pero eventualmente todos los nodos se sincronizarán. Este modelo es común en aplicaciones que requieren alta disponibilidad y escalabilidad, como las redes sociales.
+- **Consistencia Causal**: Basada en la idea de que ciertas operaciones son dependientes de otras. Las actualizaciones solo se propagan cuando tienen sentido lógico hacerlo, lo que reduce la necesidad de sincronización constante.
+
+## 8.4. Utilidad de las Bases de Datos Distribuidas en Entornos Modernos
+
+Las bases de datos distribuidas son cada vez más comunes en **entornos empresariales modernos**, especialmente en aplicaciones que necesitan alta disponibilidad, escalabilidad masiva y tolerancia a fallos. Estas bases de datos permiten que empresas globales, como las de comercio electrónico y redes sociales, operen con eficacia a nivel mundial, ofreciendo a los usuarios acceso a la información de forma rápida y confiable, sin importar su ubicación.
+
+Además, con el auge de los **sistemas en la nube**, muchas organizaciones están adoptando bases de datos distribuidas como parte de su infraestructura. Los proveedores de servicios en la nube, como **Amazon Web Services (AWS)**, **Microsoft Azure**, y **Google Cloud Platform**, ofrecen soluciones distribuidas que permiten almacenar y acceder a datos de manera eficiente en múltiples ubicaciones geográficas, garantizando la continuidad del servicio en caso de fallos regionales.
+
+## 8.5. Comparativa entre Bases de Datos Locales y Distribuidas
+
+A la hora de elegir entre una **base de datos local** o una **base de datos distribuida**, es esencial considerar los requisitos específicos del proyecto. Las bases de datos locales son adecuadas para aplicaciones con bajos volúmenes de datos y donde la simplicidad y el control son primordiales. Sin embargo, a medida que los sistemas crecen y se distribuyen geográficamente, las bases de datos distribuidas ofrecen mayores ventajas en términos de escalabilidad, disponibilidad y tolerancia a fallos.
+
+Las bases de datos distribuidas no solo permiten manejar grandes volúmenes de datos, sino que también garantizan la continuidad del servicio y la redundancia, lo que es crítico en aplicaciones donde la **alta disponibilidad** es prioritaria.
+
+---
+
+***Ejercicio 8.1:*** *Imagina que trabajas en una pequeña empresa local que utiliza una base de datos local para gestionar sus operaciones. Sin embargo, la empresa ha decidido expandirse y abrir nuevas sedes en diferentes ciudades, lo que requerirá que los datos sean accesibles desde varios lugares geográficos.*
+1. *Enumera las principales diferencias entre el modelo actual de base de datos local y el modelo de base de datos distribuida que podría implementarse tras la expansión.*
+2. *¿Qué ventajas crees que aportaría una base de datos distribuida a la empresa tras su expansión?*
+3. *¿Cuáles serían algunos de los retos que podrían surgir al migrar de un sistema local a uno distribuido?*
+
+
+***Ejercicio 8.2:*** *A continuación, se te presentan tres escenarios en los que se manejan grandes volúmenes de información. Determina si una base de datos distribuida o una base de datos local sería más adecuada en cada uno de ellos, justificando tu respuesta:*
+
+1. *Red Social Global: Una plataforma de red social con millones de usuarios distribuidos por todo el mundo, donde los datos de los perfiles de usuarios y publicaciones deben estar accesibles en tiempo real.*
+2. *Sistema de Facturación Local: Una pequeña empresa que gestiona la facturación de sus servicios desde una única sede, y todos los empleados se conectan a la base de datos desde la misma ubicación física.*
+3. *Comercio Electrónico Internacional: Una tienda en línea con clientes en todo el mundo, que requiere manejar pedidos y consultas de productos en tiempo real, garantizando una alta disponibilidad en todos los países.*
+
+# 9. Fragmentación de la Información y Políticas de Distribución
 
 En sistemas de bases de datos distribuidos, uno de los mayores desafíos es cómo dividir y distribuir los datos entre diferentes nodos o ubicaciones físicas sin comprometer el rendimiento ni la coherencia. La **fragmentación de la información** y las **políticas de distribución** juegan un papel clave en este proceso, ya que permiten optimizar el acceso a los datos, mejorar la escalabilidad y asegurar la eficiencia en sistemas distribuidos. En este apartado, exploraremos los tipos de fragmentación y las políticas que determinan cómo se distribuyen los datos en bases de datos distribuidas.
 
-## 8.1. Fragmentación Horizontal
+## 9.1. Fragmentación Horizontal
 
 La **fragmentación horizontal** consiste en dividir una tabla en subconjuntos de filas, donde cada fragmento contiene un conjunto específico de registros basados en un criterio. Por ejemplo, si tenemos una tabla de clientes, podríamos fragmentarla horizontalmente de acuerdo con el país o la región de los clientes. Cada fragmento se almacena en un nodo o servidor diferente.
 
@@ -471,7 +453,7 @@ La **fragmentación horizontal** consiste en dividir una tabla en subconjuntos d
 
 - **Desafíos**: La principal dificultad es asegurarse de que las consultas que involucren datos de varios fragmentos sean ejecutadas correctamente. Esto requiere coordinación entre los nodos para reunir los resultados de todos los fragmentos.
 
-## 8.2. Fragmentación Vertical
+## 9.2. Fragmentación Vertical
 
 La **fragmentación vertical** divide las tablas en subconjuntos de columnas. Cada fragmento contiene solo un conjunto de atributos específicos de la tabla original, de manera que los registros se distribuyen en varias ubicaciones, pero las claves primarias se replican en cada fragmento para asegurar que los registros puedan ser reconstruidos cuando sea necesario.
 
@@ -481,7 +463,7 @@ Por ejemplo, si tenemos una tabla que contiene información sobre empleados, pod
 
 - **Desafíos**: La complejidad en la reconstitución de los registros completos puede aumentar, y las consultas que requieren datos de múltiples fragmentos verticales pueden resultar más lentas si deben reunirse los datos de varios nodos.
 
-## 8.3. Fragmentación Híbrida
+## 9.3. Fragmentación Híbrida
 
 La **fragmentación híbrida** combina elementos de la fragmentación horizontal y vertical. En este enfoque, una tabla puede ser dividida primero horizontalmente, y luego cada fragmento horizontal puede ser dividido verticalmente, o viceversa. Este tipo de fragmentación ofrece una mayor flexibilidad para ajustar la distribución de los datos según las necesidades específicas del sistema.
 
@@ -489,17 +471,7 @@ La **fragmentación híbrida** combina elementos de la fragmentación horizontal
 
 - **Desafíos**: Aumenta la complejidad de la implementación y la administración del sistema, ya que debe coordinarse la combinación de fragmentación horizontal y vertical.
 
-## 8.4. Políticas de Distribución de Datos
-
-Las **políticas de distribución de datos** determinan cómo se asignan los fragmentos a los diferentes nodos o servidores en un sistema distribuido. Estas políticas pueden basarse en varios factores, como la proximidad geográfica, el rendimiento de los nodos, o la carga de trabajo actual. A continuación, exploraremos las principales políticas de distribución.
-
-- **Distribución Basada en el Hashing**: En este enfoque, un valor de hash se genera a partir de una clave primaria o un atributo de la tabla, y ese valor se utiliza para asignar los registros a diferentes nodos. Este método distribuye los datos de manera uniforme y ayuda a evitar sobrecarga en un único nodo, mejorando la escalabilidad.
-
-- **Distribución Basada en Rango**: Este método asigna fragmentos a diferentes nodos basándose en un rango de valores de un atributo. Por ejemplo, los registros de clientes podrían distribuirse entre los nodos según el rango de ID o la región geográfica. Esto es útil cuando las consultas se centran en rangos de valores específicos.
-
-- **Replicación Completa o Parcial**: Además de fragmentar los datos, en muchos sistemas distribuidos los fragmentos se **replican** en varios nodos para asegurar la alta disponibilidad y la tolerancia a fallos. En una **replicación completa**, una copia exacta de toda la base de datos se almacena en varios nodos. En la **replicación parcial**, solo ciertos fragmentos críticos se replican.
-
-## 8.5. Ventajas de la Fragmentación y Distribución de Datos
+## 9.4. Ventajas de la Fragmentación y Distribución de Datos
 
 La **fragmentación** y **distribución** de los datos ofrecen varias ventajas importantes en sistemas distribuidos:
 
@@ -509,7 +481,7 @@ La **fragmentación** y **distribución** de los datos ofrecen varias ventajas i
 
 - **Tolerancia a Fallos y Alta Disponibilidad**: La distribución y replicación de los fragmentos permiten que el sistema continúe funcionando incluso si uno o más nodos fallan, mejorando la disponibilidad y confiabilidad de los datos.
 
-## 8.6. Desafíos de la Fragmentación y Distribución de Datos
+## 9.5. Desafíos de la Fragmentación y Distribución de Datos
 
 A pesar de sus beneficios, la fragmentación y la distribución de datos también presentan ciertos desafíos:
 
@@ -517,7 +489,7 @@ A pesar de sus beneficios, la fragmentación y la distribución de datos tambié
 
 - **Coherencia y Sincronización**: Garantizar que los fragmentos de datos distribuidos se mantengan coherentes y actualizados entre todos los nodos es un desafío importante. Las operaciones distribuidas suelen requerir protocolos de consenso o sincronización, lo que puede afectar el rendimiento.
 
-## 8.7. Consideraciones en la Elección de una Estrategia de Fragmentación
+## 9.6. Consideraciones en la Elección de una Estrategia de Fragmentación
 
 La elección de la estrategia de fragmentación adecuada depende de varios factores:
 
