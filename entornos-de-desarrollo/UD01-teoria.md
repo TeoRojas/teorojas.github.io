@@ -9,12 +9,12 @@ abstract: Explora los fundamentos del desarrollo de software, desde el análisis
 ---
 
 # Índice
-1. [Introducción](#1-introducción)
-2. [Conceptos de programa informático y de aplicación informática](#2-conceptos-de-programa-informático-y-de-aplicación-informática)
-3. [El lenguaje de programación](#3-el-lenguaje-de-programación)
-4. [Código fuente, código objeto y código ejecutable; máquinas virtuales](#4-código-fuente-código-objeto-y-código-ejecutable-máquinas-virtuales)
-5. [Proceso de obtención de código ejecutable a partir del código fuente; herramientas implicadas](#5-proceso-de-obtención-de-código-ejecutable-a-partir-del-código-fuente-herramientas-implicadas)
-6. [Fases del desarrollo de una aplicación](#6-fases-del-desarrollo-de-una-aplicación)
+1. [Introducción.](#1-introducción)
+2. [Conceptos de programa informático y de aplicación informática.](#2-conceptos-de-programa-informático-y-de-aplicación-informática)
+3. [El lenguaje de programación.](#3-el-lenguaje-de-programación)
+4. [Código fuente, código objeto y código ejecutable; máquinas virtuales.](#4-código-fuente-código-objeto-y-código-ejecutable-máquinas-virtuales)
+5. [Proceso de obtención de código ejecutable a partir del código fuente; herramientas implicadas.](#5-proceso-de-obtención-de-código-ejecutable-a-partir-del-código-fuente-herramientas-implicadas)
+6. [Fases del desarrollo de una aplicación.](#6-fases-del-desarrollo-de-una-aplicación)
 
 # 1. Introducción
 
