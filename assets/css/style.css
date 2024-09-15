@@ -97,6 +97,23 @@ p{
     /*margin: 0 13px 0 45px;*/
 }
 
+table{
+    font-size: 18px;
+    width: 100%;
+    border: 2px solid;
+    border-radius: 8px;
+    padding: 0.4em;    
+}
+
+table th{
+    font-family: 'CMB';
+    letter-spacing: -1px;
+}
+
+table t{
+    font-family: 'CMR';
+}
+
 strong{
     font-family: 'CMB';
     letter-spacing: -0.75px;
