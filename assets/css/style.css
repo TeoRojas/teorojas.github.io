@@ -50,8 +50,12 @@
 }
 
 .Margins{
+    /*
     padding-left: 21%;
     width: 58%;
+    */
+    padding-left: 10%;
+    width: 80%;
 }
 
 .AbstractMargins{
@@ -178,25 +182,7 @@ ul{
 nav {
     margin-top: 1rem;
 }
-/*
-ul.site-nav {
-        list-style: none;
-        margin: 0;
-        padding: 0;
 
-        li {
-            display: inline-block;
-            margin: 0 1.5rem 0 0;
-            font-family: 'CMB';
-            letter-spacing: -0.5px;
-        }
-
-        a,a:visited {
-            text-decoration: none;
-        }
-    }
-}
-*/
 .site-nav{
     display: inline-flex;
     list-style: none;
@@ -216,58 +202,6 @@ nav ul li a:visited{
     color:black;
 
 }
-
-
-/**************************************
-    $MEDIA QUERIES - TABLET
-/**************************************/
-/*
-@media(max-width: 850px) {
-
-    body {
-        padding: 10px;
-        width: calc(100% - 20px);
-    }
-
-    h2.title { margin-top: 2rem; }
-
-    p,table,blockquote,pre,img,hr,.mini-note,ul li,ol li {
-        max-width: 100%;
-    }
-
-    .MathJax_SVG_Display {
-        max-width: 100% !important;
-    }
-
-
-    figure {
-        flex-direction: column;
-    }
-
-    .marginnote,
-    .sidenote,
-    figcaption {
-        display: block;
-        left: auto;
-        margin-top: 1rem;
-        position: relative;
-        top: auto;
-        width: 100%;
-    }
-
-    .Margins {
-        padding-left: 1% !important;
-        padding-right: 1% !important; 
-        width: 100% !important;
-        box-sizing: border-box; 
-        display: block; 
-    }
-    
-    
-
-}
-
-*/
 
 /**************************************
     $MEDIA QUERIES - TABLET (MAX-WIDTH: 850PX)
