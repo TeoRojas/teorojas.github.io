@@ -194,13 +194,40 @@ Una vez desarrollado el software, se realizan pruebas exhaustivas para asegurar 
 - **Pruebas unitarias:** Consisten en probar, una a una, las diferentes partes de software y comprobar su funcionamiento (por separado, de manera independiente). JUnit es el entorno de pruebas para Java.
 - **Pruebas de integración:** Se realizan una vez que se han realizado con éxito las pruebas unitarias y consistirán en comprobar el funcionamiento del sistema completo: con todas sus partes interrelacionadas.
 
-## 6.5. Documentación
-La documentación es esencial para el mantenimiento y la futura mejora del software. Incluye la elaboración de manuales de usuario, documentación técnica y comentarios dentro del código fuente, que explican cómo funciona el software y cómo se pueden realizar ajustes o correcciones.
+## 6.5. Despliegue y explotación
+Esta fase implica la implementación y el despliegue del software en un entorno de producción, donde los usuarios finales pueden comenzar a utilizarlo. 
 
-## 6.6. Explotación
-Esta fase implica la implementación y el despliegue del software en un entorno de producción, donde los usuarios finales pueden comenzar a utilizarlo. También se monitoriza el rendimiento del software para garantizar que opera eficientemente en condiciones reales.
+Después de que el software ha sido probado y aprobado para su lanzamiento, se despliega en un entorno de producción. Dependiendo del tamaño y la naturaleza del software, esto puede realizarse en etapas y grupos pequeños o de una sola vez.
 
-## 6.7. Mantenimiento
+También se monitoriza el rendimiento del software para garantizar que opera eficientemente en condiciones reales.
+
+## 6.6. Mantenimiento
 El mantenimiento es una fase continua que comienza después del despliegue. Incluye la actualización del software, la corrección de errores y la mejora de funcionalidades. Esta fase asegura que el software sigue siendo útil y eficaz a lo largo del tiempo frente a nuevas necesidades y tecnologías emergentes.
+
+## 6.7. Evaluación y Retiro 
+Eventualmente, el software puede necesitar ser reemplazado o retirado. Antes de que esto ocurra, se realiza una evaluación final para determinar la eficacia del software y decidir los próximos pasos, como actualizaciones, re-ingeniería o retirada del software.
+
+## 6.8. Documentación
+La fase de documentación es fundamental en el desarrollo de software y puede ser considerada parte integral de varias fases del ciclo de vida del software. Aquí te explico cómo se integra la documentación durante el proceso:
+
+1. Durante la Planificación y Análisis de Requisitos.
+- Documentación de Requisitos: Se documentan las necesidades del usuario y los requisitos funcionales y técnicos del sistema. Esto sirve como un contrato entre los stakeholders y los desarrolladores.
+
+2. En la Fase de Diseño: Documentación Técnica. 
+- Se crean diagramas de arquitectura, modelos de datos, y especificaciones de diseño que describen cómo el sistema debe ser construido.
+
+3. Durante la Implementación o Codificación. 
+- Comentarios en el Código: Los desarrolladores documentan su código para explicar la lógica y las decisiones de implementación. Esto es crucial para el mantenimiento y la futura escalabilidad del software.
+
+4. En la Fase de Pruebas.
+- Documentación de Pruebas: Se documentan los casos de prueba, los resultados de las pruebas y los problemas encontrados. Esto ayuda a validar la cobertura de las pruebas y facilita la resolución de defectos.
+
+5. Después del Despliegue.
+- Manuales de Usuario y Documentación de Soporte: Se proporciona documentación que ayuda a los usuarios finales a entender cómo utilizar el software y cómo resolver problemas comunes.
+
+6. Durante el Mantenimiento.
+- Documentación de Mantenimiento: Se actualiza la documentación existente para reflejar los cambios, las mejoras y las correcciones de errores que se realizan durante el mantenimiento del software.
+
+Incluir la documentación como parte integral de cada fase garantiza que todos los aspectos del sistema estén bien documentados, lo que reduce los malentendidos y mejora la calidad y la mantenibilidad del software.
 
 Cada una de estas fases es esencial para el desarrollo exitoso de aplicaciones informáticas y debe ser cuidadosamente gestionada para garantizar que el producto final cumpla con las expectativas y requisitos establecidos.
