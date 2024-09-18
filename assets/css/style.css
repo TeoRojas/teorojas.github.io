@@ -123,6 +123,13 @@ ul{
     margin-bottom: 20px;
 }
 
+pre{
+    border: 1px solid;
+    padding: 15px;
+    background-color: #efefef;
+    border-radius: 5px;   
+}
+
 .BodyText2Col{
     font-family: CMR;
     text-align: Left;

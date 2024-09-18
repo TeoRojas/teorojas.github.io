@@ -57,17 +57,56 @@ Los lenguajes de programación más difundidos suelen tener características com
 - **Amplia comunidad de desarrolladores**: Ofrecen un gran soporte y recursos de aprendizaje.
 - **Bibliotecas y frameworks abundantes**: Proporcionan herramientas para ampliar las funcionalidades básicas y facilitar el desarrollo de aplicaciones.
 
-Basado en varios rankings y mediciones populares, los 5 lenguajes de programación más populares a la fecha de hoy (Spetiembre de 2024) son:
+Basado en varios rankings y mediciones populares, los 5 lenguajes de programación más populares a la fecha de hoy (Septiembre de 2024) son:
 
-1. **Python.** Extremadamente versátil y ampliamente utilizado para desarrollo web, análisis de datos, inteligencia artificial, y más, debido a su sintaxis simple y poderosas librerías.
+**1º. Python.** Extremadamente versátil y ampliamente utilizado para desarrollo web, análisis de datos, inteligencia artificial, y más, debido a su sintaxis simple y poderosas librerías.
 
-2. **Java.** Conocido por su independencia de plataforma y robusto ecosistema de librerías, Java se utiliza extensivamente en entornos empresariales, desarrollo de aplicaciones Android y desarrollo de grandes sistemas.
+```python
+# Programa simple en Python para imprimir "Hola Mundo"
+print("Hola Mundo")
+```
 
-3. **C.** Apreciado por su rendimiento y eficiencia, C sigue siendo fundamental en la programación de sistemas, sistemas embebidos y escenarios donde es necesario manipular directamente el hardware.
+**2º. Java.** Conocido por su independencia de plataforma y robusto ecosistema de librerías, Java se utiliza extensivamente en entornos empresariales, desarrollo de aplicaciones Android y desarrollo de grandes sistemas.
 
-4. **C++.** Un lenguaje diseñado para implementaciones de sistemas complejos donde el rendimiento y el uso de recursos son críticos. Se utiliza ampliamente en desarrollo de juegos, sistemas en tiempo real y software que requiere cálculos de alto rendimiento.
+```java
+// Programa simple en Java para imprimir "Hola Mundo"
+public class HolaMundo {
+    public static void main(String[] args) {
+        System.out.println("Hola Mundo");
+    }
+}
+```
 
-5. **JavaScript.** Dominante en el desarrollo web, este lenguaje es esencial para el desarrollo front-end y se utiliza cada vez más en el lado del servidor a través de entornos como Node.js.
+**3º. C.** Apreciado por su rendimiento y eficiencia, C sigue siendo fundamental en la programación de sistemas, sistemas embebidos y escenarios donde es necesario manipular directamente el hardware.
+
+```c
+// Programa simple en C para imprimir "Hola Mundo"
+#include <stdio.h>
+
+int main() {
+    printf("Hola Mundo\n");
+    return 0;
+}
+```
+
+**4º. C++.** Un lenguaje diseñado para implementaciones de sistemas complejos donde el rendimiento y el uso de recursos son críticos. Se utiliza ampliamente en desarrollo de juegos, sistemas en tiempo real y software que requiere cálculos de alto rendimiento.
+
+```cpp
+// Programa simple en C++ para imprimir "Hola Mundo"
+#include <iostream>
+
+int main() {
+    std::cout << "Hola Mundo" << std::endl;
+    return 0;
+}
+```
+
+**5º. JavaScript.** Dominante en el desarrollo web, este lenguaje es esencial para el desarrollo front-end y se utiliza cada vez más en el lado del servidor a través de entornos como Node.js.
+
+```javascript
+// Programa simple en JavaScript para imprimir "Hola Mundo"
+console.log("Hola Mundo");
+```
 
 # 4. Código fuente, código objeto y código ejecutable; máquinas virtuales
 
