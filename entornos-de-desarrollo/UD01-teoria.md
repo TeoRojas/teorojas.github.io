@@ -15,6 +15,7 @@ abstract: Explora los fundamentos del desarrollo de software, desde el análisis
 4. [Código fuente, código objeto y código ejecutable; máquinas virtuales.](#4-código-fuente-código-objeto-y-código-ejecutable-máquinas-virtuales)
 5. [Proceso de obtención de código ejecutable a partir del código fuente; herramientas implicadas.](#5-proceso-de-obtención-de-código-ejecutable-a-partir-del-código-fuente-herramientas-implicadas)
 6. [Fases del desarrollo de una aplicación.](#6-fases-del-desarrollo-de-una-aplicación)
+7. [Implementación de metodologías ágiles: Scrum.](#7-implementación-de-metodologías-ágiles-scrum)
 
 # 1. Introducción
 
@@ -231,3 +232,108 @@ La fase de documentación es fundamental en el desarrollo de software y puede se
 Incluir la documentación como parte integral de cada fase garantiza que todos los aspectos del sistema estén bien documentados, lo que reduce los malentendidos y mejora la calidad y la mantenibilidad del software.
 
 Cada una de estas fases es esencial para el desarrollo exitoso de aplicaciones informáticas y debe ser cuidadosamente gestionada para garantizar que el producto final cumpla con las expectativas y requisitos establecidos.
+
+# 7. Implementación de metodologías ágiles: Scrum
+
+## 7.1. ¿Qué es SCRUM?
+Scrum es un marco de trabajo para la gestión de proyectos que promueve la comunicación efectiva, la colaboración y el control sobre el proceso de desarrollo mediante ciclos iterativos y entregas incrementales de productos. Es ampliamente utilizado en el desarrollo de software y otras áreas donde se requiere manejar proyectos complejos.
+
+## 7.2. Objetivos
+El objetivo principal de Scrum es facilitar un proceso de desarrollo que sea adaptable, rápido y eficaz, capaz de entregar productos de alta calidad que cumplan con los requisitos del cliente en un ambiente de cambio continuo.
+
+## 7.3. El manifiesto ágil
+El manifiesto ágil, que es la base filosófica detrás de Scrum y otras metodologías ágiles, enfatiza:
+- Individuos e interacciones sobre procesos y herramientas.
+- Software funcionando sobre documentación extensiva.
+- Colaboración con el cliente sobre negociación contractual.
+- Respuesta ante el cambio sobre seguir un plan.
+
+## 7.4. Ciclo de trabajo
+El ciclo de trabajo en Scrum se divide en Sprints, periodos fijos durante los cuales se crea un producto incrementable. Cada Sprint sigue una estructura de planificación, ejecución, revisión y retrospección.
+
+## 7.5. Roles
+Scrum define varios roles claves, cada uno con responsabilidades específicas que facilitan la gestión y la ejecución del proyecto:
+- **Product Owner:** El rol del Product Owner es crucial porque actúa como el punto de enlace entre el mercado, los clientes y el equipo técnico. Su capacidad para entender y comunicar las necesidades del negocio, **priorizar el trabajo** y tomar decisiones informadas es esencial para el éxito del proyecto ágil. 
+Un Product Owner efectivo puede significar la diferencia entre un producto que satisface perfectamente las necesidades del mercado y uno que no logra impactar.
+- **Scrum Master:** ayuda al equipo a entender y aplicar Scrum y sus prácticas. Se asegura de que el equipo trabaje según los principios de Scrum. Además ayuda al equipo a mejorar su dinámica, eficiencia y cohesión. Trabaja para eliminar obstáculos que puedan impedir que el equipo alcance sus objetivos del sprint. Parte de su responsabilidad es proteger al equipo de interrupciones y distracciones externas, facilitando un ambiente óptimo donde puedan concentrarse en las tareas del sprint.
+- **Equipo de Desarrollo:** Realiza el trabajo técnico para desarrollar el producto.
+- **Cliente:** Actúa como un stakeholder clave que proporciona requisitos iniciales y continua retroalimentación a lo largo del proyecto para asegurar que el producto final cumpla sus expectativas y necesidades.
+
+## 7.6. Artefactos
+Los artefactos en Scrum son herramientas o documentos que proporcionan información clave sobre el progreso del proyecto y sus requisitos:
+- **Product Backlog:** Lista de todas las características deseadas en el producto.
+- **Sprint Backlog:** Conjunto de ítems del Product Backlog seleccionados para el Sprint, junto con un plan para entregar el incremento del producto y alcanzar el objetivo del Sprint.
+- **Incremento:** Suma de todos los ítems del Product Backlog completados durante el Sprint.
+- **Artefacto:** Un artefacto es cualquier documento o herramienta que el equipo Scrum usa para capturar y compartir información del proyecto.
+
+## 7.7. Reuniones
+Scrum utiliza varias reuniones estructuradas para maximizar la claridad y eficiencia:
+- **Sprint Planning:** Donde se decide qué se va a trabajar en el Sprint.
+- **Daily Scrum:** Reuniones diarias para sincronizar actividades y crear un plan para las próximas 24 horas.
+- **Sprint Review:** Para revisar el trabajo hecho y adaptar el Product Backlog si es necesario.
+- **Sprint Retrospective:** Para mejorar el proceso y el rendimiento del equipo.
+
+## 7.8. Estimaciones
+En Scrum, las estimaciones ayudan a determinar la cantidad de trabajo y el tiempo necesario para completar las tareas del proyecto:
+- **Planning Poker:** Una técnica lúdica que utiliza cartas con números de la sucesión de Fibonacci para estimar el esfuerzo de las tareas. Cada miembro del equipo tiene un mazo de cartas, y en cada ronda de estimación, todos seleccionan una carta que represente su estimación del esfuerzo necesario.
+- **Baraja de Planificación:** Cada integrante del equipo dispone de una baraja de cartas numéricas, generalmente basadas en la sucesión de Fibonacci, para asignar puntos de esfuerzo a cada tarea, lo que promueve el consenso y evita los sesgos en las estimaciones individuales.
+
+## 7.9. SCRUM Board
+El Scrum Board es una herramienta visual que ayuda al equipo a ver el progreso durante el Sprint, mostrando todas las tareas del Sprint Backlog categorizadas en diferentes estados:
+- **Pendiente:** Tareas que aún no han comenzado.
+- **En Progreso:** Tareas que están activamente siendo trabajadas.
+- **A la Espera:** Tareas que están bloqueadas o en espera de recursos o información.
+- **Validado:** Tareas que han sido completadas y revisadas.
+- **Visualización:** Se suelen utilizar colores, pegatinas y fotos de los participantes para facilitar la visualización del progreso y la asignación de tareas.
+
+## 7.10. El contrato ágil
+El contrato ágil se adapta a las necesidades cambiantes del proyecto y fomenta una colaboración continua:
+- **Backlog de Producto Bien Definido:** Fundamental para establecer expectativas claras sobre los entregables.
+- **Ítem 'Completado':** Necesidad de definir claramente qué significa que una tarea está terminada.
+- **Demostraciones y Feedback Continuo:** Cruciales para asegurar que el producto satisface las necesidades del cliente.
+- **Cambio de Requisitos:** El marco ágil permite ajustar prioridades y añadir nuevos requisitos sin desestabilizar el proyecto.
+- **Clausulas de Finalización Anticipada:** Comunes en contratos ágiles, estas cláusulas permiten la terminación del proyecto bajo ciertas condiciones, como el cumplimiento de los objetivos antes de lo esperado.
+
+## 7.11. Ejemplo práctico de SCRUM
+Supongamos que un equipo está desarrollando una aplicación móvil de Lista de Tareas. 
+
+### Objetivo
+Desarrollar una aplicación móvil básica de lista de tareas que permita a los usuarios crear, editar, eliminar y clasificar tareas.
+
+### Descripción del Proyecto
+Los estudiantes trabajarán en equipos para diseñar y desarrollar una aplicación móvil. La aplicación debe tener una interfaz de usuario intuitiva y funcionalidades básicas para manejar tareas diarias.
+
+### Roles
+- **Product Owner:** Un profesor o un estudiante seleccionado que será responsable de mantener el Product Backlog y priorizar las tareas.
+- **Scrum Master:** Un estudiante que facilitará las reuniones Scrum y ayudará a resolver cualquier impedimento que el equipo encuentre.
+- **Equipo de Desarrollo:** Los estudiantes que programarán la aplicación.
+
+### Artefactos
+- **Product Backlog:** Lista inicial de requisitos (historias de usuario) proporcionada, que puede incluir:
+  - Como usuario, quiero agregar nuevas tareas para gestionar lo que necesito hacer.
+  - Como usuario, quiero marcar las tareas como completadas para llevar un seguimiento de mi progreso.
+  - Como usuario, quiero editar las tareas para actualizar detalles o correcciones.
+  - Como usuario, quiero eliminar tareas que ya no son necesarias.
+  - Como usuario, quiero ordenar las tareas por fecha o prioridad.
+- **Sprint Backlog:** Selección de historias de usuario que el equipo se compromete a completar durante el primer Sprint.
+- **Incremento:** La versión funcional de la aplicación al final de cada Sprint.
+
+### Sprints
+Cada Sprint debería durar una semana. Al final de cada Sprint, el equipo deberá mostrar un incremento funcional de la aplicación.
+
+### Proceso
+1. **Sprint Planning:** Decidir qué historias de usuario se incluirán en el primer Sprint.
+2. **Daily Scrum:** Reuniones diarias cortas para discutir el progreso, los impedimentos y el próximo paso.
+3. **Desarrollo:** Programación y diseño de la aplicación según las historias de usuario seleccionadas.
+4. **Sprint Review:** Presentación del trabajo realizado al Product Owner y otros stakeholders (puede incluir otros equipos o profesores).
+5. **Sprint Retrospective:** Discusión sobre qué fue bien, qué se puede mejorar y cómo implementar esos cambios en el próximo Sprint.
+
+### Evaluación
+- **Funcionalidad de la Aplicación:** ¿La aplicación funciona como se esperaba según los criterios de aceptación de las historias de usuario?
+- **Colaboración y Comunicación:** ¿Cómo trabajó el equipo juntos? ¿Fueron efectivas las reuniones Scrum?
+- **Proceso y Mejoras:** ¿Qué procesos implementados fueron efectivos y cuáles necesitan ajustes?
+
+### Entregables
+- Aplicación móvil funcionando al final del último Sprint.
+- Documentación breve que describa el trabajo realizado, los problemas encontrados, y cómo se solucionaron.
+
