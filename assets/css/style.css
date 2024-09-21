@@ -130,6 +130,11 @@ pre{
     border-radius: 5px;   
 }
 
+code{
+    font-size: 14px;
+
+}
+
 .BodyText2Col{
     font-family: CMR;
     text-align: Left;
