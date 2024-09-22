@@ -146,6 +146,79 @@ El acceso aleatorio permite leer o escribir datos en cualquier orden, sin necesi
 
 # 4. Clases de gestión de flujos de datos y ficheros
 
-# 5. Trabajo con ficheros XML, Analizadores sintácticos (parser) y vinculación (binding).
+La gestión de flujos de datos y ficheros es un aspecto esencial en el desarrollo de aplicaciones que requieren manipulación de información. Aunque la biblioteca `java.io` proporciona un conjunto de clases que facilitan la entrada y salida de datos, permitiendo trabajar con ficheros de manera eficiente, su capacidad para manejar las cuatro operaciones básicas -crear, borrar, copiar y mover- no es total, pudiendo solo manejar de manera perfecta las de crear y borrar, pero **no las de copiar y mover**.
 
-# 6. Excepciones, detección y tratamiento.
+En contraste, la biblioteca `java.nio` ofrece funcionalidades más robustas y modernas para la gestión de flujos de datos y ficheros. Con `java.nio`, es posible realizar operaciones de copia y movimiento de ficheros de manera más eficiente y con menos código, lo que la convierte en la biblioteca preferida para el estudio del flujo de datos.
+
+En este apartado, exploraremos las principales clases de `java.io` que se utilizan para gestionar ficheros y flujos de datos, así como las operaciones que se pueden llevar a cabo con ellas, desde la creación de ficheros hasta su manipulación y cierre. Conocer estas herramientas es fundamental para desarrollar aplicaciones robustas y efectivas que interactúan con el sistema de archivos.
+
+
+## 4.1. Clase Path
+
+La clase `Path` es fundamental en la biblioteca `java.nio` y representa la ubicación de un fichero o directorio en el sistema de archivos. Es parte del paquete `java.nio.file` y permite manipular y obtener información sobre rutas de manera efectiva.
+
+### Características y Uso
+
+- **Representación de Rutas**: Un objeto `Path` puede representar rutas relativas o absolutas. Esto proporciona flexibilidad al trabajar con diferentes ubicaciones de ficheros.
+  
+- **Métodos Útiles**:
+  - `getFileName()`: Devuelve el nombre del fichero o directorio en la ruta.
+  - `getParent()`: Devuelve la ruta del directorio que contiene el fichero.
+  - `toAbsolutePath()`: Convierte la ruta relativa a su forma absoluta.
+
+### Ejemplo de Uso
+```java
+Path path = Paths.get("ruta/del/fichero.txt");
+String nombreFichero = path.getFileName().toString();
+Path directorioPadre = path.getParent();
+Path rutaAbsoluta = path.toAbsolutePath();
+```
+
+## 4.2. Clase Files
+
+La clase `Files` es una clase de utilidad que proporciona métodos estáticos para realizar operaciones de entrada y salida (I/O) sobre ficheros y directorios. También está en el paquete `java.nio.file` y facilita tareas comunes, como lectura, escritura, copia, y eliminación de ficheros.
+
+### 4.2.1. Características y Uso
+
+- **Operaciones Comunes:** `Files` permite realizar una variedad de operaciones, incluyendo:
+- **Lectura de Ficheros:** Usando métodos como `readAllLines()` para leer líneas de un fichero en una lista.
+- **Escritura de Ficheros:** Métodos como `write()` permiten escribir datos en un fichero, creando el fichero si no existe.
+- **Copia y Movimiento:** Métodos como `copy()` y `move()` permiten manipular ficheros de forma eficiente.
+
+### Ejemplo de Uso
+```java
+Path sourcePath = Paths.get("ruta/origen.txt");
+Path destinationPath = Paths.get("ruta/destino.txt");
+
+// Copiar un fichero
+Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+
+// Leer todas las líneas de un fichero
+List<String> lineas = Files.readAllLines(sourcePath);
+```
+
+### 4.2.2. Clase Files - Listar directorio
+### 4.2.2. Clase Files - Escribir ficheros binarios
+### 4.2.2. Clase Files - Leer ficheros binarios
+### 4.2.2. Clase Files - Escribir y Leer ficheros de caracteres
+### 4.2.2. Clase Files - Copia y Movimiento
+
+
+## 4.2. Clase FileSystem
+
+La clase `FileSystem` representa un sistema de archivos y proporciona métodos para interactuar con él, o en otras palabras, se utiliza para obtener referencias al sistema de archivos. Ten en cuenta que es muy posible que en algún momento necesites acceder a información sobre las rutas y tipos de ficheros disponibles en el sistema.
+
+### Características y Uso
+
+- **Acceso a la Raíz**: `FileSystem` permite obtener la ruta raíz del sistema de archivos, lo que es útil para crear rutas absolutas.
+
+- **Operaciones de Tipo de Fichero**: Puedes consultar los tipos de ficheros disponibles, así como realizar operaciones relacionadas con las capacidades del sistema de archivos.
+
+- **Obtención de la Instancia**: Se obtiene mediante la clase `FileSystems`, que proporciona el método `getDefault()`.
+
+### Ejemplo de Uso
+
+```java
+FileSystem fs = FileSystems.getDefault();
+Path raiz = fs.getRootDirectories().iterator().next(); // Obtiene la raíz del sistema de archivos
+```
