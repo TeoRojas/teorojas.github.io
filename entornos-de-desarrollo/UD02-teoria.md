@@ -9,23 +9,20 @@ abstract:
 ---
 
 # Índice
+# Índice
 1. [Introducción.](#1-introducción)
-2. [El entorno de desarrollo](#2)
-2. [Funciones de un entorno de desarrollo.](#)
-3. [Componentes de un entorno de desarrollo.](#)
-4. [Instalación de un entorno de desarrollo.](#)
-5. [Mecanismo de actualización de un entorno de desarrollo.](#)
-6. [Uso básico de un entorno de desarrollo.](#)
-7. [Entornos de desarrollo libres y comerciales más usuales.](#)
-8. [Uso de herramientas CASE en el desarrollo de software.](#)
+2. [El entorno de desarrollo integrado (IDE).](#2-el-entorno-de-desarrollo-integrado-ide)
+   1. [Características Principales de un IDE.](#21-características-principales-de-un-ide)
+   2. [Diferencias entre un Editor de Texto y un IDE.](#22-diferencias-entre-un-editor-de-texto-y-un-ide)
+   3. [Principales entornos de desarrollo integrados.](#23-principales-entornos-de-desarrollo-integrados)
+3. [Funciones de un entorno de desarrollo.](#3-funciones-de-un-entorno-de-desarrollo)
+4. [Componentes de un entorno de desarrollo.](#4-componentes-de-un-entorno-de-desarrollo)
+5. [Instalación de un entorno de desarrollo.](#5-instalación-de-un-entorno-de-desarrollo)
+6. [Mecanismo de actualización de un entorno de desarrollo.](#6-mecanismo-de-actualización-de-un-entorno-de-desarrollo)
+7. [Uso básico de un entorno de desarrollo.](#7-uso-básico-de-un-entorno-de-desarrollo)
+8. [Entornos de desarrollo libres y comerciales más usuales.](#8-entornos-de-desarrollo-libres-y-comerciales-más-usuales)
+9. [Uso de herramientas CASE en el desarrollo de software.](#9-uso-de-herramientas-case-en-el-desarrollo-de-software)
 
-- CEa. Se han instalado entornos de desarrollo, propietarios y libres.
-- CEb. Se han añadido y eliminado módulos en el entorno de desarrollo.
-- CEc. Se ha personalizado y automatizado el entorno de desarrollo.
-- CEd. Se ha configurado el sistema de actualización del entorno de desarrollo.
-- CEe. Se han generado ejecutables a partir de código fuente de diferentes lenguajes en un mismo entorno de desarrollo.
-- CEf. Se han identificado las características comunes y específicas de diversos entornos de desarrollo.
-- CEg. Se han identificado las funciones más usuales de las herramientas CASE para el desarrollo, prueba y documentación de código.
 
 # 1. Introducción
 
