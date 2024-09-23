@@ -16,12 +16,12 @@ abstract:
    2. [Diferencias entre un Editor de Texto y un IDE.](#22-diferencias-entre-un-editor-de-texto-y-un-ide)
    3. [Principales entornos de desarrollo integrados.](#23-principales-entornos-de-desarrollo-integrados)
 3. [Funciones de un entorno de desarrollo.](#3-funciones-de-un-entorno-de-desarrollo)
-4. [Componentes de un entorno de desarrollo.](#4-componentes-de-un-entorno-de-desarrollo)
-5. [Instalación de un entorno de desarrollo.](#5-instalación-de-un-entorno-de-desarrollo)
-6. [Mecanismo de actualización de un entorno de desarrollo.](#6-mecanismo-de-actualización-de-un-entorno-de-desarrollo)
-7. [Uso básico de un entorno de desarrollo.](#7-uso-básico-de-un-entorno-de-desarrollo)
-8. [Entornos de desarrollo libres y comerciales más usuales.](#8-entornos-de-desarrollo-libres-y-comerciales-más-usuales)
-9. [Uso de herramientas CASE en el desarrollo de software.](#9-uso-de-herramientas-case-en-el-desarrollo-de-software)
+4. [Componentes de un entorno de desarrollo.]:#(#4-componentes-de-un-entorno-de-desarrollo)
+5. [Instalación de un entorno de desarrollo.]:#(#5-instalación-de-un-entorno-de-desarrollo)
+6. [Mecanismo de actualización de un entorno de desarrollo.]:#(#6-mecanismo-de-actualización-de-un-entorno-de-desarrollo)
+7. [Uso básico de un entorno de desarrollo.]:#(#7-uso-básico-de-un-entorno-de-desarrollo)
+8. [Entornos de desarrollo libres y comerciales más usuales.]:#(#8-entornos-de-desarrollo-libres-y-comerciales-más-usuales)
+9. [Uso de herramientas CASE en el desarrollo de software.]:#(#9-uso-de-herramientas-case-en-el-desarrollo-de-software)
 
 
 # 1. Introducción
