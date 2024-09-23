@@ -64,23 +64,34 @@
     padding-bottom: 15px;
 }
 
+h1, h2, h3, h4, h5, .Section, .SubSection{
+    font-family: 'CMB';
+    letter-spacing: -1px;
+}
+
 h1, .Section{
-    font-family: CMB;
     font-size: 33px;
     text-align: Left;
     margin-top: 45px;
     margin-bottom: 20px;
-    letter-spacing: -1px;
 }
 
 
 h2, .SubSection{
-    font-family: CMB;
     font-size: 26px;
     text-align: Left;
     margin-top: 13px;
-    margin-bottom: 20px;
-    letter-spacing: -1px;
+    margin: 30px 0 20px;
+}
+
+h3{
+    font-size: 23px;
+    margin-bottom: 10px;
+}
+
+h4{
+    font-size: 20px;
+    margin-bottom: 5px;
 }
 
 p, .BodyText, a, li {
@@ -127,7 +138,8 @@ pre{
     border: 1px solid;
     padding: 15px;
     background-color: #efefef;
-    border-radius: 5px;   
+    border-radius: 5px;  
+    margin-bottom: 20px; 
 }
 
 code{
