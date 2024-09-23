@@ -124,7 +124,7 @@ Una vez que se han completado las operaciones de lectura y escritura, es crucial
 
 - **Ejemplo**: En Java, se debe llamar al método `close()` en el objeto del fichero, lo que asegura que todos los flujos de datos se cierren adecuadamente.
 
-## 3.6. Formas de Acceso a un Fichero
+## 3.6. Formas de Acceso a un Fichero: acceso secuencial y aleatorio
 
 Las formas de acceso a un fichero se pueden clasificar en dos métodos principales: **acceso secuencial** y **acceso aleatorio**.
 
