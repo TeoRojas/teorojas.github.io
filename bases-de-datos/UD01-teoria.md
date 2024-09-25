@@ -227,8 +227,6 @@ Imagina una base de datos que almacena información sobre libros en una bibliote
 
 ***Ejercicio 4.2:*** *Define el término "dominio" en el contexto de una base de datos relacional y proporciona un ejemplo de un dominio válido.*
 
-***Ejercicio 4.3:*** *Imagina una base de datos que almacena información sobre libros en una biblioteca. Diseña una tabla que cumpla con los requisitos de las tablas en el modelo relacional para representar esta información.*
-
 # 5. La Utilidad de los Sistemas Gestores de Bases de Datos (SGBD)
 
 Los **Sistemas Gestores de Bases de Datos (SGBD)** son un conjunto coordinado de programas, procedimientos, lenguajes, etc., que suministra a los usuarios no informáticos, analistas programadores y administradores las herramientas necesarias para describir y manipular los datos almacenados en la base de datos, asegurando su integridad y seguridad.
