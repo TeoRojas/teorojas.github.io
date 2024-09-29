@@ -69,7 +69,7 @@ Existen dos tipos principales de entidades: **entidades fuertes** y **entidades 
 - **Entidades fuertes**: Son aquellas cuya existencia es **independiente** de otras entidades. Se representan gráficamente con un **rectángulo de borde simple**. Estas entidades tienen un identificador único, lo que permite diferenciarlas de otras entidades sin la necesidad de apoyarse en ninguna otra entidad.
 - **Entidades débiles**: Son aquellas cuya existencia depende de la existencia de otra entidad, conocida como la **entidad propietaria**. Se representan con un **rectángulo de doble borde**. Las entidades débiles no tienen un identificador propio único y necesitan de una entidad fuerte para poder ser identificadas de manera única.
 
-![Entidades Fuertes y Débiles](/bases-de-datos/imgs/ud02/ud02.img01.Fuertes%20y%20Débiles.png)
+![Entidades Fuertes y Débiles](/bases-de-datos/imgs/ud02/ud02_img01_FuertesDebiles.png)
 
 ## Ejemplo de Entidad Fuerte y Débil
 
