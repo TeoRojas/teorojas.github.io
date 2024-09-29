@@ -147,6 +147,12 @@ code{
 
 }
 
+img.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .BodyText2Col{
     font-family: CMR;
     text-align: Left;
