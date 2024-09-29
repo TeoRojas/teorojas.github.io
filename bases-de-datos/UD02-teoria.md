@@ -69,7 +69,7 @@ Existen dos tipos principales de entidades: **entidades fuertes** y **entidades 
 - **Entidades fuertes**: Son aquellas cuya existencia es **independiente** de otras entidades. Se representan gráficamente con un **rectángulo de borde simple**. Estas entidades tienen un identificador único, lo que permite diferenciarlas de otras entidades sin la necesidad de apoyarse en ninguna otra entidad.
 - **Entidades débiles**: Son aquellas cuya existencia depende de la existencia de otra entidad, conocida como la **entidad propietaria**. Se representan con un **rectángulo de doble borde**. Las entidades débiles no tienen un identificador propio único y necesitan de una entidad fuerte para poder ser identificadas de manera única.
 
-![Entidades Fuertes y Débiles](/bases-de-datos/imgs/ud02/ud02_img01_FuertesDebiles.png)
+![Entidades Fuertes y Débiles](/bases-de-datos/imgs/ud02/ud02_img01_fuertesDebiles.png)
 
 ## Ejemplo de Entidad Fuerte y Débil
 
@@ -85,4 +85,164 @@ Este tipo de relación entre una entidad fuerte y una débil es común en sistem
 
 En resumen, la diferencia clave entre una entidad fuerte y una entidad débil es que una **entidad fuerte** tiene una existencia independiente y se puede identificar de forma autónoma. En cambio, una **entidad débil** depende de otra entidad (la **entidad propietaria**) para su existencia y solo se puede identificar en el contexto de esa entidad. Siguiendo el ejemplo, un **Cliente de Banco** es una entidad fuerte, mientras que una **Cuenta Bancaria** es una entidad débil, ya que su existencia depende del cliente al que pertenece.
 
+# 4. Atributos
 
+Los **atributos** son componentes fundamentales en un modelo Entidad-Relación (E/R) y desempeñan un papel esencial en la descripción de las entidades y sus características. Son las propiedades que describen y definen la información relacionada con una entidad dentro de una base de datos.
+
+## 4.1. Atributos y su Significado
+
+- Los atributos son **propiedades** o **características** que describen una entidad en una base de datos.
+- Cada entidad tiene sus propios atributos, los cuales representan información específica sobre dicha entidad.
+
+## 4.2. Tipos de Atributos
+
+### 4.2.1. Atributos Identificadores de Entidad (Clave Primaria o Clave Principal)
+
+Los **atributos identificadores** tienen la función de **identificar de manera única** cada instancia u ocurrencia de una entidad en la base de datos. Esto significa que no puede haber dos instancias de la misma entidad con el mismo valor en el atributo identificador. 
+
+Esta clase de atributos se representan con una circunferencia rellena de negro, en el ejemplo a continuación el **atributo identificador** es el que corresponde a `DNI`.
+
+![Atributos](/bases-de-datos/imgs/ud02/ud02_img02_atributos01.svg)
+
+- En un modelo E/R, debe existir **al menos un atributo identificativo** en cada entidad. Esto garantiza que cada instancia de la entidad se pueda identificar de forma única en la base de datos.
+
+### 4.2.2. Atributos Descriptores de Entidad
+
+Los **atributos descriptores** son aquellos que representan características o propiedades de una entidad. Por ejemplo, en una base de datos de empleados:
+
+- Atributos como **"nombre," "apellido," "edad," y "dirección"** son ejemplos de atributos descriptivos.
+
+Aunque proporcionan información detallada sobre la entidad, no se utilizan para **identificar** de forma única las instancias de la entidad.
+
+Esta clase de atributos se representan con una circunferencia transparente, en el ejemplo a continuación el **atributo descriptor** es el que corresponde a `Nombre`.
+
+![Atributos](/bases-de-datos/imgs/ud02/ud02_img02_atributos01.svg)
+
+
+### 4.2.3. Atributos Opcionales
+
+Los **atributos opcionales** son aquellos cuyo valor no es necesario que esté presente para todas las instancias de una entidad. En otras palabras, no todas las ocurrencias de una entidad deben tener un valor para estos atributos. Se utilizan cuando la información es relevante solo en ciertos casos o situaciones.
+
+- Por ejemplo, en una base de datos de empleados, el atributo **"número de teléfono secundario"** podría ser opcional si no todos los empleados tienen uno.
+- Otro ejemplo sería un atributo **"segundo nombre"** para una entidad "Persona", ya que no todas las personas tienen un segundo nombre.
+
+Los atributos opcionales se representan en los diagramas E/R mediante una circunferencia que está unido a la entidad con una **línea discontinua**, lo que indica que su valor no es obligatorio.
+
+![Atributos](/bases-de-datos/imgs/ud02/ud02_img02_atributos02.svg)
+
+### 4.2.4. Atributos Derivados
+
+Los **atributos derivados** son aquellos cuyos valores se calculan a partir de otros atributos en la base de datos. Por ejemplo:
+- El atributo **"edad"** de una persona podría calcularse automáticamente a partir de su **"fecha de nacimiento"**.
+- El **"precio_total"** de un producto podría derivarse de la suma del **"precio"** y el **"impuesto (%IVA)"**.
+
+Se representan con una **circunferencia discontínua transparente** y con una línea contínua. A continuación el atributo `Edad` sería un atributo derivado.
+
+![Atributos](/bases-de-datos/imgs/ud02/ud02_img02_atributos03.svg)
+
+### 4.2.5. Atributos Multivaluados
+
+Estos atributos pueden contener múltiples valores dentro del mismo dominio. Imagina que estamos hablando de ti y queremos guardar información sobre ti en una base de datos.
+
+Sabemos que tienes **un solo nombre**, **una sola fecha de cumpleaños**, y **una sola dirección**. Para estos datos, usamos lo que llamamos **atributos simples** porque solo tienen un valor. Por ejemplo:
+
+- Nombre: Teo
+- Fecha de cumpleaños: 23 de noviembre
+- Dirección: Calle Sol, 15
+
+Pero, ¿qué pasa si tienes **más de un número de teléfono**? Digamos que tienes tres números de teléfonos: el móvil, el fijo de casa y el móvil para hablar con tus ligues. Como tienes **varios valores** para "número de teléfono", usaríamos un **atributo multivaluado**. Esto es solo una manera elegante de decir que puedes tener **más de un valor** para ese dato.
+
+Entonces, en lugar de guardar **un solo número de teléfono**, guardamos **varios**. El **atributo multivaluado** es simplemente una cajita en la que podemos meter **más de un valor** de algo. Así que, cuando tengas algo que pueda tener **varios** valores (como correos o teléfonos), usamos un atributo multivaluado.
+
+El atributo multivaluado se representa con una circunferencia doble como se observa a continuación.
+
+![Atributos](/bases-de-datos/imgs/ud02/ud02_img02_atributos04.svg)
+
+### 4.2.6. Atributos Compuestos
+
+Los **atributos compuestos** son aquellos que pueden descomponerse en sub-atributos que pertenecen a diferentes dominios. Un ejemplo clásico es el **"CCC" (Código Cuenta Corriente)**, que podría descomponerse en:
+- **Número de Banco**: `n_banco`.
+- **Número de Sucursal**: `n_sucurs`.
+- **Número de Cuenta**: `n_cuenta`.
+
+![Atributos](/bases-de-datos/imgs/ud02/ud02_img02_atributos05.svg)
+
+Cada uno de estos sub-atributos pertenece a un dominio distinto y en conjunto forman el atributo compuesto.
+
+### 4.2.7. Atributos Discriminadores o Discriminantes
+
+Estos atributos se utilizan en el contexto de **entidades débiles**, que dependen de una entidad fuerte para su identificación. Los atributos discriminadores ayudan a **distinguir entre las diferentes ocurrencias** de la entidad débil dentro de la entidad fuerte. Se representan con un símbolo especial, como un círculo relleno. Un ejemplo en una base de datos bancaria sería:
+- **"num_transacción"** como un atributo discriminatorio dentro de la entidad débil "Cuenta Corriente" (CCC), que depende de la entidad fuerte "Cliente".
+
+*Ver más adelante el apartado 5.5. Dependencia e interrelaciones - Debilidad por dependencia en identificación*
+
+## 4.2.8. Tipos de Atributos, resumen
+
+En resumen, los atributos en una base de datos pueden clasificarse en diferentes tipos, según su función y características:
+
+1. **Identificativos**: Identifican de forma única una instancia de una entidad.
+3. **Descriptivos**: Proporcionan características o propiedades adicionales.
+7. **Opcionales**: No todas las instancias de una entidad deben tener un valor para estos atributos.
+4. **Derivados**: Su valor se calcula a partir de otros atributos.
+5. **Multivaluados**: Pueden contener varios valores dentro del mismo dominio.
+6. **Compuestos**: Se dividen en varios sub-atributos más pequeños.
+2. **Discriminantes**: Distinguen entre instancias de entidades débiles.
+
+
+Cada uno de estos tipos de atributos desempeña un papel esencial en la representación y organización de los datos, ayudando a asegurar la integridad y coherencia de la base de datos.
+
+---
+
+***Ejercicio 4.1:*** *Clasificación de Atributos.*
+
+Dada la siguiente entidad "Empleado" con los siguientes atributos: *DNI*, *Nombre*, *Apellidos*, *Dirección*, *Teléfono*, *Edad*, *Años de Servicio* y *Email Alternativo*.
+
+1. *Identifica qué tipo de atributo es cada uno (identificativo, descriptivo, opcional, derivado, multivaluado).*
+2. *Justifica tu elección para cada atributo.*
+
+***Ejercicio 4.2:*** *Atributos Derivados.*
+
+En una base de datos de una tienda online, tienes la entidad "Pedido" con los siguientes atributos: *Fecha de Pedido*, *Precio Producto*, *Cantidad* y *Precio Total*.
+
+1. *Identifica qué atributo es derivado y explica cómo se calcularía a partir de otros atributos.*
+2. *¿Cómo representarías este atributo derivado en un diagrama E/R?*
+
+***Ejercicio 4.3:*** *Atributos Multivaluados.*
+
+Imagina que estás diseñando una base de datos para una escuela. La entidad "Estudiante" tiene los atributos *Nombre*, *Apellido*, *Teléfonos de Contacto* y *Asignaturas Matriculadas*.
+
+1. *Explica por qué los atributos "Teléfonos de Contacto" y "Asignaturas Matriculadas" serían considerados multivaluados.*
+2. *Dibuja cómo representarías estos atributos multivaluados en un diagrama E/R.*
+
+***Ejercicio 4.4:*** *Atributos Opcionales.*
+
+Supón que estás diseñando una base de datos para una clínica. La entidad "Paciente" tiene los atributos *Número de Seguro Social*, *Nombre*, *Dirección* y *Correo Electrónico Secundario*.
+
+1. *¿Por qué "Correo Electrónico Secundario" sería un atributo opcional?*
+2. *Modifica el diagrama E/R para incluir este atributo opcional.*
+
+***Ejercicio 4.5:*** *Descomposición de Atributos Compuestos.*
+
+En una base de datos bancaria, la entidad "Cuenta Bancaria" tiene el atributo compuesto *"CCC" (Código Cuenta Corriente)*, que se descompone en *Número de Banco*, *Número de Sucursal* y *Número de Cuenta*.
+
+1. *Explica por qué "CCC" es un atributo compuesto.*
+2. *Dibuja cómo representarías este atributo compuesto en un diagrama E/R, mostrando la descomposición en sub-atributos.*
+
+
+
+# 5. Relaciones
+
+Las **relaciones** son una parte fundamental en un modelo de base de datos, ya que representan las asociaciones entre dos o más entidades. Una relación es la **conexión** o **asociación** que existe entre dos o más entidades. Cada relación tiene un nombre que describe su función o propósito en el contexto de la base de datos.
+
+## Representación Gráfica de Relaciones
+
+En un **diagrama Entidad-Relación (E/R)**, las relaciones se representan mediante **rombos**. El nombre de la relación se coloca en el interior del rombo. 
+
+Generalmente, el nombre de una relación se elige considerando la primera letra de cada entidad. Por ejemplo, si las entidades son **CLIENTE** y **COCHE**, podríamos nombrar la relación como **"C-CO"**. En este caso, como ambas entidades empiezan por “C”, se añaden algunas letras más para hacer referencia a **COCHE**.
+
+![Atributos](/bases-de-datos/imgs/ud02/ud02_img03_clienteCoche01.svg)
+
+
+También podríamos haber utilizado un nombre más descriptivo para la relación, como **"Compra"** (donde **CLIENTE** compra **COCHE**). Sin embargo, este tipo de nomenclatura puede conducir a confusión a la hora de determinar la **cardinalidad** de la relación cuando estamos aprendiendo.
+
+![Atributos](/bases-de-datos/imgs/ud02/ud02_img03_clienteCoche02.svg)
