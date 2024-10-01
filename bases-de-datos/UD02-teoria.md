@@ -8,7 +8,28 @@ abstract: Sinopsis de la unidad 02
 ---
 
 # Índice
+
+# Índice
 1. [Introducción](#1-introducción)
+2. [Diseño de Bases de Datos](#2-diseño-de-bases-de-datos)
+    1. [Fase de Análisis: Especificación de Requisitos Software (E.R.S.)](#21-fase-de-análisis-especificación-de-requisitos-software-ers)
+    2. [Fase 1 del Diseño: Diseño Conceptual – Modelo Entidad/Relación (E/R)](#22-fase-1-del-diseño-diseño-conceptual--modelo-entidadrelación-er)
+    3. [Fase 2 del Diseño: Diseño Lógico – Modelo Relacional](#23-fase-2-del-diseño-diseño-lógico--modelo-relacional)
+    4. [Fase 3 del Diseño: Diseño Físico – Modelo Físico](#24-fase-3-del-diseño-diseño-físico--modelo-físico)
+3. [Entidades](#3-entidades)
+    1. [Tipos de Entidades](#tipos-de-entidades)
+4. [Atributos](#4-atributos)
+    1. [Atributos y su Significado](#41-atributos-y-su-significado)
+    2. [Tipos de Atributos](#42-tipos-de-atributos)
+        1. [Atributos Identificadores de Entidad (Clave Primaria o Clave Principal)](#421-atributos-identificadores-de-entidad-clave-primaria-o-clave-principal)
+        2. [Atributos Descriptores de Entidad](#422-atributos-descriptores-de-entidad)
+        3. [Atributos Opcionales](#423-atributos-opcionales)
+        4. [Atributos Derivados](#424-atributos-derivados)
+        5. [Atributos Multivaluados](#425-atributos-multivaluados)
+        6. [Atributos Compuestos](#426-atributos-compuestos)
+        7. [Atributos Discriminadores o Discriminantes](#427-atributos-discriminadores-o-discriminantes)
+5. [Relaciones](#5-relaciones)
+    1. [Representación Gráfica de Relaciones](#representación-gráfica-de-relaciones)
 
 
 # 1. Introducción
