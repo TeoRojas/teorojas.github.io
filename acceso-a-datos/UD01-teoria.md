@@ -302,6 +302,21 @@ public class ListarDirectorio {
 
 ### 4.2.3. Clase Files - Escribir ficheros binarios
 
+Los ficheros binarios están compuestos por bloques de 8 bits, lo que significa que cada byte de información puede representar 256 valores diferentes (desde 0 hasta 255). En estos ficheros su contenido se almacena en un formato que está destinado a ser interpretado por programas y no por humanos.
+
+**Representación**
+Los datos en los ficheros binarios se representan mediante flujos de bits, que pueden incluir cualquier tipo de información, como números, imágenes, sonidos y otros datos estructurados. Por ejemplo, un fichero de imagen (como un .png o .jpg) contiene datos que representan los colores de cada pixel, mientras que un fichero de audio (como un .mp3) almacena información sobre las ondas sonoras.
+
+**Usos**
+- **Imágenes**: Formatos como .jpg y .png son ficheros binarios que contienen datos sobre la representación visual.
+- **Audio**: Ficheros como .mp3 y .wav almacenan información sobre sonido en un formato comprimido o sin comprimir.
+- **Vídeo**: Formatos como .mp4 y .avi son ficheros binarios que combinan múltiples flujos de datos para representar movimiento y sonido.
+
+**Ventajas**
+- **Eficiencia de almacenamiento**: Los ficheros binarios tienden a ocupar menos espacio en disco que sus equivalentes en texto, ya que eliminan la sobrecarga de la representación textual.
+- **Capacidad para almacenar datos complejos**: Permiten guardar estructuras de datos que son difíciles de representar en texto plano, como objetos y matrices multidimensionales.
+
+
 La clase `Files` en la biblioteca `java.nio.file` también permite escribir datos en ficheros binarios de manera sencilla y eficiente. Esto es útil cuando se necesita almacenar información en un formato que no es texto, como imágenes, archivos de audio o datos serializados.
 
 #### Escribir Ficheros Binarios
@@ -334,12 +349,15 @@ import java.io.IOException;
 
 public class EscribirFicheroBinario {
     public static void main(String[] args) {
-        Path path = Paths.get("ruta/del/fichero.bin"); // Reemplaza con tu ruta
-        byte[] datos = { 65, 66, 67, 68, 69 }; // Datos en formato binario (A, B, C, D, E)
+        Path path = Paths.get("nombre.bin"); // Reemplaza con tu ruta
+
+        String nombre = "Teo Rojas Mata";
+
+        byte[] datosNombre = nombre.getBytes();
 
         try {
             // Escribir los datos en el fichero binario
-            Files.write(path, datos);
+            Files.write(path, datosNombre);
             System.out.println("Datos escritos correctamente en " + path.toString());
         } catch (IOException e) {
             e.printStackTrace();
@@ -350,8 +368,36 @@ public class EscribirFicheroBinario {
 #### Explicación del Código
 - **Definición de la Ruta**: Se define la ruta del fichero binario utilizando `Paths.get()`.
 - **Datos en Formato Binario**: Se crea un array de bytes que representa los datos a escribir en el fichero.
-- **Escribir en el Fichero**: Se utiliza `Files.write(path, datos)` para escribir los datos en el fichero binario. Este método crea el fichero si no existe o lo sobrescribe si ya existe.
+- **Escribir en el Fichero**: Se utiliza `Files.write(path, datosNombre)` para escribir los datos en el fichero binario. Este método crea el fichero si no existe o lo sobrescribe si ya existe.
 - **Manejo de Excepciones**: Se utiliza un bloque `try-catch` para manejar posibles excepciones, como `IOException`, que pueden ocurrir al intentar escribir en el fichero.
+
+El archivo `nombre.bin` se considera un archivo binario porque almacena datos en un formato que no es texto legible directamente por humanos, utilizando una representación de bits (ceros y unos). Sin embargo, cuando hablamos de cómo interpretamos el contenido de ese archivo, hay algunos puntos a tener en cuenta:
+
+1. **Codificación de Caracteres**  
+   Cuando escribes el nombre "Teo Rojas Mata" en el archivo binario, lo conviertes a un array de bytes utilizando la codificación de caracteres (por ejemplo, UTF-8 o ASCII). Cada carácter de la cadena se representa como un byte o una serie de bytes.
+
+   Por ejemplo:  
+   - "T" se convierte en el byte 84 (en decimal).  
+   - "e" se convierte en el byte 101.  
+   - "o" se convierte en el byte 111.  
+   
+   Así que "Teo Rojas Mata" se convierte en una secuencia de números que son los códigos de los caracteres en la codificación elegida.
+
+2. **Visualización de Datos**  
+   Cuando abres un archivo binario en un editor de texto, es probable que veas caracteres que corresponden a la secuencia de bytes que representan el texto. Sin embargo, si el archivo contiene datos que no son texto (como imágenes o datos estructurados), el contenido se verá ilegible o confuso.
+
+3. **Formato del Archivo**  
+   Aunque el archivo se llame `nombre.bin`, su contenido es en realidad un conjunto de bytes que representan caracteres, lo que permite que se pueda entender el texto cuando se lee correctamente. Si intentaras abrir un archivo que contuviera datos binarios no textuales, como una imagen, lo verías como un conjunto de caracteres no legibles.
+
+4. **Manejo de Archivos Binarios**  
+   Los archivos binarios son utilizados para almacenar información en formatos que pueden incluir texto, pero también pueden contener otros tipos de datos, como:
+
+   - **Imágenes**: Los datos de las imágenes se almacenan como bytes que representan la información visual.  
+   - **Audio**: Los archivos de audio contienen datos que representan sonidos, organizados en un formato específico.  
+   - **Objetos**: Los objetos serializados en Java son guardados como una secuencia de bytes.  
+
+En resumen, el archivo `nombre.bin` es efectivamente un archivo binario, pero al estar basado en caracteres que se convierten a bytes, puede ser interpretado y visualizado como texto. Esto no cambia su naturaleza binaria; simplemente refleja cómo se estructuran los datos en ese archivo específico.
+
 
 ### 4.2.4. Clase Files - Leer ficheros binarios
 
@@ -373,7 +419,7 @@ import java.io.IOException;
 
 public class LeerFicheroBinario {
     public static void main(String[] args) {
-        Path path = Paths.get("ruta/del/fichero.bin"); // Reemplaza con tu ruta
+        Path path = Paths.get("nombre.bin"); // Reemplaza con tu ruta
 
         try {
             // Leer todos los bytes del fichero
@@ -410,12 +456,14 @@ import java.nio.file.Paths;
 
 public class LeerFicheroConFlujo {
     public static void main(String[] args) {
-        Path path = Paths.get("ruta/del/fichero.bin"); // Reemplaza con tu ruta
+        Path path = Paths.get("nombre.bin"); // Reemplaza con tu ruta
 
         try (InputStream inputStream = Files.newInputStream(path)) {
             int byteDato;
             while ((byteDato = inputStream.read()) != -1) {
                 System.out.printf("%02X ", byteDato); // Imprime en formato hexadecimal
+                //System.out.print(String.format("%8s", Integer.toBinaryString(byteDato)).replace(' ', '0') + " "); // Imprime en binario
+
             }
             System.out.println(); // Nueva línea al final
         } catch (IOException e) {
@@ -455,6 +503,127 @@ A continuación tienes un pequeño desglose del código.
 - **`catch (IOException e);`**: Captura cualquier excepción `IOException` que pueda ocurrir durante la lectura del fichero.
 - **`System.out.println("Ocurrió un error al leer el fichero.");`**: Imprime un mensaje de error.
 - **`e.printStackTrace();`**: Imprime la traza de la pila para ayudar a diagnosticar el problema.
+
+#### Usando Herramientas de línea de comandos para leer ficheros
+
+Si prefieres usar herramientas de línea de comandos, hay varias disponibles:
+
+- **xxd (en Linux y macOS)**: Puedes usar xxd para ver el contenido binario de un archivo. Por ejemplo:
+    ```bash
+    xxd nombre.bin
+    ```
+    Esto te dará una representación hexagonal y ASCII del archivo.
+
+- **hexdump (en Linux)**: Similar a xxd, puedes usar hexdump:
+    ```bash
+    hexdump -C nombre.bin
+    ```
+
+- **Certutil (en Windows)**: Puedes usar la herramienta certutil para ver el contenido binario:
+    ```bash
+    certutil -dump nombre.bin
+    ```
+
+#### Usando Editores Hexadecimales
+
+También puedes utilizar editores hexadecimales (hex editors) para abrir archivos binarios. Estos programas muestran el contenido de un archivo en formato hexadecimal junto con su representación en texto. Algunos ejemplos de editores hexadecimales son:
+
+- **HxD (Windows)**
+- **Hex Fiend (macOS)**
+- **GHex (Linux)**
+
+#### ¿Qué es la Serialización?
+
+La serialización es el proceso de convertir un objeto en una secuencia de bytes que puede ser almacenada en un fichero, enviada a través de una red, o manipulada de alguna otra forma. Esto permite que la estructura del objeto y su estado se guarden o se transfieran, para que puedan ser recuperados más tarde y utilizados nuevamente.
+
+**Proceso de Serialización**
+1. **Conversión a Bytes**: El objeto se transforma en una serie de bytes que representan su estado interno.
+2. **Almacenamiento o Transmisión**: La secuencia de bytes resultante puede ser almacenada en un fichero, enviada a otro sistema, o guardada en la memoria.
+3. **Deserialización**: Posteriormente, la secuencia de bytes puede ser convertida de nuevo en un objeto en memoria, recuperando así su estado original.
+
+**Ejemplo de Serialización en Java**
+
+En Java, la serialización se realiza utilizando la interfaz `Serializable`. Cuando una clase implementa esta interfaz, se le permite a sus objetos ser serializados. El uso de `ObjectOutputStream` permite escribir el objeto en un fichero, mientras que `ObjectInputStream` permite leerlo de nuevo.
+
+```java
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+public class Persona implements Serializable {
+    private String nombre;
+    private int edad;
+
+    public Persona(String nombre, int edad) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+}
+
+// Serialización
+Persona persona = new Persona("Teo", 30);
+try (FileOutputStream fileOut = new FileOutputStream("persona.bin");
+     ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+    out.writeObject(persona);
+}
+
+```
+#### ¿Cuándo se Usa la Serialización?
+
+La serialización se utiliza en varias situaciones, incluyendo:
+
+1. **Almacenamiento Persistente**: 
+   - Cuando se desea guardar el estado de un objeto para su uso posterior, como en aplicaciones que requieren la recuperación de datos después de cerrar la aplicación. Por ejemplo, en juegos que guardan el progreso del jugador.
+
+2. **Comunicación entre Aplicaciones**: 
+   - En sistemas distribuidos donde los objetos necesitan ser enviados a través de la red. Por ejemplo, en aplicaciones cliente-servidor donde un cliente envía objetos a un servidor.
+
+3. **Persistencia en Bases de Datos**: 
+   - Al serializar objetos, es posible almacenar su estado en bases de datos, facilitando la gestión y recuperación de datos complejos.
+
+4. **Caché**: 
+   - La serialización permite guardar objetos en caché para mejorar el rendimiento de las aplicaciones, evitando la necesidad de reconstruir objetos complejos repetidamente.
+
+5. **Interoperabilidad**: 
+   - La serialización se utiliza para intercambiar datos entre diferentes lenguajes de programación o sistemas, asegurando que los datos puedan ser leídos y escritos de manera consistente.
+
+## Consideraciones
+
+- **Compatibilidad de Versiones**: 
+  - Al serializar objetos, es importante tener en cuenta que cambios en la clase (como la adición de nuevos atributos) pueden afectar la deserialización de objetos previamente serializados.
+
+- **Seguridad**: 
+  - La deserialización de datos no confiables puede conducir a vulnerabilidades de seguridad. Es crucial validar los datos antes de deserializarlos.
+
+---
+
+## **_Ejercicio 1:_** *Escribir un Nombre*
+*Crea un programa que pida al usuario que ingrese su nombre y lo escriba en un fichero binario llamado `nombre.bin`. Asegúrate de que el fichero se sobrescriba si ya existe.*
+
+## **_Ejercicio 2:_** *Leer un Nombre*
+*Escribe un programa que lea el contenido del fichero `nombre.bin` y lo imprima en la consola.*
+
+## **_Ejercicio 3:_** *Clase Persona*
+*Crea una clase `Persona` que contenga atributos como nombre, edad y dirección. Serializa un objeto de la clase `Persona` en un fichero binario llamado `persona.bin`.*
+
+## **_Ejercicio 4:_** *Leer un Objeto Persona*
+*Escribe un programa que lea el objeto `Persona` almacenado en `persona.bin` y muestre sus atributos en la consola.*
+
+## **_Ejercicio 5:_** *Lista de Personas*
+*Modifica la clase `Persona` para que permita almacenar una lista de varias personas. Escribe un programa que serialice una lista de objetos `Persona` en un fichero binario llamado `personas.bin`.*
+
+## **_Ejercicio 6:_** *Leer una Lista de Personas*
+*Escribe un programa que lea el fichero `personas.bin` y muestre todos los nombres y edades de las personas en la lista.*
+
+## **_Ejercicio 7:_** *Guardar Datos Numéricos*
+*Crea un programa que genere un array de números enteros (por ejemplo, 10 números aleatorios) y lo escriba en un fichero binario llamado `numeros.bin`.*
+
+## **_Ejercicio 8:_** *Leer Datos Numéricos*
+*Escribe un programa que lea los números almacenados en `numeros.bin` y los imprima en la consola, calculando también la suma total de los números.*
+
+## **_Ejercicio 9:_** *Modificar un Objeto*
+*Crea un programa que lea un objeto `Persona` desde `persona.bin`, modifique su edad y vuelva a escribir el objeto actualizado en el mismo fichero.*
+
 
 ### 4.2.5. Clase Files - Escribir y Leer ficheros de caracteres
 
@@ -535,6 +704,9 @@ public class LeerFicheroTexto {
    - Se utiliza `Files.readAllLines()` para leer todo el contenido del fichero, que se devuelve como una lista de cadenas.
    - Se imprimen las líneas utilizando un bucle `forEach`.
 
+
+
+
 ### 4.2.6. Clase Files - Copia y Movimiento
 
 La clase `Files` en la biblioteca `java.nio.file` también proporciona métodos para copiar y mover ficheros y directorios de manera sencilla y eficiente. Estas operaciones son esenciales en muchas aplicaciones, ya que permiten gestionar los recursos de archivos sin complicaciones.
@@ -609,24 +781,6 @@ public class MoverFichero {
    - Se utiliza `Files.move(origen, destino)` para mover el fichero a la nueva ubicación.
 
 
-## 4.2. Clase FileSystem
-
-La clase `FileSystem` representa un sistema de archivos y proporciona métodos para interactuar con él, o en otras palabras, se utiliza para obtener referencias al sistema de archivos. Ten en cuenta que es muy posible que en algún momento necesites acceder a información sobre las rutas y tipos de ficheros disponibles en el sistema.
-
-### Características y Uso
-
-- **Acceso a la Raíz**: `FileSystem` permite obtener la ruta raíz del sistema de archivos, lo que es útil para crear rutas absolutas.
-
-- **Operaciones de Tipo de Fichero**: Puedes consultar los tipos de ficheros disponibles, así como realizar operaciones relacionadas con las capacidades del sistema de archivos.
-
-- **Obtención de la Instancia**: Se obtiene mediante la clase `FileSystems`, que proporciona el método `getDefault()`.
-
-### Ejemplo de Uso
-
-```java
-FileSystem fs = FileSystems.getDefault();
-Path raiz = fs.getRootDirectories().iterator().next(); // Obtiene la raíz del sistema de archivos
-```
 
 # 5. Trabajo con Ficheros XML, Analizadores Sintácticos y Vinculación
 
