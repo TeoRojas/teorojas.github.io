@@ -558,14 +558,23 @@ public class Persona implements Serializable {
         this.nombre = nombre;
         this.edad = edad;
     }
+
+    // Este es el método principal donde ocurre la serialización
+    public static void main(String[] args) {
+        // Creación de una instancia de la clase Persona
+        Persona persona = new Persona("Teo", 30);
+
+        // Serialización
+        try (FileOutputStream fileOut = new FileOutputStream("persona.bin");
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(persona);
+            System.out.println("Objeto serializado correctamente.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
 
-// Serialización
-Persona persona = new Persona("Teo", 30);
-try (FileOutputStream fileOut = new FileOutputStream("persona.bin");
-     ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
-    out.writeObject(persona);
-}
 
 ```
 #### ¿Cuándo se Usa la Serialización?
