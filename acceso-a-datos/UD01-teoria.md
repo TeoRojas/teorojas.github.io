@@ -617,7 +617,7 @@ La serialización se utiliza en varias situaciones, incluyendo:
 *Escribe un programa que lea el objeto `Persona` almacenado en `persona.bin` y muestre sus atributos en la consola.*
 
 **_Ejercicio 5:_** *Lista de Personas*
-*Escribe un programa que serialice una lista de objetos `Persona` en un fichero binario llamado `personas.bin`. Es recomendable crear una clase  a parte de la clase `Persona`, por ejemplo ls clase SerializarPersonas.*
+*Escribe un programa que serialice una lista de objetos `Persona` en un fichero binario llamado `personas.bin`. Es recomendable crear una clase  a parte de la clase `Persona`, por ejemplo ls clase `SerializarPersonas`.*
 
 **_Ejercicio 6:_** *Leer una Lista de Personas*
 *Escribe un programa que lea el fichero `personas.bin` y muestre todos los nombres y edades de las personas en la lista.*
