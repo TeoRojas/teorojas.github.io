@@ -574,8 +574,6 @@ public class Persona implements Serializable {
         }
     }
 }
-
-
 ```
 #### ¿Cuándo se Usa la Serialización?
 
