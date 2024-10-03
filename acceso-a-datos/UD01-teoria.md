@@ -604,31 +604,31 @@ La serialización se utiliza en varias situaciones, incluyendo:
 
 ---
 
-## **_Ejercicio 1:_** *Escribir un Nombre*
+**_Ejercicio 1:_** *Escribir un Nombre*
 *Crea un programa que pida al usuario que ingrese su nombre y lo escriba en un fichero binario llamado `nombre.bin`. Asegúrate de que el fichero se sobrescriba si ya existe.*
 
-## **_Ejercicio 2:_** *Leer un Nombre*
+**_Ejercicio 2:_** *Leer un Nombre*
 *Escribe un programa que lea el contenido del fichero `nombre.bin` y lo imprima en la consola.*
 
-## **_Ejercicio 3:_** *Clase Persona*
+**_Ejercicio 3:_** *Clase Persona*
 *Crea una clase `Persona` que contenga atributos como nombre, edad y dirección. Serializa un objeto de la clase `Persona` en un fichero binario llamado `persona.bin`.*
 
-## **_Ejercicio 4:_** *Leer un Objeto Persona*
+**_Ejercicio 4:_** *Leer un Objeto Persona*
 *Escribe un programa que lea el objeto `Persona` almacenado en `persona.bin` y muestre sus atributos en la consola.*
 
-## **_Ejercicio 5:_** *Lista de Personas*
-*Modifica la clase `Persona` para que permita almacenar una lista de varias personas. Escribe un programa que serialice una lista de objetos `Persona` en un fichero binario llamado `personas.bin`.*
+**_Ejercicio 5:_** *Lista de Personas*
+*Escribe un programa que serialice una lista de objetos `Persona` en un fichero binario llamado `personas.bin`. Es recomendable hacerlo a parte de la clase `Persona`*
 
-## **_Ejercicio 6:_** *Leer una Lista de Personas*
+**_Ejercicio 6:_** *Leer una Lista de Personas*
 *Escribe un programa que lea el fichero `personas.bin` y muestre todos los nombres y edades de las personas en la lista.*
 
-## **_Ejercicio 7:_** *Guardar Datos Numéricos*
+**_Ejercicio 7:_** *Guardar Datos Numéricos*
 *Crea un programa que genere un array de números enteros (por ejemplo, 10 números aleatorios) y lo escriba en un fichero binario llamado `numeros.bin`.*
 
-## **_Ejercicio 8:_** *Leer Datos Numéricos*
+**_Ejercicio 8:_** *Leer Datos Numéricos*
 *Escribe un programa que lea los números almacenados en `numeros.bin` y los imprima en la consola, calculando también la suma total de los números.*
 
-## **_Ejercicio 9:_** *Modificar un Objeto*
+**_Ejercicio 9:_** *Modificar un Objeto*
 *Crea un programa que lea un objeto `Persona` desde `persona.bin`, modifique su edad y vuelva a escribir el objeto actualizado en el mismo fichero.*
 
 
