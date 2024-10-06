@@ -578,57 +578,28 @@ public class Persona implements Serializable {
 
 La serialización se utiliza en varias situaciones, incluyendo:
 
-1. **Almacenamiento Persistente**: 
-   - Cuando se desea guardar el estado de un objeto para su uso posterior, como en aplicaciones que requieren la recuperación de datos después de cerrar la aplicación. Por ejemplo, en juegos que guardan el progreso del jugador.
-
-2. **Comunicación entre Aplicaciones**: 
-   - En sistemas distribuidos donde los objetos necesitan ser enviados a través de la red. Por ejemplo, en aplicaciones cliente-servidor donde un cliente envía objetos a un servidor.
-
-3. **Persistencia en Bases de Datos**: 
-   - Al serializar objetos, es posible almacenar su estado en bases de datos, facilitando la gestión y recuperación de datos complejos.
-
-4. **Caché**: 
-   - La serialización permite guardar objetos en caché para mejorar el rendimiento de las aplicaciones, evitando la necesidad de reconstruir objetos complejos repetidamente.
-
-5. **Interoperabilidad**: 
-   - La serialización se utiliza para intercambiar datos entre diferentes lenguajes de programación o sistemas, asegurando que los datos puedan ser leídos y escritos de manera consistente.
+1. **Almacenamiento Persistente**: Cuando se desea guardar el estado de un objeto para su uso posterior, como en aplicaciones que requieren la recuperación de datos después de cerrar la aplicación. Por ejemplo, en juegos que guardan el progreso del jugador.
+2. **Comunicación entre Aplicaciones**: En sistemas distribuidos donde los objetos necesitan ser enviados a través de la red. Por ejemplo, en aplicaciones cliente-servidor donde un cliente envía objetos a un servidor.
+3. **Persistencia en Bases de Datos**: Al serializar objetos, es posible almacenar su estado en bases de datos, facilitando la gestión y recuperación de datos complejos.
+4. **Caché**: La serialización permite guardar objetos en caché para mejorar el rendimiento de las aplicaciones, evitando la necesidad de reconstruir objetos complejos repetidamente.
+5. **Interoperabilidad**: La serialización se utiliza para intercambiar datos entre diferentes lenguajes de programación o sistemas, asegurando que los datos puedan ser leídos y escritos de manera consistente.
 
 ## Consideraciones
 
-- **Compatibilidad de Versiones**: 
-  - Al serializar objetos, es importante tener en cuenta que cambios en la clase (como la adición de nuevos atributos) pueden afectar la deserialización de objetos previamente serializados.
-
-- **Seguridad**: 
-  - La deserialización de datos no confiables puede conducir a vulnerabilidades de seguridad. Es crucial validar los datos antes de deserializarlos.
+- **Compatibilidad de Versiones**: Al serializar objetos, es importante tener en cuenta que cambios en la clase (como la adición de nuevos atributos) pueden afectar la deserialización de objetos previamente serializados.
+- **Seguridad**: La deserialización de datos no confiables puede conducir a vulnerabilidades de seguridad. Es crucial validar los datos antes de deserializarlos.
 
 ---
 
-**_Ejercicio 1:_** *Escribir un Nombre*
-*Crea un programa que pida al usuario que ingrese su nombre y lo escriba en un fichero binario llamado `nombre.bin`. Asegúrate de que el fichero se sobrescriba si ya existe.*
-
-**_Ejercicio 2:_** *Leer un Nombre*
-*Escribe un programa que lea el contenido del fichero `nombre.bin` y lo imprima en la consola.*
-
-**_Ejercicio 3:_** *Clase Persona*
-*Crea una clase `Persona` que contenga atributos como nombre, edad y dirección. Serializa un objeto de la clase `Persona` en un fichero binario llamado `persona.bin`.*
-
-**_Ejercicio 4:_** *Leer un Objeto Persona*
-*Escribe un programa que lea el objeto `Persona` almacenado en `persona.bin` y muestre sus atributos en la consola.*
-
-**_Ejercicio 5:_** *Lista de Personas*
-*Escribe un programa que serialice una lista de objetos `Persona` en un fichero binario llamado `personas.bin`. Es recomendable crear una clase  a parte de la clase `Persona`, por ejemplo ls clase `SerializarPersonas`.*
-
-**_Ejercicio 6:_** *Leer una Lista de Personas*
-*Escribe un programa que lea el fichero `personas.bin` y muestre todos los nombres y edades de las personas en la lista.*
-
-**_Ejercicio 7:_** *Guardar Datos Numéricos*
-*Crea un programa que genere un array de números enteros (por ejemplo, 10 números aleatorios) y lo escriba en un fichero binario llamado `numeros.bin`.*
-
-**_Ejercicio 8:_** *Leer Datos Numéricos*
-*Escribe un programa que lea los números almacenados en `numeros.bin` y los imprima en la consola, calculando también la suma total de los números.*
-
-**_Ejercicio 9:_** *Modificar un Objeto*
-*Crea un programa que lea un objeto `Persona` desde `persona.bin`, modifique su edad y vuelva a escribir el objeto actualizado en el mismo fichero.*
+1. **Ejercicio 1: Escribir un Nombre**. Crea un programa que pida al usuario que ingrese su nombre y lo escriba en un fichero binario llamado `nombre.bin`. Asegúrate de que el fichero se sobrescriba si ya existe.
+2. **Ejercicio 2: Leer un Nombre**. Escribe un programa que lea el contenido del fichero `nombre.bin` y lo imprima en la consola.
+3. **Ejercicio 3: Clase Persona**. Crea una clase `Persona` que contenga atributos como nombre, edad y dirección. Serializa un objeto de la clase `Persona` en un fichero binario llamado `persona.bin`.
+4. **Ejercicio 4: Leer un Objeto Persona**. Escribe un programa que lea el objeto `Persona` almacenado en `persona.bin` y muestre sus atributos en la consola.
+5. **Ejercicio 5: Lista de Personas**. Escribe un programa que serialice una lista de objetos `Persona` en un fichero binario llamado `personas.bin`. Es recomendable crear una clase  a parte de la clase `Persona`, por ejemplo ls clase `SerializarPersonas`.
+6. **Ejercicio 6: Leer una Lista de Personas**. Escribe un programa que lea el fichero `personas.bin` y muestre todos los nombres y edades de las personas en la lista.
+7. **Ejercicio 7: Guardar Datos Numéricos**. Crea un programa que genere un array de números enteros (por ejemplo, 10 números aleatorios) y lo escriba en un fichero binario llamado `numeros.bin`.
+8. **Ejercicio 8: Leer Datos Numéricos**. Escribe un programa que lea los números almacenados en `numeros.bin` y los imprima en la consola, calculando también la suma total de los números.
+9. **Ejercicio 9: Modificar un Objeto**. Crea un programa que lea un objeto `Persona` desde `persona.bin`, modifique su edad y vuelva a escribir el objeto actualizado en el mismo fichero.
 
 
 ### 4.2.5. Clase Files - Escribir y Leer ficheros de caracteres
@@ -710,6 +681,17 @@ public class LeerFicheroTexto {
    - Se utiliza `Files.readAllLines()` para leer todo el contenido del fichero, que se devuelve como una lista de cadenas.
    - Se imprimen las líneas utilizando un bucle `forEach`.
 
+---
+
+1. **Ejercicio 1: Escribir un Mensaje**. Crea un programa que pida al usuario que ingrese un mensaje y lo escriba en un fichero de texto llamado `mensaje.txt`. Asegúrate de que el fichero se sobrescriba si ya existe.
+2. **Ejercicio 2: Leer un Mensaje**. Escribe un programa que lea el contenido del fichero `mensaje.txt` y lo imprima en la consola.
+3. **Ejercicio 3: Guardar Varias Líneas**. Crea un programa que pida al usuario que ingrese tres líneas de texto y las escriba en un fichero de texto llamado `lineas.txt`, asegurándote de que cada línea se guarde en una línea separada del fichero.
+4. **Ejercicio 4: Contar Líneas**. Escribe un programa que lea el fichero `lineas.txt` y cuente cuántas líneas tiene, imprimiendo el resultado en la consola.
+5. **Ejercicio 5: Clase Libro**. Crea una clase `Libro` que contenga atributos como título y autor. Escribe un programa que cree un objeto `Libro` y lo guarde en un fichero de texto llamado `libro.txt`, utilizando el formato "Título: {titulo}, Autor: {autor}".
+6. **Ejercicio 6: Leer Objeto Libro**. Escribe un programa que lea el fichero `libro.txt` y muestre los atributos del objeto `Libro` en la consola, separando el título y el autor.
+7. **Ejercicio 7: Lista de Libros**. Escribe un programa que permita al usuario ingresar varios libros (título y autor) y los almacene en un fichero de texto llamado `libros.txt`, uno por línea.
+8. **Ejercicio 8: Leer Lista de Libros**. Crea un programa que lea el fichero `libros.txt` y muestre todos los libros en la consola, enumerándolos con un número.
+9. **Ejercicio 9: Modificar un Libro**. Escribe un programa que lea el fichero `libros.txt`, permita al usuario modificar el título de un libro específico y luego escriba la lista actualizada de libros en el mismo fichero.
 
 
 
@@ -786,7 +768,17 @@ public class MoverFichero {
    - Similar al proceso de copia, se definen las rutas del fichero origen y destino.
    - Se utiliza `Files.move(origen, destino)` para mover el fichero a la nueva ubicación.
 
+---
 
+1. **Ejercicio 1: Copiar un Fichero**. Crea un programa que copie un fichero de texto llamado `texto.txt` a un nuevo fichero llamado `copia_texto.txt`. Asegúrate de que se sobrescriba si ya existe.
+2. **Ejercicio 2: Mover un Fichero**. Escribe un programa que mueva el fichero `copia_texto.txt` a un directorio llamado `backup`. Si el directorio no existe, debes crearlo.
+3. **Ejercicio 3: Copia Condicional**. Modifica el programa del Ejercicio 1 para que solo copie el fichero si `texto.txt` existe. De lo contrario, debe mostrar un mensaje en la consola.
+4. **Ejercicio 4: Mover y Renombrar**. Crea un programa que mueva un fichero llamado `documento.txt` a un nuevo directorio llamado `archivos` y lo renombre como `documento_final.txt`. Si el directorio no existe, debe crearlo.
+5. **Ejercicio 5: Copiar Directorio**. Escribe un programa que copie todo el contenido de un directorio `origen` a un directorio `destino`. Asegúrate de que el directorio de destino se cree si no existe.
+6. **Ejercicio 6: Copia de Múltiples Ficheros**. Crea un programa que copie múltiples ficheros (por ejemplo, `fichero1.txt`, `fichero2.txt`, `fichero3.txt`) desde un directorio `origen` a un directorio `destino`, sobrescribiendo ficheros existentes.
+7. **Ejercicio 7: Mover Todos los Ficheros**. Escribe un programa que mueva todos los ficheros de un directorio `descargas` a un directorio `documentos`. Asegúrate de que el directorio `documentos` existe o créalo si no.
+8. **Ejercicio 8: Copiar con Opciones**. Crea un programa que copie un fichero `importante.txt` a `seguridad.txt`, pero si `seguridad.txt` ya existe, el programa debe preguntarte si deseas sobrescribirlo (sí/no).
+9. **Ejercicio 9: Registro de Copias**. Desarrolla un programa que copie un fichero y registre la acción en un fichero de log `registro.txt`, indicando qué fichero fue copiado y a dónde se copió. Si el fichero de log no existe, créalo.
 
 # 5. Trabajo con Ficheros XML, Analizadores Sintácticos y Vinculación
 
