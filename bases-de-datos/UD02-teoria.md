@@ -30,6 +30,9 @@ abstract: Sinopsis de la unidad 02
         7. [Atributos Discriminadores o Discriminantes](#427-atributos-discriminadores-o-discriminantes)
 5. [Relaciones](#5-relaciones)
     1. [Representación Gráfica de Relaciones](#representación-gráfica-de-relaciones)
+    2. [Grado de una Relación](#51-grado-de-una-relación)
+    3. [Cardinalidad en una Relación](#52-cardinalidad-en-una-relación)
+    4. [Participación](#participación)
 
 
 # 1. Introducción
@@ -214,40 +217,25 @@ Cada uno de estos tipos de atributos desempeña un papel esencial en la represen
 
 ---
 
-***Ejercicio 4.1:*** *Clasificación de Atributos.*
+**Ejercicio 4.1: Clasificación de Atributos.** Dada la siguiente entidad "Empleado" con los siguientes atributos: *DNI*, *Nombre*, *Apellidos*, *Dirección*, *Teléfono*, *Edad*, *Años de Servicio* y *Email Alternativo*.
+1. Identifica qué tipo de atributo es cada uno (identificativo, descriptivo, opcional, derivado, multivaluado).*
+2. Justifica tu elección para cada atributo.
 
-Dada la siguiente entidad "Empleado" con los siguientes atributos: *DNI*, *Nombre*, *Apellidos*, *Dirección*, *Teléfono*, *Edad*, *Años de Servicio* y *Email Alternativo*.
+**Ejercicio 4.2: Atributos Derivados.** En una base de datos de una tienda online, tienes la entidad "Pedido" con los siguientes atributos: *Fecha de Pedido*, *Precio Producto*, *Cantidad* y *Precio Total*.
+1. Identifica qué atributo es derivado y explica cómo se calcularía a partir de otros atributos.
+2. ¿Cómo representarías este atributo derivado en un diagrama E/R?
 
-1. *Identifica qué tipo de atributo es cada uno (identificativo, descriptivo, opcional, derivado, multivaluado).*
-2. *Justifica tu elección para cada atributo.*
+**Ejercicio 4.3: Atributos Multivaluados.** Imagina que estás diseñando una base de datos para una escuela. La entidad "Estudiante" tiene los atributos *Nombre*, *Apellido*, *Teléfonos de Contacto* y *Asignaturas Matriculadas*.
+1. Explica por qué los atributos "Teléfonos de Contacto" y "Asignaturas Matriculadas" serían considerados multivaluados.
+2. Dibuja cómo representarías estos atributos multivaluados en un diagrama E/R.
 
-***Ejercicio 4.2:*** *Atributos Derivados.*
+**Ejercicio 4.4: Atributos Opcionales.** Supón que estás diseñando una base de datos para una clínica. La entidad "Paciente" tiene los atributos *Número de Seguro Social*, *Nombre*, *Dirección* y *Correo Electrónico Secundario*.
+1. ¿Por qué "Correo Electrónico Secundario" sería un atributo opcional?
+2. Modifica el diagrama E/R para incluir este atributo opcional.
 
-En una base de datos de una tienda online, tienes la entidad "Pedido" con los siguientes atributos: *Fecha de Pedido*, *Precio Producto*, *Cantidad* y *Precio Total*.
-
-1. *Identifica qué atributo es derivado y explica cómo se calcularía a partir de otros atributos.*
-2. *¿Cómo representarías este atributo derivado en un diagrama E/R?*
-
-***Ejercicio 4.3:*** *Atributos Multivaluados.*
-
-Imagina que estás diseñando una base de datos para una escuela. La entidad "Estudiante" tiene los atributos *Nombre*, *Apellido*, *Teléfonos de Contacto* y *Asignaturas Matriculadas*.
-
-1. *Explica por qué los atributos "Teléfonos de Contacto" y "Asignaturas Matriculadas" serían considerados multivaluados.*
-2. *Dibuja cómo representarías estos atributos multivaluados en un diagrama E/R.*
-
-***Ejercicio 4.4:*** *Atributos Opcionales.*
-
-Supón que estás diseñando una base de datos para una clínica. La entidad "Paciente" tiene los atributos *Número de Seguro Social*, *Nombre*, *Dirección* y *Correo Electrónico Secundario*.
-
-1. *¿Por qué "Correo Electrónico Secundario" sería un atributo opcional?*
-2. *Modifica el diagrama E/R para incluir este atributo opcional.*
-
-***Ejercicio 4.5:*** *Descomposición de Atributos Compuestos.*
-
-En una base de datos bancaria, la entidad "Cuenta Bancaria" tiene el atributo compuesto *"CCC" (Código Cuenta Corriente)*, que se descompone en *Número de Banco*, *Número de Sucursal* y *Número de Cuenta*.
-
-1. *Explica por qué "CCC" es un atributo compuesto.*
-2. *Dibuja cómo representarías este atributo compuesto en un diagrama E/R, mostrando la descomposición en sub-atributos.*
+**Ejercicio 4.5: Descomposición de Atributos Compuestos.** En una base de datos bancaria, la entidad "Cuenta Bancaria" tiene el atributo compuesto *"CCC" (Código Cuenta Corriente)*, que se descompone en *Número de Banco*, *Número de Sucursal* y *Número de Cuenta*.
+1. Explica por qué "CCC" es un atributo compuesto.
+2. Dibuja cómo representarías este atributo compuesto en un diagrama E/R, mostrando la descomposición en sub-atributos.
 
 
 
@@ -267,3 +255,107 @@ Generalmente, el nombre de una relación se elige considerando la primera letra 
 También podríamos haber utilizado un nombre más descriptivo para la relación, como **"Compra"** (donde **CLIENTE** compra **COCHE**). Sin embargo, este tipo de nomenclatura puede conducir a confusión a la hora de determinar la **cardinalidad** de la relación cuando estamos aprendiendo.
 
 ![Atributos](/bases-de-datos/imgs/ud02/ud02_img03_clienteCoche02.svg)
+
+## 5.1. Grado de una relación.
+
+El grado de una relación se refiere al **número de entidades participantes en esa relación**. Por ejemplo, si una relación conecta **dos entidades**, como "CLIENTE" y "COCHE," **se considera una relación de grado 2 o binaria**, ya que involucra dos entidades. Sin embargo, las relaciones también pueden ser ternarias (grado 3) o tener más entidades participantes, dependiendo de las necesidades del diseño de la base de datos.
+
+**Ejemplo de Relación Ternaria:** En el siguiente ejemplo la relación PUBLICAR, es de grado 3, ya que involucra las entidades LIBRO, EDITORIAL y AUTOR. 
+
+![Relación Ternaria](/bases-de-datos/imgs/ud02/ud02_img04_ternaria.svg)
+
+Sin embargo, cuando una entidad está relacionada consigo misma, hablamos de relación reflexiva. Las interrelaciones reflexivas son relaciones unitarias y, por tanto, consideran que en el tipo de interrelación se ve involucrado un único tipo de entidad. Por ejemplo, consideraremos el tipo de interrelación presentado en la siguiente figura, que describe la relación existente entre el tipo de entidad Trabajador con ella misma, y que representa que un trabajador es jefe y trabajador.
+
+![Relación Ternaria](/bases-de-datos/imgs/ud02/ud02_img05_reflexiva.svg)
+
+---
+
+**Ejercicio 5.1: Red Social**. Diseña un modelo Entidad-Relación para una red social. Las entidades incluyen *"Usuario"* y *"Publicación"*. Define una relación binaria llamada *"Publica"* que conecta a un usuario con una publicación. Esto permite rastrear qué usuarios han publicado qué contenido en la red social.
+
+**Ejercicio 5.2: Biblioteca (Versión Simplificada)**. Crea un modelo Entidad-Relación para una biblioteca simplificada. Las entidades son *"Libro"* y *"Autor"*. Define una relación binaria llamada *"Escribe"* que relaciona a un autor con un libro. Esto permite registrar qué autores han escrito qué libros.
+
+**Ejercicio 5.3: Tienda de Electrónicos**. Imagina una tienda de electrónicos. Diseña un modelo Entidad-Relación que incluya las entidades *"Cliente"* y *"Producto"*. Define una relación binaria llamada *"Compra"* que relaciona a un cliente con un producto. Esto permite registrar qué productos fueron comprados por qué clientes.
+
+**Ejercicio 5.4: Biblioteca**. Diseña un modelo Entidad-Relación para una biblioteca. Las entidades incluyen *"Libro"*, *"Socio"*, y *"Préstamo"*. Define una relación ternaria llamada *"Préstamo"* que conecta a un libro, un socio y una fecha de préstamo. Esto permite rastrear qué libros han sido prestados a qué socios en qué fechas.
+
+**Ejercicio 5.5: Universidad**. Crea un modelo Entidad-Relación para una universidad. Las entidades son *"Estudiante"*, *"Profesor"*, y *"Curso"*. Define una relación ternaria llamada *"Inscripción"* que conecta a un estudiante, un profesor y un curso. Esto registra cuáles estudiantes están inscritos en qué cursos bajo la supervisión de qué profesor.
+
+**Ejercicio 5.6: Compras en Línea**. Imagina una tienda en línea. Diseña un modelo Entidad-Relación que incluya las entidades *"Cliente"*, *"Producto"*, y *"Pedido"*. Define una relación ternaria llamada *"Compra"* que relaciona a un cliente, un producto y un pedido. Esto permite registrar qué productos fueron comprados por qué clientes en qué pedidos.
+
+## 5.2. Cardinalidad en una relación.
+
+En las relaciones binarias, la cardinalidad se refiere a la cantidad de ocurrencias de una entidad que están asociadas a una ocurrencia de la otra entidad en una relación dada. Comprender estos tipos de cardinalidad es esencial para diseñar una base de datos precisa y eficiente. Aquí exploramos los tres tipos principales de cardinalidad en relaciones binarias:
+
+### Relación uno a uno (1:1)
+
+En una relación uno a uno, cada elemento de la primera entidad se relaciona con no más de un elemento de la segunda entidad, y viceversa. Esto significa que la relación es extremadamente restrictiva en términos de conexiones. Un ejemplo clásico de una relación uno a uno podría ser la relación entre un conductor y un coche. Cada conductor sólo puede conducir simultáneamente un coche y cada coche solo puede ser conducido por un conductor.
+
+**Representación gráfica:** En los diagramas de entidad-relación, una relación uno a uno se muestra con una línea que conecta las entidades, y se coloca el número "1" junto a cada extremo de la línea para indicar que es una relación uno a uno.
+
+![Conductor conduce coche](/bases-de-datos/imgs/ud02/ud02_img06_relacionUnoUno.svg)
+
+### Relación uno a muchos (1:N)
+
+En una relación uno a muchos, cada elemento de la primera entidad se relaciona con cero, uno o más elementos de la segunda entidad, pero cada elemento de la segunda entidad está asociado con un solo elemento de la primera entidad. Esta es la cardinalidad más comúnmente utilizada en bases de datos. Tomemos como ejemplo una relación entre un cliente y sus pedidos en una tienda en línea. Un cliente puede realizar cero, uno o varios pedidos, pero cada pedido pertenece a un solo cliente.
+
+**Representación gráfica:** En un diagrama de entidad-relación, una relación uno a muchos se representa con una línea que conecta las entidades y se coloca el número "1" junto a un extremo de la línea y el símbolo "N" junto al otro extremo para indicar que es una relación uno a muchos.
+
+![Cliente compra productos](/bases-de-datos/imgs/ud02/ud02_img06_relacionUnoMuchos.svg)
+
+
+### Relación muchos a muchos (N:N) o (N:M)
+
+En una relación muchos a muchos, múltiples elementos de la primera entidad pueden estar relacionados con múltiples elementos de la segunda entidad, y viceversa. Esto significa que no hay restricciones estrictas en la cantidad de conexiones que pueden existir entre las entidades. Un ejemplo típico de una relación muchos a muchos podría ser la relación entre estudiantes y profesores en una universidad. Un estudiante puede tener varios profesores, y un profesor puede tener varios estudiantes inscritos.
+
+Representación gráfica: En un diagrama de entidad-relación, una relación muchos a muchos se representa con una línea que conecta las entidades y se coloca el símbolo "N" junto a ambos extremos de la línea para indicar que es una relación muchos a muchos.
+
+Es importante comprender estos tipos de cardinalidad ya que influyen en cómo se diseñan y estructuran las tablas en una base de datos. La elección correcta de la cardinalidad es esencial para garantizar la integridad y eficiencia de los datos en un sistema de gestión de bases de datos.
+
+![Estidantes tienen profesores](/bases-de-datos/imgs/ud02/ud02_img06_relacionMuchosMuchos.svg)
+
+
+### Participación.
+La participación de una ocurrencia de una entidad, indica, mediante una pareja de números, el mínimo y máximo número de veces que puede aparecer en la relación asociada a otra ocurrencia de entidad. Las posibles participaciones son:
+
+| **Participación** | **Significado**                       |
+|-------------------|---------------------------------------|
+| (0,1)             | Mínimo cero, máximo uno               |
+| (1,1)             | Mínimo uno, máximo uno                |
+| (0,n)             | Mínimo cero, máximo n (Muchos)        |
+| (1,n)             | Mínimo uno, máximo n (Muchos)         |
+
+
+Las reglas que definen la participación de una ocurrencia en una relación son **las reglas de negocio**, es decir, se reconocen a través de los requisitos del problema.
+
+La notación que se utiliza para expresar las participaciones en el diagrama entidad relación es poner al lado de la entidad correspondiente, la pareja de números máximo y mínimo de participaciones.
+
+Por ejemplo, los empleados pueden trabajar para varios proyectos, o pueden estar de vacaciones (sin proyecto). Por otro lado, en un proyecto trabajan de 1 a varios trabajadores. En este caso, la participación de proyecto es de (0,n), puesto que un empleado puede tener asignados de 0 a n proyectos. La participación del empleado es de (1,n) puesto que en un proyecto puede haber de 1 a n empleados. De esta manera, se indica al lado de la entidad proyecto, el par (0,n) y al lado de la entidad empleado el par (1,n).
+
+![Participaciones de ocurrencias](/bases-de-datos/imgs/ud02/ud02_img07_participaciones.svg)
+
+### La Cardinalidad a través de las participaciones.
+
+La cardinalidad de una relación se calcula a través de las participaciones de sus ocurrencias en ella. Se toman el número máximo de participaciones en cada una de las entidades en la relación. Por ejemplo, la relación trabaja en de la figura anterior tendría una cardinalidad N:N.
+
+![Cardinalidad según las participaciones](/bases-de-datos/imgs/ud02/ud02_img07_cardinalidadParticipaciones.svg)
+
+---
+
+**Ejercicio 5.7**. En un supermercado hay productos organizados en categorías (frutas, ultramarinos, carnes, pescados, etc.). Cada producto pertenece a una única categoría, y puede haber categorías que todavía no tengan ningún producto asignado, sin embargo, no puede haber productos sin categoría. Calcula las participaciones de cada entidad en la relación *Producto Pertenece a Categoría* sabiendo la siguiente información del dominio del problema.
+- Un producto puede y debe pertenecer a una única categoría (mínimo 1 y máximo 1).
+- A una categoría pueden pertenecer muchos productos (máximo n), y puede no tener productos (mínimo 0).
+
+**Ejercicio 5.8**. Las páginas web contienen controles de muchos tipos (campos de texto, listas desplegables, etc.). Si se quiere almacenar en una base de datos, cada página web, indica qué tipos de controles tiene, ¿qué participaciones habría que asignar?. Justifica tu respuesta respondiendo a preguntas del tipo ¿un control, (por ejemplo, un cuadro de texto), en cuántas páginas puede estar como máximo y mínimo?.
+
+**Ejercicio 5.9**. Los clientes pueden realizar pedidos a través de sus representantes de ventas. Indica las entidades que hay, relaciones y sus respectivas participaciones.
+
+**Ejercicio 5.10**. Calcula la cardinalidad de las siguientes relaciones binarias:
+- Hombre está casado con Mujer, en una sociedad monogámica.
+- Hombre está casado con Mujer, en una sociedad machista poligámica.
+- Hombre está casado con Mujer, en una sociedad poligámica liberal.
+- Pescador pesca Pez.
+- Arq- uitecto diseña Casa.
+- Piezas forman Producto.
+- Turista viaja Hotel.
+- Jugador juega en Equipo.
+- Político gobierna en País.
