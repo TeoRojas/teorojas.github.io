@@ -8,8 +8,6 @@ abstract: Sinopsis de la unidad 02
 ---
 
 # Índice
-
-# Índice
 1. [Introducción](#1-introducción)
 2. [Diseño de Bases de Datos](#2-diseño-de-bases-de-datos)
     1. [Fase de Análisis: Especificación de Requisitos Software (E.R.S.)](#21-fase-de-análisis-especificación-de-requisitos-software-ers)
