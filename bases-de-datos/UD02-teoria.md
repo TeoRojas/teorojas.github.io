@@ -357,3 +357,104 @@ La cardinalidad de una relación se calcula a través de las participaciones de 
 - Turista viaja Hotel.
 - Jugador juega en Equipo.
 - Político gobierna en País.
+
+## 5.3. Cardinalidad de relaciones no binarias.
+
+Para calcular la cardinalidad de una relación ternaria se agrupan (conceptualmente) las entidades en grupos de 2 vs 1  y se resuelve la participación del grupo con la entidad restante. El proceso se repite 3 veces, una para cada entidad independiente. Por último, tomando los máximos de las participaciones se generan las cardinalidades. Observa el siguiente ejemplo:
+
+Existe una interrelación `Profesor-Alumno-Examen` que representa el hecho de que un `Profesor` enseña o imparte docencia a uno o varios alumnos, mientras que a un `Alumno` sólo le imparte docencia uno y sólo un `Profesor`. Cada uno de estos tipos de entidad viene caracterizado por un conjunto de atributos siendo los atributos matricula y dni los atributos identificadores y edad y nombre y cargo y nombre los atributos para las entidades `Alumno` y `Profesor` respectivamente. Se considera que se desea representar que cada profesor examina un número variable de veces a cada alumno al que le imparte docencia, y que en cada `Examen` se le asigna una calificación a cada uno de los alumnos. Además se debe representar que aunque a un alumno sólo le imparte docencia un profesor, existe una serie de calificaciones o notas que el profesor imputa a cada alumno para los exámenes que realiza.
+
+![Cardinalidad en relaciones no binarias](/bases-de-datos/imgs/ud02/ud02_img08_cardinalidadNoBin.svg)
+
+Otra forma de verlo es pensar que para calcular la cardinalidad de una relación ternaria se tomará una de las tres entidades y se combinan las otras dos. A continuación, se calcula la participación de la entidad en la combinación de las otras dos. Posteriormente, se hará lo mismo con las otras dos entidades. Finalmente, tomando los máximos de las participaciones se generan las cardinalidades.
+
+![Cardinalidad en relaciones no binarias 2](/bases-de-datos/imgs/ud02/ud02_img08_cardinalidadNoBin02.svg)
+
+Por ejemplo, en la figura anterior se distinguen tres participaciones, la que se produce entre empresa y auditora-expediente, la que se distingue entre auditora y empresa-expediente, y por último la de expediente con auditora-empresa:
+- Una empresa, ¿Cuántos expedientes puede tener con una auditora? Puede tener un mínimo de 0 y un máximo de n. Participación de Empresa (0,n).
+- Una auditora, ¿Cuántos expedientes puede tener con una empresa? Puede tener un mínimo de 0 y un máximo de 1. Participación de Auditora (0,1).
+- Un expediente ¿A cuántas empresas auditadas por la auditora puede pertenecer? Un expediente solo puede pertenecer a una empresa auditada (1,1), por tanto Participación de Expediente (1,1).
+
+---
+
+**Ejercicio 5.11**. Calcula la cardinalidad de la siguiente relación ternaria:
+![Cardinalidad en relaciones no binarias 3](/bases-de-datos/imgs/ud02/ud02_img08_cardinalidadNoBin03.svg)
+
+**Ejercicio 5.12**. Calcula la cardinalidad de las siguientes relaciones ternarias:
+- Mecánico arregla Vehículo en Taller.
+- Alumno cursa Ciclo en Instituto.
+- Veterinario administra Medicación al Animal.
+
+## 5.4. Atributos propios de una relación.
+
+Imagina que estás diseñando una base de datos para una tienda en línea. En esta base de datos, tienes una relación llamada "Compra" que conecta a los clientes y los productos que compran. Ahora, ¿qué pasa si quieres almacenar información adicional sobre esa compras, como la cantidad de un producto comprado? Ahí es donde entran en juego los **"atributos propios de una relación"**.
+
+**¿Qué son los atributos propios de una relación?**
+
+Los atributos propios de una relación son características especiales que pertenecen exclusivamente a esa relación en particular. No se relacionan con una entidad específica, como un cliente o un producto, sino que dependen de todas las entidades involucradas en la relación. Para entenderlo mejor, veamos un ejemplo práctico.
+
+![Atributos propios de una relación](/bases-de-datos/imgs/ud02/ud02_img09_atributosRelacion.svg)
+
+**Ejemplo: La Relación "Compra"**
+
+Imaginemos una relación llamada "Compra" que conecta a los clientes y los productos que compran. Aquí tienes algunas características clave:
+
+- **Cliente** (*Cod_Cliente, Nombre, Dirección, Edad, Teléfono*): Esta entidad representa a los clientes y sus datos personales, como su nombre y dirección.
+- **Producto** (*Cod_Producto, Nombre, Descripción, Precio_Unidad*): Esta entidad describe los productos disponibles en la tienda en línea, incluyendo detalles como el nombre y el precio.
+
+**Atributo Propio: "Cantidad"**
+
+Ahora, llegamos al atributo propio de la relación "Compra": la "Cantidad". ¿Por qué es un atributo propio? Porque no se refiere únicamente a un cliente o a un producto específico, sino que depende de ambos. Veamos por qué:
+
+- Un mismo cliente puede comprar distintas cantidades de diferentes productos. Por ejemplo, puede comprar 3 camisetas y 2 pantalones.
+- Un mismo producto puede ser comprado en distintas cantidades por diferentes clientes. Por ejemplo, 5 clientes diferentes pueden comprar 2 auriculares cada uno.
+
+La "Cantidad" no se ajusta exclusivamente a un cliente o a un producto, sino que su valor se relaciona con la combinación única de cliente y producto en cada compra. Por lo tanto, es un atributo propio de la relación "Compra".
+
+En resumen, los atributos propios de una relación son como piezas de información especiales que solo tienen sentido dentro de esa relación específica. En este caso, "Cantidad" es un ejemplo de un atributo propio que nos permite rastrear cuántos productos de qué tipo compra cada cliente. Estos atributos son esenciales para capturar detalles específicos de las relaciones en una base de datos y facilitan el seguimiento de la información relacionada con múltiples entidades.
+
+## 5.5. Dependencias e Interrelaciones.
+
+Una interrelación representa la asociación, vinculación o correspondencia entre entidades. 
+
+Se denomina tipo de interrelación a la estructura genérica que describe un conjunto de interrelaciones, mientras que interrelación será cada uno de los ejemplares concretos. Por tanto, el tipo de interrelación es el resultado de clasificar un conjunto de interrelaciones. 
+
+Ejemplo: El tipo de interrelación Dueño_de entre el tipo de entidad `PERSONA` y el tipo de entidad `COCHE`, representa la vinculación existente entre las personas que son dueñas de algún coche. Un ejemplar de este tipo de interrelación, es decir, una interrelación podría vincular a la Sra. Carmen y al vehículo 9876ABC. 
+
+Se representa el tipo de interrelación mediante un rombo etiquetado con el nombre del tipo de la interrelación, unido mediante arcos a los tipos de entidad que asocia.
+
+![Interrelación unitaria](/bases-de-datos/imgs/ud02/ud02_img010_interrelacionUnitaria.svg)
+
+Hay que tener en cuenta que entre dos tipos de entidad puede existir más de un tipo de interrelación. Ejemplo: Entre los tipos de entidad PERSONA y COCHE pueden existir los tipos de interrelación Dueña_de y Conduce.
+
+![Interrelación binaria](/bases-de-datos/imgs/ud02/ud02_img010_interrelacionBinaria.svg)
+
+Como en el caso de los tipos de entidad, los tipos de interrelación se clasifican también en regulares (si están asociando dos tipos de entidad regulares) y débiles (asocian un tipo de entidad débil con un tipo de entidad regular o débil).
+
+### Dependencia en existencia y en identificación.
+
+Ya vimos como los tipos de interrelación (al igual que los tipos de entidad) se clasifican en regulares (asocian dos tipos de entidad regulares) y débiles (asocian un tipo de entidad débil con otra regular o débil). Dentro del tipo de interrelación débil se distingue entre dependencia en identificación (el rombo se etiqueta con ID) y la dependencia en existencia (el rombo se etiqueta con una E o con una EX o no se etiqueta).
+
+**Debilidad por dependencia en existencia:** Se da cuando los ejemplares de un tipo de entidad (entidad débil) no pueden existir si desaparece el ejemplar del tipo de entidad regular del cual dependen. 
+
+Por ejemplo, imagina que deseamos almacenar información sobre los empleados de una empresa y sus familiares mayores de edad que podrían ser elegibles para ciertas ayudas, como becas universitarias o descuentos en productos de la empresa. La entidad `EMPLEADO` se considera una entidad regular, ya que su existencia es independiente. 
+
+En cambio, la entidad `FAMILIAR` se considera una entidad débil, ya que su existencia depende de la existencia de un empleado. Si eliminamos un empleado de la base de datos, todos sus familiares que estén registrados se eliminarán, a menos que estén relacionados con otro empleado (por ejemplo, si ambos cónyuges son empleados, se conservarán los datos de los hijos). Esta debilidad se debe a la existencia, lo que significa que si no existe la entidad `EMPLEADO`, tampoco existirá la entidad `FAMILIAR`, pero no se debe a la identificación, ya que cada entidad se puede identificar por su N.I.F. (Número de Identificación Fiscal).
+
+![Debilidad por existencia](/bases-de-datos/imgs/ud02/ud02_img010_debilExistencia.svg)
+
+**Debilidad por dependencia en identificación:** Se da cuando además de cumplirse la condición anterior, los ejemplares del tipo de entidad débil no pueden identificarse por sí mismos, es decir, mediante los propios atributos del tipo de entidad, y exigen añadir el identificador principal del tipo de entidad regular del cual dependen. 
+
+Por ejemplo, imaginemos una empresa con varios centros de trabajo en diferentes ubicaciones de la comunidad, cada uno identificado por un código único (como CA001, CA002, SE001, MA001, etc.). Todos estos centros de trabajo tienen los mismos departamentos, como recursos humanos, mantenimiento, contabilidad, entre otros, que se identifican con códigos como PER (de personal), MAN, CON, etc.
+
+Podemos considerar que la entidad `CENTRO DE TRABAJO` es una entidad fuerte, ya que su existencia es independiente y se puede identificar mediante su propio código. Por otro lado, la entidad `DEPARTAMENTO` se considera débil por identificación, porque para identificar un ejemplar de `DEPARTAMENTO`, necesitamos hacer referencia tanto al código del centro de trabajo al que pertenece como al código específico de ese departamento. Además, si no existe un ejemplar de la entidad `CENTRO DE TRABAJO`, tampoco existirán ejemplares de `DEPARTAMENTO` asociados a ese centro de trabajo en particular.
+
+![Debilidad por identificación](/bases-de-datos/imgs/ud02/ud02_img010_debilIdentificacion.svg)
+
+En la figura anterior, se representa una dependencia de identificación, lo que significa que el identificador principal de la entidad `DEPARTAMENTO` se forma combinando el código del centro de trabajo (Cod_centro) al que está vinculado y el código específico del departamento (Cod_dpto). Esto nos da una serie de posibles identificadores principales para `DEPARTAMENTO`, como CA002PER, CA002MAN, SE001PER, y así sucesivamente.
+
+Considera ahora el siguiente ejercicio en el que se intentan representar diferentes ediciones de distintos cursos, cada una de ellas en un lugar y en una fecha determinadas. Cada edición se corresponde con un sólo curso y puede ser impartida por varios profesores.
+
+![Debilidad por identificación](/bases-de-datos/imgs/ud02/ud02_img010_debilIdentificacion02.svg)
+
+**Una dependencia en identificación implica una dependencia en existencia, pero no al contrario.**
