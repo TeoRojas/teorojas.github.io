@@ -352,7 +352,7 @@ La cardinalidad de una relación se calcula a través de las participaciones de 
 - Hombre está casado con Mujer, en una sociedad machista poligámica.
 - Hombre está casado con Mujer, en una sociedad poligámica liberal.
 - Pescador pesca Pez.
-- Arq- uitecto diseña Casa.
+- Arquitecto diseña Casa.
 - Piezas forman Producto.
 - Turista viaja Hotel.
 - Jugador juega en Equipo.
@@ -360,20 +360,20 @@ La cardinalidad de una relación se calcula a través de las participaciones de 
 
 ## 5.3. Cardinalidad de relaciones no binarias.
 
-Para calcular la cardinalidad de una relación ternaria se agrupan (conceptualmente) las entidades en grupos de 2 vs 1  y se resuelve la participación del grupo con la entidad restante. El proceso se repite 3 veces, una para cada entidad independiente. Por último, tomando los máximos de las participaciones se generan las cardinalidades. Observa el siguiente ejemplo:
+Para calcular la cardinalidad de una relación ternaria se agrupan (conceptualmente) las entidades en grupos de 2 vs 1 y se resuelve la participación del grupo con la entidad restante. El proceso se repite 3 veces, una para cada entidad independiente. Por último, tomando los máximos de las participaciones se generan las cardinalidades. Observa el siguiente ejemplo:
 
-Existe una interrelación `Profesor-Alumno-Examen` que representa el hecho de que un `Profesor` enseña o imparte docencia a uno o varios alumnos, mientras que a un `Alumno` sólo le imparte docencia uno y sólo un `Profesor`. Cada uno de estos tipos de entidad viene caracterizado por un conjunto de atributos siendo los atributos matricula y dni los atributos identificadores y edad y nombre y cargo y nombre los atributos para las entidades `Alumno` y `Profesor` respectivamente. Se considera que se desea representar que cada profesor examina un número variable de veces a cada alumno al que le imparte docencia, y que en cada `Examen` se le asigna una calificación a cada uno de los alumnos. Además se debe representar que aunque a un alumno sólo le imparte docencia un profesor, existe una serie de calificaciones o notas que el profesor imputa a cada alumno para los exámenes que realiza.
+Existe una interrelación *"Profesor-Alumno-Examen"* que representa el hecho de que un *"Profesor"* enseña o imparte docencia a uno o varios alumnos, mientras que a un *"Alumno"* sólo le imparte docencia uno y sólo un *"Profesor"*. Cada uno de estos tipos de entidad viene caracterizado por un conjunto de atributos, siendo los atributos matrícula y dni los atributos identificadores y edad, nombre, cargo y nombre los atributos para las entidades *"Alumno"* y *"Profesor"*, respectivamente. Se considera que se desea representar que cada profesor examina un número variable de veces a cada alumno al que le imparte docencia, y que en cada *"Examen"* se le asigna una calificación a cada uno de los alumnos. Además, se debe representar que, aunque a un alumno sólo le imparte docencia un profesor, existe una serie de calificaciones o notas que el profesor imputa a cada alumno para los exámenes que realiza.
 
 ![Cardinalidad en relaciones no binarias](/bases-de-datos/imgs/ud02/ud02_img08_cardinalidadNoBin.svg)
 
-Otra forma de verlo es pensar que para calcular la cardinalidad de una relación ternaria se tomará una de las tres entidades y se combinan las otras dos. A continuación, se calcula la participación de la entidad en la combinación de las otras dos. Posteriormente, se hará lo mismo con las otras dos entidades. Finalmente, tomando los máximos de las participaciones se generan las cardinalidades.
+Otra forma de verlo es pensar que para calcular la cardinalidad de una relación ternaria se tomará una de las tres entidades y se combinan las otras dos. A continuación, se calcula la participación de la entidad en la combinación de las otras dos. Posteriormente, se hará lo mismo con las otras dos entidades. Finalmente, tomando los máximos de las participaciones, se generan las cardinalidades.
 
 ![Cardinalidad en relaciones no binarias 2](/bases-de-datos/imgs/ud02/ud02_img08_cardinalidadNoBin02.svg)
 
 Por ejemplo, en la figura anterior se distinguen tres participaciones, la que se produce entre empresa y auditora-expediente, la que se distingue entre auditora y empresa-expediente, y por último la de expediente con auditora-empresa:
 - Una empresa, ¿Cuántos expedientes puede tener con una auditora? Puede tener un mínimo de 0 y un máximo de n. Participación de Empresa (0,n).
 - Una auditora, ¿Cuántos expedientes puede tener con una empresa? Puede tener un mínimo de 0 y un máximo de 1. Participación de Auditora (0,1).
-- Un expediente ¿A cuántas empresas auditadas por la auditora puede pertenecer? Un expediente solo puede pertenecer a una empresa auditada (1,1), por tanto Participación de Expediente (1,1).
+- Un expediente, ¿A cuántas empresas auditadas por la auditora puede pertenecer? Un expediente solo puede pertenecer a una empresa auditada (1,1), por tanto Participación de Expediente (1,1).
 
 ---
 
@@ -387,7 +387,7 @@ Por ejemplo, en la figura anterior se distinguen tres participaciones, la que se
 
 ## 5.4. Atributos propios de una relación.
 
-Imagina que estás diseñando una base de datos para una tienda en línea. En esta base de datos, tienes una relación llamada "Compra" que conecta a los clientes y los productos que compran. Ahora, ¿qué pasa si quieres almacenar información adicional sobre esa compras, como la cantidad de un producto comprado? Ahí es donde entran en juego los **"atributos propios de una relación"**.
+Imagina que estás diseñando una base de datos para una tienda en línea. En esta base de datos, tienes una relación llamada *"Compra"* que conecta a los clientes y los productos que compran. Ahora, ¿qué pasa si quieres almacenar información adicional sobre esa compra, como la cantidad de un producto comprado? Ahí es donde entran en juego los **"Atributos propios de una relación"**.
 
 **¿Qué son los atributos propios de una relación?**
 
@@ -397,35 +397,35 @@ Los atributos propios de una relación son características especiales que perte
 
 **Ejemplo: La Relación "Compra"**
 
-Imaginemos una relación llamada "Compra" que conecta a los clientes y los productos que compran. Aquí tienes algunas características clave:
+Imaginemos una relación llamada *"Compra"* que conecta a los clientes y los productos que compran. Aquí tienes algunas características clave:
 
 - **Cliente** (*Cod_Cliente, Nombre, Dirección, Edad, Teléfono*): Esta entidad representa a los clientes y sus datos personales, como su nombre y dirección.
 - **Producto** (*Cod_Producto, Nombre, Descripción, Precio_Unidad*): Esta entidad describe los productos disponibles en la tienda en línea, incluyendo detalles como el nombre y el precio.
 
 **Atributo Propio: "Cantidad"**
 
-Ahora, llegamos al atributo propio de la relación "Compra": la "Cantidad". ¿Por qué es un atributo propio? Porque no se refiere únicamente a un cliente o a un producto específico, sino que depende de ambos. Veamos por qué:
+Ahora, llegamos al atributo propio de la relación *"Compra"*: la *"Cantidad"*. ¿Por qué es un atributo propio? Porque no se refiere únicamente a un cliente o a un producto específico, sino que depende de ambos. Veamos por qué:
 
 - Un mismo cliente puede comprar distintas cantidades de diferentes productos. Por ejemplo, puede comprar 3 camisetas y 2 pantalones.
 - Un mismo producto puede ser comprado en distintas cantidades por diferentes clientes. Por ejemplo, 5 clientes diferentes pueden comprar 2 auriculares cada uno.
 
-La "Cantidad" no se ajusta exclusivamente a un cliente o a un producto, sino que su valor se relaciona con la combinación única de cliente y producto en cada compra. Por lo tanto, es un atributo propio de la relación "Compra".
+La *"Cantidad"* no se ajusta exclusivamente a un cliente o a un producto, sino que su valor se relaciona con la combinación única de cliente y producto en cada compra. Por lo tanto, es un atributo propio de la relación *"Compra"*.
 
-En resumen, los atributos propios de una relación son como piezas de información especiales que solo tienen sentido dentro de esa relación específica. En este caso, "Cantidad" es un ejemplo de un atributo propio que nos permite rastrear cuántos productos de qué tipo compra cada cliente. Estos atributos son esenciales para capturar detalles específicos de las relaciones en una base de datos y facilitan el seguimiento de la información relacionada con múltiples entidades.
+En resumen, los atributos propios de una relación son como piezas de información especiales que solo tienen sentido dentro de esa relación específica. En este caso, *"Cantidad"* es un ejemplo de un atributo propio que nos permite rastrear cuántos productos de qué tipo compra cada cliente. Estos atributos son esenciales para capturar detalles específicos de las relaciones en una base de datos y facilitan el seguimiento de la información relacionada con múltiples entidades.
 
 ## 5.5. Dependencias e Interrelaciones.
 
 Una interrelación representa la asociación, vinculación o correspondencia entre entidades. 
 
-Se denomina tipo de interrelación a la estructura genérica que describe un conjunto de interrelaciones, mientras que interrelación será cada uno de los ejemplares concretos. Por tanto, el tipo de interrelación es el resultado de clasificar un conjunto de interrelaciones. 
+Se denomina tipo de interrelación a la estructura genérica que describe un conjunto de interrelaciones, mientras que interrelación será cada uno de los ejemplares concretos. Por tanto, el tipo de interrelación es el resultado de clasificar un conjunto de interrelaciones.
 
-Ejemplo: El tipo de interrelación Dueño_de entre el tipo de entidad `PERSONA` y el tipo de entidad `COCHE`, representa la vinculación existente entre las personas que son dueñas de algún coche. Un ejemplar de este tipo de interrelación, es decir, una interrelación podría vincular a la Sra. Carmen y al vehículo 9876ABC. 
+Ejemplo: El tipo de interrelación *"Dueño_de"* entre el tipo de entidad *"Persona"* y el tipo de entidad *"Coche"*, representa la vinculación existente entre las personas que son dueñas de algún coche. Un ejemplar de este tipo de interrelación, es decir, una interrelación podría vincular a la Sra. Carmen y al vehículo 9876ABC. 
 
 Se representa el tipo de interrelación mediante un rombo etiquetado con el nombre del tipo de la interrelación, unido mediante arcos a los tipos de entidad que asocia.
 
 ![Interrelación unitaria](/bases-de-datos/imgs/ud02/ud02_img010_interrelacionUnitaria.svg)
 
-Hay que tener en cuenta que entre dos tipos de entidad puede existir más de un tipo de interrelación. Ejemplo: Entre los tipos de entidad PERSONA y COCHE pueden existir los tipos de interrelación Dueña_de y Conduce.
+Hay que tener en cuenta que entre dos tipos de entidad puede existir más de un tipo de interrelación. Ejemplo: Entre los tipos de entidad *"Persona"* y *"Coche"* pueden existir los tipos de interrelación *"Dueña_de"* y *"Conduce"*.
 
 ![Interrelación binaria](/bases-de-datos/imgs/ud02/ud02_img010_interrelacionBinaria.svg)
 
@@ -433,28 +433,233 @@ Como en el caso de los tipos de entidad, los tipos de interrelación se clasific
 
 ### Dependencia en existencia y en identificación.
 
-Ya vimos como los tipos de interrelación (al igual que los tipos de entidad) se clasifican en regulares (asocian dos tipos de entidad regulares) y débiles (asocian un tipo de entidad débil con otra regular o débil). Dentro del tipo de interrelación débil se distingue entre dependencia en identificación (el rombo se etiqueta con ID) y la dependencia en existencia (el rombo se etiqueta con una E o con una EX o no se etiqueta).
+Ya vimos cómo los tipos de interrelación (al igual que los tipos de entidad) se clasifican en regulares (asocian dos tipos de entidad regulares) y débiles (asocian un tipo de entidad débil con otra regular o débil). Dentro del tipo de interrelación débil se distingue entre dependencia en identificación (el rombo se etiqueta con *ID*) y la dependencia en existencia (el rombo se etiqueta con una *E* o con una *EX* o no se etiqueta).
 
 **Debilidad por dependencia en existencia:** Se da cuando los ejemplares de un tipo de entidad (entidad débil) no pueden existir si desaparece el ejemplar del tipo de entidad regular del cual dependen. 
 
-Por ejemplo, imagina que deseamos almacenar información sobre los empleados de una empresa y sus familiares mayores de edad que podrían ser elegibles para ciertas ayudas, como becas universitarias o descuentos en productos de la empresa. La entidad `EMPLEADO` se considera una entidad regular, ya que su existencia es independiente. 
+Por ejemplo, imagina que deseamos almacenar información sobre los empleados de una empresa y sus familiares mayores de edad que podrían ser elegibles para ciertas ayudas, como becas universitarias o descuentos en productos de la empresa. La entidad *"Empleado"* se considera una entidad regular, ya que su existencia es independiente. 
 
-En cambio, la entidad `FAMILIAR` se considera una entidad débil, ya que su existencia depende de la existencia de un empleado. Si eliminamos un empleado de la base de datos, todos sus familiares que estén registrados se eliminarán, a menos que estén relacionados con otro empleado (por ejemplo, si ambos cónyuges son empleados, se conservarán los datos de los hijos). Esta debilidad se debe a la existencia, lo que significa que si no existe la entidad `EMPLEADO`, tampoco existirá la entidad `FAMILIAR`, pero no se debe a la identificación, ya que cada entidad se puede identificar por su N.I.F. (Número de Identificación Fiscal).
+En cambio, la entidad *"Familiar"* se considera una entidad débil, ya que su existencia depende de la existencia de un empleado. Si eliminamos un empleado de la base de datos, todos sus familiares que estén registrados se eliminarán, a menos que estén relacionados con otro empleado (por ejemplo, si ambos cónyuges son empleados, se conservarán los datos de los hijos). Esta debilidad se debe a la existencia, lo que significa que si no existe la entidad *"Empleado"*, tampoco existirá la entidad *"Familiar"*, pero no se debe a la identificación, ya que cada entidad se puede identificar por su N.I.F. (Número de Identificación Fiscal).
 
 ![Debilidad por existencia](/bases-de-datos/imgs/ud02/ud02_img010_debilExistencia.svg)
 
 **Debilidad por dependencia en identificación:** Se da cuando además de cumplirse la condición anterior, los ejemplares del tipo de entidad débil no pueden identificarse por sí mismos, es decir, mediante los propios atributos del tipo de entidad, y exigen añadir el identificador principal del tipo de entidad regular del cual dependen. 
 
-Por ejemplo, imaginemos una empresa con varios centros de trabajo en diferentes ubicaciones de la comunidad, cada uno identificado por un código único (como CA001, CA002, SE001, MA001, etc.). Todos estos centros de trabajo tienen los mismos departamentos, como recursos humanos, mantenimiento, contabilidad, entre otros, que se identifican con códigos como PER (de personal), MAN, CON, etc.
+Por ejemplo, imaginemos una empresa con varios centros de trabajo en diferentes ubicaciones de la comunidad, cada uno identificado por un código único (como *CA001*, *CA002*, *SE001*, *MA001*, etc.). Todos estos centros de trabajo tienen los mismos departamentos, como recursos humanos, mantenimiento, contabilidad, entre otros, que se identifican con códigos como *PER* (de personal), *MAN*, *CON*, etc.
 
-Podemos considerar que la entidad `CENTRO DE TRABAJO` es una entidad fuerte, ya que su existencia es independiente y se puede identificar mediante su propio código. Por otro lado, la entidad `DEPARTAMENTO` se considera débil por identificación, porque para identificar un ejemplar de `DEPARTAMENTO`, necesitamos hacer referencia tanto al código del centro de trabajo al que pertenece como al código específico de ese departamento. Además, si no existe un ejemplar de la entidad `CENTRO DE TRABAJO`, tampoco existirán ejemplares de `DEPARTAMENTO` asociados a ese centro de trabajo en particular.
+Podemos considerar que la entidad *"Centro De Trabajo"* es una entidad fuerte, ya que su existencia es independiente y se puede identificar mediante su propio código. Por otro lado, la entidad *"Departamento"* se considera débil por identificación, porque para identificar un ejemplar de *"Departamento"*, necesitamos hacer referencia tanto al código del centro de trabajo al que pertenece como al código específico de ese departamento. Además, si no existe un ejemplar de la entidad *"Centro De Trabajo"*, tampoco existirán ejemplares de *"Departamento"* asociados a ese centro de trabajo en particular.
 
 ![Debilidad por identificación](/bases-de-datos/imgs/ud02/ud02_img010_debilIdentificacion.svg)
 
-En la figura anterior, se representa una dependencia de identificación, lo que significa que el identificador principal de la entidad `DEPARTAMENTO` se forma combinando el código del centro de trabajo (Cod_centro) al que está vinculado y el código específico del departamento (Cod_dpto). Esto nos da una serie de posibles identificadores principales para `DEPARTAMENTO`, como CA002PER, CA002MAN, SE001PER, y así sucesivamente.
+En la figura anterior, se representa una dependencia de identificación, lo que significa que el identificador principal de la entidad *"Departamento"* se forma combinando el código del centro de trabajo (Cod_centro) al que está vinculado y el código específico del departamento (Cod_dpto). Esto nos da una serie de posibles identificadores principales para *"Departamento"*, como *CA002PER*, *CA002MAN*, *SE001PER*, y así sucesivamente.
 
-Considera ahora el siguiente ejercicio en el que se intentan representar diferentes ediciones de distintos cursos, cada una de ellas en un lugar y en una fecha determinadas. Cada edición se corresponde con un sólo curso y puede ser impartida por varios profesores.
+Considera ahora el siguiente ejercicio en el que se intentan representar diferentes ediciones de distintos cursos, cada una de ellas en un lugar y en una fecha determinadas. Cada edición se corresponde con un solo curso y puede ser impartida por varios profesores.
 
 ![Debilidad por identificación](/bases-de-datos/imgs/ud02/ud02_img010_debilIdentificacion02.svg)
 
 **Una dependencia en identificación implica una dependencia en existencia, pero no al contrario.**
+
+## 5.6. Redundancia.
+
+Decimos que un elemento de un esquema **es redundante cuando puede ser eliminado sin pérdida de semántica.**
+
+Es preciso, en los esquemas E/R, analizar la existencia de redundancias , por los problemas de inconsistencias a los que pueden dar lugar. 
+
+Existen dos formas principales de redundancia, según el elemento del modelo E/R al que está asociada: **redundancia en los atributos** (atributos derivados o calculados) y **redundancia en las interrelaciones** (denominadas también por algunos autores interrelaciones derivadas).
+
+### Atributos derivados (o calculados).
+Son aquellos que se obtienen a partir de otros ya existentes, por lo que, aunque son redundantes, no dan lugar a inconsistencias, siempre que en el esquema se indique su condición de derivados (mediante la etiqueta Di). 
+- **Ejemplo 1:** En el tipo de entidad *Persona*, es redundante establecer el atributo fechaNacimiento y el atributo edad; este último puede ser calculado a partir de la fecha de nacimiento. 
+- **Ejemplo 2:** En el esquema de la figura siguiente, se puede añadir al tipo de entidad *Centro de Trabajo* el atributo Numero_dptos, el cual puede ser calculado a partir de los ejemplares de *Departamento* mediante la interrelación Tiene. 
+
+![Debilidad por identificación](/bases-de-datos/imgs/ud02/ud02_img010_debilIdentificacion.svg)
+
+Incluir en el esquema conceptual atributos derivados, a pesar de que pueden ser generados a partir de otros ya existentes, tiene a veces interés por razones semánticas. Aunque también se podría hacer por motivos de eficiencia. Un atributo derivado puede ser calculado en dos momentos distintos: 
+1. En actualizaciones que pueden provocar cambios en su valor - el atributo derivado se calcula y almacena (es real)-.
+2. Cuando se recupera -no está almacenado y se calcula al realizar la consulta (es virtual)-. 
+
+El tomar una u otra decisión es propio del diseño físico, ya que se hace por motivos de eficiencia, y dependerá del número de actualizaciones frente al de recuperaciones. 
+
+Tampoco hay que confundir un atributo derivado, cuyo valor no se introduce nunca -sino que se calcula-, con las restricciones que comprueban la consistencia entre valores que están almacenados en la base de datos, por haberlos introducido el usuario.
+
+### Interrelaciones redundantes.
+
+Se dice que una interrelación es redundante cuando su eliminación no implica pérdida de semántica porque existe la posibilidad de realizar la misma asociación de ejemplares por medio de otras interrelaciones.
+
+Es condición necesaria, aunque no suficiente, para que una interrelación sea redundante que forme parte de un ciclo, por lo que hay que estudiar detenidamente los ciclos en el diagrama E/R.
+
+**Ejemplo 1:** Supongamos que un *Profesor* sólo puede impartir *Cursos* de doctorado que estén adscritos al *Departamento* al que él pertenece; en este caso, si se conocen los *Cursos* de doctorado que imparte un *Profesor* y el departamento al que está adscrito cada curso, se deduce inmediatamente a qué *Departamento* pertenece dicho *Profesor*. 
+
+De forma análoga, dado un *Departamento*, si sabemos qué *Cursos* de doctorado tiene adscritos y los profesores que imparten dichos *Cursos*, conoceremos qué profesores pertenecen a dicho departamento, por lo que la interrelación Pertenece entre las entidades *Profesor* y *Departamento* es redundante: su eliminación no produce pérdida de información.
+
+![Debilidad por identificación](/bases-de-datos/imgs/ud02/ud02_img011_redundancia01.svg)
+
+**Ejemplo 2:** En el esquema reflejado en la figura siguiente, a pesar de que también existe un ciclo, no hay ninguna interrelación redundante. En este ejemplo la semántica es distinta y un *Departamento* puede no tener adscritos *Cursos* de doctorado; además un mismo *Curso* puede estar adscrito a distintos *Departamentos* y puede haber *Profesores* que no impartan ningún *Curso*. 
+
+La interrelación *Pertenece* no puede deducirse en este caso de las otras dos, ya que aunque sepamos los *Cursos* que ha impartido un *Profesor* y los *Departamentos* a los que están adscritos dichos *Cursos*, no podemos saber a qué departamento en concreto *Pertenece* dicho *Profesor*; tampoco se tiene esta información para los profesores que no imparten ningún curso. 
+
+La interrelación Imparte tampoco es redundante, ya que un curso de doctorado puede ser impartido por diversos *Departamentos* a cada uno de los cuales pertenecen varios profesores, por lo que no se puede saber qué *Profesor* en concreto imparte un determinado curso. 
+
+Por último, la interrelación Adscrito tampoco es redundante, ya que un curso impartido por un *Profesor* no tiene por qué estar necesariamente adscrito al *Departamento* al que pertenece dicho *Profesor*: hay *Departamentos* que no tienen *Cursos* adscritos y los *Profesores* de estos *Departamentos* pueden colaborar en *Cursos* adscritos a otros departamentos distintos del suyo.
+
+![Debilidad por identificación](/bases-de-datos/imgs/ud02/ud02_img011_redundancia02.svg)
+
+Existen otros casos en los que la interrelación, a pesar de poder ser deducida a partir de otras presentes en el esquema, no se puede eliminar porque posee atributos. 
+
+Se puede decir, como norma general, que la existencia de un ciclo no implica la existencia de interrelaciones redundantes. Deben estudiarse con mucho detenimiento las cardinalidades mínimas de las entidades, así como la semántica que aportan las interrelaciones, para poder afirmar con seguridad que existen interrelaciones redundantes. 
+
+Habrá que analizar si al eliminar una interrelación es siempre posible el paso, tanto en un sentido como en el inverso, entre las dos entidades unidas por la interrelación que se considera redundante, y habrá que comprobar también que no se pierdan atributos. 
+
+**En resumen**, para que una interrelación pueda ser eliminada por redundante se tiene que cumplir: 
+- Que exista un ciclo. 
+- Que las interrelaciones que componen el ciclo sean equivalentes semánticamente. 
+- Que se puedan asociar los ejemplares de las dos entidades que estaban interrelacionadas, aún habiéndose eliminado la interrelación. 
+- Que la interrelación o bien no tenga atributos o bien éstos puedan ser transferidos a otra a fin de no perder su semántica.
+
+# 6. El Modelo E/R Extendido [EER]
+
+El Modelo de Entidad-Relación Extendido (EER en inglés) surge para abordar ciertas limitaciones que se encontraban en el modelo de Entidad-Relación (ER) básico. Estas limitaciones incluían la incapacidad de representar adecuadamente ciertos tipos de relaciones y restricciones complejas en las bases de datos.
+
+Las razones principales para la aparición del modelo EER son las siguientes:
+1. **Soporte para herencia y generalización: El modelo EER incluye la capacidad de representar herencia y generalización, lo que es fundamental en situaciones donde existen clases de entidades relacionadas. Esto es especialmente útil para modelar la estructura jerárquica de una base de datos.** Por lo tanto añade la superclase (superentidad), la subclase(subentidad), la especialización y la generalización.
+2. Necesidad de representar relaciones más complejas: El modelo ER básico estaba diseñado para tratar relaciones simples y binarias entre entidades. Sin embargo, en la realidad, las relaciones pueden ser más complejas, involucrando múltiples entidades o atributos interrelacionados. El modelo EER introduce características que permiten modelar relaciones ternarias, cuaternarias y relaciones de mayor grado de complejidad.
+3. Representación de restricciones adicionales: Las bases de datos suelen tener restricciones y reglas de integridad que no podían ser expresadas de manera efectiva en el modelo ER básico. El EER permite la representación de restricciones de entidad, restricciones de relación y restricciones sobre atributos.
+4. Mayor precisión en la representación: El modelo EER proporciona un conjunto más rico de conceptos y notaciones que permiten una representación más precisa y completa de la estructura de la base de datos y sus restricciones.
+
+## 6.1. Superentidad (Supertipo).
+
+Una superentidad, o supertipo, es una entidad que agrupa a varias subentidades que comparten ciertos atributos. Actúa como una categoría general o clase principal que abarca un conjunto de entidades más específicas, manteniendo atributos comunes entre ellas.
+
+En otras palabras, una superentidad representa una categoría amplia que generaliza a otras entidades que se derivan de ella. Los atributos de la superentidad son compartidos por las subentidades, pero estas subentidades pueden tener también atributos propios. Por ejemplo, en un modelo de una tienda en línea, "Producto" podría ser una superentidad que agrupa categorías como "Libros", "Ropa" y "Electrónicos".
+
+## 6.2. Subentidad (Subtipo).
+
+Una subentidad, o subtipo, es una entidad más específica que se deriva de una superentidad. Aunque hereda los atributos comunes de la superentidad, también tiene sus propios atributos y características que la distinguen de otras subentidades dentro de la misma superentidad.
+
+Cada subentidad añade atributos únicos que no están presentes en otras subentidades del mismo supertipo. Usando el ejemplo anterior, "Libros" y "Ropa" serían subentidades que pertenecen a la superentidad "Producto", con atributos propios que los diferencian, como el autor en el caso de los libros o la talla en el caso de la ropa.
+
+## 6.3. Ejemplo.
+
+Observa el ejemplo de la figura anterior. En él, la relación entre una superentidad y sus subentidades podría representarse con una superentidad *Empleado*, que tiene atributos comunes como `id`, `nombre` y `teléfono`. Esta superentidad se divide en dos subentidades: 
+
+- *Por_Horas*, con atributos específicos como `pago por hora` y `horas trabajadas`.
+- *Asalariado*, con atributos propios como `sueldo mensual`, `aguinaldo` y `descuentos`.
+
+Este modelo permite que las subentidades hereden los atributos comunes de la superentidad, a la vez que mantienen sus propias características distintivas.
+
+![Ejemplo básico de EER](/bases-de-datos/imgs/ud02/ud02_img12_eer01.svg)
+
+La relación entre superentidades y subentidades se conoce como una jerarquía de entidades. Esta jerarquía permite modelar la diversidad y las relaciones entre diferentes tipos de entidades de manera más estructurada y organizada. Cada subentidad es un subconjunto específico de la superentidad y hereda sus características generales, lo que facilita la gestión y el análisis de datos.
+
+## 6.4. Generalización y Especialización.
+
+![Generalización y Especialización](/bases-de-datos/imgs/ud02/ud02_img12_eer02.svg)
+
+**Generalización**: La generalización es el proceso de crear una superentidad que agrupa múltiples subentidades relacionadas que comparten atributos y características comunes. En este proceso, se identifican las similitudes entre las subentidades para definir una entidad más general. Se utiliza para representar esos elementos comunes que varias subentidades tienen en común. 
+
+Por ejemplo, en un sistema de gestión de recursos humanos, las subentidades **Empleado a tiempo completo** (*Asalariado*) y **Empleado a tiempo parcial** (*Por_Horas*) comparten atributos como `nombre` y `teléfono`. A partir de esas similitudes, se pueden agrupar en una superentidad llamada *Empleado*.
+
+**Especialización**: La especialización es lo opuesto a la generalización. Aquí, se definen subentidades o subtipos específicos dentro de una superentidad, basados en características y atributos únicos que los distinguen. Este proceso se utiliza para representar las diferencias dentro de una categoría general.
+
+Siguiendo el ejemplo anterior, **Empleado a tiempo completo** (*Asalariado*) y **Empleado a tiempo parcial** (*Por_Horas*) son subtipos especializados dentro de la superentidad **Empleado**. Cada uno de estos subtipos podría tener atributos específicos, como `horasTrabajadas` en el caso del empleado *Por_Horas* o `aguinaldo` en el caso del *Asalariado*.
+
+En los diagramas de entidad-relación extendidos (EER), las relaciones entre generalización y especialización se representan mediante líneas que conectan la superentidad con sus subtipos correspondientes. Estos conceptos permiten modelar la jerarquía de entidades de manera más eficiente, destacando las similitudes y diferencias entre subtipos.
+
+## 6.5. Restricciones de generalización y especialización.
+
+Las restricciones definen cómo se organiza la jeraquía de subentidades bajo una superentidad. A continuación aparece una explicación detallada de cada una.
+
+### Especialización TOTAL SIN solapamiento.
+
+En esta restricción, se establece que cada entidad de la superentidad debe ser parte de al menos uno de los subtipos. Esto significa que no puede haber entidades en la superentidad que no estén especializadas en al menos un subtipo. Además, no puede haber solapamiento entre los subtipos, lo que significa que una entidad no puede pertenecer a más de un subtipo simultáneamente. 
+
+Por ejemplo, **en el dominio del siguiente ejemplo**, una *PERSONA* sólo puede ser o un *HOMBRE*, o una *MUJER*, pero no ambos a la vez ni tampoco puede tener otro género distinto.
+
+![Especialización TOTAL SIN solapamiento](/bases-de-datos/imgs/ud02/ud02_img12_totalSinSolapamiento.svg)
+
+- La TOTALidad queda reflejada en el diagrama con el círculo posicionado entre la superentidad PERSONA y el triángulo invertido de relación ES-UN.
+- La EXCLUSIVIDAD (sin solapamiento) queda reflejada por la semicircunferencia que existe entre el triángulo invertido y las subentidades HOMBRE y MUJER.
+
+### Especialización PARCIAL SIN solapamiento.
+
+En esta restricción, se permite que algunas entidades de la superentidad no estén especializadas en ningún subtipo. Esto significa que puede haber entidades que pertenezcan a la superentidad pero no se clasifiquen en ninguno de los subtipos. Sin embargo, no se permite el solapamiento entre los subtipos, lo que significa que una entidad no puede pertenecer a más de un subtipo. 
+
+Por ejemplo, **en el dominio del siguiente ejemplo**, la enfermedad cáncer no es ni un virus ni una bacteria, es decir, existen más tipos de enfermedades que los que se reflejan en el diagrama.  
+
+![Especialización PARCIAL SIN solapamiento](/bases-de-datos/imgs/ud02/ud02_img12_parcialSinSolapamiento.svg)
+
+- La PARCIALidad queda reflejada en el diagrama al conectar directamente la superentidad ENFERMEDAD y el triángulo invertido de relación ES-UN.
+- La EXCLUSIVIDAD (sin solapamiento) queda reflejada por la semicircunferencia que existe entre el triángulo invertido y las subentidades VÍRICA y BACTERIANA.
+
+### Especialización TOTAL CON solapamiento.
+
+En esta restricción, se establece que cada entidad de la superentidad debe ser parte de al menos uno de los subtipos, pero también se permite el solapamiento. Esto significa que una entidad puede pertenecer a más de un subtipo a la vez. 
+
+Por ejemplo, **en el dominio del siguiente ejemplo**, una EMPRESA puede ser PÚBLICA y PRIVADA a la vez, o sólo PÚBLICA o sólo PRIVADA, pero no puede existir otro tipo de empresa que sea diferente a estos dos subtipos. 
+
+![Especialización TOTAL CON solapamiento](/bases-de-datos/imgs/ud02/ud02_img12_totalConSolapamiento.svg)
+
+- La TOTALidad queda reflejada en el diagrama con el círculo posicionado entre la superentidad EMPRESA y el triángulo invertido de relación ES-UN.
+- El SOLAPAMIENTO queda reflejado por la no existencia de la semicircunferencia el triángulo invertido y las subentidades.
+
+### Especialización PARCIAL CON solapamiento.
+
+En esta restricción, se establece que cada entidad de la superentidad debe ser parte de al menos uno de los subtipos, pero también se permite el solapamiento. Esto significa que una entidad puede pertenecer a más de un subtipo a la vez. 
+
+Por ejemplo, **en el dominio del siguiente ejemplo**, una PERSONA puede ser un TRABAJADOR, o puede ser un ESTUDIANTE, pero también puede ser un TRABAJADOR y ESTUDIANTE, o también puede ser algo que no está reflejado en el diagrama, como por ejemplo una PERSONA que ni trabaja ni estudia.
+
+![Especialización PARCIAL CON solapamiento](/bases-de-datos/imgs/ud02/ud02_img12_parcialConSolapamiento.svg)
+
+- La PARCIALidad queda reflejada en el diagrama al conectar directamente la superentidad PERSONA y el triángulo invertido de relación ES-UN.
+- El SOLAPAMIENTO queda reflejado por la no existencia de la semicircunferencia el triángulo invertido y las subentidades.
+
+### Tabla Resumen
+
+| **Especialización TOTAL SIN** <br> **solapamiento**    |   |   |   | **Especialización PARCIAL SIN** <br> **solapamiento**  |
+| ![Especialización TOTAL SIN solapamiento](/bases-de-datos/imgs/ud02/ud02_img12_totalSinSolapamiento.svg) |   |   |   | ![Especialización PARCIAL SIN solapamiento](/bases-de-datos/imgs/ud02/ud02_img12_parcialSinSolapamiento.svg) |
+|-----------------------------------------------|---|---|---|-----------------------------------------------|
+|                                               |   |   |   |                                               |
+|-----------------------------------------------|---|---|---|-----------------------------------------------|
+|                                               |   |   |   |                                               |
+|-----------------------------------------------|---|---|---|-----------------------------------------------|
+| **Especialización TOTAL CON** <br> **solapamiento**    |   |   |   | **Especialización PARCIAL CON** <br> **solapamiento**  |
+| ![Especialización TOTAL CON solapamiento](/bases-de-datos/imgs/ud02/ud02_img12_totalConSolapamiento.svg) |   |   |   | ![Especialización PARCIAL CON solapamiento](/bases-de-datos/imgs/ud02/ud02_img12_parcialConSolapamiento.svg) |
+
+
+## 6.6. Cardinalidades en las restricciones de especialización.
+
+Al analizar las cardinalidades dentro de los procesos de generalización y especialización, es importante resaltar dos aspectos clave que regulan cómo se relacionan las superentidades y los subtipos en un diagrama de entidad-relación extendido (EER). Estas consideraciones son fundamentales para comprender cómo funcionan las jerarquías de entidades y las restricciones que se aplican en términos de cardinalidad. A continuación, desglosamos estos dos puntos con mayor detalle:
+
+### Participación entre Subtipo y Supertipo
+
+El primer aspecto a considerar es la **participación** que se establece entre un **subtipo** y su **superentidad**. En este caso, se debe tener en cuenta que la **participación** de un subtipo respecto a su superentidad está definida como **(1,1)**. Esto significa que:
+
+- Cada entidad que pertenezca a un **subtipo** también pertenece **obligatoriamente** a la superentidad.
+- No existe la posibilidad de que una entidad sea parte de más de un subtipo dentro de la misma jerarquía en el proceso de generalización.
+  
+Este comportamiento es inherente al proceso de **generalización**, donde cada subtipo es una especialización del supertipo, y por lo tanto, está completamente abarcado por él. Al especificar una relación de **participación** (1,1), indicamos que:
+  
+- **Mínimamente**, cada entidad que pertenece a un subtipo **debe pertenecer a un supertipo**.
+- **Máximamente**, cada entidad del subtipo **solo puede pertenecer a un supertipo**.
+
+En otras palabras, la cardinalidad **(1,1)** refleja la regla de que una entidad de un subtipo no puede existir sin estar vinculada a la superentidad y que solo puede existir en un subtipo a la vez dentro de esa misma jerarquía. Este comportamiento es característico de la generalización y no permite excepciones.
+
+### Participación en Especializaciones con Solapamiento
+
+El segundo punto relevante surge cuando analizamos la **participación** en una **especialización con solapamiento**. En este tipo de especialización, que puede ser **total o parcial**, las cardinalidades se comportan de manera diferente debido a la naturaleza solapada de los subtipos.
+
+Cuando hay **solapamiento**, las **participaciones** desde la superentidad hacia los subtipos (es decir, la participación de una superentidad en sus subtipos) se representan con una cardinalidad de **(0,1)**. Esto significa que:
+
+- En algunos casos, puede ocurrir que una entidad de la superentidad **no pertenezca a ningún subtipo en particular** (mínimo de 0). Esta es la opción de no especialización, es decir, la entidad puede no estar vinculada a ninguna de las subcategorías definidas.
+- Sin embargo, también puede ocurrir que la entidad **sí pertenezca a uno o más subtipos** simultáneamente, especialmente cuando se permite el solapamiento (máximo de 1). En esta situación, una entidad puede estar vinculada a múltiples subtipos dentro de la misma jerarquía.
+
+Este comportamiento refleja la flexibilidad del solapamiento en las especializaciones. Por ejemplo, una entidad puede pertenecer a dos subtipos diferentes a la vez, pero en el mínimo de los casos, puede que no pertenezca a ninguno, o solo a uno. Esta capacidad de coexistencia en múltiples subtipos es lo que permite que la especialización sea más versátil y adecuada para representar relaciones complejas donde las entidades no necesariamente siguen una estructura rígida.
+
+En resumen, las cardinalidades en una **especialización con solapamiento** se expresan como **(0,1)** para la participación desde la superentidad hacia los subtipos, indicando que:
+  
+- **Mínimamente**, una entidad puede no pertenecer a ningún subtipo (0).
+- **Máximamente**, una entidad puede pertenecer a uno o más subtipos simultáneamente (1 o más en casos de solapamiento total).
+
+### Conclusión
+
+Comprender estas dos observaciones clave sobre las cardinalidades es crucial para modelar correctamente las relaciones entre superentidades y subentidades. En la **generalización**, la cardinalidad **(1,1)** garantiza que cada subtipo esté completamente abarcado por la superentidad, mientras que en las **especializaciones con solapamiento**, la cardinalidad **(0,1)** proporciona la flexibilidad para que una entidad pertenezca a uno o más subtipos, o a ninguno en algunos casos.
