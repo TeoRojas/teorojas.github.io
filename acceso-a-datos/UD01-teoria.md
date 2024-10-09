@@ -998,14 +998,153 @@ Un documento XML debe ser "bien formado", lo que significa que debe seguir ciert
 
 1. **Una única raíz**: Todo documento XML debe tener un único elemento raíz que contenga todos los demás elementos.
 2. **Etiquetas balanceadas**: Cada etiqueta de apertura debe tener una etiqueta de cierre correspondiente.
-3. **Atributos entre comillas**: Los valores de los atributos deben estar entre comillas (simples o dobles).
+3. **Atributos entre comillas**: Los valores de los atributos deben estar entre comillas (simples o dobles). Esto significa que, al definir un atributo en un elemento, el valor asignado debe estar rodeado por comillas para ser reconocido correctamente. Por ejemplo, en `<libro idioma="español">`, el atributo `idioma` tiene el valor `español` encerrado entre comillas dobles.
 4. **No elementos solapados**: Los elementos no deben solaparse entre sí.
 
-### 5.2.6. Validación de Documentos XML
+### 5.2.6. Escritura y Lectura de Ficheros XML
+
+La escritura y lectura de ficheros XML es fundamental para trabajar con datos estructurados en Java. A continuación, se presenta una explicación de cómo crear un documento XML simple y cómo leerlo utilizando las clases de la biblioteca estándar de Java.
+
+#### 5.2.6.1. Escritura de un Documento XML Simple
+Para crear un documento XML en Java, se podría utilizar la librería `Files` vista hasta ahora. No obstante, se entiende que cuando se necesitan manejar documentos XML de envergadura, es necesario utilizar librerías especializadas que faliciten el manejo de este tipo de ficheros. 
+
+Una de las librerías para crear un documento XML en Java que puedes utilizar es `java.xml.parsers` y su clase `DocumentBuilder`. Esta clase permite construir un documento XML de manera programática.
+
+```java
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.File;
+
+public class CrearXML {
+    public static void main(String[] args) {
+        try {
+            // Crear un documento XML
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            Document doc = docBuilder.newDocument();
+
+            // Crear el elemento raíz
+            Element raiz = doc.createElement("libro");
+            doc.appendChild(raiz);
+
+            // Crear el elemento título
+            Element titulo = doc.createElement("titulo");
+            titulo.appendChild(doc.createTextNode("El Principito"));
+            raiz.appendChild(titulo);
+
+            // Crear el elemento autor
+            Element autor = doc.createElement("autor");
+            autor.appendChild(doc.createTextNode("Antoine de Saint-Exupéry"));
+            raiz.appendChild(autor);
+
+            // Escribir el contenido del documento en un fichero XML
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File("libro.xml"));
+            transformer.transform(source, result);
+
+            System.out.println("Documento XML creado correctamente.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+**Explicación del Código**
+- Se utiliza `DocumentBuilderFactory` para crear un `DocumentBuilder`, que se usa para construir el documento XML.
+- Se crea un elemento raíz llamado `<libro>`, y se añaden los elementos `<titulo>` y `<autor>` con sus respectivos valores.
+- Se utiliza `Transformer` para escribir el contenido del documento en un fichero llamado `libro.xml`.
+
+#### 5.2.6.1. Lectura de un Documento XML
+Para leer un documento XML en Java, se puede usar `DocumentBuilder` de la misma manera. Este permite cargar el XML y acceder a sus elementos.
+
+```java
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Element;
+import java.io.File;
+
+public class LeerXML {
+    public static void main(String[] args) {
+        try {
+            // Cargar el documento XML
+            File archivo = new File("libro.xml");
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            Document doc = docBuilder.parse(archivo);
+
+            // Normalizar el documento XML
+            doc.getDocumentElement().normalize();
+
+            // Obtener el elemento raíz
+            Element raiz = doc.getDocumentElement();
+            System.out.println("Elemento raíz: " + raiz.getNodeName());
+
+            // Obtener los elementos título y autor
+            NodeList listaLibros = doc.getElementsByTagName("libro");
+            for (int i = 0; i < listaLibros.getLength(); i++) {
+                Element libro = (Element) listaLibros.item(i);
+                System.out.println("Título: " + libro.getElementsByTagName("titulo").item(0).getTextContent());
+                System.out.println("Autor: " + libro.getElementsByTagName("autor").item(0).getTextContent());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+**Explicación del Código**
+- Se carga el documento XML utilizando `DocumentBuilder` y se normaliza el contenido.
+- Se accede al elemento raíz y se imprime su nombre.
+- Se utilizan `getElementsByTagName` para obtener los elementos `<titulo>` y `<autor>` dentro del documento y se imprime su contenido.
+
+---
+
+1. **Ejercicio 1: Crear un Documento XML Simple**. Crea un programa que genere un fichero XML llamado `fruta.xml` que contenga la información de una fruta. El XML debe tener la siguiente estructura:
+   ```xml
+   <fruta>
+       <nombre>Manzana</nombre>
+       <color>Rojo</color>
+       <cantidad>10</cantidad>
+   </fruta>
+    ```
+2. **Ejercicio 2: Leer un Documento XML Simple**. Escribe un programa que lea el fichero `fruta.xml` creado en el Ejercicio 1 y muestre el nombre, el color y la cantidad de la fruta en la consola.
+3. **Ejercicio 3: Crear un Documento XML con Múltiples Frutas**. Modifica el programa del Ejercicio 1 para que genere un fichero XML llamado `frutas.xml` que contenga información de varias frutas. La estructura debe ser similar a:
+    ```xml
+    <frutas>
+    <fruta>
+        <nombre>Manzana</nombre>
+        <color>Rojo</color>
+        <cantidad>10</cantidad>
+    </fruta>
+    <fruta>
+        <nombre>Banana</nombre>
+        <color>Amarillo</color>
+        <cantidad>5</cantidad>
+    </fruta>
+    </frutas>
+    ```
+4. **Ejercicio 4: Leer Múltiples Frutas de un Documento XML**. Escribe un programa que lea el fichero `frutas.xml` creado en el Ejercicio 3 y muestre en la consola el nombre, el color y la cantidad de cada fruta en el archivo. Utiliza un bucle para iterar a través de todos los elementos.
+5. **Ejercicio 5: Modificar un Documento XML Existente**. Crea un programa que lea el fichero `frutas.xml`, permita al usuario modificar el color o la cantidad de una fruta específica (por ejemplo, cambiar la cantidad de la primera fruta a "20"), y luego sobrescriba el fichero `frutas.xml` con la información actualizada. Asegúrate de manejar correctamente la estructura XML al realizar las modificaciones.
+
+### 5.2.7. Validación de Documentos XML
 
 La validación de documentos XML es el proceso de verificar que un documento XML cumple con un conjunto de reglas predefinidas que especifican su estructura y contenido. Esto se realiza utilizando esquemas de validación, que pueden ser DTD (Document Type Definition) o XML Schema.
 
-#### 5.2.6.1. Tipos de Esquemas
+#### 5.2.7.1. Tipos de Esquemas
 
 1. **Document Type Definition (DTD)**:
    - DTD es una forma sencilla de definir la estructura de un documento XML. Especifica qué elementos y atributos pueden aparecer en el documento, así como su orden.
@@ -1043,13 +1182,13 @@ La validación de documentos XML es el proceso de verificar que un documento XML
      ```
    - Aquí se define que el elemento `<biblioteca>` puede contener uno o más elementos `<libro>`, y cada `<libro>` debe tener un `<titulo>` y un `<autor>`, con tipo de dato `string`.
 
-#### 5.2.6.2. Beneficios de la Validación
+#### 5.2.7.2. Beneficios de la Validación
 
 - **Integridad de Datos**: Asegura que los datos en el documento XML cumplen con un formato esperado, lo que previene errores en el procesamiento.
 - **Consistencia**: Garantiza que todos los documentos XML que siguen el mismo esquema son consistentes entre sí, lo que es crucial en sistemas que manejan grandes volúmenes de datos.
 - **Interoperabilidad**: Facilita la comunicación entre diferentes sistemas, ya que un esquema bien definido ayuda a que todos los sistemas comprendan el formato de los datos.
 
-#### 5.2.6.3. Validación en Java
+#### 5.2.7.3. Validación en Java
 
 En Java, la validación de documentos XML se puede realizar utilizando bibliotecas como `javax.xml.validation`. Aquí hay un ejemplo de cómo validar un documento XML contra un esquema XSD:
 
@@ -1081,7 +1220,7 @@ public class ValidarXML {
 }
 ```
 
-### 5.2.6.4. Manejo de Errores de Validación
+### 5.2.7.4. Manejo de Errores de Validación
 
 Cuando se produce un error de validación, es importante manejarlo adecuadamente. El validador puede lanzar excepciones que indican el tipo de error, como:
 
