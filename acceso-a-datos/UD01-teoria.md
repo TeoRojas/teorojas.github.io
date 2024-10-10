@@ -835,6 +835,8 @@ public class CopiarFichero {
     }
 }
 ```
+*¿Sabrías decirme si el método `copy()` tiene alguna forma de sobreescribir archivos al copiar?*
+
 #### Movimiento de ficheros
 Para mover un fichero, se utiliza el método `move()` de la clase `Files`, que permite cambiar la ubicación de un fichero de manera similar a la copia.
 
