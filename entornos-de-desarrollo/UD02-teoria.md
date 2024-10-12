@@ -19,8 +19,7 @@ abstract:
 4. [Componentes de un entorno de desarrollo.](#4-componentes-de-un-entorno-de-desarrollo)
 5. [Instalación de un entorno de desarrollo.](#5-instalación-de-un-entorno-de-desarrollo)
 6. [Mecanismo de actualización de un entorno de desarrollo.]:#(#6-mecanismo-de-actualización-de-un-entorno-de-desarrollo)
-7. [Uso básico de un entorno de desarrollo.]:#(#7-uso-básico-de-un-entorno-de-desarrollo)
-8. [Entornos de desarrollo libres y comerciales más usuales.]:#(#8-entornos-de-desarrollo-libres-y-comerciales-más-usuales)
+7. [Uso básico de un entorno de desarrollo.](#7-uso-básico-de-un-entorno-de-desarrollo)
 9. [Uso de herramientas CASE en el desarrollo de software.]:#(#9-uso-de-herramientas-case-en-el-desarrollo-de-software)
 
 
@@ -758,3 +757,91 @@ Implementar ejemplos prácticos es una manera efectiva de entender cómo las act
 - **Blogs y Artículos:** Escribir blogs o artículos sobre experiencias personales con las actualizaciones puede ayudar a otros desarrolladores a entender mejor las nuevas características y proporcionar una referencia útil para futuros proyectos.
 
 La implementación de ejemplos prácticos es crucial para entender y maximizar los beneficios de las actualizaciones en un entorno de desarrollo integrado, ayudando a los desarrolladores a adaptarse rápidamente y aprovechar las nuevas herramientas y características efectivamente.
+
+# 7. Uso básico de un entorno de desarrollo
+
+El uso básico de un entorno de desarrollo integrado (IDE) es fundamental para cualquier desarrollador de software, ya que proporciona las herramientas necesarias para escribir, editar, compilar, y depurar código de manera eficiente. Un IDE adecuadamente configurado puede acelerar significativamente el desarrollo de software y mejorar la calidad del código. A lo largo de este capítulo, exploraremos las funciones esenciales que todo desarrollador debe dominar para aprovechar al máximo las capacidades de un IDE.
+
+## 7.1. Interfaz de usuario
+
+La interfaz de usuario de un IDE es el punto central donde los desarrolladores pasan la mayor parte de su tiempo. Es crucial que los usuarios comprendan cómo navegar y personalizar esta interfaz para maximizar su productividad.
+
+### Características principales de la interfaz:
+
+- **Barra de herramientas:** Proporciona acceso rápido a las funciones más comunes como guardar, abrir, ejecutar, y depurar.
+- **Área de trabajo:** Donde se edita el código. Suele soportar pestañas para facilitar la navegación entre varios archivos abiertos simultáneamente.
+- **Explorador de proyectos:** Muestra la estructura de archivos y carpetas del proyecto, permitiendo a los usuarios gestionar recursos fácilmente.
+- **Consola o salida:** Muestra la salida del programa, los errores de compilación y mensajes de depuración.
+- **Panel de propiedades:** Permite ajustar configuraciones específicas del proyecto y del IDE.
+  
+### Personalización de la interfaz:
+
+Los IDEs modernos permiten una amplia personalización de la interfaz para adaptar el entorno de trabajo a las preferencias individuales y necesidades del proyecto. Esto puede incluir temas de color, disposición de paneles, y configuraciones de teclado, lo que permite a cada desarrollador crear un entorno donde se sientan cómodos trabajando.
+
+## 7.2. Creación y gestión de proyectos
+
+Un proyecto en un IDE es una colección de archivos de código, bibliotecas y configuraciones que definen cómo se compila, ejecuta y depura una aplicación. Gestionar proyectos eficientemente es esencial para el desarrollo de software estructurado y mantenible.
+
+### Creación de un nuevo proyecto:
+
+Para crear un nuevo proyecto, los usuarios generalmente seleccionan de una lista de plantillas de proyecto que corresponden a diferentes tipos de aplicaciones. Las plantillas preconfiguradas proporcionan la estructura básica del proyecto y archivos de configuración necesarios, lo que ayuda a acelerar el proceso de configuración inicial.
+
+### Importancia de la estructura del proyecto:
+
+Una estructura de proyecto clara y bien organizada es crucial para:
+- **Mantenibilidad:** Facilita la comprensión y el mantenimiento del código a largo plazo.
+- **Colaboración:** Permite que varios desarrolladores trabajen en el mismo proyecto sin interferencias.
+- **Integración y despliegue:** Simplifica los procesos de integración continua y despliegue automatizado.
+
+### Gestión de proyectos:
+
+Los IDEs proporcionan herramientas para gestionar aspectos del proyecto como dependencias de bibliotecas, configuraciones de compilación y entornos de ejecución. Algunos IDEs también integran controladores de versiones, lo que facilita el seguimiento de cambios y la colaboración entre varios desarrolladores.
+
+Aprender a utilizar eficazmente las herramientas de gestión de proyectos que ofrece un IDE es esencial para cualquier desarrollador, ya que esto puede significar la diferencia entre un proyecto exitoso y uno que enfrenta constantes desafíos técnicos.
+
+## 7.3. Edición de código
+
+La edición de código es una de las actividades fundamentales en cualquier entorno de desarrollo. Los IDEs modernos ofrecen una amplia gama de herramientas para facilitar este proceso y aumentar la eficiencia del desarrollador.
+
+### Características de edición avanzada:
+
+- **Resaltado de sintaxis:** Mejora la legibilidad del código al diferenciar visualmente elementos del lenguaje como variables, funciones y estructuras de control.
+- **Autocompletado:** Proporciona sugerencias en tiempo real para completar código basándose en el contexto actual y en las librerías disponibles.
+- **Refactorización:** Permite modificar estructuras de código existentes mejorando su calidad y legibilidad sin alterar su comportamiento funcional.
+- **Doblado de código (Code Folding):** Permite ocultar bloques de código para centrarse en partes específicas del archivo.
+
+Estas herramientas no solo aceleran el desarrollo, sino que también ayudan a prevenir errores comunes, asegurando un código más limpio y mantenible.
+
+## 7.4. Compilación y ejecución
+
+La capacidad de compilar y ejecutar código directamente desde el IDE es otro pilar fundamental de estos entornos. Esta integración proporciona un ciclo de retroalimentación rápido que es esencial para el desarrollo ágil de software.
+
+### Proceso de compilación:
+
+- **Verificación de sintaxis:** Detecta errores de sintaxis antes de que el código se ejecute.
+- **Generación de ejecutables:** Transforma el código fuente en un formato ejecutable por la máquina.
+- **Configuraciones de compilación:** Permite personalizar opciones como optimizaciones y definiciones de preprocesador.
+
+### Ejecución del programa:
+
+- **Ejecución directa:** Permite correr el programa con un clic, lo cual es ideal para pruebas rápidas.
+- **Argumentos de línea de comandos:** Configura parámetros iniciales que el programa requiere para su ejecución.
+- **Perfiles de ejecución:** Crea diferentes configuraciones de ejecución para probar diversas condiciones del entorno.
+
+## 7.5. Depuración
+
+La depuración es un componente crítico del desarrollo de software, permitiendo a los desarrolladores identificar y corregir errores en el código. Los IDEs ofrecen potentes herramientas de depuración integradas que facilitan este proceso.
+
+### Funcionalidades de un depurador:
+
+- **Puntos de interrupción (Breakpoints):** Marca líneas específicas de código donde el IDE detendrá la ejecución para inspección.
+- **Inspección de variables:** Muestra los valores de las variables en tiempo real para análisis.
+- **Paso a paso (Step through):** Permite avanzar por el código línea por línea para observar cómo cambian los estados del programa.
+
+### Herramientas adicionales:
+
+- **Registro de ejecución (Logging):** Captura eventos y valores durante la ejecución para revisión posterior.
+- **Análisis de rendimiento:** Identifica cuellos de botella en el código y ayuda a optimizar la eficiencia del programa.
+
+Dominar estas herramientas de depuración permite a los desarrolladores mantener un alto estándar de calidad del código y asegura que los programas funcionen como es esperado bajo diferentes condiciones.
+
