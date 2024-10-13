@@ -162,6 +162,28 @@ Explorar y evaluar diferentes entornos permite a los equipos seleccionar la herr
 - **Licencia:** La versión Community es libre; la versión Ultimate es propietaria.
 - [Instalar y usar IntelliJ IDEA](https://youtu.be/xyKsnuuHHRI)
 
+---
+**Ejercicio de Investigación 01: Instalar y documentar al menos tres IDEs.** Los alumnos deberán instalar y documentar el proceso de instalación de al menos tres Entornos de Desarrollo Integrados (IDEs) descritos en la unidad. Se deberán realizar capturas de pantalla demostrando cada paso del proceso de instalación. En cada captura de pantalla se añadirá la imagen de un bloc de notas abierto con el nombre y apellidos del alumno, de lo contrario no se evaluará.
+
+1. **Paso 1**: Investigar las características en la teoría los IDEs más interesantes.
+2. **Paso 2**: Instalar los que más gusten (al menos tres). Realiza alguna personalización en el IDE.
+3. **Paso 3**: Comenta similitudes y diferencias encontradas en el proceso de instalación.
+4. **Paso 4**: Elaborar un reporte en el que se adjunte toda la información.
+
+**Objetivos** a cumplir:
+- **CEa**: Se han instalado entornos de desarrollo, propietarios y libres.
+- **CEc**: Se ha personalizado y automatizado el entorno de desarrollo.
+
+**Ejercicio de Investigación 02: Añadir y Eliminar Módulos + Características Comunes y Específicas de IDEs.** Los alumnos deberán realizar un análisis comparativo de dos entornos de desarrollo integrados (por ejemplo, IntelliJ IDEA y Eclipse). En el IDE seleccionado, deberán añadir y eliminar módulos de lenguajes de programación diferentes para adecuarse a las necesidades de un proyecto.
+
+1. **Paso 1**: Investigar las características comunes y específicas de los IDEs IntelliJ IDEA y Eclipse. Realizar una comparativa detallada.
+2. **Paso 2**: Crear un proyecto en el IDE seleccionado e instalar al menos dos módulos para lenguajes diferentes (por ejemplo, Java y Python).
+3. **Paso 3**: Eliminar uno de los módulos y documentar los pasos necesarios para su eliminación.
+4. **Paso 4**: Elaborar un reporte que resuma la comparativa de los IDEs y el proceso de gestión de módulos.
+
+**Objetivos** a cumplir:
+- **CEb**: Se han añadido y eliminado módulos en el entorno de desarrollo.
+- **CEf**: Se han identificado las características comunes y específicas de diversos entornos de desarrollo.
 
 # 3. Funciones de un entorno de desarrollo
 
@@ -780,6 +802,18 @@ Implementar ejemplos prácticos es una manera efectiva de entender cómo las act
 
 La implementación de ejemplos prácticos es crucial para entender y maximizar los beneficios de las actualizaciones en un entorno de desarrollo integrado, ayudando a los desarrolladores a adaptarse rápidamente y aprovechar las nuevas herramientas y características efectivamente.
 
+---
+
+**Ejercicio de Investigación 03: Configuración del Sistema de Actualización + Generación de Ejecutables**. Los alumnos deberán configurar el sistema de actualización de su entorno de desarrollo (puede ser Visual Studio Code o IntelliJ IDEA), asegurándose de que el entorno se mantiene actualizado de forma automática. Luego, deberán generar ejecutables a partir de código fuente en dos lenguajes diferentes dentro del mismo entorno de desarrollo.
+1. **Paso 1**: Configurar el sistema de actualización automática del IDE seleccionado (Visual Studio Code o IntelliJ IDEA). Documentar cómo se ha realizado la configuración.
+2. **Paso 2**: Crear un proyecto que incluya código en dos lenguajes de programación diferentes (por ejemplo, Java, **Python** y C++).
+3. **Paso 3**: Generar los ejecutables correspondientes a cada lenguaje y documentar el proceso de compilación y generación de los ejecutables.
+4. **Paso 4**: Realizar un informe final que incluya tanto la configuración del sistema de actualización como el proceso de generación de ejecutables.
+
+**Objetivos** a cumplir:
+- **CEd**: Se ha configurado el sistema de actualización del entorno de desarrollo.
+- **CEe**: Se han generado ejecutables a partir de código fuente de diferentes lenguajes en un mismo entorno de desarrollo.
+
 # 7. Uso básico de un entorno de desarrollo
 
 El uso básico de un entorno de desarrollo integrado (IDE) es fundamental para cualquier desarrollador de software, ya que proporciona las herramientas necesarias para escribir, editar, compilar, y depurar código de manera eficiente. Un IDE adecuadamente configurado puede acelerar significativamente el desarrollo de software y mejorar la calidad del código. A lo largo de este capítulo, exploraremos las funciones esenciales que todo desarrollador debe dominar para aprovechar al máximo las capacidades de un IDE.
@@ -958,3 +992,15 @@ Adoptar mejores prácticas en el uso de un IDE puede marcar la diferencia entre 
 - **Aprende los atajos de teclado:** Los atajos de teclado pueden dramáticamente reducir el tiempo de desarrollo y mejorar la eficiencia.
 
 Estas prácticas no solo mejoran la productividad individual, sino que también contribuyen a la calidad general del proyecto y al mantenimiento del software.
+
+---
+**Ejercicio de Investigación 04: Herramientas CASE + Solución de Problemas Durante la Actualización.** En este ejercicio, los alumnos deberán utilizar herramientas CASE para diseñar un modelo UML que refleje las principales clases de un proyecto. También deberán simular un problema durante la actualización del entorno de desarrollo y solucionarlo siguiendo las mejores prácticas descritas en la teoría.
+
+1. **Paso 1**: Crear un proyecto en el IDE y utilizar una herramienta CASE para modelar un diagrama UML que represente las principales clases y relaciones de una aplicación básica (como una calculadora o un sistema de gestión de inventario).
+2. **Paso 2**: Simular un error durante el proceso de actualización del entorno de desarrollo (por ejemplo, un conflicto de versiones). Documentar cómo se resolvió este problema utilizando las herramientas de diagnóstico del IDE.
+3. **Paso 3**: Documentar el uso de la herramienta CASE y cómo esta contribuyó a la documentación del proyecto. Incluir capturas de pantalla del diagrama UML generado.
+4. **Paso 4**: Elaborar un informe que detalle tanto la resolución del problema de actualización como el uso de la herramienta CASE.
+
+**Objetivos**:
+- **CEg**: Se han identificado las funciones más usuales de las herramientas CASE para el desarrollo, prueba y documentación de código.
+- **CEf**: Se han solucionado problemas durante la actualización de un entorno de desarrollo.
