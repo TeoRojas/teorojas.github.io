@@ -31,6 +31,26 @@ abstract: Sinopsis de la unidad 01
        5. [Clase Files - Escribir y Leer ficheros de caracteres](#425-clase-files---escribir-y-leer-ficheros-de-caracteres)
        6. [Clase Files - Copia y Movimiento](#426-clase-files---copia-y-movimiento)
 5. [Clase FileSystem](#43-clase-filesystem)
+6. [Trabajo con Ficheros XML, Analizadores Sintácticos y Vinculación](#5-trabajo-con-ficheros-xml-analizadores-sintácticos-y-vinculación)
+   1. [Introducción a XML](#51-introducción-a-xml)
+   2. [Estructura de un Documento XML](#52-estructura-de-un-documento-xml)
+      1. [Elementos](#521-elementos)
+      2. [Atributos](#522-atributos)
+      3. [Texto](#523-texto)
+      4. [Jerarquía](#524-jerarquía)
+      5. [Documentos XML Bien Formados](#525-documentos-xml-bien-formados)
+      6. [Escritura y Lectura de Ficheros XML](#526-escritura-y-lectura-de-ficheros-xml)
+   3. [Validación de Documentos XML](#527-validación-de-documentos-xml)
+   4. [Analizadores Sintácticos (Parsers)](#53-analizadores-sintácticos-parsers)
+      1. [DOM (Document Object Model)](#531-dom-document-object-model)
+      2. [SAX (Simple API for XML)](#532-sax-simple-api-for-xml)
+      3. [StAX (Streaming API for XML)](#533-stax-streaming-api-for-xml)
+   5. [Vinculación (Binding)](#54-vinculación-binding)
+      1. [Introducción a JAXB (Java Architecture for XML Binding)](#541-introducción-a-jaxb-java-architecture-for-xml-binding)
+      2. [Ejemplo de Vinculación con JAXB](#542-ejemplo-de-vinculación-con-jaxb)
+   6. [Ventajas y Desventajas de Usar XML](#55-ventajas-y-desventajas-de-usar-xml)
+      1. [Análisis de Cuándo es Apropiado Utilizar XML en Comparación con Otros Formatos](#551-análisis-de-cuándo-es-apropiado-utilizar-xml-en-comparación-con-otros-formatos)
+
 
 
 
