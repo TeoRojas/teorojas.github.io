@@ -133,7 +133,7 @@ strong{
 }
 
 ul{
-    margin-bottom: 20px;
+    /*margin-bottom: 20px; Al eliminarlo se arreglan los índices*/ 
 }
 
 pre{
