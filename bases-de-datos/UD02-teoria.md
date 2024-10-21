@@ -26,11 +26,29 @@ abstract: Sinopsis de la unidad 02
         5. [Atributos Multivaluados](#425-atributos-multivaluados)
         6. [Atributos Compuestos](#426-atributos-compuestos)
         7. [Atributos Discriminadores o Discriminantes](#427-atributos-discriminadores-o-discriminantes)
+        8. [Tipos de Atributos, resumen](#428-tipos-de-atributos-resumen)
 5. [Relaciones](#5-relaciones)
     1. [Representación Gráfica de Relaciones](#representación-gráfica-de-relaciones)
     2. [Grado de una Relación](#51-grado-de-una-relación)
     3. [Cardinalidad en una Relación](#52-cardinalidad-en-una-relación)
     4. [Participación](#participación)
+    5. [Cardinalidad de Relaciones no Binarias](#53-cardinalidad-de-relaciones-no-binarias)
+    6. [Atributos Propios de una Relación](#atributos-propios-de-una-relación)
+    7. [Dependencias e Interrelaciones](#dependencias-e-interrelaciones)
+6. [Redundancia](#6-redundancia)
+    1. [Atributos Derivados (o Calculados)](#atributos-derivados-o-calculados)
+    2. [Interrelaciones Redundantes](#interrelaciones-redundantes)
+7. [El Modelo E/R Extendido (EER)](#7-el-modelo-er-extendido-eer)
+    1. [Superentidad (Supertipo)](#71-superentidad-supertipo)
+    2. [Subentidad (Subtipo)](#72-subentidad-subtipo)
+    3. [Ejemplo](#73-ejemplo)
+    4. [Generalización y Especialización](#74-generalización-y-especialización)
+    5. [Restricciones de Generalización y Especialización](#75-restricciones-de-generalización-y-especialización)
+        1. [Especialización TOTAL SIN Solapamiento](#751-especialización-total-sin-solapamiento)
+        2. [Especialización PARCIAL SIN Solapamiento](#752-especialización-parcial-sin-solapamiento)
+        3. [Especialización TOTAL CON Solapamiento](#753-especialización-total-con-solapamiento)
+        4. [Especialización PARCIAL CON Solapamiento](#754-especialización-parcial-con-solapamiento)
+    6. [Cardinalidades en las Restricciones de Especialización](#76-cardinalidades-en-las-restricciones-de-especialización)
 
 
 # 1. Introducción
@@ -459,7 +477,7 @@ Considera ahora el siguiente ejercicio en el que se intentan representar diferen
 
 **Una dependencia en identificación implica una dependencia en existencia, pero no al contrario.**
 
-## 5.6. Redundancia.
+# 6. Redundancia.
 
 Decimos que un elemento de un esquema **es redundante cuando puede ser eliminado sin pérdida de semántica.**
 
@@ -516,7 +534,7 @@ Habrá que analizar si al eliminar una interrelación es siempre posible el paso
 - Que se puedan asociar los ejemplares de las dos entidades que estaban interrelacionadas, aún habiéndose eliminado la interrelación. 
 - Que la interrelación o bien no tenga atributos o bien éstos puedan ser transferidos a otra a fin de no perder su semántica.
 
-# 6. El Modelo E/R Extendido [EER]
+# 7. El Modelo E/R Extendido [EER]
 
 El Modelo de Entidad-Relación Extendido (EER en inglés) surge para abordar ciertas limitaciones que se encontraban en el modelo de Entidad-Relación (ER) básico. Estas limitaciones incluían la incapacidad de representar adecuadamente ciertos tipos de relaciones y restricciones complejas en las bases de datos.
 
@@ -526,19 +544,19 @@ Las razones principales para la aparición del modelo EER son las siguientes:
 3. Representación de restricciones adicionales: Las bases de datos suelen tener restricciones y reglas de integridad que no podían ser expresadas de manera efectiva en el modelo ER básico. El EER permite la representación de restricciones de entidad, restricciones de relación y restricciones sobre atributos.
 4. Mayor precisión en la representación: El modelo EER proporciona un conjunto más rico de conceptos y notaciones que permiten una representación más precisa y completa de la estructura de la base de datos y sus restricciones.
 
-## 6.1. Superentidad (Supertipo).
+## 7.1. Superentidad (Supertipo).
 
 Una superentidad, o supertipo, es una entidad que agrupa a varias subentidades que comparten ciertos atributos. Actúa como una categoría general o clase principal que abarca un conjunto de entidades más específicas, manteniendo atributos comunes entre ellas.
 
 En otras palabras, una superentidad representa una categoría amplia que generaliza a otras entidades que se derivan de ella. Los atributos de la superentidad son compartidos por las subentidades, pero estas subentidades pueden tener también atributos propios. Por ejemplo, en un modelo de una tienda en línea, "Producto" podría ser una superentidad que agrupa categorías como "Libros", "Ropa" y "Electrónicos".
 
-## 6.2. Subentidad (Subtipo).
+## 7.2. Subentidad (Subtipo).
 
 Una subentidad, o subtipo, es una entidad más específica que se deriva de una superentidad. Aunque hereda los atributos comunes de la superentidad, también tiene sus propios atributos y características que la distinguen de otras subentidades dentro de la misma superentidad.
 
 Cada subentidad añade atributos únicos que no están presentes en otras subentidades del mismo supertipo. Usando el ejemplo anterior, "Libros" y "Ropa" serían subentidades que pertenecen a la superentidad "Producto", con atributos propios que los diferencian, como el autor en el caso de los libros o la talla en el caso de la ropa.
 
-## 6.3. Ejemplo.
+## 7.3. Ejemplo.
 
 Observa el ejemplo de la figura anterior. En él, la relación entre una superentidad y sus subentidades podría representarse con una superentidad *Empleado*, que tiene atributos comunes como `id`, `nombre` y `teléfono`. Esta superentidad se divide en dos subentidades: 
 
@@ -551,7 +569,7 @@ Este modelo permite que las subentidades hereden los atributos comunes de la sup
 
 La relación entre superentidades y subentidades se conoce como una jerarquía de entidades. Esta jerarquía permite modelar la diversidad y las relaciones entre diferentes tipos de entidades de manera más estructurada y organizada. Cada subentidad es un subconjunto específico de la superentidad y hereda sus características generales, lo que facilita la gestión y el análisis de datos.
 
-## 6.4. Generalización y Especialización.
+## 7.4. Generalización y Especialización.
 
 ![Generalización y Especialización](/bases-de-datos/imgs/ud02/ud02_img12_eer02.svg)
 
@@ -565,7 +583,7 @@ Siguiendo el ejemplo anterior, **Empleado a tiempo completo** (*Asalariado*) y *
 
 En los diagramas de entidad-relación extendidos (EER), las relaciones entre generalización y especialización se representan mediante líneas que conectan la superentidad con sus subtipos correspondientes. Estos conceptos permiten modelar la jerarquía de entidades de manera más eficiente, destacando las similitudes y diferencias entre subtipos.
 
-## 6.5. Restricciones de generalización y especialización.
+## 7.5. Restricciones de generalización y especialización.
 
 Las restricciones definen cómo se organiza la jeraquía de subentidades bajo una superentidad. A continuación aparece una explicación detallada de cada una.
 
@@ -626,7 +644,7 @@ Por ejemplo, **en el dominio del siguiente ejemplo**, una PERSONA puede ser un T
 | ![Especialización TOTAL CON solapamiento](/bases-de-datos/imgs/ud02/ud02_img12_totalConSolapamiento.svg) |   |   |   | ![Especialización PARCIAL CON solapamiento](/bases-de-datos/imgs/ud02/ud02_img12_parcialConSolapamiento.svg) |
 
 
-## 6.6. Cardinalidades en las restricciones de especialización.
+## 7.6. Cardinalidades en las restricciones de especialización.
 
 Al analizar las cardinalidades dentro de los procesos de generalización y especialización, es importante resaltar dos aspectos clave que regulan cómo se relacionan las superentidades y los subtipos en un diagrama de entidad-relación extendido (EER). Estas consideraciones son fundamentales para comprender cómo funcionan las jerarquías de entidades y las restricciones que se aplican en términos de cardinalidad. A continuación, desglosamos estos dos puntos con mayor detalle:
 
