@@ -1404,8 +1404,8 @@ Para comenzar el mapeo, debes definir una clase Java que represente la estructur
 
 **Ejemplo de Clase Java**:
 ```java
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "libro")
 public class Libro {
@@ -1439,9 +1439,9 @@ Para transformar un documento XML en un objeto Java, utilizas el proceso de dese
 
 **Ejemplo de Deserialización:**
 ```java
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 import java.io.File;
 
 public class VinculacionXML {
@@ -1467,9 +1467,9 @@ El proceso inverso, que convierte un objeto Java a un documento XML, se conoce c
 
 **Ejemplo de Serialización:**
 ```java
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
 import java.io.File;
 
 public class SerializarXML {
@@ -1529,8 +1529,8 @@ Supongamos que tienes un fichero XML llamado `libros.xml` con el siguiente conte
 Primero, definimos una clase `Libro` que representará cada libro en el XML:
 
 ```java
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "libro")
 public class Libro {
@@ -1562,8 +1562,8 @@ public class Libro {
 Luego, se define una clase `Libros` que contendrá una lista de objetos Libro:
 
 ```java
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 @XmlRootElement(name = "libros")
@@ -1585,9 +1585,9 @@ public class Libros {
 A continuación, se muestra cómo vincular el contenido del fichero XML a objetos Java:
 
 ```java
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 import java.io.File;
 
 public class VinculacionLibros {
@@ -1609,11 +1609,45 @@ public class VinculacionLibros {
     }
 }
 ```
-### Explicación del Código
-
+**Explicación del Código**
 - **Definición de Clases**: Se definen las clases `Libro` y `Libros`, donde `Libros` contiene una lista de objetos `Libro`.
 - **Carga del XML**: Se utiliza `Unmarshaller` para cargar el documento XML y convertirlo en una instancia de `Libros`.
 - **Iteración sobre los Libros**: Una vez deserializados, se itera sobre la lista de libros para mostrar sus títulos y autores.
+
+### 5.4.3. Usar Maven para Manejar Dependencias
+
+Para utilizar la biblioteca Jakarta JAXB en tu proyecto, es recomendable usar Maven, que es una herramienta de gestión de proyectos y construcción en Java. Maven simplifica el manejo de dependencias y la construcción del proyecto.
+
+Contenido del archivo `pom.xml`:
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId> <!-- Ajusta esto si es necesario -->
+    <artifactId>xml</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>3.0.1</version> <!-- O la versión que necesites -->
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>3.0.1</version> <!-- O la versión que necesites -->
+        </dependency>
+    </dependencies>
+</project>
+```
+**Explicación del `pom.xml`**
+- **``groupId``**: Identifica de manera única tu proyecto.
+- **``artifactId``**: Nombre del proyecto.
+- **``dependencies``**: Aquí se declaran las bibliotecas que tu proyecto necesita, en este caso, las bibliotecas de Jakarta JAXB.
+
 
 ## 5.5. Ventajas y Desventajas de Usar XML
 
@@ -1664,3 +1698,106 @@ La elección de XML como formato de datos debe basarse en el contexto y los requ
 ### Conclusión
 
 XML es un formato poderoso con muchas ventajas en el manejo de datos estructurados, pero su uso debe ser considerado en función de las necesidades específicas de la aplicación. Comprender las ventajas y desventajas de XML en comparación con otros formatos permite a los desarrolladores tomar decisiones informadas sobre qué formato utilizar en sus proyectos.
+
+---
+### **Ejercicio 1**: Serializar un Objeto a XML.
+
+**Objetivo:** Serializar un objeto de la clase `Libro` a un fichero XML.
+
+**Instrucciones:**
+1. Crea una nueva clase `GuardarLibroXML`.
+2. En el método `main`, crea un objeto `Libro`, establece su título y autor, y guarda el objeto en un fichero llamado `nuevo_libro.xml`.
+
+```java
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import java.io.File;
+
+public class GuardarLibroXML {
+    public static void main(String[] args) {
+        // Completar
+    }
+}
+```
+
+### **Ejercicio 2**: Manejar una Colección de Libros.
+
+**Objetivo:** Leer un documento XML que contenga una lista de libros y mostrarlos en la consola.
+
+**Instrucciones:**
+1. Crea un fichero XML llamado `libros.xml` que contenga varios libros:
+
+```xml
+<libros>
+    <libro>
+        <titulo>El Principito</titulo>
+        <autor>Antoine de Saint-Exupéry</autor>
+    </libro>
+    <libro>
+        <titulo>1984</titulo>
+        <autor>George Orwell</autor>
+    </libro>
+</libros>
+```
+
+2. Define la clase `Libros` que contenga una lista de objetos `Libro`.
+3. Crea una clase `LeerLibrosXML`que use `Unmarshaller`para deserializar el XML y mostrar todos los títulos y autores en la consola.
+
+```java
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
+import java.io.File;
+
+// Completar la clase
+public class LeerLibrosXML {
+    public static void main(String[] args) {
+        // Completar
+    }
+}
+```
+
+### **Ejercicio 3**: Exportar e Importar Datos a Formatos Diferentes.
+
+**Objetivo:** Desarrollar una aplicación que permita exportar la lista de libros a formato CSV y también leer desde el CSV para crear objetos `Libro`.
+
+**Instrucciones:**
+1. Crea un método en la clase `LeerLibrosXML` que exporte la lista de libros a un archivo CSV llamado `libros.csv`.
+2. Implementa otro método que lea el archivo `libros.csv` y cree objetos `Libro`a partir de los datos.
+3. El archivo CSV debe tener el siguiente formato:
+
+```yaml
+titulo,autor
+El Principito, Antoine de Saint-Exupéry
+1984,George Orwell
+```
+**Asegúrate de que el archivo java mantenga la siguiente estructura:**
+
+```java
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+
+// Completar la clase
+public class LeerLibrosXML {
+    public static void main(String[] args) {
+        // Completar
+    }
+
+    // Método para exportar a CSV
+    public void exportarALibrosCSV() {
+        // Completar
+    }
+
+    // Método para importar desde CSV
+    public void importarDesdeLibrosCSV() {
+        // Completar
+    }
+}
+```

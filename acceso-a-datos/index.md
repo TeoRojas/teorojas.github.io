@@ -12,7 +12,7 @@ abstract: En Acceso a Datos te lanzaremos a la aventura de conectar con el coraz
 * [Contenidos básicos.](/acceso-a-datos/contenidos-basicos/)
 
 # Índice de Contenidos
-1. [Gestión de la información almacenada en Ficheros.](/acceso-a-datos/ud01/teoria/)
+1. [Gestión de la información almacenada en Ficheros.](/acceso-a-datos/ud01/teoria/) / [Ejercicios Finales RA01.](/acceso-a-datos/ud01/ejercicios/)
 2. Desarrollo de aplicaciones que gestionan información en bases de datos relacionales.
 3. Gestión de la persistencia de los datos con herramientas de mapeo objeto relacional (ORM).
 4. Desarrollo de aplicaciones que gestionan bases de datos objeto relacionales y orientadas a objetos.

@@ -46,16 +46,17 @@ abstract: Sinopsis de la unidad 01
 
 2. **Estructura del Fichero XML:**
    - La estructura del fichero XML deberá ser la siguiente:
-     ```xml
-     <libros>
-         <libro>
-             <titulo>Título del libro</titulo>
-             <autor>Autor del libro</autor>
-             <año>2024</año>
-         </libro>
-         <!-- Más libros -->
-     </libros>
-     ```
+
+   ```xml
+   <libros>
+      <libro>
+            <titulo>Título del libro</titulo>
+            <autor>Autor del libro</autor>
+            <año>2024</año>
+      </libro>
+      <!-- Más libros -->
+   </libros>
+   ```
 
 # 2. Ejercicio: Sistema de Gestión de Contactos en Ficheros XML
 
@@ -75,16 +76,17 @@ abstract: Sinopsis de la unidad 01
 
 2. **Estructura del Fichero XML:**
    - La estructura del fichero XML deberá ser la siguiente:
-     ```xml
-     <contactos>
-         <contacto>
-             <nombre>Nombre del contacto</nombre>
-             <telefono>123456789</telefono>
-             <direccion>Dirección del contacto</direccion>
-         </contacto>
-         <!-- Más contactos -->
-     </contactos>
-     ```
+
+   ```xml
+   <contactos>
+      <contacto>
+            <nombre>Nombre del contacto</nombre>
+            <telefono>123456789</telefono>
+            <direccion>Dirección del contacto</direccion>
+      </contacto>
+      <!-- Más contactos -->
+   </contactos>
+   ```
 
 # 3. Ejercicio: Sistema de Gestión de Productos en Ficheros XML
 
@@ -104,16 +106,17 @@ abstract: Sinopsis de la unidad 01
 
 2. **Estructura del Fichero XML:**
    - La estructura del fichero XML deberá ser la siguiente:
-     ```xml
-     <productos>
-         <producto>
-             <nombre>Nombre del producto</nombre>
-             <precio>19.99</precio>
-             <cantidad>50</cantidad>
-         </producto>
-         <!-- Más productos -->
-     </productos>
-     ```
+
+   ```xml
+   <productos>
+      <producto>
+            <nombre>Nombre del producto</nombre>
+            <precio>19.99</precio>
+            <cantidad>50</cantidad>
+      </producto>
+      <!-- Más productos -->
+   </productos>
+   ```
 
 # 4. Rúbrica
 - **CEa**: Se han utilizado clases para la gestión de ficheros y directorios.
