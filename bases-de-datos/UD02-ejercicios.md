@@ -39,7 +39,7 @@ Elabora el esquema ER que contemple lo siguiente:
 - Una asignatura es impartida por un único profesor.
 - Un profesor podrá impartir varias asignaturas.
 
-![ER Alumno-Asignatura-Profesor](/bases-de-datos/imgs/ud02_ER_e01.png)
+![ER Alumno-Asignatura-Profesor](/bases-de-datos/imgs/ud02/ud02_ER_e01.svgud02_ER_e01.svg)
 
 - **\*1**: La participación mínima de P-A (PROFESOR-Imparte-ASIGNATURA) no queda reflejado en los requisitos del enunciado. Por lo tanto se toma la decisión de usar la participación mínima 0, por dos motivos:
 1. Abarca más dominio en el atributo.
