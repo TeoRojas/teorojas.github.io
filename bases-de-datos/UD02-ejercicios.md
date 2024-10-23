@@ -57,6 +57,12 @@ Obtén el esquema ER para el siguiente supuesto. Una empresa dedicada a la insta
 - Cada modelo de dormitorio puede ser comprado por uno o varios clientes, y el mismo cliente podrá comprar uno o varios dormitorios. 
 - De un cliente nos interesa su NIF, nombre, dirección, teléfono y fecha de compra de cada modelo.
 
+![ER Alumno-Asignatura-Profesor](/bases-de-datos/imgs/ud02/ud02_ER_e02.svg)
+
+- **\*1**: La participación mínima de Montador-Monta-ModeloDeDormitorio no la indica en los requisitos del problema. Por ello se elige 1, en primer lugar porque en una `FechaMontaje` un montador debe de estar montando al menos un dormitorio.
+- **\*2**: Se entiende que un montador puede montar más de un Modelo de Dormitorio en la misma fecha (en el mismo día).
+- **\*3**: Para obtener la cantidad total de dormitorios de un modelo montados por un montador no se debe poner ningún atributo. En la BDD se sumarán los registros que aparecen en la tabla "Monta" correspondientes al montador y modelo deseados.
+
 ## 3. Ejercicio 3: Esquema ER de Red de Enseñanzas.
 
 Se pretende guardar información sobre la red de institutos de enseñanzas medias de una comunidad autónoma con los siguientes valores:
