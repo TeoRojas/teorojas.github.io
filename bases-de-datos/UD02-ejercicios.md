@@ -39,6 +39,12 @@ Elabora el esquema ER que contemple lo siguiente:
 - Una asignatura es impartida por un único profesor.
 - Un profesor podrá impartir varias asignaturas.
 
+![ER Alumno-Asignatura-Profesor](/bases-de-datos/imgs/ud02_ER_e01.png)
+
+- **\*1**: La participación mínima de P-A (PROFESOR-Imparte-ASIGNATURA) no queda reflejado en los requisitos del enunciado. Por lo tanto se toma la decisión de usar la participación mínima 0, por dos motivos:
+1. Abarca más dominio en el atributo.
+2. Se quiere representar que haya Profesores que no estén impartiendo ninguna asignatura (Profesor en estado de baja).
+
 ## 2. Ejercicio 2: Esquema ER de Montador-Dormitorio-Cliente.
 
 Obtén el esquema ER para el siguiente supuesto. Una empresa dedicada a la instalación de dormitorios juveniles (a medida) quiere realizar una base de datos donde se reflejen las ventas y montajes, para lo cual se tiene en cuenta:
