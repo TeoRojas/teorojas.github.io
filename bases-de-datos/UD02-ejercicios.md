@@ -41,9 +41,10 @@ Elabora el esquema ER que contemple lo siguiente:
 
 ![ER Alumno-Asignatura-Profesor](/bases-de-datos/imgs/ud02/ud02_ER_e01.svg)
 
-- **\*1**: La participación mínima de P-A (PROFESOR-Imparte-ASIGNATURA) no queda reflejado en los requisitos del enunciado. Por lo tanto se toma la decisión de usar la participación mínima 0, por dos motivos:
-1. Abarca más dominio en el atributo.
-2. Se quiere representar que haya Profesores que no estén impartiendo ninguna asignatura (Profesor en estado de baja).
+**\*1**: La participación mínima en la relación PROFESOR-Imparte-ASIGNATURA no se especifica en los requisitos del problema. Por lo tanto, se ha decidido establecer una participación mínima de 0. Esta decisión se toma por dos razones principales:
+
+1. **Mayor Flexibilidad:** Permite abarcar un dominio más amplio, lo que significa que se pueden representar casos en los que un profesor no esté asignado a ninguna asignatura.
+2. **Casos Especiales:** Refleja la posibilidad de que haya profesores que no estén impartiendo ninguna asignatura en un momento determinado, por ejemplo, debido a una licencia o una baja temporal.
 
 ## 2. Ejercicio 2: Esquema ER de Montador-Dormitorio-Cliente.
 
@@ -59,9 +60,9 @@ Obtén el esquema ER para el siguiente supuesto. Una empresa dedicada a la insta
 
 ![ER Alumno-Asignatura-Profesor](/bases-de-datos/imgs/ud02/ud02_ER_e02.svg)
 
-- **\*1**: La participación mínima de Montador-Monta-ModeloDeDormitorio no la indica en los requisitos del problema. Por ello se elige 1, en primer lugar porque en una `FechaMontaje` un montador debe de estar montando al menos un dormitorio.
-- **\*2**: Se entiende que un montador puede montar más de un Modelo de Dormitorio en la misma fecha (en el mismo día).
-- **\*3**: Para obtener la cantidad total de dormitorios de un modelo montados por un montador no se debe poner ningún atributo. En la BDD se sumarán los registros que aparecen en la tabla "Monta" correspondientes al montador y modelo deseados.
+- **\*1 Participación mínima en la relación MONTADOR-Monta-MODELO_DORMITORIO:** En los requisitos del problema no se menciona explícitamente la participación mínima de los montadores en la relación "MONTADOR-Monta-MODELO_DORMITORIO". Por esta razón, se ha optado por establecer una participación mínima de 1, lo que implica que en una fecha de montaje, un montador debe estar involucrado en la instalación de al menos un dormitorio. Esto garantiza que la relación sea consistente y refleja la necesidad de tener al menos un dormitorio montado en cualquier momento registrado.
+- **\*2. Montaje de múltiples modelos en la misma fecha:** Se asume que un montador puede montar más de un dormitorio en el mismo día. Esto significa que la relación `Monta` permite la posibilidad de que un montador realice montajes de varios dormitorios (mismo modelo o no) en el mismo día pero a distinta hora (se entiende que en fecha queda reflejada la hora), registrando cada uno de ellos como una entrada distinta en la base de datos.
+- **\*3. Calculo de la cantidad total de dormitorios montados por un montador:** Para determinar la cantidad total de dormitorios de un modelo montados por un montador, no es necesario añadir un atributo específico para esta información en el esquema ER. En su lugar, se puede calcular sumando los registros correspondientes en la tabla `Monta` que coinciden con el montador y el modelo de dormitorio en cuestión. Esto proporciona la flexibilidad para agregar nuevos registros de montajes sin necesidad de modificar la estructura del modelo de datos.
 
 ## 3. Ejercicio 3: Esquema ER de Red de Enseñanzas.
 
@@ -72,6 +73,12 @@ Se pretende guardar información sobre la red de institutos de enseñanzas media
 - Toda ciudad pertenece a una provincia, de la cual sabemos su código (único), su nombre y la superficie en kilómetros cuadrados. 
 - Se tienen datos de los inspectores que controlan el funcionamiento de los institutos. Un inspector puede ser destinado para controlar varias ciudades, pero cada ciudad sólo puede tener asignado un inspector.
 - De cada inspector conocemos: nif, nombre, apellidos y teléfono.
+
+![ER Instituto-Ciudad-Inspector](/bases-de-datos/imgs/ud02/ud02_ER_e03.svg)
+
+- **\*1 Participación mínima en la relación CIUDAD-TieneSituado-INSTITUTO:** En los requisitos del ejercicio no se especifica la participación mínima de los institutos en la relación `TieneSituado`. Por lo tanto, se ha decidido establecer una participación mínima de 0. Esta decisión se toma para reflejar la posibilidad de que algunas ciudades no tengan ningún instituto. Así, el modelo es más flexible y abarca situaciones reales en las que podría no existir un instituto en cada ciudad.
+- **\*2. Participación mínima en la relación Controla (CIUDAD-EsControladaPor-INSPECTOR):** La elección anterior (ver **\*1**) implica que el esquema ER permita la existencia de ciudades sin inspectores asignados, ya que es posible que algunas ciudades no alberguen institutos. En tal caso, no tendría sentido asignar un inspector a una ciudad sin institutos. Por eso, la participación mínima se ha configurado también en 0 para reflejar esta posibilidad.
+- **\*3. Participación mínima en la relación Controla (INSPECTOR-Controla-CIUDAD):** Se ha establecido la participación mínima de los inspectores en la relación `Controla` en 0, para contemplar la posibilidad de que existan inspectores que no tengan asignada ninguna ciudad en particular. Esto podría ocurrir, por ejemplo, si un inspector está de baja temporal o en cualquier otra situación en la que no se le asigne la supervisión de una ciudad específica. Esta decisión permite que el modelo sea más flexible y represente con precisión la realidad, considerando casos en los que un inspector no esté ejerciendo sus funciones activamente.
 
 ## 4. Ejercicio 4: Esquema ER de Empleados de Empresa.
 
