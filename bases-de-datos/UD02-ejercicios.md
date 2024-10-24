@@ -89,7 +89,7 @@ Se persigue guardar información sobre los empleados de una empresa; éstos se o
 - Para algunos empleados se conoce la comisión mensual que cobra; para otros, se desconoce ese dato.
 - Un empleado siempre está adscrito a un departamento y solo puede pertenecer a un departamento.
 - De cada departamento: número (único), nombre, presupuesto anual, el número de empleado que corresponde al director y el tipo de director (fijo o eventual) y número del centro al cual pertenece. 
-- Todo departamento tiene un solo director..
+- Todo departamento tiene un solo director.
 
 
 ## 5. Ejercicio 5: Esquema ER de Formula 1.
