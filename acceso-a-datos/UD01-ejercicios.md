@@ -152,6 +152,6 @@ abstract: Sinopsis de la unidad 01
 - Se evaluará la claridad y organización de la presentación, así como la capacidad para responder preguntas y defender su enfoque.
 
 ## 4.3. Instrucciones Adicionales
-- Los estudiantes deben entregar su código fuente y la documentación en pdf de **un solo ejercicio** en la tarea de Moodel habilitada a tal efecto.
+- Los estudiantes deben entregar su código fuente y la documentación en pdf de **un solo ejercicio** en la tarea de Moodle habilitada a tal efecto.
 - La defensa del ejercicio tendrá lugar en clase, donde cada alumno dispondrá de 5 minutos para presentar su trabajo y 5 minutos aproximadamente para responder preguntas.
 
