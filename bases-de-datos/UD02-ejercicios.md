@@ -153,9 +153,19 @@ Se quiere guardar en una BDD información sobre los libros de una biblioteca, la
 - Cada libro sólo puede ser solicitado a la editorial por un solo empleado. 
 - Los lectores deben poseer un carnet que se le rellena en la primera visita a la biblioteca. Se guarda su NIF, nombre completo y teléfono. 
 - Cada usuario sólo puede tener retirado un libro en cada momento. 
-- Un lector no puede retirar más de una vez el mismo libro. 
 - Puede que existan usuarios que no hayan solicitado ningún libro. 
 - Se anota de cada petición de préstamo, la fecha de préstamo y la fecha de devolución.
+
+<!-- 
+[ER de Biblioteca](/bases-de-datos/imgs/ud02/ud02_ER_e08.svg)
+
+- **\*1 Participación mínima en la relación LIBRO-EsTenido-ESTANTERÍA:** Se considera que algunos libros podrían aún no estar asignados a una estantería específica, especialmente en casos como libros recientemente adquiridos o que están en proceso de catalogación. Por lo tanto, la participación mínima en esta relación es 0, permitiendo la flexibilidad de que ciertos libros permanezcan sin ubicación fija temporalmente.
+- **\*2 Participación mínima en la relación ESTANTERÍA-Tiene-LIBRO:** Al registrar una estantería en el sistema, esta podría estar vacía, ya sea por estar destinada a futuras adquisiciones o por estar temporalmente sin libros. De ahí que se establezca la participación mínima en 0 para reflejar que las estanterías pueden existir en la base de datos sin contener libros en determinados momentos.
+- **\*3 Participación mínima en la relación AUTOR-Escribe-LIBRO:** La base de datos puede contener información de autores que aún no tienen obras registradas en la biblioteca. Esto podría incluir autores cuyas obras están pendientes de adquisición. La participación mínima de 0 permite que un autor esté registrado sin que necesariamente haya un libro asociado en el sistema en ese momento.
+- **\*4 Participación mínima en la relación LIBRO-Escrito-AUTOR:** En la relación entre LIBRO y AUTOR, existe la posibilidad de que algunos libros sean de autoría anónima. En estos casos, se puede registrar el autor como “Anónimo” para mantener consistencia en la base de datos. Esto asegura que todos los libros tengan un autor registrado, aunque sea de manera general como “Anónimo”.
+- **\*5 Participación mínima en la relación EDITORIAL-Suministra-LIBRO:** Al registrar editoriales en la base de datos, es posible que algunas de ellas aún no hayan suministrado libros a la biblioteca. Esto permite anticipar futuras colaboraciones con editoriales o gestionar editoriales potenciales, por lo que la participación mínima se establece en 0.
+- **\*6 Participación mínima en la relación LIBRO-EsSolicitado-EMPLEADO:** En este caso, la participación mínima es 1, ya que cualquier libro que se encuentre en la biblioteca ha tenido que ser solicitado previamente por un empleado. Esto asegura que todos los libros tengan un registro de solicitud que justifique su incorporación a la biblioteca y refleja la necesidad de esta relación para los registros de inventario.
+-->
 
 ## 9. Ejercicio 9: Esquema ER de Startrek.
 
@@ -170,12 +180,15 @@ Realiza un diagrama entidad relación que modele el diseño de la siguiente base
 - Planetas: En cada capítulo, se visita 1 o varios planteas, hay que almacenar el código del planeta, su nombre, galaxia a la que pertenece, el problema que se resolvió en esa visita y la nave con la que se viajó al planeta. Para la descripción del problema será suficiente con un campo de texto de 255 caracteres. 
 - De la nave se almacenará el nombre, código y número de tripulantes.
 
+<!-- 
+[ER de Startrek](/bases-de-datos/imgs/ud02/ud02_ER_e09.svg)
 Consideraciones a tener en cuenta:
 
 - En el enunciado no aparece explícitamente el campo Código para los personajes y actores, pero es necesario incluirlo para dotar de un atributo clave a estas entidades.
 - La clave de la entidad Capítulo es compuesta debido a la idiosincrasia de las mismas.
 - La relación ternaria tiene cardinalidad N:M:P, es decir, Muchos-Muchos-Muchos.
 - Se sobreentiende que un jefe de zona no tiene que tener trabajadores a su cargo obligatoriamente.
+-->
 
 ## 10. Ejercicio 10: Esquema ER de Lanzadera en Startrek.
 
