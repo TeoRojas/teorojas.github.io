@@ -91,6 +91,8 @@ Se persigue guardar información sobre los empleados de una empresa; éstos se o
 - De cada departamento: número (único), nombre, presupuesto anual, el número de empleado que corresponde al director y el tipo de director (fijo o eventual) y número del centro al cual pertenece. 
 - Todo departamento tiene un solo director.
 
+![ER Empleados-Empresa](/bases-de-datos/imgs/ud02/ud02_ER_e04.svg)
+
 
 ## 5. Ejercicio 5: Esquema ER de Formula 1.
 
@@ -102,6 +104,9 @@ Se quiere guardar información sobre la Fórmula 1, específicamente sobre los p
 - En cada carrera suelen correr varios pilotos, y cada piloto puede correr en una o más carreras. 
 - Cada carrera se corre en un circuito, y en un circuito se pueden celebrar una o más carreras (normalmente, una cada año, aunque algunos circuitos son descartados del calendario en determinadas temporadas).
 - De cada piloto que participa en una carrera: puesto de salida (parrilla), puesto de llegada (su valor puede ser un número de orden o, si el piloto no ha completado la carrera, el valor será una abreviatura indicativa del motivo -DES: descalificado, FM: fallo mecánico, SP: salida de pista, etc.-), tiempo empleado y puntos conseguidos (valor de 0 a 10).
+
+![ER Fórmula1](/bases-de-datos/imgs/ud02/ud02_ER_e05.svg)
+
 
 ## 6. Ejercicio 6: Esquema ER de Libros, Autores y Temas.
 
