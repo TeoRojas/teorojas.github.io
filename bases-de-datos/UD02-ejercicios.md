@@ -107,6 +107,7 @@ Se quiere guardar información sobre la Fórmula 1, específicamente sobre los p
 
 ![ER Fórmula1](/bases-de-datos/imgs/ud02/ud02_ER_e05.svg)
 
+- **\*1 Participación mínima en la relación CARRERA-TieneParticipando-PILOTO:** En los requisitos del problema, no se especifica un mínimo de pilotos en cada carrera, pero, por definición, una carrera oficial de Fórmula 1 requiere la participación de al menos dos pilotos. Si solo un piloto está presente, el evento se considera más apropiado como una sesión de control de tiempos por vuelta o práctica individual, no como una carrera competitiva oficial. Por lo tanto, se establece la participación mínima de pilotos en 2 para reflejar que el evento cumpla con los criterios de carrera y no se confunda con una actividad individual o de práctica.
 
 ## 6. Ejercicio 6: Esquema ER de Libros, Autores y Temas.
 
