@@ -122,6 +122,8 @@ Se persigue guardar información sobre libros, sus autores y el tema que tratan:
 - Un tema concreto puede abarcar varios subtemas, pero un subtema sólo se encuadra dentro de un determinado tema. En principio, en la base de datos guardaremos una gran variedad de temas, cada uno con sus correspondientes subtemas; por tanto, puede que en un momento determinado haya temas o subtemas que no clasifiquen a ningún libro. 
 - Antes de insertar un subtema en la BDD habrá que insertar el tema al que corresponde; análogamente, si un tema se elimina de la BDD también se eliminarán todos los subtemas que abarca.
 
+![ER de Libros y Autores](/bases-de-datos/imgs/ud02/ud02_ER_e06.svg)
+
 ## 7. Ejercicio 7: Esquema ER de Clasificación ATP de Tenis.
 
 Realiza un diagrama entidad relación que modele el diseño de la siguiente base de datos.Deseamos almacenar información en una base de datos (BDD) siguiendo estas pautas:
@@ -139,6 +141,9 @@ Los siguientes puntos son importantes:
 - Cada torneo se celebra una vez al año, y tenemos datos de varios años, incluido el año actual. 
 - Se considera que dos torneos diferentes pueden comenzar en la misma fecha.
 - No existen jugadores ni entrenadores con el mismo nombre.
+
+![ER de Tenistas, Entrenadores y Torneos](/bases-de-datos/imgs/ud02/ud02_ER_e07.svg)
+
 
 ## 8. Ejercicio 8: Esquema ER de Biblioteca.
 
