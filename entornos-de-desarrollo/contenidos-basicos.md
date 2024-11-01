@@ -44,7 +44,7 @@ date: Septiembre 2024
   - Normas y certificaciones.
   - Medidas de calidad del software.
 
-4. Optimización y documentación:
+4. Optimización, control de versiones y documentación:
 - Refactorización.
   - Concepto y limitaciones.
   - Patrones de refactorización más usuales.
