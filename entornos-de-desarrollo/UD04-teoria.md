@@ -77,7 +77,10 @@ GitHub no solo simplifica la gestión de proyectos de software, sino que tambié
 
 Configurar un repositorio en GitHub es un proceso fundamental para comenzar a trabajar en cualquier proyecto colaborativo. Aquí te guiaré a través de los pasos esenciales para configurar un nuevo repositorio.
 
-### Paso 1: Crear un nuevo repositorio
+### 3.4.1. En Remoto (web Github)
+
+**Paso 1: Crear un nuevo repositorio**
+
 1. **Iniciar sesión en GitHub:** Asegúrate de estar conectado a tu cuenta de [GitHub](https://github.com/).
 2. **Ir a la página principal:** Haz clic en tu perfil de usuario y selecciona 'Your repositories'.
 3. **Crear nuevo repositorio:** Haz clic en el botón 'New' situado en la parte superior derecha de la página de repositorios.
@@ -86,37 +89,83 @@ Configurar un repositorio en GitHub es un proceso fundamental para comenzar a tr
    - **Descripción (opcional):** Proporciona una breve descripción del repositorio.
    - **Visibilidad del Repositorio:** Decide si quieres que el repositorio sea público (visible para todos) o privado (visible solo para ti y aquellos a quienes otorgues acceso).
 
-### Paso 2: Configuración inicial
+
+**Paso 2: Configuración inicial**
+
 1. **Inicializar con README:** Marca esta opción para crear automáticamente un archivo `README.md` en tu repositorio, que puedes utilizar para describir el proyecto.
 2. **Agregar .gitignore:** GitHub ofrece una lista de plantillas .gitignore que puedes utilizar para ignorar automáticamente los archivos no deseados en tus commits.
 3. **Elegir una licencia:** Si planeas compartir tu código, seleccionar una licencia es crucial. GitHub proporciona varias opciones que puedes incluir automáticamente.
+4. **Generar un Token de Acceso Personal (PAT):** Como medida de seguridad, GitHub requiere autenticación mediante un **Token de Acceso Personal (PAT)** a modo de contraseña. Para crear un PAT, sigue estos pasos:
+   - Dirígete a [GitHub Settings > Developer settings > Personal access tokens](https://github.com/settings/tokens).
+   - Haz clic en **Generate new token/Generate new token (classic)**.
+   - **[Muy importante] Selecciona el alcance de los permisos que necesitas**. Para acceso completo al repositorio, selecciona `repo`.
+   - Haz clic en **Generate token** al final de la página.
+   - Te generará un token similar a éste: 
+   ```bash
+   github_pat_xxxxxxxxxxxxxxxxxxxxxx_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   ```
+   - **Copia el token generado** y guárdalo en un lugar seguro, ya que no podrás verlo nuevamente.
 
-### Paso 3: Instalar Git
+### 3.4.2. En Local (tu PC)
+
+**Paso 1: Instalar Git**
+
 Si no tienes Git instalado en tu **máquina local**, necesitarás instalarlo para interactuar con tu repositorio localmente:
+
 1. **Descargar Git:** Ve a [https://git-scm.com](https://git-scm.com) y descarga el instalador apropiado para tu sistema operativo.
 2. **Instalar Git:** Sigue las instrucciones del instalador para completar la instalación.
 3. **Verificar la instalación:** Abre tu terminal y ejecuta el comando `git --version` para asegurarte de que Git está correctamente instalado.
 
-### Paso 4: Clonar el repositorio
-Para trabajar localmente en tu máquina:
-1. **Clonar el repositorio:** Haz clic en el botón 'Code' en tu repositorio y copia la URL proporcionada.
-2. **Abre tu terminal:** Navega al directorio donde deseas clonar el repositorio.
-3. **Ejecutar el comando de clonación:**
+#### Instalación de Git en Linux/Ubuntu
+Alternativamente, en sistemas **Linux/Ubuntu**, puedes instalar Git directamente desde la terminal usando el siguiente comando:
+
+```bash
+sudo apt install git
+```
+Este comando descargará e instalará Git en tu sistema. Una vez finalizada la instalación, puedes verificarla ejecutando `git --version` en la terminal.
+
+**Paso 2: Configuración de la identidad de usuario en Git**
+
+Después de instalar Git, es importante configurar tu identidad de usuario en tu máquina local. Esto evitará que aparezca el mensaje de error "Identidad del autor desconocido" al hacer commits. Esta configuración establece el nombre y correo electrónico que se usarán en los commits que realices.
+
+Para configurar tu identidad, abre la terminal y ejecuta los comandos necesarios para:
+
+- **user.name**: Especificar el nombre que deseas asociar a tus commits (por ejemplo, "Teo Rojas").
+- **user.email**: Añadir tu correo electrónico asociado a tu cuenta de GitHub o al servicio que estés utilizando.
+
+```bash
+git config --global user.name "Teo Rojas"
+git config --global user.email "tuemail@example.com"
+```
+Con esta configuración, Git incluirá tu identidad en cada commit que realices, asegurando que todos tus cambios sean correctamente atribuibles a ti.
+
+**Paso 3: Clonar el repositorio**
+
+Para trabajar en tu máquina local, primero necesitas clonar el repositorio desde GitHub.
+
+1. **Clonar el repositorio:** Dirígete a tu repositorio en GitHub y haz clic en el botón 'Code'. Copia la URL proporcionada (HTTPS).
+
+2. **Abre tu terminal:** Navega al directorio donde deseas clonar el repositorio en tu máquina local.
    ```bash
    git clone [URL del repositorio]
    ```
    Sustituye `[URL del repositorio]` por la URL que copiaste anteriormente.
 
-Con estos pasos, tendrás un repositorio configurado en GitHub y clonado localmente para comenzar a trabajar en tu proyecto. A medida que avanzas, puedes añadir colaboradores, gestionar ramas y utilizar pull requests para manejar cambios y revisiones.
+4. **Ejecutar el comando de clonación:**
+   En la terminal, ejecuta el siguiente comando para clonar el repositorio, sustituyendo `[URL del repositorio]` con la URL que copiaste en el paso 1.
 
-### Paso 5: Realizar cambios locales y subirlos a GitHub
+
+**Paso 4: Realizar cambios locales y subirlos a GitHub**
 
 Una vez que tienes tu proyecto clonado localmente, puedes empezar a realizar cambios en el código. Aquí te muestro cómo guardar esos cambios en GitHub:
 
 1. **Realizar Cambios:**
    - Abre los archivos del proyecto en tu editor de código favorito.
    - Realiza las modificaciones necesarias en tu código.
-
+   - Realiza un `git status` para comprobar los archivos que han sido modificados desde el último `commit`.
+   ```bash
+   git status
+   ```
 2. **Agregar los cambios al área de Staging:**
    - Abre tu terminal y navega al directorio del proyecto.
    - Para agregar todos los archivos modificados al área de staging, utiliza el comando:
@@ -127,7 +176,6 @@ Una vez que tienes tu proyecto clonado localmente, puedes empezar a realizar cam
      ```bash
      git add [nombre del archivo]
      ```
-
 3. **Hacer un Commit:**
    - Una vez que todos los cambios deseados están en el área de staging, debes hacer un commit, que es como tomar una "foto" del estado actual del proyecto:
      ```bash
@@ -139,10 +187,16 @@ Una vez que tienes tu proyecto clonado localmente, puedes empezar a realizar cam
    - Asegúrate de estar en la rama correcta donde deseas subir tus cambios, por ejemplo, `main` o `master`.
    - Utiliza el siguiente comando para subir tus cambios a GitHub:
      ```bash
-     git push origin [nombre de la rama]
+     git push origin [nombre de la rama remota]
      ```
-     Reemplaza `[nombre de la rama]` con el nombre de la rama a la que estás subiendo, por ejemplo, `main`.
+     Reemplaza `[nombre de la rama remota]` con el nombre de la rama a la que estás subiendo, por ejemplo, `main` (este dato debes de comprobarlo en GitHub.com).
 
-5. **Verificar en GitHub:**
+5. **Autenticación con el Token de Acceso Personal (PAT):**
+   Durante el proceso de subir los cambios al servidor remoto, se te pedirá que introduzcas tus credenciales:
+   - **Usuario:** Ingresa tu nombre de usuario de GitHub.
+   - **Contraseña:** En lugar de la contraseña, **pega tu Token de Acceso Personal (PAT)**. A continuación tienes las instrucciones de cómo crear un `PAT`:
+
+6. **Verificar en GitHub.com:**
    - Una vez subidos los cambios, puedes ir a tu repositorio en GitHub y verificar que los cambios estén presentes. Además, puedes revisar el historial de commits para ver el detalle de cada cambio.
+
 
