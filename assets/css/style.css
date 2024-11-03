@@ -118,6 +118,10 @@ table{
     margin-bottom: 15px;
 }
 
+table td{
+    padding: 5px 10px;
+}
+
 table th{
     font-family: 'CMB';
     letter-spacing: -1px;
