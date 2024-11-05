@@ -49,7 +49,11 @@ abstract: Sinopsis de la unidad 02
         3. [Especialización TOTAL CON Solapamiento](#753-especialización-total-con-solapamiento)
         4. [Especialización PARCIAL CON Solapamiento](#754-especialización-parcial-con-solapamiento)
     6. [Cardinalidades en las Restricciones de Especialización](#76-cardinalidades-en-las-restricciones-de-especialización)
-
+    7. [Restricciones de las Relaciones](#77-restricciones-de-las-relaciones)
+        1. [Restricción de Exclusividad](#771-restricción-de-exclusividad)
+        2. [Restricción de Exclusión](#772-restricción-de-exclusión)
+        3. [Restricción de Inclusividad](#773-restricción-de-inclusividad)
+        4. [Restricción de Inclusión](#774-restricción-de-inclusión)
 
 # 1. Introducción
 
@@ -681,3 +685,51 @@ En resumen, las cardinalidades en una **especialización con solapamiento** se e
 ### Conclusión
 
 Comprender estas dos observaciones clave sobre las cardinalidades es crucial para modelar correctamente las relaciones entre superentidades y subentidades. En la **generalización**, la cardinalidad **(1,1)** garantiza que cada subtipo esté completamente abarcado por la superentidad, mientras que en las **especializaciones con solapamiento**, la cardinalidad **(0,1)** proporciona la flexibilidad para que una entidad pertenezca a uno o más subtipos, o a ninguno en algunos casos.
+
+## 7.7 Restricciones de las Relaciones
+
+En el diseño de bases de datos, cuando existen varias relaciones entre dos entidades, a veces se necesita controlar cómo estas relaciones interactúan entre sí. Por ejemplo, puede ser necesario que una entidad solo participe en una relación a la vez o que una relación solo ocurra si otra ya ha sucedido previamente. Estas reglas especiales, conocidas como exclusividad, exclusión, inclusividad e inclusión, permiten definir con claridad cómo deben participar las entidades en las relaciones. De este modo, el modelo refleja de forma precisa las reglas del negocio y captura detalles importantes sobre la interacción entre las entidades.
+
+A continuación, se explican dichas reglas con ejemplos.
+
+### 7.7.1. Restricción de Exclusividad
+
+La **restricción de exclusividad** se aplica cuando una entidad participa en dos o más relaciones de manera excluyente, es decir, una vez que un ejemplar de dicha entidad pertenece a una de las relaciones, no podrá formar parte de la otra, ni ahora ni en el futuro. Esto significa que la exclusividad es permanente, y el ejemplar de la entidad no podrá cambiar de rol en ningún momento entre las relaciones excluyentes.
+
+**Ejemplo:** Imaginemos un profesor que puede **impartir** cursos o **recibir** cursos de formación, pero no ambas cosas. Si un profesor comienza a impartir un curso, ya no podrá, en ningún momento, participar en éste u otro curso como alumno. La exclusividad asegura que, una vez que el profesor toma un rol, como el de impartir un curso, no puede cambiar al otro rol en ninguna instancia futura. Esto significa que, en el contexto de esta restricción, el profesor se queda permanentemente en un rol específico para esa relación de cursos.
+
+![Restricciones en relaciones Exclusividad](/bases-de-datos/imgs/ud02/ud02_img12_eerExclusividad.svg)
+
+**Representación gráfica:** En el Diagrama de Entidad-Relación Extendido, la exclusividad se representa mediante un arco que engloba las relaciones que son mutuamente excluyentes.
+
+### 7.7.2. Restricción de Exclusión
+
+La **restricción de exclusión** también implica que una entidad no puede participar en dos relaciones con el mismo rol en el mismo momento, pero a diferencia de la exclusividad, **esta restricción permite que el ejemplar de la entidad pueda participar en ambos roles en diferentes momentos o instancias de tiempo**.
+
+**Ejemplo:** Consideremos nuevamente a un profesor que **imparte** o **recibe** cursos. Con una restricción de exclusión, un profesor que esté impartiendo un curso no podrá recibir el mismo curso al mismo tiempo. Sin embargo, en otro momento (por ejemplo, en otro semestre o periodo) el profesor podría participar en el curso desde el rol de alumno o viceversa. En este caso, la restricción permite flexibilidad temporal: el profesor puede cambiar de rol en diferentes instancias de tiempo, pero no simultáneamente para la misma instancia de curso.
+
+![Restricciones en relaciones Exclusión](/bases-de-datos/imgs/ud02/ud02_img12_eerExclusion.svg)
+
+**Representación gráfica:** La restricción de exclusión se representa mediante una línea discontinua entre las dos relaciones en el Diagrama de Entidad-Relación Extendido y la palabra "exclusión" entre paréntesis.
+
+### 7.7.3. Restricción de Inclusividad
+
+La **restricción de inclusividad** se aplica cuando es necesario que una entidad participe en una relación antes de poder hacerlo en otra. Esta restricción garantiza que exista una relación previa entre los ejemplares de la entidad antes de poder formar parte de la siguiente, pero no exige que ambas relaciones se realicen con el mismo ejemplar de la entidad en ambas interrelaciones.
+
+**Ejemplo:** Consideremos un profesor que puede **impartir** o **recibir** cursos. Supongamos que la organización establece que un profesor solo puede impartir cursos si ha recibido previamente al menos dos cursos de formación, como requisito general para impartir formación. Sin embargo, este requisito no demanda que el profesor haya recibido exactamente el mismo curso que va a impartir. Por ejemplo, si el profesor completó un curso de "Desarrollo Profesional" y "Maestro de la seducción" esto le habilita para impartir otros cursos, como "Introducción a la Programación" o "Bases de Datos".
+
+En este caso, la **inclusividad** asegura que el profesor tenga experiencia previa en algún curso, sin importar cuál. La relación **recibe** sirve de paso previo para participar en la relación **imparte**, pero sin necesidad de ser el mismo curso específico.
+
+![Restricciones en relaciones Inclusividad](/bases-de-datos/imgs/ud02/ud02_img12_eerInclusividad.svg)
+
+**Representación gráfica:** En el Diagrama de Entidad-Relación Extendido, la inclusividad se representa mediante un arco con una flecha, que parte de la relación condicionada hacia la relación que debe cumplirse primero. Junto al arco, se indica la cardinalidad mínima y máxima, por ejemplo, (2,n), para especificar cuántas veces debe cumplirse la primera relación antes de poder participar en la segunda.
+
+### 7.7.4. Restricción de Inclusión
+
+La **restricción de inclusión** es una versión más estricta de la restricción de inclusividad. En este caso, se requiere que un ejemplar de una entidad que participa en una relación específica también esté asociado al mismo ejemplar en otra relación. Es decir, hay una dependencia directa y específica entre las instancias de las relaciones.
+
+**Ejemplo:** Siguiendo el mismo contexto, la restricción de inclusión implica que, para que un profesor pueda **impartir** un curso, debe haber **recibido** previamente **ese mismo curso específico**. Esto significa que el profesor debe tener experiencia previa en el curso específico que va a impartir, asegurando una relación directa entre ambos roles para el mismo curso.
+
+![Restricciones en relaciones Inclusión](/bases-de-datos/imgs/ud02/ud02_img12_eerInclusion.svg)
+
+**Representación gráfica:** La restricción de inclusión se representa en el Diagrama de Entidad-Relación Extendido mediante una línea discontinua con una punta de flecha que conecta las dos relaciones, orientada desde la relación que depende de la condición hacia la relación que debe cumplirse previamente. Para indicar esta restricción, se coloca la palabra "inclusión" entre paréntesis junto a la línea.
