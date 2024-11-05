@@ -419,3 +419,50 @@ Existen varias maneras de revertir cambios en Git, dependiendo de si los cambios
 - **Evitar el uso de `reset --hard` en un equipo**: Cuando trabajas en colaboración, el uso de `reset --hard` puede generar conflictos y pérdida de trabajo para otros colaboradores. Para revertir cambios en un equipo, es preferible utilizar `revert`, que mantiene el historial intacto.
 
 La gestión de versiones y el control sobre los cambios son pilares fundamentales en Git, proporcionando un sistema seguro y estructurado para modificar y mantener un proyecto. Con estos comandos y prácticas, puedes gestionar el flujo de trabajo de manera eficiente y revertir cambios cuando sea necesario, minimizando el riesgo de errores y mejorando la colaboración entre desarrolladores.
+
+---
+A continuación se presentan varios ejercicios para que los alumnos trabajen de manera individual y en grupos utilizando GitHub. Estos ejercicios permitirán practicar la creación de una web con varios archivos y reforzar el trabajo en equipo mediante el uso de ramas y el proceso de merge.
+
+## 3.6. Ejercicios individuales
+
+1. **Creación de un repositorio y página de inicio**  
+   - Crea un repositorio en GitHub llamado `MiPaginaWeb`.
+   - Dentro del repositorio, crea un archivo llamado `index.html` y añade una estructura básica de HTML con un encabezado (`h1`) y un párrafo (`p`) introductorio sobre ti.
+   - Haz `commit` de los cambios y súbelos al repositorio.
+   - Verifica que el archivo esté disponible en GitHub.
+
+2. **Estructura básica de una web**
+   - Añade dos archivos nuevos en el repositorio: `about.html` y `contact.html`.
+   - En `about.html`, escribe un breve resumen sobre tus intereses.
+   - En `contact.html`, crea un formulario básico con campos de nombre, correo electrónico y mensaje.
+   - Haz `commit` de los cambios y súbelos al repositorio.
+
+3. **Estilos y personalización**
+   - Crea un archivo CSS llamado `style.css` y vincúlalo a tus archivos HTML.
+   - Añade estilos básicos para la página: cambia el color de fondo, el tipo de fuente y el tamaño del texto.
+   - Haz `commit` de los cambios en el archivo CSS y en los archivos HTML, y súbelos al repositorio.
+
+## 3.7. Ejercicios en grupo (equipos de 4 estudiantes)
+
+4. **Página colaborativa de equipo sin conflictos**
+   - Cada miembro del grupo debe crear una rama de trabajo propia desde la rama `main`, llamada `branch-nombre`.
+   - Cada estudiante creará una página HTML independiente en su rama:
+     - Estudiante A: `bienvenida.html` (sección de bienvenida).
+     - Estudiante B: `equipo.html` (sección sobre el equipo).
+     - Estudiante C: `proyectos.html` (sección de proyectos realizados).
+     - Estudiante D: `contacto.html` (sección de contacto).
+   - No es necesario que modifiquen el archivo `index.html`.
+   - Cada estudiante debe hacer `commit` y `push` de su trabajo en su rama.
+   - Al finalizar, el equipo hará un **merge** de todas las ramas en `main`. Una vez unidas todas las ramas, un solo integrante del grupo (escogido al azar) enlazará desde el `index.html` al resto de páginas.
+
+5. **Página colaborativa de equipo con resolución de conflictos**
+   - Una vez terminado el ejercicio anterior, se volverá a modificar de la siguiente forma.
+   - Cada miembro del grupo debe crear una rama de trabajo desde la rama `main`, llamada `branch-nombre`.
+   - Todos los estudiantes trabajarán en el archivo principal `index.html`, añadiendo cada uno una sección dentro de la misma página:
+     - Estudiante A: Sección de bienvenida.
+     - Estudiante B: Sección sobre el equipo.
+     - Estudiante C: Sección de proyectos realizados.
+     - Estudiante D: Sección de contacto.
+   - Cada estudiante debe hacer `commit` y `push` de sus cambios en su rama al completar su sección.
+   - Al final, el equipo debe hacer un **merge** de todas las ramas en `main`. Dado que todos trabajaron en el mismo archivo, es probable que surjan conflictos. Los estudiantes deberán resolver los conflictos de forma colaborativa antes de completar el merge.
+
