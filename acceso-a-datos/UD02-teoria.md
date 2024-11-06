@@ -25,14 +25,14 @@ abstract: Sinopsis de la unidad 02
 5. [Instalación de Gestores de Bases de Datos](#5-instalación-de-gestores-de-bases-de-datos)
    - Instalación de MySQL y H2
    - Instalación con Maven de MySQL y H2
-
-<!--
-
 6. [Establecimiento de Conexiones](#6-establecimiento-de-conexiones)
    - Métodos para establecer conexiones con bases de datos (CEd)
    - Conexión a la base de datos MySQL
    - Conexión a la base de datos H2
    - Ejemplo práctico de conexión a una base de datos
+
+<!--
+
 7. [Definición de Objetos para Almacenamiento de Resultados](#7-definición-de-objetos-para-almacenamiento-de-resultados)
    - Estructura de los objetos destinados a almacenar resultados de operaciones (CEg)
    - Eliminación de objetos una vez finalizada su función (CEi)
@@ -175,3 +175,198 @@ Existen diferentes tipos de gestores de bases de datos, cada uno con sus propias
 MySQL es un gestor de bases de datos relacional de código abierto ampliamente utilizado en aplicaciones web y sistemas empresariales. Su popularidad se debe a su robustez, escalabilidad y a la gran cantidad de recursos y soporte disponible. Por otro lado, H2 es un gestor de bases de datos embebido que se destaca por su ligereza y velocidad, lo que lo convierte en una opción ideal para aplicaciones que requieren una integración sencilla y un bajo consumo de recursos.
 
 Este apartado abordará tanto el proceso de **instalación manual** de estos gestores, como la instalación **automática utilizando herramientas de gestión de dependencias como Maven**. Al finalizar esta sección, los estudiantes tendrán un conocimiento práctico de cómo instalar y configurar estos gestores de bases de datos, lo que les permitirá prepararse para las siguientes etapas del desarrollo de aplicaciones que requieren interacción con bases de datos.
+
+## 5.1. Instalación de MySQL y H2
+
+### Instalación de MySQL
+
+Para comenzar a trabajar con MySQL, es necesario seguir una serie de pasos para instalarlo adecuadamente en el sistema. A continuación se detallan los pasos básicos para la instalación:
+
+1. **Descargar MySQL**: Visita la [página oficial de MySQL](https://dev.mysql.com/downloads/mysql/) y selecciona la versión adecuada para tu sistema operativo. Puedes optar por la versión Community Server, que es gratuita.
+2. **Ejecutar el instalador**: Una vez descargado el archivo, ejecuta el instalador. Durante la instalación, se te presentarán diferentes opciones. Es recomendable seleccionar la instalación "Developer Default" para obtener todos los componentes necesarios para el desarrollo.
+3. **Configurar MySQL**: Al finalizar la instalación, se te pedirá configurar el servidor MySQL. Esto incluye establecer una contraseña para el usuario root y decidir si deseas configurar MySQL como un servicio en tu sistema operativo.
+4. **Verificar la instalación**: Para asegurarte de que MySQL se ha instalado correctamente, puedes abrir una terminal o línea de comandos y acceder al cliente MySQL con el usuario root. Si puedes acceder sin problemas, la instalación ha sido exitosa.
+
+```bash
+mysql -u root -p
+```
+
+### Instalación de H2
+
+H2 es un gestor de bases de datos embebido que puede ser utilizado de manera rápida y sencilla. A continuación se presentan los pasos para instalar H2:
+
+1. **Descargar H2**: Dirígete a la [página oficial de H2 Database](http://www.h2database.com/) y descarga la versión más reciente del archivo comprimido.
+2. **Extraer el archivo**: Una vez descargado, extrae el contenido del archivo comprimido en una carpeta de tu elección.
+3. **Ejecutar H2**: Abre una terminal o línea de comandos y navega hasta la carpeta donde extrajiste H2. Inicia el servidor H2, lo que abrirá la consola web en tu navegador.
+   ```bash
+   java -jar h2*.jar
+   ```
+4. **Configurar conexión**: En la consola web, podrás crear y gestionar bases de datos. Para conectarte, utiliza la URL de conexión predeterminada, que generalmente es `jdbc:h2:~/test`, junto con el nombre de usuario y la contraseña que desees establecer.
+5. **Verificar la instalación**: Si puedes acceder a la consola H2 y crear una base de datos, la instalación ha sido exitosa.
+
+## 5.2. Instalación con Maven de MySQL y H2
+
+La gestión de dependencias en proyectos Java se facilita considerablemente mediante el uso de Maven. Al utilizar Maven, puedes incluir bibliotecas necesarias para trabajar con bases de datos como MySQL y H2 directamente en tu archivo de configuración, conocido como `pom.xml`. A continuación se explican los pasos para instalar estas bases de datos usando Maven.
+
+### 5.2.1. Instalación del conector MySQL
+
+Para trabajar con MySQL, necesitas añadir la dependencia del conector JDBC en tu archivo `pom.xml`. El conector permite que tu aplicación Java se comunique con el servidor de MySQL. A continuación se presenta cómo hacerlo:
+
+1. **Abrir el archivo `pom.xml`**: En la raíz de tu proyecto Maven, busca y abre el archivo `pom.xml`.
+2. **Agregar la dependencia de MySQL**: Dentro de la sección `<dependencies>`, añade la dependencia correspondiente.
+   ```xml
+   <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.30</version> <!-- Verifica la última versión disponible -->
+   </dependency>
+   ```
+
+### 5.2.2. Instalación del conector H2
+
+Del mismo modo, para utilizar H2, también es necesario añadir la dependencia correspondiente en tu archivo `pom.xml`:
+
+1. **Continuar en el archivo `pom.xml`**: Asegúrate de estar dentro de la misma sección `<dependencies>`.
+2. **Agregar la dependencia de H2**: Añade la dependencia correspondiente.
+   ```xml
+   <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>2.1.214</version> <!-- Verifica la última versión disponible -->
+   </dependency>
+   ```
+
+### 5.2.3. Actualizar el proyecto
+
+Una vez que hayas añadido las dependencias, guarda los cambios en el archivo `pom.xml`. Si estás utilizando un IDE como IntelliJ IDEA o Eclipse, es posible que necesites actualizar el proyecto Maven para descargar automáticamente las nuevas dependencias. Esto se puede hacer desde el panel de Maven del IDE o mediante el comando correspondiente.
+
+```bash
+mvn clean install
+```
+
+### Verificación de la instalación
+
+Después de completar estos pasos, las bibliotecas necesarias para trabajar con MySQL y H2 estarán disponibles en tu proyecto. Puedes verificar que las dependencias se han añadido correctamente comprobando la carpeta de dependencias en tu proyecto o mirando el archivo `pom.xml` para asegurarte de que no hay errores.
+
+Con estos conectores instalados, estarás listo para establecer conexiones con las bases de datos y realizar operaciones de acceso a datos en tus aplicaciones Java.
+
+# 6. Establecimiento de Conexiones
+
+Como se ha visto anteriormente, el establecimiento de conexiones con bases de datos es un proceso fundamental en el desarrollo de aplicaciones que gestionan información. Permite que una aplicación Java se comunique con un sistema de gestión de bases de datos (SGBD), lo que es esencial para realizar operaciones de lectura y escritura de datos. Este apartado aborda los métodos y consideraciones necesarias para establecer conexiones efectivas con bases de datos relacionales como MySQL y H2.
+
+## 6.1. Métodos para establecer conexiones con bases de datos (CEd)
+
+Para establecer una conexión con una base de datos, se deben seguir ciertos pasos:
+
+1. **Cargar el Driver JDBC**: Antes de establecer la conexión, es necesario cargar el driver JDBC correspondiente. Esto se puede hacer utilizando el método `Class.forName()`, que permite cargar la clase del driver en tiempo de ejecución.
+
+2. **Definir la URL de Conexión**: La URL de conexión incluye la ubicación del servidor de la base de datos, el nombre de la base de datos y otros parámetros necesarios. Por ejemplo, para MySQL, la URL tiene el formato: `jdbc:mysql://<host>:<port>/<database>`.
+
+3. **Establecer la Conexión**: Utilizando la clase `DriverManager`, se puede establecer la conexión mediante el método `getConnection()`, proporcionando la URL de conexión, el nombre de usuario y la contraseña.
+
+4. **Verificar la Conexión**: Una vez que la conexión ha sido establecida, es importante verificar que no ha habido errores y que la conexión está activa.
+
+5. **Cerrar la Conexión**: Es fundamental cerrar la conexión una vez que se ha terminado de utilizar para liberar recursos y evitar posibles fugas de memoria.
+
+## 6.2. Conexión a la base de datos MySQL
+
+Para conectarte a una base de datos MySQL, debes asegurarte de que el servidor MySQL está en funcionamiento y accesible. La conexión puede hacerse de la siguiente manera:
+
+- Cargar el driver MySQL en tu aplicación.
+- Definir la URL de conexión utilizando las credenciales adecuadas (usuario y contraseña).
+- Utilizar `DriverManager` para obtener la conexión.
+
+## 6.3. Conexión a la base de datos H2
+
+La conexión a H2 es similar, pero tiene algunas diferencias clave. H2 es una base de datos embebida que puede ser utilizada en modo de servidor o en modo embebido:
+
+- Para el modo embebido, la URL de conexión suele ser `jdbc:h2:~/test` (donde `~/test` es el nombre del archivo de la base de datos en el sistema de archivos).
+- Para el modo servidor, la URL incluirá el host y el puerto en el que el servidor H2 está corriendo.
+
+## 6.4. Ejemplo práctico de conexión a una base de datos
+
+En este ejemplo, se presentará cómo establecer conexiones a bases de datos MySQL y H2 utilizando JDBC en Java. Asegúrate de tener el driver JDBC correspondiente en tu proyecto.
+
+### 6.4.1. Conexión a la Base de Datos MySQL
+
+Para conectarte a una base de datos MySQL, necesitas seguir estos pasos:
+
+```java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class ConexionMySQL {
+    public static void main(String[] args) {
+        // Datos de conexión
+        String url = "jdbc:mysql://localhost:3306/nombre_de_la_base_de_datos"; // Cambia "nombre_de_la_base_de_datos"
+        String usuario = "tu_usuario"; // Cambia "tu_usuario"
+        String contrasena = "tu_contrasena"; // Cambia "tu_contrasena"
+
+        try {
+            // Cargar el driver de MySQL
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Establecer la conexión
+            Connection conexion = DriverManager.getConnection(url, usuario, contrasena);
+            System.out.println("Conexión a MySQL establecida con éxito.");
+
+            // Aquí puedes realizar operaciones con la base de datos
+
+            // Cerrar la conexión
+            conexion.close();
+            System.out.println("Conexión a MySQL cerrada.");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Driver no encontrado: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Error al establecer la conexión: " + e.getMessage());
+        }
+    }
+}
+```
+
+### 6.4.2. Conexión a la Base de Datos H2
+
+Para conectarte a una base de datos H2, el proceso es similar pero con una URL de conexión diferente:
+
+```java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class ConexionH2 {
+    public static void main(String[] args) {
+        // Datos de conexión
+        String url = "jdbc:h2:~/nombre_de_la_base_de_datos"; // Cambia "nombre_de_la_base_de_datos"
+        String usuario = "sa"; // Usuario por defecto en H2
+        String contrasena = ""; // Contraseña vacía por defecto
+
+        try {
+            // Cargar el driver de H2
+            Class.forName("org.h2.Driver");
+
+            // Establecer la conexión
+            Connection conexion = DriverManager.getConnection(url, usuario, contrasena);
+            System.out.println("Conexión a H2 establecida con éxito.");
+
+            // Aquí puedes realizar operaciones con la base de datos
+
+            // Cerrar la conexión
+            conexion.close();
+            System.out.println("Conexión a H2 cerrada.");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Driver no encontrado: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Error al establecer la conexión: " + e.getMessage());
+        }
+    }
+}
+```
+
+### 6.4.3. Notas Finales
+
+- **Asegúrate de tener los drivers JDBC de MySQL y H2** en tu proyecto, ya sea mediante Maven o descargando manualmente los JARs necesarios.
+- **Cambia los datos de conexión** (nombre de la base de datos, usuario y contraseña) según tu configuración.
+- **MySQL**: Asegúrate de que el servidor MySQL esté en ejecución y que la base de datos exista.
+- **H2**: H2 puede ejecutarse en modo embebido o en modo servidor. En el ejemplo anterior, se utiliza el modo embebido.
+
