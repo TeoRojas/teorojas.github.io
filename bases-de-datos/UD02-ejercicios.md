@@ -185,15 +185,14 @@ Realiza un diagrama entidad relación que modele el diseño de la siguiente base
 - Planetas: En cada capítulo, se visita 1 o varios planteas, hay que almacenar el código del planeta, su nombre, galaxia a la que pertenece, el problema que se resolvió en esa visita y la nave con la que se viajó al planeta. Para la descripción del problema será suficiente con un campo de texto de 255 caracteres. 
 - De la nave se almacenará el nombre, código y número de tripulantes.
 
-<!-- 
-[ER de Startrek](/bases-de-datos/imgs/ud02/ud02_ER_e09.svg)
+![ER de Startrek](/bases-de-datos/imgs/ud02/ud02_ER_e09.svg)
 Consideraciones a tener en cuenta:
 
 - En el enunciado no aparece explícitamente el campo Código para los personajes y actores, pero es necesario incluirlo para dotar de un atributo clave a estas entidades.
 - La clave de la entidad Capítulo es compuesta debido a la idiosincrasia de las mismas.
 - La relación ternaria tiene cardinalidad N:M:P, es decir, Muchos-Muchos-Muchos.
 - Se sobreentiende que un jefe de zona no tiene que tener trabajadores a su cargo obligatoriamente.
--->
+
 
 ## 10. Ejercicio 10: Esquema ER de Lanzadera en Startrek.
 
