@@ -30,9 +30,6 @@ abstract: Sinopsis de la unidad 02
    - Conexión a la base de datos MySQL
    - Conexión a la base de datos H2
    - Ejemplo práctico de conexión a una base de datos
-
-<!--
-
 7. [Definición de Objetos para Almacenamiento de Resultados](#7-definición-de-objetos-para-almacenamiento-de-resultados)
    - Estructura de los objetos destinados a almacenar resultados de operaciones (CEg)
    - Eliminación de objetos una vez finalizada su función (CEi)
@@ -46,6 +43,9 @@ abstract: Sinopsis de la unidad 02
    - Utilización del resultado de una consulta
    - SQL Injection y cómo prevenirlo
    - PreparedStatement - Solución para SQL Injection
+
+<!--
+
 9. [Procedimientos Almacenados](#9-procedimientos-almacenados)
    - Concepto y uso de procedimientos almacenados en bases de datos
    - Ejemplo de ejecución de procedimientos almacenados
@@ -370,3 +370,279 @@ public class ConexionH2 {
 - **MySQL**: Asegúrate de que el servidor MySQL esté en ejecución y que la base de datos exista.
 - **H2**: H2 puede ejecutarse en modo embebido o en modo servidor. En el ejemplo anterior, se utiliza el modo embebido.
 
+# 7. Definición de Objetos para Almacenamiento de Resultados
+
+En el contexto de las aplicaciones que interactúan con bases de datos relacionales, es fundamental definir correctamente los objetos que se utilizarán para almacenar los resultados de las operaciones realizadas. Estos objetos permiten representar de manera estructurada los datos que se extraen de la base de datos y facilitar su manipulación dentro de la aplicación. Además, es importante asegurarse de que estos objetos sean eliminados adecuadamente una vez que ya no sean necesarios, para evitar el consumo innecesario de recursos.
+
+## 7.1. Estructura de los Objetos Destinados a Almacenamiento de Resultados (CEg)
+
+Cuando se realiza una consulta a la base de datos, el resultado debe ser almacenado en objetos que representen las entidades de la base de datos. Estos objetos pueden ser simples clases Java, también conocidas como **POJOs (Plain Old Java Objects)**, que contienen propiedades que corresponden a las columnas de las tablas de la base de datos.
+
+### Ejemplo de Clase para Almacenar Resultados de Consultas:
+
+Consideremos una base de datos con una tabla de **Persona** que contiene los campos `id`, `nombre` y `edad`. La clase Java destinada a almacenar los resultados de las consultas de esta tabla podría verse de la siguiente manera:
+
+```java
+public class Persona {
+    private int id;
+    private String nombre;
+    private int edad;
+
+    // Constructor
+    public Persona(int id, String nombre, int edad) {
+        this.id = id;
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+
+    // Getters y setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+}
+```
+
+En este caso, la clase `Persona` representa un registro de la tabla `Persona` de la base de datos. Los datos que se obtienen a partir de una consulta serán almacenados en instancias de esta clase.
+
+### Mapeo entre la Base de Datos y el Objeto
+
+El mapeo entre los resultados de la consulta y los objetos Java se realiza mediante la ejecución de la consulta SQL y la asignación de los resultados de cada columna a los atributos correspondientes de la clase `Persona`.
+
+```java
+String sql = "SELECT id, nombre, edad FROM Persona WHERE edad > ?";
+PreparedStatement ps = conexion.prepareStatement(sql);
+ps.setInt(1, 18);  // Filtra personas mayores de 18 años
+
+ResultSet rs = ps.executeQuery();
+
+while (rs.next()) {
+    Persona persona = new Persona(rs.getInt("id"), rs.getString("nombre"), rs.getInt("edad"));
+    // Almacenar el objeto persona en una lista o procesarlo según sea necesario
+}
+```
+
+## 7.2. Eliminación de Objetos una vez Finalizada su Función (CEi)
+
+Una vez que los objetos han cumplido su propósito, es importante gestionarlos adecuadamente para liberar los recursos que están utilizando. En Java, la **gestión de memoria** se realiza principalmente mediante el **garbage collector**, que se encarga de eliminar los objetos que ya no tienen referencias. Sin embargo, hay buenas prácticas que se deben seguir para asegurar que no queden objetos innecesarios ocupando memoria.
+
+### Buenas Prácticas para la Eliminación de Objetos:
+
+1. **Nullificar las Referencias**:
+   Después de que un objeto ha sido utilizado y ya no es necesario, se puede **nullificar** las referencias a dicho objeto. Esto puede ayudar al garbage collector a identificar que el objeto puede ser recolectado.
+
+   ```java
+   persona = null;  // El objeto Persona ya no es necesario
+   ```
+2. **Cerrar Recursos de Base de Datos**:
+   Es crucial cerrar conexiones, statements y result sets después de que ya no sean necesarios, ya que estos recursos pueden mantenerse activos durante mucho tiempo si no se cierran adecuadamente.
+   ```java
+   rs.close();
+   ps.close();
+   conexion.close();
+   ```
+3. **Uso de Try-With-Resources**:
+   El uso de la estructura **try-with-resources** en Java ayuda a cerrar automáticamente los recursos cuando se salen del alcance del bloque `try`, garantizando así que se eliminen los objetos asociados de forma apropiada.
+   ```java
+   try (Connection conexion = DriverManager.getConnection(url, usuario, contrasena);
+      PreparedStatement ps = conexion.prepareStatement("SELECT * FROM Persona");
+      ResultSet rs = ps.executeQuery()) {
+
+      while (rs.next()) {
+         Persona persona = new Persona(rs.getInt("id"), rs.getString("nombre"), rs.getInt("edad"));
+         // Procesar el objeto persona
+      }
+
+   } catch (SQLException e) {
+      e.printStackTrace();
+   }
+   ```
+
+De esta manera, los objetos son gestionados de forma eficiente, asegurando que no haya fugas de memoria y que los recursos se liberen adecuadamente al final de su uso.
+
+La correcta **definición de objetos** para almacenar resultados y su **eliminación adecuada** son aspectos cruciales en el desarrollo de aplicaciones que gestionan información en bases de datos relacionales. Asegurarse de que los objetos representen fielmente los datos de la base de datos y de que se eliminen adecuadamente después de su uso contribuye a una gestión eficiente de los recursos y a la estabilidad de la aplicación.
+
+# 8. Ejecución de Sentencias SQL
+
+En este apartado, se abordarán los aspectos fundamentales de la ejecución de sentencias SQL utilizando JDBC. Aprenderemos a interactuar con bases de datos relacionales mediante la ejecución de comandos para la manipulación y la obtención de datos. Se cubrirán sentencias de definición de datos, manipulación de tablas y consultas, con el fin de crear aplicaciones que gestionen datos de manera eficiente y segura.
+
+## 8.1. Crear Statement - Repaso Data Definition Language (DDL)
+
+El **Data Definition Language (DDL)** es un subconjunto de SQL utilizado para definir, modificar y eliminar estructuras de bases de datos como tablas, índices y vistas. Para ejecutar sentencias DDL en Java, utilizamos un objeto `Statement`. Aquí repasaremos cómo crear un `Statement` y ejecutar sentencias DDL.
+
+### Creación de un `Statement`
+
+Para crear un `Statement`, primero necesitamos obtener una conexión a la base de datos y luego utilizarla para crear un objeto `Statement`. Con este objeto podemos ejecutar comandos SQL, como la creación de tablas o la modificación de la estructura de la base de datos.
+
+```java
+Statement statement = connection.createStatement();
+```
+
+## 8.2. Statement Crear Tabla
+
+Una de las primeras operaciones al interactuar con una base de datos es la creación de tablas. Para ello, usamos una sentencia SQL de tipo `CREATE TABLE`. A continuación se muestra un ejemplo de cómo crear una tabla en una base de datos mediante JDBC.
+
+### Ejemplo de Código para Crear una Tabla.
+
+```java
+String sql = "CREATE TABLE Persona ("
+           + "id INT PRIMARY KEY, "
+           + "nombre VARCHAR(100), "
+           + "edad INT)";
+statement.executeUpdate(sql);
+```
+En este ejemplo, estamos creando una tabla llamada `Persona` con tres columnas: `id`, `nombre` y `edad`. La columna `id` es la clave primaria.
+
+## 8.3. Statement Buscar Datos
+
+El siguiente paso es ejecutar consultas para obtener datos de las tablas. Usamos la sentencia `SELECT` para consultar los datos almacenados en una base de datos.
+
+### Ejemplo de Código para Buscar Datos
+
+```java
+String sql = "SELECT * FROM Persona";
+ResultSet resultSet = statement.executeQuery(sql);
+
+while (resultSet.next()) {
+    System.out.println("ID: " + resultSet.getInt("id"));
+    System.out.println("Nombre: " + resultSet.getString("nombre"));
+    System.out.println("Edad: " + resultSet.getInt("edad"));
+}
+```
+
+## 8.4. Ejecución de Sentencias de Descripción de Datos
+
+Las sentencias de **descripción de datos** se utilizan para obtener información sobre la estructura de la base de datos, como las tablas y las columnas. Estas sentencias son útiles cuando necesitamos obtener información acerca de la base de datos sin modificarla.
+
+### Ejemplo de Código para Descripción de Datos.
+
+```java
+DatabaseMetaData metadata = connection.getMetaData();
+ResultSet resultSet = metadata.getTables(null, null, "%", new String[] {"TABLE"});
+
+while (resultSet.next()) {
+    System.out.println("Tabla: " + resultSet.getString("TABLE_NAME"));
+}
+```
+
+Este código muestra el nombre de todas las tablas presentes en la base de datos.
+
+## 8.5. Ejecución de Sentencias de Modificación de Datos (CEf)
+
+Las sentencias de **modificación de datos** se utilizan para cambiar el contenido de las tablas en la base de datos. Estas incluyen sentencias `INSERT`, `UPDATE` y `DELETE`. A continuación, se muestra cómo ejecutar una sentencia `INSERT` para añadir un nuevo registro a la base de datos.
+
+### Ejemplo de Código para Insertar Datos.
+
+```java
+String sql = "INSERT INTO Persona (id, nombre, edad) VALUES (?, ?, ?)";
+PreparedStatement preparedStatement = connection.prepareStatement(sql);
+preparedStatement.setInt(1, 1);
+preparedStatement.setString(2, "Juan Pérez");
+preparedStatement.setInt(3, 30);
+preparedStatement.executeUpdate();
+```
+En este ejemplo, utilizamos un `PreparedStatement` para insertar un nuevo registro en la tabla `Persona`, con los valores de `id`, `nombre` y `edad`.
+
+Estas operaciones básicas de manipulación de datos (DML) son esenciales para desarrollar aplicaciones que gestionen y modifiquen bases de datos relacionales.
+
+## 8.6. Ejecución de Consultas (CEh)
+
+Las consultas en SQL se utilizan para recuperar información de las bases de datos. Para ejecutar una consulta, usamos la sentencia `SELECT`. Estas consultas pueden ser simples, pero también pueden incluir filtros, ordenamientos y agrupaciones de datos.
+
+### Ejemplo de Código para Ejecutar una Consulta
+
+```java
+String sql = "SELECT * FROM Persona WHERE edad > ?";
+PreparedStatement preparedStatement = connection.prepareStatement(sql);
+preparedStatement.setInt(1, 18); // Filtra las personas mayores de 18 años
+
+ResultSet resultSet = preparedStatement.executeQuery();
+
+while (resultSet.next()) {
+    System.out.println("ID: " + resultSet.getInt("id"));
+    System.out.println("Nombre: " + resultSet.getString("nombre"));
+    System.out.println("Edad: " + resultSet.getInt("edad"));
+}
+```
+
+En este ejemplo, ejecutamos una consulta `SELECT` que obtiene todos los registros de la tabla `Persona` para personas mayores de 18 años.
+
+## 8.7. Utilización del Resultado de una Consulta
+
+Una vez ejecutada una consulta, el resultado se almacena en un objeto `ResultSet`. Este objeto contiene los datos obtenidos de la base de datos, y a través de sus métodos, podemos acceder a los valores de las columnas de cada fila.
+
+### Accediendo a los Resultados del `ResultSet`
+
+### Accediendo a los Resultados del `ResultSet`
+```java
+ResultSet resultSet = preparedStatement.executeQuery();
+
+while (resultSet.next()) {
+    // Acceder a los datos de las columnas
+    int id = resultSet.getInt("id");
+    String nombre = resultSet.getString("nombre");
+    int edad = resultSet.getInt("edad");
+
+    // Utilizar los datos
+    System.out.println("ID: " + id + ", Nombre: " + nombre + ", Edad: " + edad);
+}
+```
+
+En este caso, estamos utilizando el método `next()` para recorrer el conjunto de resultados y acceder a los valores de cada columna mediante los métodos apropiados como `getInt()` y `getString()`.
+
+## 8.8. SQL Injection y Cómo Prevenirlo
+
+**SQL Injection** es un tipo de vulnerabilidad de seguridad que ocurre cuando un atacante puede insertar o manipular código SQL dentro de una consulta. Esto puede permitir al atacante acceder a datos no autorizados, modificar datos o incluso ejecutar comandos destructivos.
+
+### Ejemplo de SQL Injection
+
+Imagina una consulta como esta, donde el parámetro de entrada no está protegido: 
+
+```java
+String sql = "SELECT * FROM Persona WHERE nombre = '" + nombreUsuario + "'";
+Statement statement = connection.createStatement();
+ResultSet resultSet = statement.executeQuery(sql);
+```
+
+En este caso, si `nombreUsuario` contiene código SQL malicioso (como `'; DROP TABLE Persona; --`), el atacante podría eliminar toda la tabla.
+
+### Prevención de SQL Injection
+
+La mejor forma de prevenir SQL Injection es usar **PreparedStatements**, que automáticamente manejan la inserción de valores dentro de las consultas de manera segura.
+
+## 8.9. PreparedStatement - Solución para SQL Injection
+
+El uso de `PreparedStatement` en lugar de `Statement` es una técnica clave para prevenir **SQL Injection**. `PreparedStatement` permite precompilar la consulta y establecer los valores de los parámetros de manera segura, evitando que se interpreten como parte del código SQL.
+
+### Ejemplo de uso de `PreparedStatement`
+
+```java
+String sql = "SELECT * FROM Persona WHERE nombre = ?";
+PreparedStatement preparedStatement = connection.prepareStatement(sql);
+preparedStatement.setString(1, nombreUsuario); // Inserta el valor de manera segura
+
+ResultSet resultSet = preparedStatement.executeQuery();
+```
+
+En este ejemplo, la consulta se ejecuta de manera segura, ya que el valor de `nombreUsuario` es tratado como un parámetro y no como parte del código SQL. Esto evita la posibilidad de una inyección SQL.
+
+El uso de `PreparedStatement` no solo mejora la seguridad, sino que también puede mejorar el rendimiento al permitir la reutilización de consultas precompiladas.
