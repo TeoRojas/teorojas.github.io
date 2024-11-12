@@ -9,27 +9,32 @@ abstract:
 ---
 
 # Índice
-1. [Introducción](#1-introducción)
+1. Introducción
 2. Refactorización
-3. [Control de versiones y GitHub](#3-control-de-versiones-y-github)
-   1. [¿Qué es el control de versiones?](#31-qué-es-el-control-de-versiones)
-   2. [¿Qué es Git?](#32-qué-es-git)
-      - [Características principales de Git](#características-principales-de-git)
-      - [Conceptos básicos de Git](#conceptos-básicos-de-git)
-   3. [Introducción a GitHub: concepto y características](#33-introducción-a-github-concepto-y-características)
-   4. [Configuración de un repositorio en GitHub](#34-configuración-de-un-repositorio-en-github)
-      - [En Remoto (web GitHub)](#341-en-remoto-web-github)
-      - [En Local (tu PC)](#342-en-local-tu-pc)
-   5. [Comandos básicos de Git y su uso en GitHub](#35-comandos-básicos-de-git-y-su-uso-en-github)
-      - [3.5.1. Configuración y estado](#351-configuración-y-estado)
-      - [3.5.2. Gestión de archivos y seguimiento de cambios](#352-gestión-de-archivos-y-seguimiento-de-cambios)
-      - [3.5.3. Sincronización con GitHub](#353-sincronización-con-github)
-      - [3.5.4. Trabajo con ramas](#354-trabajo-con-ramas)
-      - [3.5.5. Gestión de versiones y revertir cambios](#355-gestión-de-versiones-y-revertir-cambios)
-     6. Integración de GitHub con el entorno de desarrollo
-   7. Uso de GitHub para el control de versiones integrado
-4. Trabajo colaborativo y Github
-5. Documentación efectiva
+3. [Control de versiones y GitHub](#3-control-de-versiones-y-github)  
+   3.1. [¿Qué es el control de versiones?](#31-qué-es-el-control-de-versiones)  
+   3.2. [¿Qué es Git?](#32-qué-es-git)  
+      &emsp;&emsp;3.2.1. [Características principales de Git](#321-características-principales-de-git)  
+      &emsp;&emsp;3.2.2. [Conceptos básicos de Git](#322-conceptos-básicos-de-git)  
+   3.3. [Introducción a GitHub: concepto y características](#33-introducción-a-github-concepto-y-características)  
+   3.4. [Configuración de un repositorio en GitHub](#34-configuración-de-un-repositorio-en-github)  
+      &emsp;&emsp;3.4.1. [En Remoto (web GitHub)](#341-en-remoto-web-github)  
+      &emsp;&emsp;3.4.2. [En Local (tu PC)](#342-en-local-tu-pc)  
+   3.5. [Comandos básicos de Git y su uso en GitHub](#35-comandos-básicos-de-git-y-su-uso-en-github)  
+      &emsp;&emsp;3.5.1. [Configuración y estado](#351-configuración-y-estado)  
+      &emsp;&emsp;3.5.2. [Gestión de archivos y seguimiento de cambios](#352-gestión-de-archivos-y-seguimiento-de-cambios)  
+      &emsp;&emsp;3.5.3. [Sincronización con GitHub](#353-sincronización-con-github)  
+      &emsp;&emsp;3.5.4. [Trabajo con ramas](#354-trabajo-con-ramas)  
+      &emsp;&emsp;3.5.5. [Gestión de versiones y revertir cambios](#355-gestión-de-versiones-y-revertir-cambios)      
+      &emsp;&emsp;3.5.6. [Ejercicios individuales](#356-ejercicios-individuales)  
+      &emsp;&emsp;3.5.7. [Ejercicios en grupo](357-ejercicios-en-grupo-equipos-de-4-estudiantes)  
+   3.6. [Trabajo colaborativo y GitHub](#36-trabajo-colaborativo-y-github)  
+   3.7. Integración de GitHub con el entorno de desarrollo   
+   3.8. Uso de GitHub para el control de versiones integrado
+5. Documentación efectiva 
+
+
+
 
 # 3. Control de versiones y GitHub
 
@@ -423,7 +428,7 @@ La gestión de versiones y el control sobre los cambios son pilares fundamentale
 ---
 A continuación se presentan varios ejercicios para que los alumnos trabajen de manera individual y en grupos utilizando GitHub. Estos ejercicios permitirán practicar la creación de una web con varios archivos y reforzar el trabajo en equipo mediante el uso de ramas y el proceso de merge.
 
-## 3.6. Ejercicios individuales
+### 3.5.6. Ejercicios individuales
 
 1. **Creación de un repositorio y página de inicio**  
    - Crea un repositorio en GitHub llamado `MiPaginaWeb`.
@@ -442,7 +447,7 @@ A continuación se presentan varios ejercicios para que los alumnos trabajen de 
    - Añade estilos básicos para la página: cambia el color de fondo, el tipo de fuente y el tamaño del texto.
    - Haz `commit` de los cambios en el archivo CSS y en los archivos HTML, y súbelos al repositorio.
 
-## 3.7. Ejercicios en grupo (equipos de 4 estudiantes)
+### 3.5.7. Ejercicios en grupo (equipos de 4 estudiantes)
 
 4. **Página colaborativa de equipo sin conflictos**
    - Cada miembro del grupo debe crear una rama de trabajo propia desde la rama `main`, llamada `branch-nombre`.
@@ -465,4 +470,236 @@ A continuación se presentan varios ejercicios para que los alumnos trabajen de 
      - Estudiante D: Sección de contacto.
    - Cada estudiante debe hacer `commit` y `push` de sus cambios en su rama al completar su sección.
    - Al final, el equipo debe hacer un **merge** de todas las ramas en `main`. Dado que todos trabajaron en el mismo archivo, es probable que surjan conflictos. Los estudiantes deberán resolver los conflictos de forma colaborativa antes de completar el merge.
+
+## 3.6. Trabajo colaborativo y Github
+
+En un entorno de desarrollo colaborativo, como el que ofrece GitHub, trabajar en equipo sobre un mismo proyecto implica una coordinación cuidadosa y un uso eficiente de las herramientas de control de versiones. GitHub facilita el trabajo colaborativo al permitir que varios desarrolladores trabajen en el mismo código al mismo tiempo, sin temor a perder o sobrescribir el trabajo de otros. Mediante el uso de ramas, pull requests, y otras herramientas, es posible integrar y revisar el trabajo de todos los miembros del equipo de manera organizada y eficaz.
+
+En este apartado exploraremos cómo GitHub permite la colaboración estructurada entre varios miembros de un equipo, desde la creación de ramas individuales hasta la asignación de roles y la resolución de conflictos. Además, para cada subtema, seguiremos un ejemplo práctico en el que un equipo ficticio trabaja en un proyecto. Esto nos permitirá entender, paso a paso, cómo se implementan las mejores prácticas de trabajo colaborativo en GitHub y cómo se asignan responsabilidades para lograr una colaboración exitosa.
+
+Ya sea que se trate de una pequeña mejora en el código o una gran nueva funcionalidad, saber cómo organizar el trabajo y aprovechar al máximo las herramientas de GitHub es esencial para mantener la eficiencia y la coherencia en el desarrollo del proyecto.
+
+### 3.6.1. Flujo de trabajo en equipo
+
+El flujo de trabajo en equipo en GitHub sigue una serie de pasos estructurados que permiten la organización, integración y revisión del trabajo realizado por cada miembro. Este proceso asegura que los cambios individuales no interfieran con el trabajo de los demás, y facilita el seguimiento de los avances y la gestión de versiones en un proyecto compartido.
+
+#### Organización inicial del proyecto
+
+Antes de empezar a trabajar en el proyecto, es fundamental definir los objetivos y planificar las tareas necesarias. Una buena práctica es dividir el proyecto en módulos o funcionalidades que puedan asignarse a diferentes miembros del equipo. En esta fase inicial, es útil acordar:
+
+- Las principales características y requisitos del proyecto.
+- La creación de un repositorio en GitHub para alojar el proyecto y facilitar el control de versiones.
+- La estructura de ramas a utilizar (por ejemplo, ramas para cada funcionalidad o rama de desarrollo).
+- Roles y responsabilidades de cada miembro, como el responsable de integrar las ramas y el encargado de realizar revisiones.
+
+> **Ejemplo:** Un equipo de cuatro personas comienza un proyecto de desarrollo web. Deciden dividir las tareas en módulos: *frontend*, *backend*, *base de datos* y *diseño*. Cada miembro se encargará de una parte, y acuerdan usar una rama para cada módulo en el repositorio compartido.
+
+### 3.6.2. Creación y gestión de ramas en equipo
+
+Para que cada miembro pueda crear una rama y contribuir al proyecto, el propietario del repositorio debe invitar a cada persona como colaborador. Este proceso garantiza que todos tengan los permisos necesarios para realizar cambios y crear ramas directamente en el repositorio original, sin necesidad de hacer copias independientes del proyecto (forks).
+
+#### Proceso de invitación de colaboradores
+
+1. **Acceder a la configuración del repositorio**: 
+   Dirígete a la página principal del repositorio y haz clic en **Settings**.
+2. **Agregar colaboradores**:
+   - En el menú lateral, selecciona **Manage access** y haz clic en el botón **Invite a collaborator**.
+   - Introduce el nombre de usuario o correo electrónico de cada miembro y envía la invitación.
+3. **Aceptar la invitación**:
+   Los colaboradores recibirán una notificación en GitHub o en su correo electrónico. Deben aceptar la invitación para obtener permisos de acceso.
+
+### 3.6.3. Asignación de permisos
+
+Una vez que los colaboradores han aceptado la invitación, es recomendable verificar sus permisos. Generalmente, para poder crear ramas y hacer *push* al repositorio, los colaboradores deben tener permisos de *Write* o superiores. Puedes asignar estos permisos al configurar el acceso.
+
+#### Comandos adicionales
+
+Una vez aceptada la invitación y con los permisos configurados, los colaboradores pueden crear ramas en el repositorio de esta forma:
+
+```bash
+# Clonar el repositorio (si no lo tienen en local)
+git clone <URL-del-repositorio>
+
+# Cambiar al directorio del repositorio
+cd <nombre-del-repositorio>
+
+# Crear una nueva rama para su tarea específica
+git checkout -b nombre_de_rama
+```
+
+Con este acceso y permisos configurados, cada miembro del equipo puede realizar cambios en su propia rama y contribuir al proyecto sin conflictos administrativos. Esta configuración inicial agiliza el flujo de trabajo colaborativo, reduciendo la necesidad de autorizaciones constantes.
+
+
+#### Creación de ramas para cada tarea
+
+Una vez asignadas las tareas y roles, cada miembro debe crear una rama propia en el repositorio. Esto permite que todos trabajen en paralelo sin afectar el código de los demás. Cada rama suele tener un nombre descriptivo que indica la tarea específica que se está abordando (por ejemplo, `frontend-navbar`, `backend-auth`, `database-setup`). A veces incluso se suele añadir el nombre del desarrollador encargado de la rama, por ejemplo, `Teo-frontend-navbar`, `Fran-backend-auth`, `Alex-database-setup`
+
+- **Comando para crear una rama y cambiar a ella:**
+  ```bash
+  git checkout -b nombre_de_rama
+  ```
+
+> **Ejemplo:** El miembro encargado del frontend crea una rama `frontend-navbar`, donde implementará el diseño de la barra de navegación sin interferir con el trabajo en otras partes del proyecto.
+
+Al trabajar en una rama separada, cada miembro puede realizar los cambios necesarios en su tarea y hacer commits de manera independiente.
+
+#### Subida de cambios al repositorio remoto
+
+A medida que los miembros del equipo completan avances en sus tareas, deben subir sus cambios al repositorio remoto en GitHub. Esto permite a otros miembros ver el progreso y realizar revisiones de los cambios si es necesario. Para subir una rama, se utiliza el comando correspondiente para hacer un *push* de la rama al repositorio remoto.
+
+```bash
+git push origin nombre_de_rama
+```
+
+Este paso garantiza que los cambios se almacenen de forma segura en GitHub y que todos los miembros del equipo tengan acceso a la última versión del trabajo realizado en cada rama.
+
+> **Ejemplo:** El desarrollador de backend sube sus cambios en la rama `backend-auth` al repositorio de GitHub, de manera que otros miembros puedan revisar el estado de la autenticación en el sistema.
+
+### 3.6.4. Realización de Pull Requests y Revisión de Código
+
+Cuando un desarrollador completa una tarea y quiere integrar sus cambios en la rama principal o en una rama de desarrollo, se recomienda abrir un *pull request* (PR) en GitHub. El *pull request* es una herramienta que facilita el proceso de revisión, permitiendo que otros miembros del equipo revisen los cambios, comenten en el código y sugieran mejoras antes de la integración definitiva. Este flujo de trabajo fomenta la calidad del código y garantiza que los cambios sean revisados y aprobados colaborativamente.
+
+Un PR en GitHub no solo permite ver las diferencias de código, sino también realizar comentarios en líneas específicas, lo que ayuda a mantener el contexto en las revisiones. Los revisores pueden aprobar el PR, solicitar cambios o simplemente añadir comentarios para discusión. Una vez que el PR recibe las aprobaciones necesarias, los cambios pueden integrarse en la rama principal del proyecto. 
+
+> **Ejemplo práctico:** Imaginemos que un desarrollador que trabaja en la configuración de la base de datos abre un PR para su rama `database-setup`. Otros miembros del equipo pueden revisar el diseño de las tablas y la estructura de la base de datos y aprobarlo cuando estén satisfechos con los cambios, lo cual permite integrarlo en la rama de desarrollo.
+
+#### Creación de un Pull Request
+
+Para crear un PR en GitHub, sigue estos pasos:
+
+1. Desde la página del repositorio, selecciona la pestaña **Pull requests** y haz clic en **New pull request**. Esto abrirá una vista donde puedes seleccionar la rama de origen, que contiene los cambios, y la rama de destino, donde quieres integrar esos cambios (por ejemplo, de `mi-rama` a `main`).
+2. Después de seleccionar las ramas, haz clic en **Create pull request** y añade un título descriptivo y una descripción detallada de los cambios realizados. Esto es útil para que los revisores comprendan el contexto del PR y el objetivo de los cambios.
+
+#### Revisión de un Pull Request
+
+Una vez creado el PR, los revisores del equipo pueden examinar el código en GitHub y realizar comentarios detallados. Aquí están los pasos típicos que un revisor puede seguir:
+
+1. **Comentar en el PR:** En la pestaña **Files changed**, los revisores pueden ver los archivos modificados. Al pasar el cursor por una línea de código específica, aparece un ícono de **+** que permite realizar comentarios en esa línea. Esto ayuda a contextualizar los comentarios y facilita la discusión en equipo sobre líneas específicas de código.
+2. **Solicitar cambios en el PR:** Si el revisor encuentra áreas que necesitan mejoras, puede optar por **Request changes** después de hacer sus comentarios. Esta opción enviará una notificación al autor del PR, solicitando que realice las modificaciones necesarias antes de que se apruebe la integración.
+3. **Aprobar el PR:** Si el revisor está satisfecho con los cambios y no necesita más ajustes, puede seleccionar **Approve** y enviar su aprobación, indicando que el PR está listo para ser fusionado. Esto da luz verde a los cambios y permite que el PR se integre en la rama de destino.
+
+#### Ejemplo práctico de revisión
+
+Imaginemos el siguiente flujo de revisión de un PR en un equipo de desarrollo:
+
+- El desarrollador completa su tarea y abre un PR en GitHub.
+- Los revisores acceden al PR y comentan en una línea específica:  
+   *"¿Podrías revisar esta línea? Quizá sea más eficiente usar un bucle `for` en lugar de `while`."*
+- Otro revisor, al ver que faltan comentarios en ciertas funciones clave, solicita cambios:  
+   *"Sería útil añadir comentarios en las funciones para mejorar la comprensión."*
+- Después de que el desarrollador aborda los comentarios y realiza los ajustes necesarios, el PR recibe la aprobación final:  
+   *"Todo parece correcto, gracias por implementar los cambios. Aprobado para merge."*
+
+#### Resumen de los pasos en el flujo de trabajo de PRs
+
+1. **Start a review:** Para iniciar una revisión completa y añadir varios comentarios en el PR.
+2. **Add single comment:** Para añadir un comentario puntual sin realizar una revisión completa.
+3. **Request changes:** Para notificar al desarrollador que se deben hacer ajustes antes de aprobar.
+4. **Approve:** Para indicar que los cambios son satisfactorios y pueden ser integrados.
+
+Este flujo de trabajo asegura que el código pase por un proceso de revisión estructurado, fomentando la colaboración y mejorando la calidad del proyecto.
+
+
+### 3.6.5. Fusión de ramas y resolución de conflictos
+
+Tras la aprobación de un PR, la rama puede fusionarse con la rama de destino. Si varias ramas han realizado cambios en los mismos archivos, es posible que se generen conflictos durante la fusión. Estos conflictos ocurren porque Git no puede determinar automáticamente qué versión del código debe conservar. En este apartado, exploraremos cómo identificar y resolver estos conflictos de forma eficaz.
+
+#### ¿Qué es un conflicto de fusión?
+
+Un conflicto de fusión ocurre cuando:
+- Dos ramas modifican la misma línea de un archivo.
+- Una rama realiza cambios en una línea que la otra rama ha eliminado o reestructurado.
+- Cambios en varios archivos afectan la estructura general del proyecto, como referencias o llamadas a funciones eliminadas o renombradas.
+
+#### Proceso para resolver conflictos de fusión
+
+1. **Identificación del Conflicto**: Al intentar fusionar ramas en GitHub o en un entorno de desarrollo local, Git notificará al usuario si existen conflictos que requieren resolución. En GitHub, esto se verá reflejado en la sección de *Pull Requests* con una alerta que indica *"This branch has conflicts that must be resolved"*.
+2. **Abrir el Archivo en Conflicto**: Los conflictos están delimitados con los indicadores que muestran el contenido de la rama actual y el contenido de la rama que se intenta fusionar.
+3. **Resolver los Cambios Manualmente**: Decide qué cambios deseas conservar:
+   - Mantener los cambios de la rama actual.
+   - Conservar los cambios de la otra rama.
+   - Combinar ambos cambios (ideal si ambos son necesarios).
+   - Edita el archivo para eliminar los marcadores de conflicto y ajusta el contenido final según lo que sea más adecuado para el proyecto.
+4. **Marcar los Conflictos como Resueltos**: Una vez que has editado los archivos para resolver los conflictos, guarda los cambios y añade los archivos actualizados al área de *staging* para que Git los considere resueltos.
+5. **Hacer un Commit de la Resolución**: Realiza un commit que confirme la resolución de los conflictos. Esto dejará un registro claro de la fusión y de los conflictos que se resolvieron.
+6. **Completar la Fusión**: Si estás trabajando en GitHub, haz clic en **Mark as resolved** y luego en **Commit merge** para completar la fusión. En un entorno local, puedes finalizar la fusión utilizando el comando de commit tras haber resuelto y añadido los cambios.
+
+#### Ejemplo práctico de resolución de conflictos
+
+Imaginemos que el equipo de desarrollo está trabajando en el archivo de estilos. El desarrollador de frontend hizo cambios en una rama específica mientras que otro desarrollador trabajaba en otra rama. Al intentar fusionar ambas ramas, se detecta un conflicto en el color de fondo del encabezado.
+
+```plaintext
+<<<<<<< HEAD
+header {
+   background-color: #ff0000;
+}
+=======
+header {
+   background-color: #00ff00;
+}
+>>>>>>> feature/style-update
+```
+
+En este caso, el equipo debe decidir:
+- Conservar el cambio de color de la rama actual.
+- Utilizar el color de la otra rama.
+- O combinar ambos cambios si el equipo decide que ambos son válidos.
+
+#### Buenas prácticas para evitar conflictos
+
+- **Comunicación constante**: Asegúrate de que todos en el equipo estén al tanto de los cambios que cada miembro está realizando.
+- **Actualizar frecuentemente la rama de trabajo**: Ejecuta el comando de actualización `git pull` desde la rama principal para mantener la rama de trabajo actualizada con los últimos cambios.
+- **Utilizar ramas específicas para cada tarea**: Esto limita los conflictos a las áreas del proyecto que están siendo modificadas.
+
+La resolución de conflictos es una habilidad esencial en el trabajo colaborativo, permitiendo a los equipos integrar los aportes de cada miembro de forma ordenada y mantener el flujo de trabajo sin interrupciones. 
+
+## 3.6.6. Buenas prácticas para trabajo colaborativo en GitHub
+
+Trabajar en equipo en un proyecto de desarrollo implica una organización clara y el seguimiento de ciertas prácticas que ayudan a mantener el orden y la eficiencia. A continuación, se presentan algunas de las mejores prácticas para el trabajo colaborativo en GitHub, que no solo facilitan la integración de código, sino que también promueven una comunicación efectiva y un flujo de trabajo estructurado.
+
+#### Definición de roles y responsabilidades
+
+Antes de empezar, es importante asignar roles dentro del equipo. Cada miembro debe tener claro su rol, ya sea desarrollador principal, revisor de código, o responsable de integraciones. Esto evita malentendidos y asegura que cada tarea tenga una persona a cargo. 
+
+- **Administrador de repositorio:** Encargado de configurar el repositorio y establecer permisos.
+- **Desarrolladores:** Cada desarrollador trabaja en sus respectivas ramas y sigue las reglas de commits y pull requests.
+- **Revisores:** Personas asignadas para revisar y aprobar los pull requests de otros miembros antes de fusionarlos con la rama principal.
+
+#### Uso de ramas para tareas específicas
+
+Crear una rama para cada tarea o característica ayuda a mantener el historial de cambios claro y facilita la revisión del código. Las ramas permiten que los desarrolladores trabajen en paralelo sin interferir en el código de los demás, ya que cada rama es un "espacio aislado" del proyecto.
+
+- **Convención de nombres:** Usa nombres claros y descriptivos para las ramas, como `feature/nueva-funcionalidad` o `fix/bug-inicio-sesion`, para que todos puedan identificar su propósito fácilmente.
+- **Integración frecuente:** Fusionar las ramas individuales con la rama principal periódicamente ayuda a evitar conflictos grandes y facilita la sincronización de cambios.
+
+#### Realizar commits frecuentes y descriptivos
+
+Los commits son la unidad básica de cambios en Git. Hacer commits pequeños y específicos ayuda a mantener el proyecto organizado y permite identificar fácilmente el origen de cualquier cambio o error. 
+
+- **Commits frecuentes:** Haz commits de manera regular, en lugar de un gran commit al final. Esto permite que cada cambio tenga un propósito claro y facilita la revisión.
+- **Mensajes descriptivos:** Usa mensajes de commit que expliquen qué se hizo y por qué, como `Ajusta validación de entrada en formulario` o `Corrige error en el cálculo de precios`.
+
+#### Uso adecuado de pull requests y revisión de código
+
+Los pull requests son una excelente manera de proponer cambios y revisar el código antes de integrarlo en la rama principal. Permiten a los revisores analizar el código, detectar posibles errores y proponer mejoras.
+
+- **Abrir un pull request al finalizar la tarea:** Una vez completada una tarea, abre un pull request para que los compañeros puedan revisar los cambios y dar su feedback.
+- **Comentarios y discusiones:** Utiliza los comentarios para señalar cualquier aspecto relevante del cambio y aclarar dudas. Este es un buen espacio para el aprendizaje y la mejora continua.
+- **Revisión cruzada:** Asigna revisores que no participaron en la creación de la rama para una revisión objetiva y precisa.
+
+#### Resolver conflictos de manera colaborativa
+
+Los conflictos en el código pueden surgir cuando diferentes ramas modifican las mismas líneas de código. Resolver estos conflictos de manera colaborativa y planificada ayuda a mantener la cohesión del equipo.
+
+- **Actualización frecuente de ramas locales:** Antes de empezar a trabajar, realiza un `git pull` de la rama principal para asegurarte de que tienes los últimos cambios y así minimizar posibles conflictos.
+- **Resolución de conflictos con ayuda del equipo:** Si encuentras un conflicto, comunícalo a los involucrados y, si es necesario, resuélvelo en conjunto para asegurar que todos los cambios se mantengan en la versión final.
+- **Pruebas después de la fusión:** Una vez resueltos los conflictos, realiza pruebas para asegurar que los cambios no afectan otras partes del proyecto.
+
+#### Documentación del proceso y los cambios
+
+Mantener una buena documentación es fundamental para el éxito del proyecto. Esto incluye no solo el código, sino también el proceso y las decisiones tomadas.
+
+- **Archivos README y Wiki:** Usa el README para describir el proyecto y su propósito, e incluye instrucciones básicas. La Wiki es útil para agregar información adicional, como guías de instalación o descripciones detalladas de cada funcionalidad.
+- **Documentación de código:** Agrega comentarios en el código que expliquen secciones complejas o pasos importantes. Esto facilita la comprensión de futuras contribuciones y el mantenimiento del proyecto.
+- **Historial de cambios (CHANGELOG):** Mantén un registro de los cambios significativos para que todos en el equipo puedan revisar las actualizaciones y adaptarse a ellas.
 
