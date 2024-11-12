@@ -653,7 +653,7 @@ En este caso, el equipo debe decidir:
 
 La resolución de conflictos es una habilidad esencial en el trabajo colaborativo, permitiendo a los equipos integrar los aportes de cada miembro de forma ordenada y mantener el flujo de trabajo sin interrupciones. 
 
-## 3.6.6. Buenas prácticas para trabajo colaborativo en GitHub
+### 3.6.6. Buenas prácticas para trabajo colaborativo en GitHub
 
 Trabajar en equipo en un proyecto de desarrollo implica una organización clara y el seguimiento de ciertas prácticas que ayudan a mantener el orden y la eficiencia. A continuación, se presentan algunas de las mejores prácticas para el trabajo colaborativo en GitHub, que no solo facilitan la integración de código, sino que también promueven una comunicación efectiva y un flujo de trabajo estructurado.
 
