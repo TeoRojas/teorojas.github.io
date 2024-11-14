@@ -9,8 +9,18 @@ abstract:
 ---
 
 # Índice
-1. Introducción
-2. Refactorización
+1. [Introducción](#1-introducción)
+2. [Refactorización](#2-refactorización)  
+   2.1. [Introducción a la Refactorización](#21-introducción-a-la-refactorización)  
+   2.2. [Patrones de Refactorización Más Usuales](#22-patrones-de-refactorización-más-usuales)  
+      &emsp;&emsp;2.2.1. [Modularización](#221-modularización)  
+      &emsp;&emsp;2.2.2. [Reducción lógica (Extract Method)](#222-reducción-lógica-extract-method)  
+      &emsp;&emsp;2.2.3. [Variables autoexplicativas](#223-variables-autoexplicativas)  
+      &emsp;&emsp;2.2.4. [Objetos en Parámetros (Introduce Parameter Object)](#224-objetos-en-parámetros-introduce-parameter-object)  
+      &emsp;&emsp;2.2.5. [Métodos Inline](#225-métodos-inline)  
+      &emsp;&emsp;2.2.6. [Autoencapsular campos -getters y setters- (Encapsulate Field)](#226-autoencapsular-campos-getters-y-setters-encapsulate-field)  
+      &emsp;&emsp;2.2.7. [Uso de Constantes](#227-uso-de-constantes)  
+      &emsp;&emsp;2.2.8. [Aplicación de Patrones en el Código](#228-aplicación-de-patrones-en-el-código)  
 3. [Control de versiones y GitHub](#3-control-de-versiones-y-github)  
    3.1. [¿Qué es el control de versiones?](#31-qué-es-el-control-de-versiones)  
    3.2. [¿Qué es Git?](#32-qué-es-git)  
@@ -33,7 +43,414 @@ abstract:
    3.8. Uso de GitHub para el control de versiones integrado
 5. Documentación efectiva 
 
+# 1. Introducción
 
+En este módulo exploraremos los conceptos y prácticas fundamentales que sustentan el desarrollo de software profesional, centrándonos en la refactorización de código, el control de versiones con Git, y el uso de GitHub como plataforma de colaboración. Cada uno de estos elementos juega un papel crucial en la creación de software eficiente, mantenible y colaborativo, y juntos forman una base sólida para un flujo de trabajo productivo en equipos de desarrollo.
+
+Comenzaremos con la refactorización, un proceso clave para mejorar la estructura interna del código sin modificar su funcionalidad. A través de este proceso, lograremos que el código sea más limpio, entendible y sencillo de mantener a largo plazo. Aprenderemos a identificar patrones de refactorización comunes y a aplicar estos principios en nuestros proyectos utilizando herramientas integradas en el entorno de desarrollo, como Visual Studio Code. Estos principios no solo harán que el código sea más manejable, sino que también ayudarán a prevenir errores y a facilitar futuras modificaciones.
+
+El control de versiones es otra práctica esencial para gestionar de manera eficiente cualquier proyecto de desarrollo. Utilizaremos Git, un sistema que nos permitirá llevar un registro detallado de los cambios en nuestro código a lo largo del tiempo. Con Git, aprenderemos a gestionar las distintas versiones de nuestro proyecto de forma local, realizando operaciones como confirmaciones de cambios, creación de ramas para desarrollar nuevas funcionalidades en paralelo, y la fusión de esas ramas para consolidar el trabajo realizado. A continuación, exploraremos GitHub, una plataforma que facilita la colaboración a través de herramientas como *pull requests*, revisiones de código y la integración continua. Esto nos permitirá sincronizar nuestro código entre el entorno local y GitHub y nos introducirá en la dinámica de trabajo en equipo.
+
+Trabajaremos en prácticas de colaboración en equipo, lo que nos permitirá desarrollar software de manera ágil y eficiente. La organización del trabajo en equipo incluirá la creación de ramas para tareas específicas y el uso de *pull requests* para revisar y aprobar el código. Aprenderemos a coordinar de manera organizada el trabajo de varios desarrolladores y a resolver conflictos que pueden surgir al fusionar cambios de distintas ramas, todo ello con herramientas y ejemplos prácticos que facilitarán la colaboración y la gestión de proyectos en equipo.
+
+Además, una parte crucial de cualquier proyecto de software es su documentación. A lo largo de este módulo, veremos cómo documentar tanto el código como el flujo de trabajo para asegurar que el proyecto sea comprensible y accesible para todos los miembros del equipo. GitHub también ofrece herramientas para facilitar la documentación mediante comentarios y notas en los *pull requests* y revisiones de código, lo que contribuye a mantener una comunicación clara y organizada dentro del equipo.
+
+En conjunto, estos temas dotarán al estudiante de habilidades prácticas y conceptuales esenciales para gestionar proyectos de software de manera profesional. Desde la mejora de la estructura del código hasta la colaboración efectiva en equipo y la documentación integral, el contenido de este módulo ofrece una visión completa sobre el ciclo de desarrollo y mantenimiento de aplicaciones, abarcando tanto proyectos individuales como colaborativos.
+
+
+# 2. Refactorización
+
+## 2.1. Introducción a la Refactorización
+
+La refactorización es el proceso de reestructurar el código de un programa sin modificar su funcionalidad externa. Este proceso es fundamental en el desarrollo de software, ya que permite mejorar la calidad del código, hacerlo más legible, modular y fácil de mantener. Al aplicar técnicas de refactorización, los desarrolladores pueden identificar y aislar tareas específicas dentro de funciones o métodos, lo que facilita su comprensión y reutilización en otras partes del programa.
+
+### Ventajas y Desventajas de la Refactorización
+
+Refactorizar tiene varias ventajas:
+- **Mejora de la legibilidad**: Al dividir el código en funciones más pequeñas, resulta más fácil de entender y seguir.
+- **Facilita el mantenimiento**: Un código modular permite hacer cambios en una parte específica sin afectar el funcionamiento global del programa.
+- **Promueve la reutilización**: Las funciones individuales se pueden reutilizar en diferentes contextos sin duplicar código.
+  
+Sin embargo, la refactorización también presenta algunos inconvenientes:
+- **Tiempo adicional de desarrollo**: Refactorizar lleva tiempo y puede retrasar la entrega de funcionalidades nuevas.
+- **Riesgo de errores**: Si no se realizan pruebas adecuadas, pueden introducirse errores al modificar la estructura del código.
+  
+A continuación, veremos un ejemplo sencillo de refactorización para ilustrar estas ventajas.
+
+### Ejemplo: Impresión de una Cuenta de Usuario
+
+Supongamos que tenemos una función que imprime una cuenta de banco de un usuario, incluyendo el nombre y la cantidad de dinero disponible. También queremos que la función muestre el logo del banco. La implementación inicial de la función `imprimir_cuenta_usuario` es la siguiente:
+
+```python
+# Versión inicial
+def imprimir_cuenta_usuario(nombre, saldo):
+   print("---- Logo del Banco ----")
+   print(f"Titular de la Cuenta: {nombre}")
+   print(f"Saldo: ${saldo}")
+```
+
+En esta versión, la función realiza varias tareas a la vez: imprime el logo del banco y muestra los detalles de la cuenta del usuario. Aunque esta estructura funciona, no es modular ni reutilizable. Vamos a refactorizar el código dividiendo estas tareas en funciones específicas.
+
+### Código Refactorizado
+
+A continuación, presentamos el código refactorizado. Hemos dividido la funcionalidad en tres funciones: `imprimir_logo`, que muestra el logo del banco; `imprimir_detalles`, que imprime el nombre y la cantidad; y `imprimir_cuenta_usuario`, que coordina estas funciones.
+
+```python
+# Versión refactorizada
+def imprimir_logo():
+   print("---- Logo del Banco ----")
+
+def imprimir_detalles(nombre, saldo):
+   print(f"Titular de la Cuenta: {nombre}")
+   print(f"Saldo: ${saldo}")
+
+def imprimir_cuenta_usuario(nombre, saldo):
+   imprimir_logo()
+   imprimir_detalles(nombre, saldo)
+```
+
+### Explicación de la Refactorización
+
+En el código refactorizado:
+- **La función `imprimir_logo`** se encarga únicamente de mostrar el logo del banco.
+- **La función `imprimir_detalles`** recibe el nombre del usuario y la cantidad y muestra estos datos en pantalla.
+- **La función `imprimir_cuenta_usuario`** llama a las dos funciones anteriores, logrando que la impresión de la cuenta sea clara y modular.
+
+Este enfoque modular hace que el código sea más claro y fácil de mantener. Si en el futuro queremos cambiar el logo o el formato de los detalles, solo necesitamos actualizar una de las funciones, sin afectar el resto del flujo de trabajo.
+
+### Ventajas de la Refactorización Aplicada
+
+1. **Modularidad**: Cada función tiene una única responsabilidad, lo que mejora la organización del código.
+2. **Reusabilidad**: Las funciones `imprimir_logo` e `imprimir_detalles` pueden utilizarse en otros contextos si necesitamos el logo o los detalles de la cuenta.
+3. **Legibilidad**: La función principal es más simple y clara, ya que delega las tareas específicas a funciones individuales.
+
+Refactorizar ayuda a mantener un código de calidad a medida que el proyecto crece, asegurando que sea más fácil de entender, modificar y probar.
+
+### Entonces, ¿cuándo refactorizar?
+
+Ten en cuenta siempre aplicar la **Regla de los Tres**:
+
+1. La primera vez que haces algo, simplemente haz que funcione.
+2. La segunda vez que haces algo similar, te puede incomodar repetirlo, pero haz lo mismo de todas formas.
+3. La tercera vez que haces lo mismo, es el momento de comenzar a refactorizar.
+
+
+## 2.2. Patrones de Refactorización Más Usuales
+
+Refactorizar el código es mucho más que simplificar o mejorar la legibilidad: implica aplicar patrones que han sido establecidos como buenas prácticas para mejorar la calidad, mantenimiento y eficiencia del software. A continuación, exploraremos algunos de los patrones de refactorización más comunes.
+
+### 2.2.1. Modularización
+
+La **modularización** en programación es el proceso de dividir un programa grande y complejo en partes más pequeñas y manejables llamadas "módulos" o "funciones". Cada módulo se enfoca en una tarea específica, lo que permite organizar el código en bloques lógicos y reducir la complejidad general del programa. 
+
+**Ejemplo de Modularización en Refactorización**
+
+Supongamos que tenemos una función que realiza varias operaciones para procesar un pedido. La función se encarga de todo: calcular el total, aplicar un descuento, y generar el recibo. 
+
+```python
+# Versión inicial
+def procesar_pedido(productos, descuento):
+    total = 0
+    for producto in productos:
+        total += producto['precio'] * producto['cantidad']
+    
+    total_descuento = total - (total * descuento / 100)
+    
+    print("Recibo de Compra:")
+    for producto in productos:
+        print(f"{producto['nombre']} - Cantidad: {producto['cantidad']} - Precio: {producto['precio']}€")
+    print(f"Descuento aplicado: {descuento}%")
+    print(f"Total final: {total_descuento}€")
+
+productos = [
+    {'nombre': 'Producto A', 'precio': 10, 'cantidad': 2},
+    {'nombre': 'Producto B', 'precio': 20, 'cantidad': 1},
+]
+
+procesar_pedido(productos, 10)
+```
+**Problemas del Código Inicial**
+
+- **Responsabilidad Múltiple**: La función `procesar_pedido` hace demasiadas cosas (calcular el total, aplicar el descuento y generar el recibo).
+- **Difícil de Mantener y Reutilizar**: Si alguna parte del proceso cambia, como el cálculo del descuento o el formato del recibo, es necesario modificar esta función directamente.
+
+**Código Después de Refactorizar (Modularizado)**
+
+Vamos a dividir `procesar_pedido` en tres funciones más pequeñas: `calcular_total`, `aplicar_descuento`, y `generar_recibo`.
+
+```python
+# Versión Refactorizada
+def calcular_total(productos):
+    total = 0
+    for producto in productos:
+        total += producto['precio'] * producto['cantidad']
+    return total
+
+def aplicar_descuento(total, descuento):
+    return total - (total * descuento / 100)
+
+def generar_recibo(productos, total_descuento, descuento):
+    print("Recibo de Compra:")
+    for producto in productos:
+        print(f"{producto['nombre']} - Cantidad: {producto['cantidad']} - Precio: {producto['precio']}€")
+    print(f"Descuento aplicado: {descuento}%")
+    print(f"Total final: {total_descuento}€")
+
+def procesar_pedido(productos, descuento):
+    total = calcular_total(productos)
+    total_descuento = aplicar_descuento(total, descuento)
+    generar_recibo(productos, total_descuento, descuento)
+
+productos = [
+    {'nombre': 'Producto A', 'precio': 10, 'cantidad': 2},
+    {'nombre': 'Producto B', 'precio': 20, 'cantidad': 1},
+]
+
+procesar_pedido(productos, 10)
+```
+
+**Explicación del Código Refactorizado**
+
+1. **calcular_total**: Esta función recibe la lista de productos y calcula el total de la compra.
+2. **aplicar_descuento**: Calcula el precio total después de aplicar el descuento.
+3. **generar_recibo**: Imprime el recibo con el detalle de cada producto, el descuento aplicado y el total final.
+
+La función `procesar_pedido` ahora se encarga únicamente de coordinar las llamadas a las funciones especializadas, haciéndola más fácil de leer y entender.
+
+**Ventajas de la Modularización en Este Ejemplo**
+
+- **Mayor Legibilidad**: Al dividir el código en funciones más pequeñas, cada una con un propósito específico, es más fácil entender qué hace cada parte del código.
+- **Reutilización**: Las funciones `calcular_total` y `aplicar_descuento` pueden reutilizarse en otras partes del programa.
+- **Facilidad de Pruebas**: Cada función puede probarse de forma aislada, lo que facilita la detección y corrección de errores.
+- **Mantenibilidad**: Al trabajar en módulos más pequeños, es más sencillo detectar errores y realizar mejoras sin afectar el funcionamiento general del programa.
+
+
+### 2.2.2. Reducción lógica (Extract Method) 
+
+Este patrón se utiliza cuando una función o método tiene demasiadas responsabilidades o contiene bloques de código que pueden extraerse en métodos más específicos. Extraer partes de un método largo en métodos independientes mejora la legibilidad y facilita el mantenimiento del código.
+
+```python
+# Versión inicial
+def procesar_pedido():
+   print("Detalles del Cliente:")
+   print("Nombre: Juan Pérez")
+   print("Dirección: Calle Principal 123, Springfield")
+   print("Artículos Pedidos:")
+   print("Artículo 1: Widget A")
+   print("Artículo 2: Widget B")
+   print("Precio Total: $40")
+
+procesar_pedido()
+```
+
+```python
+# Versión Refactorizada
+def imprimir_detalles_cliente():
+   print("Detalles del Cliente:")
+   print("Nombre: Juan Pérez")
+   print("Dirección: Calle Principal 123, Springfield")
+
+def imprimir_articulos_pedidos():
+   print("Artículos Pedidos:")
+   print("Artículo 1: Widget A")
+   print("Artículo 2: Widget B")
+   print("Precio Total: $40")
+
+def procesar_pedido():
+   imprimir_detalles_cliente()
+   imprimir_articulos_pedidos()
+
+procesar_pedido()
+```
+### 2.2.3. Variables autoexplicativas 
+
+Renombrar variables es un proceso sencillo pero fundamental. Utilizar nombres descriptivos mejora la comprensión del código, facilitando que otros desarrolladores comprendan rápidamente su propósito. Un cambio en el nombre de una variable puede reducir errores y hacer que el código sea más intuitivo.
+
+```python
+# Versión inicial
+def calcular_total(x):
+    tasa_impuesto = 0.21
+    total = x + (x * tasa_impuesto)
+    return total
+
+monto_pedido = 100
+print(calcular_total(monto_pedido))
+```
+
+```python
+# Versión Refactorizada
+def calcular_total(precio_base):
+    tasa_impuesto = 0.21
+    total = precio_base + (precio_base * tasa_impuesto)
+    return total
+
+precio_compra_sin_impuestos = 100
+print(calcular_total(precio_compra_sin_impuestos))
+
+```
+### 2.2.4. Objetos en Parámetros (Introduce Parameter Object)
+
+Este patrón se aplica cuando un conjunto de parámetros relacionados se pasa de forma repetitiva a múltiples funciones. En lugar de pasar varias variables por separado, se puede introducir un objeto que encapsule todos estos parámetros. Esto reduce la cantidad de argumentos en una función y simplifica la interfaz.
+
+```python
+# Versión inicial
+def crear_pedido(nombre_cliente, direccion_cliente, nombre_articulo, precio_articulo, cantidad):
+    precio_total = precio_articulo * cantidad
+    print(f"Pedido para {nombre_cliente}")
+    print(f"Envío a: {direccion_cliente}")
+    print(f"Artículo: {nombre_articulo} - Cantidad: {cantidad}")
+    print(f"Precio Total: ${precio_total}")
+
+crear_pedido("Juan Pérez", "Calle Principal 123", "Widget A", 10, 3)
+```
+
+```python
+# Versión Refactorizada
+class Pedido:
+    def __init__(self, nombre_cliente, direccion_cliente, nombre_articulo, precio_articulo, cantidad):
+        self.nombre_cliente = nombre_cliente
+        self.direccion_cliente = direccion_cliente
+        self.nombre_articulo = nombre_articulo
+        self.precio_articulo = precio_articulo
+        self.cantidad = cantidad
+
+def crear_pedido(pedido):
+    precio_total = pedido.precio_articulo * pedido.cantidad
+    print(f"Pedido para {pedido.nombre_cliente}")
+    print(f"Envío a: {pedido.direccion_cliente}")
+    print(f"Artículo: {pedido.nombre_articulo} - Cantidad: {pedido.cantidad}")
+    print(f"Precio Total: ${precio_total}")
+
+pedido = Pedido("Juan Pérez", "Calle Principal 123", "Widget A", 10, 3)
+crear_pedido(pedido)
+```
+### 2.2.5. Métodos Inline 
+
+Cuando un método es muy corto o su única tarea es llamar a otro método, puede resultar conveniente eliminar el método intermedio y sustituir su llamada directamente por el código que ejecuta. Este patrón es útil para simplificar el flujo del programa eliminando métodos redundantes. En el siguiente ejemplo El patrón se simplifica el código eliminando una función (es_jubilado) cuya lógica puede integrarse directamente en otra función (entrada_gratis). Este patrón es útil cuando una función es tan simple que no justifica su existencia por separado, o cuando su contenido es fácilmente comprensible sin la necesidad de una abstracción adicional. En este caso, al utilizar métodos inline, el código se vuelve más conciso sin sacrificar la claridad.
+
+```python
+# Versión inicial
+def entrada_gratis(edad):
+    return 1 if es_jubilado(edad) else 0
+
+def es_jubilado(edad):
+    return edad >= 65
+
+# Uso de la función
+print(entrada_gratis(70))  # Salida: 1
+print(entrada_gratis(30))  # Salida: 0
+```
+
+```python
+# Versión Refactorizada
+def entrada_gratis(edad):
+    return 1 if edad >= 65 else 0
+
+# Uso de la función
+print(entrada_gratis(70))  # Salida: 1
+print(entrada_gratis(30))  # Salida: 0
+
+```
+
+### 2.2.6. Autoencapsular campos -getters y setters- (Encapsulate Field)
+
+Este patrón se utiliza para proteger los atributos de una clase, accediendo a ellos únicamente a través de métodos específicos, llamados getters y setters. Encapsular campos es una buena práctica para asegurar que el acceso y modificación de datos se haga de manera controlada.
+
+```python
+class CuentaBancaria:
+   def __init__(self, saldo):
+      self.saldo = saldo
+
+# Uso
+cuenta = CuentaBancaria(1000)
+cuenta.saldo = -500  # No hay control sobre los valores asignados
+```
+
+```python
+# Versión Refactorizada
+class CuentaBancaria:
+   def __init__(self, saldo):
+      self._saldo = saldo  # El campo es privado
+
+   # Getter
+   def get_saldo(self):
+      return self._saldo
+
+   # Setter con validación
+   def set_saldo(self, nuevo_saldo):
+      if nuevo_saldo >= 0:  # Validamos que el saldo no sea negativo
+         self._saldo = nuevo_saldo
+      else:
+         print("Error: el saldo no puede ser negativo.")
+
+# Uso
+cuenta = CuentaBancaria(1000)
+print(cuenta.get_saldo())  # Salida: 1000
+cuenta.set_saldo(500)      # Modificamos el saldo de manera controlada
+print(cuenta.get_saldo())  # Salida: 500
+cuenta.set_saldo(-100)     # Intento de asignación inválida; se evita el cambio
+```
+### Explicación
+
+- **Campo privado** (`_saldo`): Usamos un guion bajo para indicar que el campo es privado y no debería ser accedido directamente.
+- **Getter** (`get_saldo`): Nos permite obtener el valor del saldo sin exponer el campo directamente.
+- **Setter** (`set_saldo`): Controla la modificación del saldo, permitiendo que solo se asignen valores válidos (en este caso, no negativos).
+
+Al encapsular el campo, logramos un mejor control sobre el acceso y la modificación del atributo `saldo`, protegiendo la integridad de los datos y siguiendo los principios de diseño orientado a objetos.
+
+### 2.2.7. Uso de Constantes 
+
+El uso de constantes en la programación es una práctica que mejora la claridad, eficiencia y mantenibilidad del código. Una constante es un valor que se define una vez y no cambia durante la ejecución del programa. Las constantes permiten dar nombres significativos a valores fijos, evitando "números mágicos" o valores dispersos en el código que dificultan su comprensión.
+
+**Ventajas de Usar Constantes**
+
+1. **Claridad y Legibilidad**: Al asignar nombres significativos a valores constantes, el código se vuelve más comprensible. Por ejemplo, en lugar de utilizar directamente el número `3.14159` para el valor de PI, una constante `PI = 3.14159` hace el propósito de este valor mucho más claro.
+2. **Mantenibilidad**: Si el valor de una constante necesita cambiarse, solo se modifica en un único lugar, facilitando las actualizaciones en el código y reduciendo errores.
+3. **Prevención de Errores**: Las constantes evitan la modificación accidental de valores importantes, ya que el compilador o el intérprete de muchas lenguajes de programación impedirán el cambio de su valor una vez establecido.
+4. **Eficiencia**: Las constantes pueden optimizar el rendimiento del programa. Algunos compiladores optimizan el uso de constantes mejor que el uso de variables, ya que saben que el valor no cambiará. Esto hace que el uso de constantes sea ligeramente más rápido en algunas situaciones.
+
+**Ejemplo de Refactorización con Constantes**
+
+Supongamos que tenemos un programa donde se calcula el precio de venta de un producto con un impuesto del 21% y un descuento fijo. Antes de la refactorización, el programa utiliza los valores de descuento e impuesto directamente en el código.
+
+```python
+def calcular_precio_final(precio_base):
+    precio_con_impuesto = precio_base * 1.21  # Aplicar 21% de impuesto
+    precio_final = precio_con_impuesto - 5  # Aplicar descuento de 5
+    return precio_final
+```
+
+**Refactorización utilizando Constantes**
+
+Después de refactorizar, los valores de impuesto y descuento se definen como constantes. Esto no solo mejora la claridad y eficiencia del código, sino que también permite modificar los valores de `IMPUESTO` o `DESCUENTO` en un único lugar si es necesario.
+
+```python
+IMPUESTO = 0.21
+DESCUENTO = 5
+
+def calcular_precio_final(precio_base):
+    precio_con_impuesto = precio_base * (1 + IMPUESTO)
+    precio_final = precio_con_impuesto - DESCUENTO
+    return precio_final
+```
+
+**Importancia en la Refactorización**
+
+Refactorizar el código para incluir constantes mejora la estructura y modularidad del programa. Cuando se utiliza una constante en lugar de un valor disperso en el código, facilita la comprensión y actualización de su propósito. En el ejemplo, `IMPUESTO` y `DESCUENTO` son fácilmente identificables y modificables, reduciendo errores y mejorando la adaptabilidad del programa a futuros cambios.
+
+Además, el uso de constantes fomenta un estilo de programación coherente, en el que se da prioridad a la legibilidad y mantenibilidad, haciendo que el código sea más comprensible y eficiente a largo plazo.
+
+
+### 2.2.8. Aplicación de Patrones en el Código
+
+La aplicación de un patrón de refactorización dependerá del contexto y de la necesidad específica de mejora en el código. A continuación, se presentan algunas pautas para elegir el patrón adecuado según el objetivo de la refactorización:
+
+- **Mejorar la legibilidad**: Para hacer que el código sea más fácil de leer y comprender, los patrones *Extract Method* y *Rename Variable* son especialmente útiles. Por ejemplo, si se encuentra un bloque de código que realiza una función específica dentro de un método más extenso, *Extract Method* permite mover ese bloque a un método propio con un nombre descriptivo.
+- **Reducir la complejidad de las funciones**: Si un método tiene demasiados parámetros, el patrón *Introduce Parameter Object* puede ser una buena solución para agrupar estos valores en un solo objeto, simplificando la interfaz del método y facilitando futuras modificaciones.
+- **Proteger los datos y el acceso a los mismos**: Para gestionar y proteger el acceso a los atributos de una clase, *Encapsulate Field* asegura que los datos no se manipulen directamente desde fuera de la clase. Esto resulta útil en clases donde la seguridad o la consistencia de los datos es crítica.
+- **Eliminar redundancias**: En ocasiones, algunos métodos solo llaman a otros métodos sin agregar valor adicional. En estos casos, *Inline Method* ayuda a reducir estos métodos intermediarios, dejando el código más compacto y directo.
+
+Aplicar los patrones de refactorización adecuados en cada situación permite no solo que el código sea más limpio y fácil de mantener, sino también que sea más eficiente y robusto a medida que el proyecto crece. 
 
 
 # 3. Control de versiones y GitHub
