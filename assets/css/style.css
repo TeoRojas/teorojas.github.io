@@ -118,8 +118,21 @@ table{
     margin-bottom: 15px;
 }
 
+table.rouge-table{
+    border: none !important;
+    padding: 0px !important;
+    background-color: none !important;
+    border-radius: none !important;  
+    margin: 0px !important; 
+    font-size: unset;
+}
+
 table td{
     padding: 5px 10px;
+}
+
+td.rouge-gutter.gl {
+    color: #cccccc;
 }
 
 table th{
@@ -131,6 +144,16 @@ table t{
     font-family: 'CMR';
 }
 
+pre.highlight {
+    overflow: auto;
+    border: 1px solid #d3dddb;
+    scrollbar-color: #e4ebe9 transparent;  
+    padding: 0px 5px;
+    background-color: #f6f8f8;
+    border-radius: 5px;  
+    margin-bottom: 20px;      
+}
+
 strong{
     font-family: 'CMB';
     letter-spacing: -0.75px;
@@ -140,17 +163,6 @@ ul{
     /*margin-bottom: 20px; Al eliminarlo se arreglan los índices*/ 
 }
 
-pre{
-    border: 1px solid;
-    padding: 15px;
-    background-color: #f6f8f8;
-    border-radius: 5px;  
-    margin-bottom: 20px; 
-    /*to improve*/
-    overflow: auto;
-    border: 1px solid #d3dddb;
-    scrollbar-color: #e4ebe9 transparent;
-}
 
 code{
     font-size: 14px;
