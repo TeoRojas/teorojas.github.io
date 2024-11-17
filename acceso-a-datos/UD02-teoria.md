@@ -586,8 +586,6 @@ En este ejemplo, ejecutamos una consulta `SELECT` que obtiene todos los registro
 Una vez ejecutada una consulta, el resultado se almacena en un objeto `ResultSet`. Este objeto contiene los datos obtenidos de la base de datos, y a través de sus métodos, podemos acceder a los valores de las columnas de cada fila.
 
 ### Accediendo a los Resultados del `ResultSet`
-
-### Accediendo a los Resultados del `ResultSet`
 ```java
 ResultSet resultSet = preparedStatement.executeQuery();
 
