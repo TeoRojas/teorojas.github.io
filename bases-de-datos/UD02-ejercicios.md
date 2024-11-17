@@ -19,12 +19,12 @@ abstract: Sinopsis de la unidad 02
 8. [Ejercicio 8: Esquema ER de Biblioteca](#8-ejercicio-8-esquema-er-de-biblioteca)
 9. [Ejercicio 9: Esquema ER de Startrek](#9-ejercicio-9-esquema-er-de-startrek)
 10. [Ejercicio 10: Esquema ER de Lanzadera en Startrek](#10-ejercicio-10-esquema-er-de-lanzadera-en-startrek)
-11. [Ejercicio 11: Esquema ER de Campeonato de Ajedrez](#11-ejercicio-11-esquema-er-de-campeonato-de-ajedrez)
+11. [Ejercicio 11: Esquema ER de Club Náutico](#11-ejercicio-11-esquema-er-de-club-náutico)
 12. [Ejercicio 12: Esquema ER de Información Adicional en Startrek](#12-ejercicio-12-esquema-er-de-información-adicional-en-startrek)
 13. [Ejercicio 13: Esquema ER de Gestión de Actividades Formativas](#13-ejercicio-13-esquema-er-de-gestión-de-actividades-formativas)
 14. [Ejercicio 14: Esquema ER de Seguridad en Bancos](#14-ejercicio-14-esquema-er-de-seguridad-en-bancos)
 15. [Ejercicio 15: Esquema ER de Trabajos Fin de Carrera](#15-ejercicio-15-esquema-er-de-trabajos-fin-de-carrera)
-16. [Ejercicio 16](#16-ejercicio-16)
+16. [Ejercicio 16: Esquema ER de Flota de Autobuses.](#16-ejercicio-16-esquema-er-de-flota-de-autobuses)
 17. [Ejercicio 17: Esquema ER de Taller de Reparación](#17-ejercicio-17-esquema-er-de-taller-de-reparación)
 18. [Ejercicio 18: Esquema ER de Centro Médico](#18-ejercicio-18-esquema-er-de-centro-médico)
 
@@ -161,8 +161,7 @@ Se quiere guardar en una BDD información sobre los libros de una biblioteca, la
 - Puede que existan usuarios que no hayan solicitado ningún libro. 
 - Se anota de cada petición de préstamo, la fecha de préstamo y la fecha de devolución.
 
-<!-- 
-[ER de Biblioteca](/bases-de-datos/imgs/ud02/ud02_ER_e08.svg)
+![ER de Biblioteca](/bases-de-datos/imgs/ud02/ud02_ER_e08.svg)
 
 - **\*1 Participación mínima en la relación LIBRO-EsTenido-ESTANTERÍA:** Se considera que algunos libros podrían aún no estar asignados a una estantería específica, especialmente en casos como libros recientemente adquiridos o que están en proceso de catalogación. Por lo tanto, la participación mínima en esta relación es 0, permitiendo la flexibilidad de que ciertos libros permanezcan sin ubicación fija temporalmente.
 - **\*2 Participación mínima en la relación ESTANTERÍA-Tiene-LIBRO:** Al registrar una estantería en el sistema, esta podría estar vacía, ya sea por estar destinada a futuras adquisiciones o por estar temporalmente sin libros. De ahí que se establezca la participación mínima en 0 para reflejar que las estanterías pueden existir en la base de datos sin contener libros en determinados momentos.
@@ -170,7 +169,7 @@ Se quiere guardar en una BDD información sobre los libros de una biblioteca, la
 - **\*4 Participación mínima en la relación LIBRO-Escrito-AUTOR:** En la relación entre LIBRO y AUTOR, existe la posibilidad de que algunos libros sean de autoría anónima. En estos casos, se puede registrar el autor como “Anónimo” para mantener consistencia en la base de datos. Esto asegura que todos los libros tengan un autor registrado, aunque sea de manera general como “Anónimo”.
 - **\*5 Participación mínima en la relación EDITORIAL-Suministra-LIBRO:** Al registrar editoriales en la base de datos, es posible que algunas de ellas aún no hayan suministrado libros a la biblioteca. Esto permite anticipar futuras colaboraciones con editoriales o gestionar editoriales potenciales, por lo que la participación mínima se establece en 0.
 - **\*6 Participación mínima en la relación LIBRO-EsSolicitado-EMPLEADO:** En este caso, la participación mínima es 1, ya que cualquier libro que se encuentre en la biblioteca ha tenido que ser solicitado previamente por un empleado. Esto asegura que todos los libros tengan un registro de solicitud que justifique su incorporación a la biblioteca y refleja la necesidad de esta relación para los registros de inventario.
--->
+
 
 ## 9. Ejercicio 9: Esquema ER de Startrek.
 
@@ -202,6 +201,9 @@ El club de fans de Startrek quiere hacer una segunda versión de la base de dato
 - Se identificará cada lanzadera mediante un número entero y el código de la nave. 
 - Es necesario conocer la capacidad en personas de la lanzadera.
 
+![ER de Lanzadera en Startrek](/bases-de-datos/imgs/ud02/ud02_ER_e10.svg)
+
+<!--
 ## 11. Ejercicio 11: Esquema ER de Campeonato de Ajedrez.
 
 El club de Ajedrez de Villatortas de Arriba, ha sido encargado por la Federación Internacional de Ajedrez de la organización de los próximos campeonatos mundiales que se celebrarán en la mencionada localidad. Por este motivo, desea llevar una base de datos con toda la gestión relativa a participantes y procedencias. Teniendo en cuenta que:
@@ -213,6 +215,24 @@ El club de Ajedrez de Villatortas de Arriba, ha sido encargado por la Federació
 - Todo jugador y árbitro es enviado por un único país. 
 - Un país puede ser representado por otro país. 
 - Cada país se identifica por un número correlativo según su orden alfabético e interesa conocer además de su nombre, el número de clubes de ajedrez existentes en el mismo.
+
+-->
+
+## 11. Ejercicio 11: Esquema ER de Club Náutico.
+
+Se quiere guardar en una BDD la información que maneja un club náutico (instalaciones, empleados, socios y embarcaciones). El club esta organizado de la siguiente forma:
+
+- De los socios pertenecientes al club se conoce: dni, nombre, dirección, teléfonos y fecha de ingreso en el club.
+- Un socio puede que no tenga ni amarre ni embarcación.
+- Las embarcaciones vienen definidas por: matrícula (es diferente para cada barco), nombre, tipo y dimensiones.
+- Los amarres tienen como datos de interés el número de amarre (es único para cada amarre), la lectura del contador de agua, la lectura del contador de electricidad, y si tienen o no servicios de mantenimiento contratados.
+- Por otro lado, hay que tener en cuenta que una embarcación pertenece a un socio aunque un socio puede tener varias embarcaciones.
+- Cada embarcación (de las registradas en nuestra BDD) ocupa un amarre y un amarre solo puede estar ocupado por una sola embarcación. Es importante la fecha en la que una embarcación fue asignada a su amarre actual. Hay amarres que están libres (no ocupados por nadie).
+- Los socios pueden ser propietarios de amarres, siendo importante la fecha de compra del amarre. Hay que tener en cuenta que un amarre pertenece a un solo socio y que NO HAY
+ninguna relación directa entre la fecha en la que se compra un amarre y en la que una embarcación se asigna a un amarre; de hecho un barco se puede asignar al amarre de otro socio o al amarre del dueño del barco.
+- El club náutico está dividido en varias zonas cuyas características son: letra identificativa (cada zona tiene una letra diferente), el tipo de barcos que tiene (deportivo, recreativo, vigilancia, lujo, etc.) , el numero de barcos que contiene, la profundidad y el ancho de los amarres. Una zona tendrá varios amarres y un amarre pertenece a una sola zona.
+- En cuanto a los empleados, estos vienen definidos por su código (exclusivo de cada uno), nombre, dirección, teléfono y especialidad. Un empleado está asignado a varias zonas y en una zona puede haber más de un empleado, siendo de interés el número de barcos de los que se encarga en cada zona: Hay que tener en cuenta que un empleado puede no encargarse de todos los barcos de una zona.
+
 
 ## 12. Ejercicio 12: Esquema ER de Información Adicional en Startrek.
 

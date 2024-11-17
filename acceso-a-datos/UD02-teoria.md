@@ -20,32 +20,29 @@ abstract: Sinopsis de la unidad 02
 4. [Protocolos de Acceso a Bases de Datos y Conectores](#4-protocolos-de-acceso-a-bases-de-datos-y-conectores)
    - Tipos de conectores y su funcionamiento
    - Conector JDBC
-   - Ventajas e inconvenientes de utilizar conectores (CEa)
-   - Selección del conector adecuado para la aplicación (CEc)
+   - Ventajas e inconvenientes de utilizar conectores 
+   - Selección del conector adecuado para la aplicación 
 5. [Instalación de Gestores de Bases de Datos](#5-instalación-de-gestores-de-bases-de-datos)
    - Instalación de MySQL y H2
    - Instalación con Maven de MySQL y H2
 6. [Establecimiento de Conexiones](#6-establecimiento-de-conexiones)
-   - Métodos para establecer conexiones con bases de datos (CEd)
+   - Métodos para establecer conexiones con bases de datos 
    - Conexión a la base de datos MySQL
    - Conexión a la base de datos H2
    - Ejemplo práctico de conexión a una base de datos
 7. [Definición de Objetos para Almacenamiento de Resultados](#7-definición-de-objetos-para-almacenamiento-de-resultados)
-   - Estructura de los objetos destinados a almacenar resultados de operaciones (CEg)
-   - Eliminación de objetos una vez finalizada su función (CEi)
+   - Estructura de los objetos destinados a almacenar resultados de operaciones 
+   - Eliminación de objetos una vez finalizada su función 
 8. [Ejecución de Sentencias SQL](#8-ejecución-de-sentencias-sql)
    - Crear Statement - repaso Data Definition Language
    - Statement crear tabla
    - Statement buscar datos
    - Ejecución de sentencias de descripción de datos
-   - Ejecución de sentencias de modificación de datos (CEf)
-   - Ejecución de consultas (CEh)
+   - Ejecución de sentencias de modificación de datos 
+   - Ejecución de consultas 
    - Utilización del resultado de una consulta
    - SQL Injection y cómo prevenirlo
    - PreparedStatement - Solución para SQL Injection
-
-<!--
-
 9. [Procedimientos Almacenados](#9-procedimientos-almacenados)
    - Concepto y uso de procedimientos almacenados en bases de datos
    - Ejemplo de ejecución de procedimientos almacenados
@@ -54,10 +51,8 @@ abstract: Sinopsis de la unidad 02
     - Repositorio Dirección
     - Join entre Persona y Dirección
 11. [Gestión de Transacciones](#11-gestión-de-transacciones)
-    - Importancia de la gestión de transacciones (CEj)
+    - Importancia de la gestión de transacciones 
     - Métodos para manejar transacciones en aplicaciones
-
--->
 
 # 1. Introducción
 
@@ -646,3 +641,383 @@ ResultSet resultSet = preparedStatement.executeQuery();
 En este ejemplo, la consulta se ejecuta de manera segura, ya que el valor de `nombreUsuario` es tratado como un parámetro y no como parte del código SQL. Esto evita la posibilidad de una inyección SQL.
 
 El uso de `PreparedStatement` no solo mejora la seguridad, sino que también puede mejorar el rendimiento al permitir la reutilización de consultas precompiladas.
+
+# 9. Procedimientos Almacenados
+
+Los procedimientos almacenados son bloques de código SQL que se almacenan y se ejecutan directamente en el servidor de base de datos. Estos procedimientos permiten encapsular operaciones complejas o repetitivas, mejorando la eficiencia, la seguridad y la mantenibilidad del sistema de base de datos. Son ampliamente utilizados en aplicaciones empresariales para centralizar la lógica de negocio en la base de datos, lo que reduce la cantidad de lógica en el código de la aplicación y mejora el rendimiento.
+
+## 9.1. Concepto y Uso de Procedimientos Almacenados en Bases de Datos
+
+Un procedimiento almacenado es un conjunto de sentencias SQL que se almacenan en la base de datos y se pueden ejecutar en cualquier momento. Estos procedimientos pueden aceptar parámetros de entrada, devolver resultados y realizar acciones sobre las bases de datos, como insertar, actualizar o eliminar registros. Además, pueden incluir lógica de control, como bucles, condicionales, y transacciones.
+
+### Ventajas de Usar Procedimientos Almacenados:
+1. **Reducción de la Carga en la Aplicación**: Al mover la lógica de negocio a la base de datos, se reduce la carga sobre la aplicación cliente y se aprovechan las optimizaciones del motor de base de datos.
+2. **Seguridad Mejorada**: El acceso a los procedimientos almacenados puede estar restringido, de modo que los usuarios solo pueden ejecutar las operaciones predefinidas y no tienen acceso directo a las tablas de la base de datos.
+3. **Facilidad de Mantenimiento**: La lógica de negocio se centraliza en la base de datos, por lo que cualquier cambio se puede hacer directamente en el procedimiento almacenado sin necesidad de modificar el código de la aplicación.
+4. **Mejor Rendimiento**: Al estar almacenados y ejecutados en el servidor de base de datos, los procedimientos almacenados pueden optimizarse por el propio motor de base de datos, reduciendo la cantidad de datos que deben transferirse entre la base de datos y la aplicación.
+
+### Ejemplos de Uso:
+- **Cálculos complejos**: Los procedimientos almacenados pueden realizar cálculos complejos sin la necesidad de hacer múltiples consultas desde la aplicación.
+- **Operaciones repetitivas**: Si una operación SQL es requerida en varias partes de la aplicación, se puede encapsular en un procedimiento almacenado para evitar duplicación de código.
+
+## 9.2. Ejemplo de Ejecución de Procedimientos Almacenados
+
+Para ejecutar procedimientos almacenados desde una aplicación Java utilizando JDBC, primero debemos asegurarnos de que el procedimiento esté previamente definido en la base de datos. A continuación, se presenta un ejemplo de cómo ejecutar un procedimiento almacenado en una base de datos MySQL.
+
+### 1. Creación de un Procedimiento Almacenado en MySQL:
+
+Supongamos que tenemos un procedimiento almacenado que calcula el salario total de un empleado, añadiendo un bono a su salario base. El procedimiento toma dos parámetros de entrada: el ID del empleado y el bono. Devuelve el salario total del empleado.
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE calcular_salario(IN empleado_id INT, IN bono DECIMAL(10,2))
+BEGIN
+    DECLARE salario_base DECIMAL(10,2);
+    DECLARE salario_total DECIMAL(10,2);
+
+    -- Obtener el salario base del empleado
+    SELECT salario INTO salario_base
+    FROM empleados
+    WHERE id = empleado_id;
+
+    -- Calcular el salario total
+    SET salario_total = salario_base + bono;
+
+    -- Devolver el salario total
+    SELECT salario_total;
+END $$
+
+DELIMITER ;
+```
+
+Este procedimiento almacenado toma el `empleado_id` y el `bono` como parámetros, calcula el salario total del empleado y devuelve el resultado.
+
+### 2. Llamada al Procedimiento Almacenado desde Java:
+
+Una vez que el procedimiento almacenado está definido en la base de datos, podemos llamarlo desde una aplicación Java usando JDBC. A continuación, se muestra cómo ejecutar este procedimiento y obtener el resultado:
+
+```java
+import java.sql.*;
+
+public class ProcedimientoAlmacenadoEjemplo {
+    public static void main(String[] args) {
+        // Establecer la conexión con la base de datos
+        String url = "jdbc:mysql://localhost:3306/mi_base_de_datos";
+        String usuario = "root";
+        String contrasena = "password";
+
+        try (Connection conexion = DriverManager.getConnection(url, usuario, contrasena)) {
+            
+            // Llamar al procedimiento almacenado
+            CallableStatement stmt = conexion.prepareCall("{call calcular_salario(?, ?)}");
+
+            // Establecer los parámetros de entrada
+            stmt.setInt(1, 1);  // ID del empleado
+            stmt.setBigDecimal(2, new BigDecimal("500.00"));  // Bono
+
+            // Ejecutar el procedimiento y obtener el resultado
+            ResultSet rs = stmt.executeQuery();
+
+            // Mostrar el salario total
+            if (rs.next()) {
+                System.out.println("Salario Total: " + rs.getBigDecimal(1));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+En este ejemplo, la aplicación Java:
+1. Se conecta a la base de datos MySQL usando JDBC.
+2. Prepara una llamada al procedimiento almacenado `calcular_salario`, pasando el ID del empleado y el bono como parámetros.
+3. Ejecuta el procedimiento y obtiene el resultado (el salario total).
+4. Imprime el resultado en la consola.
+
+### Consideraciones:
+- Los procedimientos almacenados pueden ser más complejos, incluyendo múltiples operaciones, transacciones, y lógica condicional.
+- Es importante gestionar adecuadamente los recursos, como las conexiones y los statements, para evitar fugas de memoria y garantizar que los recursos se liberen cuando ya no sean necesarios.
+
+El uso de procedimientos almacenados en bases de datos permite optimizar la ejecución de tareas complejas y repetitivas, manteniendo la aplicación más limpia y eficiente.
+
+# 10. Trabajo con Entidades y Repositorios
+
+En el desarrollo de aplicaciones que gestionan bases de datos, es común utilizar el concepto de **entidades** y **repositorios** para estructurar la interacción entre la aplicación y la base de datos. Las entidades representan los datos que se almacenan en las bases de datos y los repositorios son componentes responsables de gestionar la persistencia de esas entidades.
+
+### 10.1. Entities y Repositorio Persona
+
+La entidad **Persona** se representa como una clase POJO (Plain Old Java Object), que contiene atributos que corresponden a las columnas de la tabla `Persona` en la base de datos. Los objetos de la clase `Persona` representan registros de la tabla `Persona` y se utilizan para almacenar los resultados de las consultas realizadas a la base de datos.
+
+```java
+public class Persona {
+    private int id;
+    private String nombre;
+    private int edad;
+
+    // Constructor
+    public Persona(int id, String nombre, int edad) {
+        this.id = id;
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+
+    // Getters y setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+}
+```
+
+El repositorio de **Persona** se encarga de las operaciones CRUD sobre la base de datos. Estas operaciones incluyen la creación, lectura, actualización y eliminación de registros de la tabla `Persona`. A través de este repositorio, se pueden realizar operaciones como guardar una nueva persona, obtener una persona por su ID y obtener todas las personas almacenadas en la base de datos. Aquí tienes un ejemplo del respositorio `PersonaRepository` utilizando JDBC para realizar las operaciones básicas:
+
+```java
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class PersonaRepository {
+    private Connection connection;
+
+    public PersonaRepository(Connection connection) {
+        this.connection = connection;
+    }
+
+    public void guardarPersona(Persona persona) throws SQLException {
+        String sql = "INSERT INTO Persona (nombre, edad) VALUES (?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, persona.getNombre());
+            ps.setInt(2, persona.getEdad());
+            ps.executeUpdate();
+        }
+    }
+
+    public Persona obtenerPersonaPorId(int id) throws SQLException {
+        String sql = "SELECT id, nombre, edad FROM Persona WHERE id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Persona(rs.getInt("id"), rs.getString("nombre"), rs.getInt("edad"));
+            }
+            return null;
+        }
+    }
+
+    public List<Persona> obtenerTodasLasPersonas() throws SQLException {
+        String sql = "SELECT id, nombre, edad FROM Persona";
+        try (Statement stmt = connection.createStatement()) {
+            ResultSet rs = stmt.executeQuery(sql);
+            List<Persona> personas = new ArrayList<>();
+            while (rs.next()) {
+                personas.add(new Persona(rs.getInt("id"), rs.getString("nombre"), rs.getInt("edad")));
+            }
+            return personas;
+        }
+    }
+}
+```
+
+### 10.2. Repositorio Dirección
+
+De manera similar, la entidad **Dirección** se representa como una clase POJO, que tiene atributos correspondientes a las columnas de la tabla `Dirección`. Los objetos de la clase `Dirección` contienen los detalles de la dirección, como la calle, la ciudad y el código postal, que se almacenan en la tabla `Dirección` de la base de datos. Aquí tienes un ejemplo de la clase `Dirección`:
+
+```java
+public class Direccion {
+    private int id;
+    private String calle;
+    private String ciudad;
+    private String codigoPostal;
+
+    // Constructor
+    public Direccion(int id, String calle, String ciudad, String codigoPostal) {
+        this.id = id;
+        this.calle = calle;
+        this.ciudad = ciudad;
+        this.codigoPostal = codigoPostal;
+    }
+
+    // Getters y setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+}
+```
+
+El repositorio de **Dirección** se utiliza para realizar las operaciones CRUD sobre la base de datos (tabla `Dirección`). Estas operaciones incluyen la creación de direcciones, la obtención de direcciones asociadas a una persona específica y la recuperación de todas las direcciones almacenadas en la base de datos.
+
+```java
+public class DireccionRepository {
+    private Connection connection;
+
+    public DireccionRepository(Connection connection) {
+        this.connection = connection;
+    }
+
+    public void guardarDireccion(Direccion direccion) throws SQLException {
+        String sql = "INSERT INTO Direccion (calle, ciudad, codigoPostal) VALUES (?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, direccion.getCalle());
+            ps.setString(2, direccion.getCiudad());
+            ps.setString(3, direccion.getCodigoPostal());
+            ps.executeUpdate();
+        }
+    }
+
+    public List<Direccion> obtenerDireccionesPorPersonaId(int personaId) throws SQLException {
+        String sql = "SELECT id, calle, ciudad, codigoPostal FROM Direccion WHERE persona_id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, personaId);
+            ResultSet rs = ps.executeQuery();
+            List<Direccion> direcciones = new ArrayList<>();
+            while (rs.next()) {
+                direcciones.add(new Direccion(rs.getInt("id"), rs.getString("calle"), rs.getString("ciudad"), rs.getString("codigoPostal")));
+            }
+            return direcciones;
+        }
+    }
+}
+```
+
+### 10.3. Join entre Persona y Dirección
+
+Para realizar un `JOIN` entre las entidades `Persona` y `Direccion`, se puede ejecutar una consulta SQL que combine ambas tablas mediante una relación común, como un campo `persona_id` en la tabla `Direccion`. Este tipo de consulta permite obtener una lista de personas junto con sus direcciones correspondientes.
+
+```java
+public class PersonaDireccionRepository {
+    private Connection connection;
+
+    public PersonaDireccionRepository(Connection connection) {
+        this.connection = connection;
+    }
+
+    public List<PersonaDireccion> obtenerPersonasConDirecciones() throws SQLException {
+        String sql = "SELECT p.id AS persona_id, p.nombre, p.edad, d.id AS direccion_id, d.calle, d.ciudad, d.codigoPostal " +
+                     "FROM Persona p JOIN Direccion d ON p.id = d.persona_id";
+        try (Statement stmt = connection.createStatement()) {
+            ResultSet rs = stmt.executeQuery(sql);
+            List<PersonaDireccion> personasConDirecciones = new ArrayList<>();
+            while (rs.next()) {
+                Persona persona = new Persona(rs.getInt("persona_id"), rs.getString("nombre"), rs.getInt("edad"));
+                Direccion direccion = new Direccion(rs.getInt("direccion_id"), rs.getString("calle"), rs.getString("ciudad"), rs.getString("codigoPostal"));
+                personasConDirecciones.add(new PersonaDireccion(persona, direccion));
+            }
+            return personasConDirecciones;
+        }
+    }
+}
+```
+
+En este ejemplo, la clase `PersonaDireccion` podría ser una clase de **DTO (Data Transfer Object)**,que contiene tanto una instancia de `Persona` como una instancia de `Direccion`. Este tipo de transferencia de datos entre entidades facilita la manipulación de información combinada de múltiples tablas en la aplicación.
+
+# 11. Gestión de Transacciones
+
+La **gestión de transacciones** es un aspecto fundamental en las aplicaciones que interactúan con bases de datos relacionales. Una transacción asegura que un conjunto de operaciones sobre la base de datos se ejecute de manera correcta y completa, o no se ejecute en absoluto, en caso de que ocurra un error. Esto garantiza la **integridad y consistencia** de los datos. El principio fundamental de las transacciones es que deben seguir los cuatro criterios ACID:
+
+- **Atomicidad**: Todas las operaciones de la transacción deben ejecutarse completamente, o ninguna de ellas se ejecuta.
+- **Consistencia**: La base de datos pasa de un estado válido a otro estado válido.
+- **Aislamiento**: Las transacciones concurrentes no deben interferir entre sí.
+- **Durabilidad**: Los cambios realizados por una transacción se mantienen incluso si ocurre un fallo en el sistema.
+
+## 11.1. Importancia de la Gestión de Transacciones (CEj)
+
+La gestión adecuada de transacciones es crucial para el buen funcionamiento de una base de datos, especialmente en aplicaciones que manejan grandes cantidades de datos o que requieren alta disponibilidad y confiabilidad. El manejo de transacciones garantiza que las operaciones sobre la base de datos sean seguras y consistentes, minimizando los riesgos de corrupción de datos. Un sistema de transacciones bien gestionado permite:
+
+- **Deshacer cambios** en caso de fallos o errores durante la ejecución de las operaciones.
+- **Controlar la concurrencia** entre múltiples usuarios o procesos, evitando inconsistencias cuando varias transacciones se ejecutan simultáneamente.
+- **Asegurar la integridad** de la base de datos al asegurar que las transacciones que afectan a múltiples tablas se completan sin interrupciones.
+
+En la práctica, sin una correcta gestión de transacciones, las aplicaciones podrían experimentar problemas como datos corruptos, inconsistencias entre las tablas o la pérdida de información en caso de fallos del sistema.
+
+## 11.2. Métodos para Manejar Transacciones en Aplicaciones
+
+En Java, las transacciones se manejan típicamente a través de la interfaz `Connection` de JDBC, que ofrece métodos como `setAutoCommit()`, `commit()` y `rollback()`. Estas funciones permiten controlar el inicio, confirmación y reversión de una transacción.
+
+### Ejemplo de manejo de transacciones en JDBC:
+
+1. **Iniciar la Transacción**: Se puede establecer que la transacción se ejecute de forma manual mediante el método `setAutoCommit(false)`.
+
+2. **Realizar las Operaciones**: Después de desactivar el autocommit, se pueden realizar las operaciones sobre la base de datos.
+
+3. **Confirmar o Revertir**: Si todas las operaciones se realizan correctamente, se llama a `commit()` para confirmar los cambios. En caso de error, se utiliza `rollback()` para revertir todos los cambios realizados hasta ese punto.
+
+### Ejemplo de código:
+```java
+Connection connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+try {
+    connection.setAutoCommit(false);  // Desactivar el autocommit para gestionar transacciones manualmente
+
+    // Realizar varias operaciones SQL
+    Statement statement = connection.createStatement();
+    statement.executeUpdate("UPDATE persona SET nombre = 'Nuevo Nombre' WHERE id = 1");
+    statement.executeUpdate("UPDATE direccion SET ciudad = 'Nueva Ciudad' WHERE persona_id = 1");
+
+    connection.commit();  // Confirmar los cambios realizados
+} catch (SQLException e) {
+    connection.rollback();  // Revertir los cambios en caso de error
+    e.printStackTrace();
+} finally {
+    connection.setAutoCommit(true);  // Restablecer el autocommit
+    connection.close();  // Cerrar la conexión
+}
+```
+
+En este ejemplo:
+
+- **`setAutoCommit(false)`** desactiva el autocommit, lo que significa que las operaciones no se guardarán en la base de datos hasta que se llame a **`commit()`**.
+- Si ocurre algún error durante la ejecución, se llama a **`rollback()`** para revertir todas las operaciones realizadas desde el último **`commit()`**.
+- **`commit()`** se utiliza para confirmar que todas las operaciones realizadas en la transacción se han completado correctamente.
+
+Este enfoque de manejar las transacciones de manera explícita es importante en aplicaciones que realizan múltiples operaciones sobre la base de datos de forma secuencial, ya que garantiza que los cambios sean consistentes y que los errores no causen inconsistencias en los datos.
+
+

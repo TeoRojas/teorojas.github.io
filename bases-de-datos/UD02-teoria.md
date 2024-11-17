@@ -54,8 +54,13 @@ abstract: Sinopsis de la unidad 02
    &emsp;&emsp;7.7.2. [Restricción de Exclusión](#772-restricción-de-exclusión)  
    &emsp;&emsp;7.7.3. [Restricción de Inclusividad](#773-restricción-de-inclusividad)  
    &emsp;&emsp;7.7.4. [Restricción de Inclusión](#774-restricción-de-inclusión)  
-
-
+8. [Guía de Construcción de un Diagrama E/R](#8-guía-para-la-construcción-de-un-diagrama-entidad-relación-er)  
+   8.1. [Paso 1: Leer y entender el problema](#81-paso-1-leer-y-entender-el-problema)  
+   8.2. [Paso 2: Generar una lista inicial de elementos](#82-paso-2-generar-una-lista-inicial-de-elementos)  
+   8.3. [Paso 3: Representar cada entidad por separado](#83-paso-3-representar-cada-entidad-por-separado)  
+   8.4. [Paso 4: Afinar relaciones y dependencias](#84-paso-4-afinar-relaciones-y-dependencias)  
+   8.5. [Paso 5: Revisión y refinamiento](#85-paso-5-revisión-y-refinamiento)  
+   8.6. [No es un proceso lineal](#86-no-es-un-proceso-lineal)  
 
 
 # 1. Introducción
@@ -742,3 +747,39 @@ La **restricción de inclusión** es una versión más estricta de la restricci�
 ![Restricciones en relaciones Inclusión](/bases-de-datos/imgs/ud02/ud02_img12_eerInclusion.svg)
 
 **Representación gráfica:** La restricción de inclusión se representa en el Diagrama de Entidad-Relación Extendido mediante una línea discontinua con una punta de flecha que conecta las dos relaciones, orientada desde la relación que depende de la condición hacia la relación que debe cumplirse previamente. Para indicar esta restricción, se coloca la palabra "inclusión" entre paréntesis junto a la línea.
+
+# 8. Guía para la Construcción de un Diagrama Entidad-Relación (E/R)
+
+## 8.1. Paso 1: Leer y entender el problema
+
+Para construir un diagrama E/R, lo primero es leer varias veces el enunciado del problema hasta comprenderlo completamente. Es fundamental interiorizar los conceptos clave, identificando los elementos importantes que describen el contexto y asegurándose de captar todos los detalles necesarios antes de proceder.
+
+## 8.2. Paso 2: Generar una lista inicial de elementos
+
+El siguiente paso consiste en identificar los elementos principales del problema, comenzando por las **entidades**. Estas suelen ser nombres comunes relevantes como "empleado," "vehículo," o "cliente." En caso de no contar con un documento de requisitos formal, será necesario abstraer conceptos de conversaciones o descripciones vagas proporcionadas por los usuarios. Por ejemplo, un mecánico podría hablar sobre "modelos de vehículos" sin mencionar características específicas como "vehículos diésel," que podrían ser esenciales para el diseño.
+
+A continuación, se deben identificar los **atributos**, que son los descriptores asociados a las entidades. Por ejemplo, "color" sería un atributo asociado a la entidad "vehículo." Clasifica los atributos en categorías como **principal** o **alterno**, **obligatorios** o **opcionales**, **simples** o **compuestos**, y **multivaluados** o **derivados**. También es importante extraer las **relaciones** entre las entidades. Estas pueden identificarse a partir de los verbos en el texto del problema, como "vende" en la frase "agente inmobiliario vende edificio," donde "agente inmobiliario" y "edificio" son entidades, y "vende" es la relación.
+
+Finalmente, define los **dominios de los atributos**, especificando los rangos posibles de valores aunque no se representen directamente en el diagrama.
+
+## 8.3. Paso 3: Representar cada entidad por separado
+
+Para una representación clara, trabaja con una entidad a la vez. Subraya todas las menciones de la entidad en el texto y representa toda la semántica asociada en el diagrama antes de pasar a la siguiente. Si hay dudas sobre alguna semántica, déjala marcada hasta resolver el problema. Borra el subrayado cuando hayas completado su representación.
+
+## 8.4. Paso 4: Afinar relaciones y dependencias
+
+Es importante analizar generalizaciones o especializaciones cuando un atributo es común a varias entidades. Esto permite definir una estructura de supertipo y subtipos, especificando si la especialización es total o parcial, inclusiva o exclusiva. Luego, distingue entre entidades fuertes y débiles evaluando preguntas clave como: ¿tiene sentido esta entidad sin la otra? ¿Puede identificarse por sí sola? Las respuestas a estas preguntas ayudarán a establecer dependencias en existencia o identificación.
+
+Además, identifica los **atributos de las relaciones**, que suelen ser descriptores aplicables exclusivamente a las interacciones entre entidades. Por ejemplo, "fecha de inicio" podría ser un atributo de la relación "trabaja_en" entre "empleado" y "departamento."
+
+Asimismo, determina las **participaciones y cardinalidades** de las relaciones. Estas generalmente se extraen del enunciado, pero si no están definidas, selecciona aquellas que almacenen más información sin contradecir el problema.
+
+## 8.5. Paso 5: Revisión y refinamiento
+
+Coloca todos los elementos identificados en un mapa visual, evaluando nuevamente su clasificación y relación. Esto incluye reconsiderar si un atributo podría ser una entidad, o si una entidad sería mejor representada como una relación. Elimina inconsistencias volviendo a pasos anteriores si es necesario, y discute el diseño con compañeros o expertos para aclarar conceptos dudosos.
+
+Si persisten dudas sobre el enunciado o los requisitos, consulta con el responsable del documento ERS o el usuario. Aclara las dudas y vuelve al análisis inicial si es necesario.
+
+## 8.6. No es un proceso lineal
+
+El diseño de un diagrama E/R es un proceso iterativo. Es normal volver a pasos anteriores para refinar y ajustar hasta alcanzar un modelo claro, completo y coherente.

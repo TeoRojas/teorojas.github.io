@@ -146,6 +146,10 @@ pre{
     background-color: #f6f8f8;
     border-radius: 5px;  
     margin-bottom: 20px; 
+    /*to improve*/
+    overflow: auto;
+    border: 1px solid #d3dddb;
+    scrollbar-color: #e4ebe9 transparent;
 }
 
 code{
