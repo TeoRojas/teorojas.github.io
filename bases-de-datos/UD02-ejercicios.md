@@ -203,21 +203,6 @@ El club de fans de Startrek quiere hacer una segunda versión de la base de dato
 
 ![ER de Lanzadera en Startrek](/bases-de-datos/imgs/ud02/ud02_ER_e10.svg)
 
-<!--
-## 11. Ejercicio 11: Esquema ER de Campeonato de Ajedrez.
-
-El club de Ajedrez de Villatortas de Arriba, ha sido encargado por la Federación Internacional de Ajedrez de la organización de los próximos campeonatos mundiales que se celebrarán en la mencionada localidad. Por este motivo, desea llevar una base de datos con toda la gestión relativa a participantes y procedencias. Teniendo en cuenta que:
-
-- En el campeonato participan jugadores y árbitros; de ambos se requiere conocer el número de asociado, nombre, dirección, teléfono de contacto y campeonatos en los que ha participado (como jugador o como árbitro). 
-- De los jugadores se precisa además el nivel de juego en una escala de 1 a 10. 
-- Ningún árbitro puede participar como jugador.
-- Los países envían al campeonato un conjunto de jugadores y árbitros, aunque no todos los países envían participantes. 
-- Todo jugador y árbitro es enviado por un único país. 
-- Un país puede ser representado por otro país. 
-- Cada país se identifica por un número correlativo según su orden alfabético e interesa conocer además de su nombre, el número de clubes de ajedrez existentes en el mismo.
-
--->
-
 ## 11. Ejercicio 11: Esquema ER de Club Náutico.
 
 Se quiere guardar en una BDD la información que maneja un club náutico (instalaciones, empleados, socios y embarcaciones). El club esta organizado de la siguiente forma:
@@ -321,3 +306,33 @@ Se quiere guardar en una BDD la información que se maneja en un centro médico:
 - Un paciente puede acudir varias veces al centro médico para ser atendido por cualquiera de los doctores que allí trabajan. Incluso, en un mismo día, puede asistir consecutivamente o no, a diferentes consultas, con el mismo o con diferentes doctores. Por tanto, cada vez que asista o que pida cita con un médico diferente se considera una consulta distinta. 
 - En cada consulta médica sólo está presente un doctor y un paciente; o sea, sólo un médico realiza cada vez el diagnóstico y no puede atender a varios pacientes a la vez. 
 - No se permitirá borrar datos de médicos ni de pacientes si hay registradas consultas en las que hayan participado (como doctor o como paciente). Visto desde otro punto de vista, para poder registrar una consulta en la BDD tiene que estar dados de alta tanto el médico como el paciente.
+
+
+## 19. Ejercicio 19: Esquema ER de Campeonato de Ajedrez.
+
+El club de Ajedrez de Villatortas de Arriba, ha sido encargado por la Federación Internacional de Ajedrez de la organización de los próximos campeonatos mundiales que se celebrarán en la mencionada localidad. Por este motivo, desea llevar una base de datos con toda la gestión relativa a participantes y procedencias. Teniendo en cuenta que:
+
+- En el campeonato participan jugadores y árbitros; de ambos se requiere conocer el número de asociado, nombre, dirección, teléfono de contacto y campeonatos en los que ha participado (como jugador o como árbitro). 
+- De los jugadores se precisa además el nivel de juego en una escala de 1 a 10. 
+- Ningún árbitro puede participar como jugador.
+- Los países envían al campeonato un conjunto de jugadores y árbitros, aunque no todos los países envían participantes. 
+- Todo jugador y árbitro es enviado por un único país. 
+- Un país puede ser representado por otro país. 
+- Cada país se identifica por un número correlativo según su orden alfabético e interesa conocer además de su nombre, el número de clubes de ajedrez existentes en el mismo.
+- Cada partida se identifica por un número correlativo (Cód_P), la juegan dos jugadores y la arbitra un árbitro. Interesa registrar las partidas que juega cada jugador y el color (blancas o negras) con el que juega. Ha de tenerse en cuenta que un árbitro no puede arbitrar a jugadores enviados por el mismo país que le ha enviado a él.
+- Todo participante participa en al menos una partida.
+- Tanto jugadores como árbitros se alojan en uno de los hoteles en los que se desarrollan las partidas, se desea conocer en qué hotel y en qué fechas se ha alojado cada uno de los participantes. Los participantes pueden no permanecer en Villatortas durante todo el campeonato, sino acudir cuando tienen que jugar alguna partida alojándose en el mismo o distinto hotel. De cada hotel, se desea conocer el nombre, la dirección y el teléfono.
+
+## 20. Ejercicio 20: Esquema ER de Compras de Hotel.
+
+Un hotel realiza compras en diferentes supermercados utilizando vehículos conducidos por sus empleados. La base de datos debe registrar toda la información relevante sobre las compras, los supermercados, los empleados, los vehículos y otros datos relacionados. 
+
+- En cuanto a los empleados, es necesario guardar el NIF, el nombre, el primer apellido, el segundo apellido y la fecha de nacimiento. 
+- Los empleados se dividen en dos categorías: conductores y administrativos. Los conductores no pueden comprar y solo pueden conducir y los administradores solo pueden comprar pero no conducir.
+- Cada empleado puede estar supervisado por otro empleado del hotel, lo que permite modelar jerarquías dentro de la organización. Por ejemplo, un conductor puede estar supervisado por un administrativo o por otro conductor con un rol superior. De igual forma, un administrativo puede supervisar tanto a administrativos como a conductores. 
+- Los conductores tienen, además de los datos generales, información sobre su licencia de conducir y la fecha de expiración de ésta. Por otro lado, los administrativos pueden ser responsables de varias compras, pero cada compra tiene asignado un único empleado como responsable.
+- Los vehículos utilizados para las compras deben registrar datos como la matrícula, que es única, la marca, el modelo, la carga máxima y la fecha de matriculación. Opcionalmente, también se puede incluir la fecha de la última inspección técnica (ITV). 
+- Cada compra utiliza un único vehículo, aunque un mismo vehículo puede ser utilizado en varias compras.
+- Los supermercados donde se realizan las compras deben registrar un código único, el nombre, el teléfono, la dirección y la distancia en kilómetros.
+- Cada compra debe almacenar un identificador único, la fecha y hora en la que se realizó y el importe pagado. Además, cada compra está vinculada a un único empleado, que será el responsable de esa operación, al vehículo utilizado para transportar los productos y al supermercado donde se realizó la compra. 
+- Es importante respetar la restricción de que no pueden registrarse dos compras simultáneas (con la misma fecha y hora) en un mismo supermercado. Sin embargo, pueden coincidir compras en diferentes supermercados a la misma fecha y hora.
