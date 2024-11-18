@@ -222,7 +222,7 @@ El club de Ajedrez de Villatortas de Arriba, ha sido encargado por la Federació
 
 Se quiere guardar en una BDD la información que maneja un club náutico (instalaciones, empleados, socios y embarcaciones). El club esta organizado de la siguiente forma:
 
-- De los socios pertenecientes al club se conoce: dni, nombre, dirección, teléfonos y fecha de ingreso en el club.
+- De los socios pertenecientes al club se conoce: dni, nombre, dirección, teléfono y fecha de ingreso en el club.
 - Un socio puede que no tenga ni amarre ni embarcación.
 - Las embarcaciones vienen definidas por: matrícula (es diferente para cada barco), nombre, tipo y dimensiones.
 - Los amarres tienen como datos de interés el número de amarre (es único para cada amarre), la lectura del contador de agua, la lectura del contador de electricidad, y si tienen o no servicios de mantenimiento contratados.
