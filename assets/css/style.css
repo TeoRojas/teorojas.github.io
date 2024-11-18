@@ -124,7 +124,7 @@ table.rouge-table{
     background-color: none !important;
     border-radius: none !important;  
     margin: 0px !important; 
-    font-size: unset;
+    font-size: 14px !important;
 }
 
 table td{
