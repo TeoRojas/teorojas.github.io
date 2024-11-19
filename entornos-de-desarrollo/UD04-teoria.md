@@ -21,6 +21,10 @@ abstract:
       &emsp;&emsp;2.2.6. [Autoencapsular campos -getters y setters- (Encapsulate Field)](#226-autoencapsular-campos-getters-y-setters-encapsulate-field)  
       &emsp;&emsp;2.2.7. [Uso de Constantes](#227-uso-de-constantes)  
       &emsp;&emsp;2.2.8. [Aplicación de Patrones en el Código](#228-aplicación-de-patrones-en-el-código)  
+      &emsp;&emsp;2.2.9. [Ejercicios básicos de Refactorización](#229-ejercicios-básicos-de-refactorización)  
+   2.3. [Pruebas Asociadas a la Refactorización](#23-pruebas-asociadas-a-la-refactorización)  
+      &emsp;&emsp;2.3.1. [Tipos de pruebas para validar la refactorización](#231-tipos-de-pruebas-para-validar-la-refactorización)  
+      &emsp;&emsp;2.3.2. [Herramientas para automatizar las pruebas](#232-herramientas-para-automatizar-las-pruebas) 
 3. [Control de versiones y GitHub](#3-control-de-versiones-y-github)  
    3.1. [¿Qué es el control de versiones?](#31-qué-es-el-control-de-versiones)  
    3.2. [¿Qué es Git?](#32-qué-es-git)  
@@ -59,6 +63,41 @@ En conjunto, estos temas dotarán al estudiante de habilidades prácticas y conc
 
 
 # 2. Refactorización
+
+<!--
+# 2. Refactorización
+
+## 2.1. Introducción a la Refactorización  
+   Breve explicación sobre qué es la refactorización y por qué es importante en el desarrollo de software.
+
+## 2.2. Patrones de Refactorización Más Usuales  
+   - 2.2.1. Identificación de patrones comunes  
+      Ejemplos de patrones de refactorización como "Extract Method", "Rename Variable", "Introduce Parameter Object", entre otros.
+   - 2.2.2. Aplicación de patrones en el código  
+      Cómo elegir el patrón adecuado según el contexto y la finalidad de la refactorización.
+
+## 2.3. Pruebas Asociadas a la Refactorización  
+   - 2.3.1. Tipos de pruebas para validar la refactorización  
+      Introducción a las pruebas unitarias, de integración, y cómo se aplican tras la refactorización.
+   - 2.3.2. Herramientas para automatizar las pruebas  
+      Ejemplos de herramientas y frameworks de prueba que se utilizan para asegurar la funcionalidad después de los cambios.
+
+## 2.4. Análisis de Código con Herramientas  
+   - 2.4.1. Revisión del código fuente  
+      Cómo utilizar herramientas de análisis estático y dinámico para identificar áreas que necesitan refactorización.
+   - 2.4.2. Configuración de herramientas de análisis de código  
+      Opciones de configuración y personalización para adaptar las herramientas de análisis a los estándares de calidad del equipo o del proyecto.
+
+## 2.5. Aplicación de Patrones de Refactorización con Herramientas de Desarrollo  
+   - 2.5.1. Herramientas integradas en el entorno de desarrollo  
+      Descripción de herramientas como los refactorizadores integrados en IDEs y cómo facilitan la aplicación de patrones.
+   - 2.5.2. Práctica de refactorización asistida por herramientas  
+      Ejemplo de un flujo de trabajo práctico para aplicar patrones de refactorización de forma guiada y eficiente.
+
+## 2.6. Buenas Prácticas en Refactorización  
+   Consejos y pautas para refactorizar sin introducir errores y asegurando la mejora de la calidad del código.
+
+-->
 
 ## 2.1. Introducción a la Refactorización
 
@@ -451,6 +490,412 @@ La aplicación de un patrón de refactorización dependerá del contexto y de la
 - **Eliminar redundancias**: En ocasiones, algunos métodos solo llaman a otros métodos sin agregar valor adicional. En estos casos, *Inline Method* ayuda a reducir estos métodos intermediarios, dejando el código más compacto y directo.
 
 Aplicar los patrones de refactorización adecuados en cada situación permite no solo que el código sea más limpio y fácil de mantener, sino también que sea más eficiente y robusto a medida que el proyecto crece. 
+
+### 2.2.9 Ejercicios básicos de Refactorización
+
+**Ejercicio 1: Calculadora básica.** Tienes una función que realiza varias operaciones aritméticas. Refactorízala para que cada operación sea una función separada.
+
+```python
+# Código inicial
+def calculadora(a, b):
+    suma = a + b
+    resta = a - b
+    multiplicacion = a * b
+    division = a / b
+    print(f"Suma: {suma}, Resta: {resta}, Multiplicación: {multiplicacion}, División: {division}")
+```
+**Ejercicio 2: Generación de informes.** El siguiente código genera un informe con información de ventas. Refactoriza el código para separar las responsabilidades: generación del encabezado, detalle de ventas y pie del informe.
+```python
+# Código inicial
+def generar_informe(ventas):
+    print("---- Informe de Ventas ----")
+    total = 0
+    for producto, cantidad in ventas.items():
+        total += cantidad
+        print(f"{producto}: {cantidad} unidades")
+    print(f"Total de ventas: {total} unidades")
+```
+
+**Ejercicio 3: Gestión de inventario.** El siguiente código gestiona un inventario. Refactorízalo para que haya funciones separadas para agregar, eliminar y mostrar productos.
+
+```python
+# Código inicial
+productos = []
+
+accion = input("¿Qué deseas hacer? (agregar/eliminar/mostrar): ")
+
+if accion == "agregar":
+    producto = input("Introduce el nombre del producto: ")
+    productos.append(producto)
+    print(f"Producto '{producto}' agregado.")
+elif accion == "eliminar":
+    producto = input("Introduce el nombre del producto a eliminar: ")
+    if producto in productos:
+        productos.remove(producto)
+        print(f"Producto '{producto}' eliminado.")
+    else:
+        print("El producto no existe en el inventario.")
+elif accion == "mostrar":
+    print("Productos en el inventario:")
+    for producto in productos:
+        print(f"- {producto}")
+else:
+    print("Acción no válida.")
+```
+**Ejercicio 4: Formateo de texto.** El siguiente código da formato a un texto. Refactorízalo para que cada tarea (mayúsculas, minúsculas, capitalización) sea una función separada.
+
+```python
+# Código inicial
+def formatear_texto(texto):
+    print(texto.upper())
+    print(texto.lower())
+    print(texto.capitalize())
+```
+**Ejercicio 5: Cálculo de estadísticas.** El siguiente código calcula estadísticas básicas (promedio, máximo, mínimo) de una lista de números. Refactorízalo para que cada cálculo esté en una función separada.
+
+```python
+# Código inicial
+def calcular_estadisticas(numeros):
+    promedio = sum(numeros) / len(numeros)
+    maximo = max(numeros)
+    minimo = min(numeros)
+    print(f"Promedio: {promedio}, Máximo: {maximo}, Mínimo: {minimo}")
+```
+**Ejercicio 6: Generación de contraseñas.** El siguiente código genera contraseñas. Refactorízalo para separar la generación de caracteres, mezcla de caracteres y la impresión de la contraseña.
+
+```python
+# Código inicial
+def generar_contraseña(longitud):
+    import random
+    import string
+    caracteres = string.ascii_letters + string.digits
+    contraseña = ''.join(random.choice(caracteres) for _ in range(longitud))
+    print(f"Contraseña generada: {contraseña}")
+```
+**Ejercicio 7: Cálculo de áreas.** El siguiente código calcula el área de un círculo y un rectángulo. Refactorízalo para que cada cálculo sea una función separada.
+
+```python
+# Código inicial
+def calcular_areas(radio, base, altura):
+    area_circulo = 3.14 * (radio ** 2)
+    area_rectangulo = base * altura
+    print(f"Área del círculo: {area_circulo}, Área del rectángulo: {area_rectangulo}")
+```
+**Ejercicio 8: Envío de correos electrónicos.** El siguiente código envía correos electrónicos. Refactorízalo para que las tareas de generar el asunto, el cuerpo del mensaje y el envío estén separadas.
+
+```python
+# Código inicial
+def enviar_correo(destinatario, asunto, mensaje):
+    print(f"Enviando correo a: {destinatario}")
+    print(f"Asunto: {asunto}")
+    print(f"Mensaje: {mensaje}")
+```
+**Ejercicio 9: Clasificación de números.** El siguiente código clasifica números en pares e impares. Refactorízalo para que haya funciones separadas para la clasificación y la impresión de los resultados.
+
+```python
+# Código inicial
+def clasificar_numeros(numeros):
+    pares = [num for num in numeros if num % 2 == 0]
+    impares = [num for num in numeros if num % 2 != 0]
+    print(f"Pares: {pares}, Impares: {impares}")
+```
+**Ejercicio 10: Validación de entradas de usuario.** El siguiente código valida una entrada de usuario. Refactorízalo para que las tareas de mostrar el mensaje, leer la entrada y validar estén separadas.
+
+```python
+# Código inicial
+def validar_entrada():
+    entrada = input("Introduce un número entre 1 y 10: ")
+    if entrada.isdigit() and 1 <= int(entrada) <= 10:
+        print("Entrada válida")
+    else:
+        print("Entrada no válida")
+```
+
+## 2.3. Pruebas Asociadas a la Refactorización
+
+La refactorización implica realizar cambios en el código sin alterar su funcionalidad externa. Sin embargo, estos cambios pueden introducir errores si no se validan correctamente. Por ello, las pruebas son una parte fundamental del proceso, ya que aseguran que el comportamiento del programa sigue siendo el esperado tras aplicar los cambios.
+
+### 2.3.1. Tipos de pruebas para validar la refactorización
+
+Existen diferentes tipos de pruebas que permiten garantizar la estabilidad y funcionalidad del software después de la refactorización. Pero antes de detallarlos, es importante destacar la utilidad de herramientas como la biblioteca `unittest` en Python para llevarlas a cabo. Esta biblioteca es fundamental porque:
+
+- **Verifica la funcionalidad**: Permite comprobar que cada componente del código funciona como se espera, detectando errores en etapas tempranas del desarrollo.
+- **Facilita el mantenimiento**: Al disponer de pruebas automatizadas, cualquier cambio o refactorización puede validarse rápidamente, asegurando que no se introduzcan nuevos errores.
+- **Actúa como documentación activa**: Las pruebas realizadas con `unittest` sirven como ejemplos prácticos del uso de funciones y métodos, ayudando a entender cómo debe comportarse el código.
+
+El uso de `unittest` implica definir clases que heredan de `unittest.TestCase` y escribir métodos que contengan aserciones para verificar el comportamiento esperado del código. Su versatilidad y facilidad de uso la convierten en una herramienta esencial para implementar cualquiera de los siguientes tipos de pruebas:
+
+#### **Pruebas Unitarias**
+
+Las pruebas unitarias son pruebas automatizadas diseñadas para verificar que una **unidad de código** (por ejemplo, una función, método o clase) funcione de manera correcta y cumpla con su propósito. Se centran exclusivamente en una pequeña parte del sistema, aislando su lógica de otros componentes.
+
+**¿Por qué son importantes?**
+1. **Detección temprana de errores**: Permiten identificar problemas en una etapa inicial del desarrollo.
+2. **Fácil de ejecutar y mantener**: Son rápidas de implementar y proporcionan un marco para realizar modificaciones seguras en el código.
+3. **Base para la refactorización**: Al garantizar que las unidades individuales funcionan correctamente, los desarrolladores pueden refactorizar con confianza.
+
+**Ejemplo**. Supongamos que tenemos una función que calcula el precio total de un producto con impuestos:
+
+```python
+def calcular_precio_total(precio_base, impuesto):
+    return precio_base + (precio_base * impuesto)
+```
+
+La prueba unitaria verificará casos específicos de entrada y salida esperada:
+
+```python
+import unittest
+
+class TestCalcularPrecioTotal(unittest.TestCase):
+    def test_precio_positivo(self):
+        self.assertEqual(calcular_precio_total(100, 0.21), 121)
+
+    def test_precio_cero(self):
+        self.assertEqual(calcular_precio_total(0, 0.21), 0)
+
+    def test_precio_negativo(self):
+        with self.assertRaises(ValueError):
+            calcular_precio_total(-50, 0.21)
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+En este ejemplo:
+- Verificamos que la función devuelve los valores correctos para un precio positivo.
+- Validamos que un precio base de 0 produce un resultado esperado.
+- Probamos un caso no válido (precio negativo) que debería lanzar una excepción.
+
+
+#### **Pruebas de Integración**
+
+Las pruebas de integración verifican que varios componentes del sistema funcionen correctamente **en conjunto**. A diferencia de las pruebas unitarias, estas evalúan cómo interactúan las distintas partes de un sistema, como funciones, clases o incluso servicios externos.
+
+**¿Por qué son importantes?**
+1. **Validación de interacciones**: Garantizan que los módulos se comuniquen entre sí como se espera.
+2. **Detección de errores en la integración**: Identifican problemas que no son evidentes en pruebas unitarias, como incompatibilidades entre módulos.
+3. **Conexión de servicios**: Verifican que las integraciones con bases de datos, APIs o sistemas externos funcionen correctamente.
+
+**Ejemplo**. Supongamos que tenemos las siguientes dos funciones que queremos que trabajen juntas correctamente:
+
+```python
+def calcular_total(productos):
+    return sum(p['precio'] * p['cantidad'] for p in productos)
+
+def generar_recibo(productos):
+    total = calcular_total(productos)
+    return f"Total de la compra: {total}€"
+```
+
+La prueba de integración quedaría de la siguiente forma:
+
+```python
+import unittest
+
+class TestGenerarRecibo(unittest.TestCase):
+    def test_generar_recibo(self):
+        productos = [{'precio': 10, 'cantidad': 2}, {'precio': 5, 'cantidad': 4}]
+        self.assertEqual(generar_recibo(productos), "Total de la compra: 40€")
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+En este caso, verificamos:
+
+- La interacción entre `calcular_total` y `generar_recibo`.
+- La correcta generación del recibo con el total calculado.
+
+
+#### **Pruebas Funcionales**
+
+Las pruebas funcionales verifican que el sistema cumple con los **requisitos funcionales** definidos. A diferencia de las pruebas unitarias e integradas, estas simulan escenarios reales de uso desde la perspectiva del usuario.
+
+**¿Por qué son importantes?**
+1. **Enfoque en el usuario final**: Validan que el sistema haga lo que se espera desde un punto de vista funcional.
+2. **Pruebas completas**: Evalúan el comportamiento del sistema completo, desde la entrada hasta la salida.
+3. **Evidencia de cumplimiento**: Confirman que se cumplen los requisitos del cliente o usuario.
+
+**Ejemplo**. Imagina que estamos desarrollando una función de autenticación de usuario:
+
+```python
+def autenticar_usuario(usuario, contraseña):
+    if usuario == "admin" and contraseña == "1234":
+        return "Acceso concedido"
+    return "Acceso denegado"
+```
+
+Las pruebas funcionales quedarían de la siguiente forma:
+
+```python
+import unittest
+
+class TestAutenticacion(unittest.TestCase):
+    def test_acceso_correcto(self):
+        self.assertEqual(autenticar_usuario("admin", "1234"), "Acceso concedido")
+
+    def test_acceso_incorrecto(self):
+        self.assertEqual(autenticar_usuario("usuario", "contraseña_erronea"), "Acceso denegado")
+```
+
+#### Diferencias y Cuándo Usarlas
+
+| Tipo de Prueba        | Nivel | Propósito                                                        | Ejemplo                               |
+|-----------------------|-------|------------------------------------------------------------------|---------------------------------------|
+| **Pruebas Unitarias** | Bajo  | Verificar el correcto funcionamiento de componentes individuales. | Probar una función que suma dos números. |
+| **Pruebas de Integración** | Medio | Validar que los módulos interactúan correctamente entre ellos.    | Probar que la suma de productos y el cálculo de impuestos funcionan juntos. |
+| **Pruebas Funcionales** | Alto  | Validar que el sistema cumple los requisitos del usuario final.    | Verificar que el sistema permita iniciar sesión con credenciales correctas. |
+
+
+### 2.3.2. Herramientas para automatizar las pruebas
+
+Automatizar las pruebas es esencial para garantizar la eficacia del proceso de validación tras una refactorización. Existen diversas herramientas y frameworks que ayudan a realizar pruebas unitarias, de integración y funcionales de manera eficiente.
+
+#### Herramientas de Pruebas Unitarias
+- **PyTest (Python)**: Un framework flexible y fácil de usar para escribir y ejecutar pruebas unitarias. Soporta parametrización y cuenta con un amplio ecosistema de plugins.
+- **Unittest (Python)**: Incluido en la biblioteca estándar de Python, es una opción robusta para crear pruebas unitarias. Su integración con herramientas externas lo hace ideal para proyectos grandes.
+
+#### Herramientas de Pruebas de Integración
+- **Postman**: Útil para probar APIs y servicios web. Permite realizar solicitudes, verificar respuestas y crear colecciones de pruebas automatizadas.
+- **Selenium**: Ideal para pruebas de integración y funcionales en aplicaciones web. Simula interacciones del usuario en navegadores.
+
+#### Herramientas de Pruebas Funcionales
+- **Robot Framework**: Una herramienta de automatización de pruebas que permite escribir casos de prueba de alto nivel en un lenguaje natural y fácil de entender.
+- **Cypress**: Específicamente diseñado para pruebas de interfaces de usuario en aplicaciones web. Permite simular interacciones y validar resultados visuales.
+
+### Importancia de las Pruebas Automatizadas en la Refactorización
+
+Automatizar las pruebas tiene varias ventajas:
+1. **Rapidez y Consistencia**: Las pruebas se ejecutan de manera uniforme cada vez, reduciendo el margen de error humano.
+2. **Retroalimentación Rápida**: Detectar errores inmediatamente después de realizar cambios minimiza los costos de corrección.
+3. **Facilidad de Escalado**: A medida que el sistema crece, las pruebas automatizadas aseguran que el software siga siendo estable sin la necesidad de realizar pruebas manuales repetitivas.
+
+Al integrar estas herramientas y técnicas en tu flujo de trabajo, aseguras que la refactorización sea un proceso controlado y confiable, manteniendo la calidad y estabilidad del software en todo momento.
+
+### 2.3.2. Herramientas para Automatizar las Pruebas
+
+Automatizar las pruebas es esencial para garantizar la eficacia del proceso de validación tras una refactorización. Estas herramientas y frameworks permiten ejecutar pruebas unitarias, de integración y funcionales de manera eficiente, reduciendo el tiempo y los errores asociados a las pruebas manuales.
+
+#### Herramientas de Pruebas Unitarias
+
+- **PyTest (Python)**: Este framework es conocido por su flexibilidad y simplicidad. Soporta pruebas parametrizadas, lo que permite reutilizar pruebas para diferentes entradas, y cuenta con un ecosistema de plugins que amplía su funcionalidad.
+
+   ```python
+   import pytest
+
+   def add(a, b):
+      return a + b
+
+   def test_add():
+      assert add(2, 3) == 5
+      assert add(-1, 1) == 0
+   ```
+
+Ejecutar las pruebas es tan simple como usar el comando `pytest` `nombre_del_archivo.py` en la terminal.
+
+- **Unittest (Python)**: Incluido en la biblioteca estándar de Python, es una opción robusta para proyectos grandes. Permite agrupar pruebas en clases y definir configuraciones específicas para cada conjunto.
+
+   ```python
+   import unittest
+
+   class TestMathOperations(unittest.TestCase):
+      def test_add(self):
+         self.assertEqual(2 + 3, 5)
+         self.assertEqual(-1 + 1, 0)
+
+   if __name__ == "__main__":
+      unittest.main()
+   ```
+
+#### Herramientas de Pruebas de Integración
+
+- **Postman**: Postman facilita las pruebas de APIs mediante la creación de colecciones de solicitudes automatizadas. Por ejemplo, puedes realizar una solicitud `GET` a una API y verificar el código de respuesta. Además, Postman incluye un lenguaje de scripting para validar respuestas directamente desde su interfaz.
+
+   ```json
+   // Ejemplo de prueba en Postman
+   {
+   "info": {
+      "name": "User API Test",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+   },
+   "item": [
+      {
+         "name": "Get User Data",
+         "request": {
+         "method": "GET",
+         "url": {
+            "raw": "https://jsonplaceholder.typicode.com/users/1",
+            "protocol": "https",
+            "host": [
+               "jsonplaceholder",
+               "typicode",
+               "com"
+            ],
+            "path": [
+               "users",
+               "1"
+            ]
+         }
+         },
+         "response": []
+      }
+   ]
+   }
+   ```
+
+- **Selenium**: Selenium es ideal para probar la interacción de componentes en aplicaciones web. Puede automatizar flujos completos en navegadores, verificando títulos, botones, formularios y cualquier otra funcionalidad interactiva.
+
+   ```python
+   from selenium import webdriver
+
+   driver = webdriver.Chrome()
+   driver.get("https://example.com")
+   assert "Example Domain" in driver.title
+   driver.quit()
+   ```
+
+#### Herramientas de Pruebas Funcionales
+
+- **Robot Framework**: Es una herramienta poderosa para pruebas de alto nivel. Su sintaxis es similar al lenguaje natural, lo que facilita su comprensión. Es especialmente útil para equipos multidisciplinarios que incluyen personas no técnicas.
+
+   ```robot
+   *** Test Cases ***
+   Open Browser And Verify Title
+      Open Browser  https://example.com  chrome
+      Title Should Be  Example Domain
+      Close Browser
+   ```
+
+- **Cypress**: Específicamente diseñado para aplicaciones web, permite validar interacciones y verificar el estado visual de la aplicación. Cypress es conocido por su rapidez y facilidad para depurar errores visuales en interfaces web.
+
+   ```javascript
+   describe("My First Test", () => {
+      it("Visits the Kitchen Sink", () => {
+         cy.visit("https://example.cypress.io");
+         cy.contains("type").click();
+         cy.url().should("include", "/commands/actions");
+      });
+   });
+   ```
+
+### Importancia de las Pruebas Automatizadas en la Refactorización
+
+Automatizar las pruebas es fundamental por varias razones:
+
+1. **Rapidez y Consistencia**: Las pruebas se ejecutan automáticamente, garantizando resultados uniformes y rápidos, incluso para grandes volúmenes de código.
+2. **Retroalimentación Inmediata**: La ejecución de pruebas automatizadas justo después de realizar cambios ayuda a identificar problemas antes de que se propaguen.
+3. **Facilidad de Escalado**: A medida que el sistema crece, las pruebas automatizadas permiten mantener la estabilidad sin depender de pruebas manuales.
+4. **Reducción de Costos**: Aunque inicialmente requiere inversión, la automatización reduce significativamente el tiempo necesario para validar cambios, aumentando la productividad.
+
+### Ejemplo Integrado: Flujo de Pruebas Automatizadas
+
+Imagina un proyecto en Python donde se necesita verificar la funcionalidad de una API. Utilizando `unittest` para pruebas unitarias, Postman para integración, y Selenium para pruebas funcionales, se podría implementar el siguiente flujo:
+
+1. Crear y ejecutar pruebas unitarias para verificar funciones individuales.  
+2. Probar la interacción de múltiples componentes mediante solicitudes API en Postman.  
+3. Automatizar casos funcionales en la interfaz de usuario con Selenium.
+
+Este enfoque combinado garantiza que la refactorización sea validada exhaustivamente en todos los niveles del sistema.
 
 
 # 3. Control de versiones y GitHub
