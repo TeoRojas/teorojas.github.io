@@ -14,7 +14,7 @@ abstract: En Acceso a Datos te lanzaremos a la aventura de conectar con el coraz
 # Índice de Contenidos
 1. [Gestión de la información almacenada en Ficheros.](/acceso-a-datos/ud01/teoria/) / [Ejercicios Finales RA01.](/acceso-a-datos/ud01/ejercicios/)
 2. [Desarrollo de aplicaciones que gestionan información en bases de datos relacionales.](/acceso-a-datos/ud02/teoria/) / [Ejercicios RA02.](/acceso-a-datos/ud02/ejercicios/)
-3. [Gestión de la persistencia de los datos con herramientas de mapeo objeto relacional (ORM).](/acceso-a-datos/ud03/teoria/)
+3. [Gestión de la persistencia de los datos con herramientas de mapeo objeto relacional (ORM).](/acceso-a-datos/ud03/teoria/) / [Ejercicios RA03.](/acceso-a-datos/ud03/ejercicios/)
 4. Desarrollo de aplicaciones que gestionan bases de datos objeto relacionales y orientadas a objetos.
 5. Desarrollo de aplicaciones que gestionan bases de datos nativas XML.
 6. Programación de componentes de acceso a datos.

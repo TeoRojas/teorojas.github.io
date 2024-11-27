@@ -13,20 +13,15 @@ abstract: Sinopsis de la unidad 03
 3. [Instalación de Hibernate (CEa).](#3-instalación-de-hibernate)  
 4. [Configuración de Hibernate (CEb).](#4-configuración-de-hibernate)  
 5. [Iniciar Hibernate (CEb).](#5-iniciar-hibernate)  
-
+6. [Mapeo con Ficheros XML (CEc).](#6-mapeo-con-ficheros-xml)  
+7. [Mapeo con Anotaciones (CEc).](#7-mapeo-con-anotaciones)  
+8. [Insertar Datos con Hibernate (CEd).](#9-insertar-datos-con-hibernate)  
 
 <!--
 # Índice
    
 
-6. [Iniciar Hibernate](#6-iniciar-hibernate)  
-   - **CEb. Se ha configurado la herramienta ORM.**   
-7. [Mapeo con Ficheros XML](#7-mapeo-con-ficheros-xml)  
-   - **CEc. Se han definido los ficheros de mapeo.**
-8. [Mapeo con Anotaciones](#8-mapeo-con-anotaciones)  
-   - **CEc. Se han definido los ficheros de mapeo.**
-9. [Insertar Datos con Hibernate](#9-insertar-datos-con-hibernate)  
-   - **CEd. Se han aplicado mecanismos de persistencia a los objetos.**   
+  
 10. [Actualizar Datos con Hibernate](#10-actualizar-datos-con-hibernate)  
    - **CEd. Se han aplicado mecanismos de persistencia a los objetos.**
 11. [Eliminar Datos con Hibernate](#11-eliminar-datos-con-hibernate)  
@@ -191,20 +186,11 @@ Si no deseas utilizar Maven, puedes descargar los JARs de Hibernate e incluirlos
 
 ### Paso 1: Descargar los JARs de Hibernate
 
-1. Visita el sitio web oficial de Hibernate en [https://hibernate.org/](https://hibernate.org/).
-2. Dirígete a la sección de descargas y selecciona la versión de Hibernate que deseas descargar. Asegúrate de descargar el archivo ZIP que contiene los JARs de Hibernate.
-3. Extrae el archivo ZIP descargado en una carpeta de tu elección.
+1. Visita el sitio web oficial de Hibernate o ve directamente a [Hibernate.zip](https://sourceforge.net/projects/hibernate/files/hibernate-orm/5.6.0.Final/hibernate-release-5.6.0.Final.zip/download).
+2. Extrae el archivo ZIP descargado en una carpeta de tu elección.
+3. Copia todos los `.jar` de la carpeta `lib/required` en la carpeta de los recursos `libs` de tu proyecto.
 
-### Paso 2: Agregar los JARs al Classpath
-
-Una vez que hayas descargado los JARs de Hibernate, agrega los archivos JAR a tu proyecto Java. Para hacerlo, sigue estos pasos:
-
-1. Copia los archivos JAR de la carpeta extraída (por ejemplo, `hibernate-core-x.x.x.Final.jar`) en una carpeta dentro de tu proyecto, como `libs`.
-2. En tu IDE, agrega esta carpeta a las dependencias de tu proyecto:
-   - En **IntelliJ IDEA**, haz clic derecho en la carpeta `libs`, selecciona "Mark Directory as" -> "Library Files".
-   - En **Eclipse**, haz clic derecho en el proyecto -> "Properties" -> "Java Build Path" -> "Libraries" -> "Add External JARs..." y selecciona los JARs.
-
-### Paso 3: Descargar e Incluir el Driver de MySQL
+### Paso 2: Descargar e Incluir el Driver de MySQL
 
 Además de los JARs de Hibernate, también necesitarás el controlador JDBC correspondiente para MySQL. Descarga el JAR del controlador de MySQL y agrégalo al classpath de tu proyecto, siguiendo los mismos pasos que para los JARs de Hibernate.
 
@@ -444,81 +430,373 @@ Algunos aspectos a considerar incluyen:
 
 Una vez configurado Hibernate, estarás listo para utilizarlo para gestionar la persistencia de datos de manera eficiente y escalable.
 
-# 5. Iniciar Hibernate (CEb).
+# 5. Iniciar Hibernate (CEb)
 
-Una vez que hayas configurado Hibernate y creado el archivo de configuración, el siguiente paso es **iniciar Hibernate**. Esto implica crear una sesión de Hibernate que interactuará con la base de datos. La sesión es un objeto que se utiliza para realizar transacciones y consultas, y debe ser gestionada adecuadamente para evitar fugas de memoria y otros problemas de rendimiento. En este apartado, aprenderás a iniciar Hibernate de manera correcta para que puedas empezar a realizar operaciones en la base de datos.
+Una vez que Hibernate está instalado y configurado, el siguiente paso es iniciar la herramienta ORM para comenzar a interactuar con la base de datos. Iniciar Hibernate implica configurar el entorno de ejecución, crear una sesión y comenzar a realizar operaciones de persistencia sobre los objetos que representan las entidades de la base de datos.
 
-## 5.1. Crear una SessionFactory
+En Hibernate, la sesión es la interfaz principal utilizada para interactuar con la base de datos. Cada vez que una aplicación necesita acceder a la base de datos, crea una **sesión** de Hibernate. La sesión permite realizar varias operaciones sobre las entidades, como guardar, actualizar, eliminar y consultar objetos de la base de datos.
 
-El primer paso para iniciar Hibernate es crear una `SessionFactory`. La `SessionFactory` es responsable de la creación y gestión de las sesiones de Hibernate. Esta debe ser configurada al inicio de la aplicación y es utilizada para crear una sesión (`Session`) cuando se necesita interactuar con la base de datos.
+A continuación, te explicamos cómo iniciar Hibernate y obtener una **sesión** de trabajo para realizar estas operaciones.
 
-La `SessionFactory` se crea utilizando la configuración de Hibernate, que incluye los archivos de configuración y las clases anotadas. Esta es una operación costosa, por lo que generalmente se crea una sola vez en la vida de la aplicación.
+## 5.1. Creación del **SessionFactory**
 
-### Ejemplo de creación de una `SesionFactory`:
+Antes de que se pueda iniciar una sesión, es necesario crear un objeto llamado `SessionFactory`. Este objeto es responsable de la configuración de Hibernate y la creación de sesiones. El `SessionFactory` se construye una sola vez en la vida de la aplicación y se reutiliza para obtener sesiones de trabajo.
+
+El `SessionFactory` se configura utilizando el archivo **hibernate.cfg.xml**, que contiene todos los parámetros necesarios para conectarse a la base de datos y configurar Hibernate. Este archivo debe estar en el directorio **`src/main/resources`** de tu proyecto.
+
+### Ejemplo de Configuración de `SessionFactory`:
 
 ```java
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+// Paso 1: Configuración de la SessionFactory
+SessionFactory factory = new Configuration()
+                            .configure("hibernate.cfg.xml") // Cargar el archivo de configuración
+                            .addAnnotatedClass(Persona.class)  // Añadir clases anotadas
+                            .buildSessionFactory();
+```
+- `configure("hibernate.cfg.xml")`: Este método lee el archivo hibernate.cfg.xml que contiene la configuración de Hibernate, como la URL de la base de datos, las credenciales y otras propiedades.
+- `addAnnotatedClass(Persona.class)`: Se añaden las clases anotadas de tu modelo de datos, que corresponden a las tablas de la base de datos.
+- `buildSessionFactory()`: Crea la instancia de SessionFactory que luego se utilizará para crear sesiones.
 
-public class HibernateUtil {
+## 5.2. Obtener una Sesión
 
-    private static final SessionFactory sessionFactory;
+Una vez que el `SessionFactory` ha sido configurado y creado, podemos obtener una **sesión** a través del método `openSession()`. La sesión es utilizada para ejecutar operaciones de persistencia.
 
-    static {
+### Ejemplo de Crear y Obtener una Sesión:
+
+```java
+// Paso 2: Crear una sesión a partir del SessionFactory
+Session session = factory.getCurrentSession();
+```
+`getCurrentSession()` devuelve una sesión que está asociada al ciclo de vida de la transacción actual. En aplicaciones basadas en transacciones, este método es útil ya que gestiona automáticamente el cierre de la sesión al final de la transacción.
+
+## 5.3. Iniciar una Transacción
+
+Una vez obtenida la sesión, se debe iniciar una transacción. Hibernate trabaja dentro de transacciones, lo que significa que todas las operaciones de persistencia deben estar dentro de una transacción.
+
+### Ejemplo de Iniciar una Transacción:
+
+```java
+// Paso 3: Iniciar una transacción
+session.beginTransaction();
+```
+Esto marca el comienzo de una transacción. Durante la transacción, puedes realizar varias operaciones de base de datos, como insertar, actualizar, eliminar y consultar objetos.
+
+## 5.4. Realizar Operaciones con la Sesión
+
+Una vez que la transacción ha comenzado, puedes realizar operaciones sobre la base de datos. Por ejemplo, si tienes una entidad llamada `Persona`, puedes **guardar** un nuevo registro en la base de datos.
+
+### Ejemplo de Guardar un Objeto:
+
+```java
+// Paso 4: Crear un objeto y guardarlo en la base de datos
+Persona persona = new Persona("Juan", "Pérez", "juan.perez@gmail.com");
+session.save(persona);
+```
+
+El método `save()` de la sesión guarda el objeto persona en la base de datos. Hibernate se encarga de la conversión del objeto en una fila dentro de la tabla correspondiente.
+
+## 5.5. Confirmar la Transacción
+
+Después de realizar las operaciones necesarias, la transacción debe ser confirmada para que los cambios se apliquen permanentemente en la base de datos.
+
+### Ejemplo de Confirmar la Transacción:
+
+```java
+// Paso 5: Confirmar la transacción
+session.getTransaction().commit();
+```
+El método `commit()` asegura que todos los cambios realizados durante la transacción se persistan en la base de datos. Si no se llama a `commit()`, los cambios realizados en la transacción se descartan.
+
+## 5.6. Cerrar la Sesión
+
+Una vez que la transacción se ha completado, es importante cerrar la sesión para liberar los recursos que Hibernate ha utilizado.
+
+### Ejemplo de Cerrar la Sesión:
+
+```java
+// Paso 6: Cerrar la sesión
+session.close();
+```
+
+## 5.7. Ejemplo Completo de Iniciar Hibernate
+
+Para iniciar Hibernate correctamente, es fundamental seguir estos pasos:
+
+1. Configurar el `SessionFactory` utilizando el archivo `hibernate.cfg.xml`.
+2. Obtener una sesión utilizando `getCurrentSession()`.
+3. Iniciar una transacción con `session.beginTransaction()`.
+4. Realizar las operaciones de persistencia necesarias, como guardar, actualizar o eliminar entidades.
+5. Confirmar los cambios con `session.getTransaction().commit()`.
+6. Cerrar la sesión para liberar los recursos utilizados.
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        // Paso 1: Configurar el SessionFactory
+        SessionFactory factory = new Configuration()
+                                    .configure("hibernate.cfg.xml")
+                                    .addAnnotatedClass(Persona.class)
+                                    .buildSessionFactory();
+        
+        // Paso 2: Crear una sesión
+        Session session = factory.getCurrentSession();
+
         try {
-            // Crear la SessionFactory a partir de la configuración de Hibernate
-            sessionFactory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Persona.class).buildSessionFactory();
-        } catch (Throwable ex) {
-            // Si algo falla al crear la SessionFactory, lanzar una excepción
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
+            // Paso 3: Iniciar una transacción
+            session.beginTransaction();
+
+            // Paso 4: Crear un objeto Persona
+            Persona persona = new Persona("Juan", "Pérez", "juan.perez@gmail.com");
+
+            // Paso 5: Guardar el objeto Persona
+            session.save(persona);
+
+            // Paso 6: Confirmar la transacción
+            session.getTransaction().commit();
+        } finally {
+            factory.close(); // Paso 7: Cerrar el SessionFactory
         }
-    }
-
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    public static void shutdown() {
-        getSessionFactory().close();
     }
 }
 ```
 
-En este código, el método `configure("hibernate.cfg.xml")` carga el archivo de configuración de Hibernate, mientras que el método `addAnnotatedClass(Persona.class)` le dice a Hibernate que utilice la clase `Persona` para las operaciones de mapeo. El `SessionFactory` se crea al inicializar la clase `HibernateUtil`.
+Este flujo básico te ofrece una guía básica a modo de resumen para interactuar con la base de datos utilizando Hibernate y realizar operaciones de persistencia de manera eficiente.
 
-## 5.2. Obtener una sesión
+# 6. Mapeo con Ficheros XML (CEc)
 
-Una vez que tienes una `SessionFactory`, puedes utilizarla para abrir sesiones que permiten interactuar con la base de datos. Una sesión es un objeto de **transacciones** y **consultas**, y es necesario abrir una sesión antes de realizar cualquier operación de persistencia.
+El mapeo de ficheros XML es un proceso crucial en el desarrollo de aplicaciones que gestionan datos en formato XML. En este contexto, Hibernate ofrece herramientas que permiten trabajar con ficheros XML para mapear entidades Java a tablas de bases de datos. Este enfoque facilita la persistencia de datos al abstraer las complejidades de la base de datos y permitir una manipulación más sencilla desde la aplicación.
 
-Una vez que se obtiene una sesión, es posible comenzar una transacción y ejecutar las operaciones de la base de datos, como guardar, actualizar o eliminar objetos. Para ello, se utilizan los métodos de la sesión, como `save()`, `update()`, `delete()`, etc.
+## ¿Qué es el Mapeo con Ficheros XML?
 
-### Ejemplo de creación de una `SesionFactory`:
+El mapeo con ficheros XML en Hibernate se refiere a la configuración de las relaciones entre las clases Java y las tablas de base de datos mediante archivos XML. Estos ficheros contienen la información que Hibernate utiliza para realizar el mapeo objeto-relacional (ORM), de modo que cada clase y su correspondiente tabla en la base de datos estén correctamente vinculadas.
+
+El archivo XML se utiliza para declarar las entidades y sus propiedades, las relaciones entre las entidades y otras configuraciones necesarias, como la estrategia de generación de identificadores, los tipos de datos y las relaciones entre tablas.
+
+## Ventajas del Mapeo con XML
+
+1. **Separación de la lógica de negocio y la configuración de la base de datos**: Al utilizar archivos XML, la configuración del mapeo no está directamente integrada en el código de la aplicación, lo que facilita la separación de responsabilidades y el mantenimiento del código.
+2. **Flexibilidad**: El mapeo mediante XML es muy flexible y permite realizar modificaciones sin necesidad de cambiar el código de las clases Java. Esto es útil, por ejemplo, cuando se debe cambiar la estructura de la base de datos o las relaciones entre las tablas sin afectar directamente el código de negocio.
+3. **Portabilidad**: Al estar basado en un archivo de configuración, el mapeo mediante XML facilita la portabilidad entre diferentes bases de datos. Es más sencillo ajustar los ficheros de mapeo a diferentes entornos o bases de datos sin tener que modificar el código Java.
+4. **Soporte para configuraciones avanzadas**: Aunque el mapeo basado en anotaciones es más común en muchos proyectos, el mapeo con XML sigue siendo útil en escenarios más complejos o en los que se necesitan configuraciones avanzadas, como la configuración de la herencia de clases o la personalización de estrategias de acceso a datos.
+
+## Estructura de los Ficheros XML
+
+Los ficheros XML de Hibernate generalmente siguen una estructura estándar que incluye el mapeo de las entidades a tablas y la definición de las relaciones entre ellas. A continuación se explica la estructura básica de un fichero de mapeo XML.
+
+### Elementos principales del fichero XML de mapeo:
+- **hibernate-mapping**: Es el elemento raíz del fichero XML, y dentro de él se definen todas las configuraciones relacionadas con el mapeo de las clases.
+- **class**: Representa la clase que será mapeada a una tabla de la base de datos. Dentro de este elemento, se definen las propiedades de la clase, y se especifican los detalles del mapeo, como el nombre de la tabla y las claves primarias.
+- **id**: Este elemento se utiliza para mapear la propiedad de una clase que corresponde a la clave primaria de la tabla.
+- **property**: Se utiliza para mapear propiedades normales de la clase a las columnas de la tabla de la base de datos.
+- **many-to-one** y **one-to-many**: Se utilizan para mapear relaciones entre entidades (por ejemplo, una relación de uno a muchos o muchos a uno).
+
+### Ejemplo de un fichero de mapeo XML:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="Persona" table="PERSONA">
+        <id name="id" column="ID">
+            <generator class="increment"/>
+        </id>
+        <property name="nombre" column="NOMBRE"/>
+        <property name="edad" column="EDAD"/>
+    </class>
+</hibernate-mapping>
+```
+En este ejemplo:
+
+- La clase `Persona` se mapea a la tabla `PERSONA` en la base de datos.
+- La propiedad `id` de la clase se mapea a la columna `ID` de la tabla y se genera automáticamente con la estrategia de incremento.
+- Las propiedades `nombre` y `edad` se mapean a las columnas `NOMBRE` y `EDAD`, respectivamente.
+
+## Proceso de Mapeo en Hibernate con XML
+
+### 1. Crear la Clase Java:
+El primer paso es crear la clase Java que representará la entidad en el sistema. Esta clase tendrá los atributos que corresponderán a las columnas de la tabla en la base de datos.
+### 2. Crear el Fichero de Mapeo XML:
+El siguiente paso es crear un fichero XML donde se definirá el mapeo entre la clase Java y la tabla de la base de datos. El archivo XML debe incluir detalles sobre la clase, las propiedades y las relaciones con otras tablas.
+### 3. Configurar Hibernate:
+El archivo de configuración de Hibernate (generalmente `hibernate.cfg.xml`) debe incluir la referencia al fichero de mapeo XML para que Hibernate lo utilice al generar las consultas y realizar las operaciones sobre la base de datos.
+### 4. Usar Hibernate para Realizar Operaciones:
+Una vez que el mapeo se ha definido correctamente, se pueden utilizar las APIs de Hibernate para realizar operaciones sobre la base de datos, como insertar, actualizar o eliminar registros.
+
+## Desventajas del Mapeo con XML
+
+Aunque el mapeo con ficheros XML ofrece varias ventajas, también tiene algunas desventajas:
+- **Mayor complejidad**: La configuración en XML puede ser más extensa y difícil de mantener en proyectos grandes. Además, los errores de configuración pueden ser más difíciles de identificar y corregir.
+- **Falta de validación en tiempo de compilación**: A diferencia del mapeo con anotaciones, los errores en los ficheros XML no se detectan hasta que se ejecuta la aplicación, lo que puede dificultar la depuración.
+
+## Conclusión
+
+El mapeo con ficheros XML es una de las opciones más flexibles y potentes para gestionar la persistencia de datos en aplicaciones Java utilizando Hibernate. Aunque se ha visto cierta preferencia por el uso de anotaciones en muchas aplicaciones modernas, los ficheros XML siguen siendo útiles y efectivos, especialmente en proyectos que requieren configuraciones más avanzadas y flexibles.
+
+El uso adecuado de los ficheros de mapeo XML puede mejorar significativamente la escalabilidad y el mantenimiento de una aplicación, al permitir modificar la estructura de la base de datos sin alterar el código de la lógica de negocio.
+
+# 7. Mapeo con Anotaciones (CEc)
+
+El mapeo con anotaciones es uno de los enfoques más modernos y utilizados en Hibernate para mapear las clases Java a las tablas de bases de datos. En lugar de usar ficheros XML para la configuración del mapeo, Hibernate permite que los desarrolladores utilicen anotaciones directamente en las clases Java. Esto hace que el proceso de mapeo sea más directo y menos propenso a errores, ya que se realiza dentro del propio código de la aplicación.
+
+## ¿Qué es el Mapeo con Anotaciones?
+
+El mapeo con anotaciones en Hibernate implica el uso de anotaciones estándar de Java (o de Hibernate) para declarar cómo una clase Java debe ser persistida en una base de datos relacional. Estas anotaciones se colocan en las propiedades de la clase y en la propia clase, indicando a Hibernate cómo debe gestionar la relación entre la clase y la base de datos.
+
+Las anotaciones simplifican el código, eliminando la necesidad de ficheros de configuración XML, y hacen que el código sea más limpio y fácil de mantener. Además, al estar integradas directamente en el código Java, las anotaciones permiten una validación más temprana en tiempo de compilación, lo que reduce los posibles errores de mapeo.
+
+## Ventajas del Mapeo con Anotaciones
+
+1. **Simplicidad**: Al no requerir archivos de configuración XML, el mapeo con anotaciones es más sencillo de configurar y administrar. El código es más limpio y directo, lo que facilita el mantenimiento.
+2. **Integración con el código Java**: Las anotaciones están directamente asociadas a las clases y sus propiedades, lo que hace que el mapeo sea más intuitivo. No es necesario hacer referencia a ficheros externos o realizar configuraciones adicionales fuera del código.
+3. **Detección temprana de errores**: Al usar anotaciones, los errores de configuración en el mapeo pueden ser detectados en tiempo de compilación, lo que mejora la calidad del código y reduce la posibilidad de errores en la ejecución.
+4. **Mayor control sobre el mapeo**: Hibernate ofrece una variedad de anotaciones que permiten un control más fino sobre el mapeo de las clases, como la estrategia de generación de claves primarias, las relaciones entre entidades y la definición de las tablas y columnas correspondientes.
+
+## Anotaciones Principales para el Mapeo
+
+Hibernate proporciona un conjunto de anotaciones que se pueden usar para mapear clases Java a tablas de bases de datos. A continuación se describen algunas de las anotaciones más utilizadas.
+
+### @Entity
+La anotación `@Entity` se usa para marcar una clase como una entidad de base de datos, es decir, una clase cuya instancia se almacenará en una tabla de la base de datos.
+
+```java
+@Entity
+public class Persona {
+    // Atributos y métodos
+}
+```
+
+### @Table
+La anotación `@Table` se usa para especificar el nombre de la tabla que será mapeada a la clase. Si no se especifica, Hibernate asumirá que el nombre de la tabla será el mismo que el de la clase.
+
+```java
+@Entity
+@Table(name = "PERSONA")
+public class Persona {
+    // Atributos y métodos
+}
+```
+
+### @Id
+La anotación `@Id` se utiliza para marcar el campo que será la clave primaria de la tabla.
+
+```java
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private int id;
+```
+
+### @GeneratedValue
+La anotación `@GeneratedValue` se usa para especificar cómo se generará el valor de la clave primaria. Puede utilizar diferentes estrategias, como `AUTO`, `IDENTITY`, `SEQUENCE` o `TABLE`.
+
+```java
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private int id;
+```
+
+### @Column
+La anotación `@Column` se usa para mapear un campo de la clase a una columna de la tabla de la base de datos. Se puede usar para definir el nombre de la columna, el tipo de datos, si la columna es nullable, entre otras propiedades.
+
+```java
+@Column(name = "nombre", nullable = false)
+private String nombre;
+```
+
+### @OneToMany, @ManyToOne, @ManyToMany
+Estas anotaciones se utilizan para mapear relaciones entre entidades. Se usan para especificar cómo se debe gestionar la relación entre dos o más tablas. `@OneToMany` y `@ManyToOne` definen relaciones de uno a muchos y muchos a uno, mientras que `@ManyToMany` define una relación de muchos a muchos.
+
+```java
+@OneToMany(mappedBy = "persona")
+private List<Direccion> direcciones;
+```
+
+### @JoinColumn
+La anotación `@JoinColumn` se usa en una relación de tipo `@ManyToOne` o `@OneToMany` para definir cómo se deben asociar las columnas de las tablas relacionadas. Esto es útil para especificar la clave foránea en una relación entre tablas.
+
+```java
+@ManyToOne
+@JoinColumn(name = "persona_id")
+private Persona persona;
+```
+
+## Proceso de Mapeo con Anotaciones en Hibernate
+
+### 1. Crear la Clase Java:
+El primer paso es crear la clase Java que representará la entidad. La clase debe estar anotada con `@Entity` para que Hibernate la reconozca como una entidad de base de datos.
+
+### 2. Añadir las Anotaciones Correspondientes:
+A continuación, se deben agregar las anotaciones a la clase y sus atributos para definir el mapeo entre la clase y la tabla de la base de datos. Esto incluye el uso de `@Id` para la clave primaria, `@GeneratedValue` para la estrategia de generación de identificadores, y `@Column` para las columnas correspondientes.
+
+### 3. Configurar Hibernate:
+En el archivo de configuración de Hibernate (`hibernate.cfg.xml`), se debe incluir la configuración de la base de datos y las propiedades necesarias para que Hibernate funcione correctamente. También debe incluirse la clase mapeada para que Hibernate pueda reconocerla.
+
+### 4. Realizar Operaciones con Hibernate:
+Una vez que el mapeo esté configurado, se pueden utilizar las APIs de Hibernate para realizar operaciones de persistencia como insertar, actualizar, eliminar o consultar los datos almacenados en la base de datos.
+
+## Desventajas del Mapeo con Anotaciones
+
+Aunque el mapeo con anotaciones tiene muchas ventajas, también presenta algunas desventajas:
+
+1. **Rigidez en el código**: Aunque las anotaciones simplifican la configuración, al estar directamente en el código de la clase, pueden hacer que el código sea más difícil de mantener a largo plazo, especialmente cuando hay muchas entidades o relaciones complejas.
+  
+2. **Limitaciones en configuraciones avanzadas**: En comparación con el mapeo XML, las anotaciones pueden ser menos flexibles cuando se requiere una configuración avanzada o personalizada. Algunos casos complejos, como la configuración de la herencia de clases o estrategias avanzadas de claves primarias, pueden ser más difíciles de manejar.
+
+## Conclusión
+
+El mapeo con anotaciones es una de las técnicas más populares en Hibernate, ya que simplifica el proceso de mapeo objeto-relacional y mejora la legibilidad del código. Al integrarse directamente en el código Java, las anotaciones facilitan la configuración y la detección de errores en tiempo de compilación. Sin embargo, también es importante tener en cuenta sus limitaciones y considerar el mapeo XML en situaciones más complejas o cuando se necesite una mayor flexibilidad.
+
+El mapeo con anotaciones es una excelente opción para proyectos que requieren una implementación rápida y eficiente del mapeo objeto-relacional, y es ampliamente utilizado en aplicaciones modernas que utilizan Hibernate.
+
+# 8. Insertar Datos con Hibernate (CEd)
+
+Una de las tareas más comunes al trabajar con bases de datos es insertar datos. Hibernate facilita este proceso al mapear las entidades Java a las tablas de la base de datos, permitiendo que los desarrolladores puedan insertar datos mediante objetos en lugar de tener que escribir sentencias SQL manualmente. En este apartado, aprenderemos cómo insertar datos en la base de datos utilizando Hibernate.
+
+## 8.1. Operación de Insertar con Hibernate
+
+La operación de insertar en Hibernate se realiza mediante el método `save()` de la sesión de Hibernate. Este método permite almacenar una instancia de una entidad (una clase Java) en la base de datos. Hibernate se encarga de convertir los valores de los objetos a las filas correspondientes en las tablas de la base de datos.
+
+### Pasos para Insertar Datos con Hibernate
+
+1. **Crear la clase entidad**: La clase debe estar anotada con `@Entity` y debe tener las propiedades correspondientes a las columnas de la tabla de la base de datos.
+2. **Configurar Hibernate**: Debemos asegurarnos de que Hibernate está configurado correctamente para interactuar con la base de datos.
+3. **Crear una sesión y una transacción**: Hibernate gestiona las operaciones dentro de transacciones, por lo que necesitamos iniciar una sesión y una transacción.
+4. **Guardar los objetos**: Usamos el método `save()` de la sesión para guardar un objeto de la clase entidad en la base de datos.
+5. **Confirmar la transacción**: Después de guardar los datos, se debe confirmar la transacción para que los cambios sean persistidos en la base de datos.
+
+### Ejemplo de Inserción de Datos
+
+Supongamos que tenemos una entidad `Persona` con los atributos `id`, `nombre`, `apellido` y `email`. Para insertar un nuevo registro de persona en la base de datos, el código sería el siguiente:
 
 ```java
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
-public class MainApp {
+public class InsertarDatosHibernate {
     public static void main(String[] args) {
-        // Obtener la SessionFactory
-        SessionFactory factory = HibernateUtil.getSessionFactory();
+        // Paso 1: Configurar la SessionFactory
+        SessionFactory factory = new Configuration()
+                                    .configure("hibernate.cfg.xml")
+                                    .addAnnotatedClass(Persona.class)
+                                    .buildSessionFactory();
 
-        // Obtener una nueva sesión a partir de la SessionFactory
+        // Paso 2: Obtener una sesión
         Session session = factory.getCurrentSession();
 
         try {
-            // Empezar una nueva transacción
+            // Paso 3: Crear un objeto Persona
+            Persona nuevaPersona = new Persona("Carlos", "Gómez", "carlos.gomez@example.com");
+
+            // Paso 4: Iniciar una transacción
             session.beginTransaction();
 
-            // Crear un objeto de tipo Persona
-            Persona persona = new Persona("Juan", "Pérez", 30);
+            // Paso 5: Guardar el objeto en la base de datos
+            session.save(nuevaPersona);
 
-            // Guardar el objeto
-            session.save(persona);
-
-            // Commit de la transacción
+            // Paso 6: Confirmar la transacción
             session.getTransaction().commit();
+            
+            System.out.println("Persona guardada con éxito: " + nuevaPersona);
         } finally {
             factory.close();
         }
@@ -526,25 +804,53 @@ public class MainApp {
 }
 ```
 
-En este ejemplo:
-- `getCurrentSession()` obtiene una sesión de la SessionFactory.
-- `beginTransaction()` inicia una nueva transacción.
-- `session.save(persona)` persiste un objeto Persona en la base de datos.
-- `session.getTransaction().commit()` confirma la transacción, lo que guarda definitivamente los cambios en la base de datos.
+### Explicación del Código:
 
-## 5.3. Cerrar la sesión
+1. **Configuración de Hibernate**: Creamos una `SessionFactory` con el archivo de configuración `hibernate.cfg.xml`, que contiene la información sobre la base de datos.
+2. **Creación de la sesión**: Usamos `getCurrentSession()` para obtener una sesión que gestionará la transacción y las operaciones de persistencia.
+3. **Creación del objeto Persona**: Creamos una nueva instancia de la clase `Persona` con los datos que queremos insertar en la base de datos.
+4. **Inicio de la transacción**: Comenzamos una transacción con `session.beginTransaction()`.
+5. **Inserción del objeto**: Usamos `session.save(nuevaPersona)` para guardar el objeto en la base de datos. Hibernate se encarga de insertar los valores del objeto en la tabla correspondiente.
+6. **Confirmación de la transacción**: Llamamos a `session.getTransaction().commit()` para confirmar la transacción, lo que garantiza que los cambios se guardan permanentemente en la base de datos.
+7. **Cierre de la sesión**: Finalmente, cerramos la `SessionFactory` para liberar los recursos.
 
-Es importante cerrar la sesión después de que ya no sea necesaria. Esto libera los recursos que Hibernate ha utilizado y asegura que no haya fugas de memoria. En el ejemplo anterior, la sesión se cierra automáticamente cuando el bloque `finally` se ejecuta, cerrando la `SessionFactory`.
+### Manejando el Identificador de la Entidad
+
+Si la clase entidad tiene una propiedad que es la clave primaria (por ejemplo, `id`), Hibernate se encarga de asignar el valor a esta propiedad automáticamente si está configurado adecuadamente. En el ejemplo anterior, si la propiedad `id` está configurada con la anotación `@Id`, Hibernate generará un identificador único para el nuevo registro. Si se utiliza la estrategia `GenerationType.IDENTITY` o `GenerationType.AUTO`, el valor del `id` será generado automáticamente por la base de datos al insertar el nuevo registro.
+
+## 8.2. Consideraciones Importantes
+
+1. **Persistencia y transacciones**: Es fundamental que las operaciones de inserción se realicen dentro de una transacción. Hibernate asegura que los cambios en la base de datos se apliquen de manera atómica y segura. Si la transacción no se confirma (`commit()`), los cambios no se guardarán en la base de datos.
+2. **Caché de primer nivel**: Hibernate utiliza un caché de primer nivel asociado a la sesión. Esto significa que los objetos guardados en una sesión estarán disponibles durante toda la sesión, evitando consultas adicionales a la base de datos.
+3. **Autogeneración de identificadores**: Si la clave primaria de la entidad es autogenerada (por ejemplo, con `@GeneratedValue`), Hibernate manejará automáticamente el valor del identificador.
+
+## 8.3. Insertar Múltiples Registros
+
+Si necesitas insertar varios registros a la vez, puedes utilizar un enfoque similar. Solo tienes que crear varias instancias de la entidad y llamarlas al método `save()` dentro de la misma transacción. Hibernate gestionará las inserciones de manera eficiente.
 
 ```java
-session.close();
+// Crear múltiples instancias de Persona
+Persona persona1 = new Persona("Ana", "López", "ana.lopez@example.com");
+Persona persona2 = new Persona("Luis", "Martínez", "luis.martinez@example.com");
+
+// Guardar las personas en la base de datos
+session.save(persona1);
+session.save(persona2);
 ```
 
-Este método asegura que se liberen los recursos asociados a la sesión, como las conexiones con la base de datos y cualquier caché interna.
+### Optimización de la Inserción
 
-## 5.4. Consideraciones importantes
+Hibernate también permite realizar inserciones por lotes (batch processing) para mejorar el rendimiento al insertar grandes cantidades de datos. Esto se puede configurar en el archivo `hibernate.cfg.xml` mediante las propiedades adecuadas.
 
-- **Manejo de excepciones**: Siempre que trabajes con Hibernate, asegúrate de manejar adecuadamente las excepciones, especialmente las relacionadas con las transacciones y la persistencia de objetos.
-- **Gestión de transacciones**: Asegúrate de realizar un `commit()` para que los cambios se apliquen permanentemente a la base de datos. Si ocurre un error, puedes hacer un `rollback()` para revertir cualquier cambio realizado durante la transacción.
-- **SessionFactory singleton**: Generalmente, la `SessionFactory` se crea una sola vez y se utiliza durante toda la vida de la aplicación. Esto se debe a que la creación de una `SessionFactory` es costosa en términos de rendimiento.
+## 8.4. Verificación de la Inserción
 
+Es una buena práctica verificar que los datos se hayan insertado correctamente. Puedes hacerlo recuperando los objetos insertados de la base de datos y confirmando que la inserción fue exitosa.
+
+```java
+Persona personaRecuperada = session.get(Persona.class, persona1.getId());
+System.out.println("Persona recuperada: " + personaRecuperada);
+```
+
+## 8.5. Conclusión
+
+Insertar datos con Hibernate es una operación sencilla gracias a su modelo de objetos y su abstracción del SQL. Usando las herramientas de Hibernate, puedes insertar datos de manera eficiente y sin necesidad de escribir consultas SQL manualmente. El uso de sesiones y transacciones asegura que las operaciones de persistencia se realicen de manera segura y eficiente, permitiendo a los desarrolladores centrarse en la lógica de negocio sin preocuparse por la gestión de la base de datos.
