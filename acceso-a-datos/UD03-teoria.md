@@ -149,16 +149,16 @@ Para instalar Hibernate con Maven, debes agregar las siguientes dependencias a t
 <dependencies>
     <!-- Dependencia de Hibernate Core -->
     <dependency>
-        <groupId>org.hibernate</groupId>
+        <groupId>org.hibernate.orm</groupId>
         <artifactId>hibernate-core</artifactId>
-        <version>5.6.5.Final</version> <!-- Verifica la última versión disponible -->
-    </dependency>
+        <version>6.6.3.Final</version>
+    </dependency><!-- Verifica la última versión disponible -->
 
     <!-- Dependencia de la base de datos MySQL -->
     <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.30</version> <!-- Verifica la última versión disponible -->
+        <groupId>com.mysql</groupId>
+        <artifactId>mysql-connector-j</artifactId>
+        <version>9.1.0</version> <!-- Verifica la última versión disponible -->
     </dependency>
 
     <!-- Dependencia de JPA (si deseas usar JPA con Hibernate) -->
