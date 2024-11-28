@@ -8,14 +8,14 @@ abstract: Sinopsis de la unidad 03
 ---
 
 # Índice
-1. [Introducción a la Persistencia de Datos con ORM (CEa).](#1-introducción-a-la-persistencia-de-datos-con-orm)  
-2. [¿Qué es Hibernate? (CEa).](#2-qué-es-hibernate)  
-3. [Instalación de Hibernate (CEa).](#3-instalación-de-hibernate)  
-4. [Configuración de Hibernate (CEb).](#4-configuración-de-hibernate)  
-5. [Iniciar Hibernate (CEb).](#5-iniciar-hibernate)  
-6. [Mapeo con Ficheros XML (CEc).](#6-mapeo-con-ficheros-xml)  
-7. [Mapeo con Anotaciones (CEc).](#7-mapeo-con-anotaciones)  
-8. [Insertar Datos con Hibernate (CEd).](#9-insertar-datos-con-hibernate)  
+1. [Introducción a la Persistencia de Datos con ORM (CEa).](#1-introducción-a-la-persistencia-de-datos-con-orm-cea)  
+2. [¿Qué es Hibernate? (CEa).](#2-qué-es-hibernate-cea)  
+3. [Instalación de Hibernate (CEa).](#3-instalación-de-hibernate-cea)  
+4. [Configuración de Hibernate (CEb).](#4-configuración-de-hibernate-ceb)  
+5. [Iniciar Hibernate (CEb).](#5-iniciar-hibernate-ceb)  
+6. [Mapeo con Ficheros XML (CEc).](#6-mapeo-con-ficheros-xml-cec)  
+7. [Mapeo con Anotaciones (CEc).](#7-mapeo-con-anotaciones-cec)  
+8. [Insertar Datos con Hibernate (CEd).](#8-insertar-datos-con-hibernate-ced)  
 
 <!--
 # Índice

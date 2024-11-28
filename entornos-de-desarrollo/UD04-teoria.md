@@ -24,7 +24,10 @@ abstract:
       &emsp;&emsp;2.2.9. [Ejercicios básicos de Refactorización](#229-ejercicios-básicos-de-refactorización)  
    2.3. [Pruebas Asociadas a la Refactorización](#23-pruebas-asociadas-a-la-refactorización)  
       &emsp;&emsp;2.3.1. [Tipos de pruebas para validar la refactorización](#231-tipos-de-pruebas-para-validar-la-refactorización)  
-      &emsp;&emsp;2.3.2. [Herramientas para automatizar las pruebas](#232-herramientas-para-automatizar-las-pruebas) 
+      &emsp;&emsp;2.3.2. [Herramientas para automatizar las pruebas](#232-herramientas-para-automatizar-las-pruebas)  
+   2.4. [Análisis de Código con Herramientas](#24-análisis-de-código-con-herramientas)  
+      &emsp;&emsp;2.4.1. [Revisión del código fuente](#241-revisión-del-código-fuente)  
+      &emsp;&emsp;2.4.2. [Configuración de herramientas de análisis de código](#242-configuración-de-herramientas-de-análisis-de-código)  
 3. [Control de versiones y GitHub](#3-control-de-versiones-y-github)  
    3.1. [¿Qué es el control de versiones?](#31-qué-es-el-control-de-versiones)  
    3.2. [¿Qué es Git?](#32-qué-es-git)  
@@ -47,6 +50,19 @@ abstract:
    3.8. Uso de GitHub para el control de versiones integrado
 5. Documentación efectiva 
 
+<!--
+
+## 2.5. Aplicación de Patrones de Refactorización con Herramientas de Desarrollo  
+   - 2.5.1. Herramientas integradas en el entorno de desarrollo  
+      Descripción de herramientas como los refactorizadores integrados en IDEs y cómo facilitan la aplicación de patrones.
+   - 2.5.2. Práctica de refactorización asistida por herramientas  
+      Ejemplo de un flujo de trabajo práctico para aplicar patrones de refactorización de forma guiada y eficiente.
+
+## 2.6. Buenas Prácticas en Refactorización  
+   Consejos y pautas para refactorizar sin introducir errores y asegurando la mejora de la calidad del código.
+
+-->
+
 # 1. Introducción
 
 En este módulo exploraremos los conceptos y prácticas fundamentales que sustentan el desarrollo de software profesional, centrándonos en la refactorización de código, el control de versiones con Git, y el uso de GitHub como plataforma de colaboración. Cada uno de estos elementos juega un papel crucial en la creación de software eficiente, mantenible y colaborativo, y juntos forman una base sólida para un flujo de trabajo productivo en equipos de desarrollo.
@@ -63,41 +79,6 @@ En conjunto, estos temas dotarán al estudiante de habilidades prácticas y conc
 
 
 # 2. Refactorización
-
-<!--
-# 2. Refactorización
-
-## 2.1. Introducción a la Refactorización  
-   Breve explicación sobre qué es la refactorización y por qué es importante en el desarrollo de software.
-
-## 2.2. Patrones de Refactorización Más Usuales  
-   - 2.2.1. Identificación de patrones comunes  
-      Ejemplos de patrones de refactorización como "Extract Method", "Rename Variable", "Introduce Parameter Object", entre otros.
-   - 2.2.2. Aplicación de patrones en el código  
-      Cómo elegir el patrón adecuado según el contexto y la finalidad de la refactorización.
-
-## 2.3. Pruebas Asociadas a la Refactorización  
-   - 2.3.1. Tipos de pruebas para validar la refactorización  
-      Introducción a las pruebas unitarias, de integración, y cómo se aplican tras la refactorización.
-   - 2.3.2. Herramientas para automatizar las pruebas  
-      Ejemplos de herramientas y frameworks de prueba que se utilizan para asegurar la funcionalidad después de los cambios.
-
-## 2.4. Análisis de Código con Herramientas  
-   - 2.4.1. Revisión del código fuente  
-      Cómo utilizar herramientas de análisis estático y dinámico para identificar áreas que necesitan refactorización.
-   - 2.4.2. Configuración de herramientas de análisis de código  
-      Opciones de configuración y personalización para adaptar las herramientas de análisis a los estándares de calidad del equipo o del proyecto.
-
-## 2.5. Aplicación de Patrones de Refactorización con Herramientas de Desarrollo  
-   - 2.5.1. Herramientas integradas en el entorno de desarrollo  
-      Descripción de herramientas como los refactorizadores integrados en IDEs y cómo facilitan la aplicación de patrones.
-   - 2.5.2. Práctica de refactorización asistida por herramientas  
-      Ejemplo de un flujo de trabajo práctico para aplicar patrones de refactorización de forma guiada y eficiente.
-
-## 2.6. Buenas Prácticas en Refactorización  
-   Consejos y pautas para refactorizar sin introducir errores y asegurando la mejora de la calidad del código.
-
--->
 
 ## 2.1. Introducción a la Refactorización
 
@@ -896,6 +877,185 @@ Imagina un proyecto en Python donde se necesita verificar la funcionalidad de un
 3. Automatizar casos funcionales en la interfaz de usuario con Selenium.
 
 Este enfoque combinado garantiza que la refactorización sea validada exhaustivamente en todos los niveles del sistema.
+
+## 2.4. Análisis de Código con Herramientas
+
+El análisis de código es una etapa crucial para garantizar la calidad del software y mantener estándares elevados en proyectos a largo plazo. Este proceso utiliza herramientas que examinan el código de forma estática o dinámica, permitiendo identificar áreas problemáticas, como redundancias, complejidad excesiva o vulnerabilidades de seguridad. En este apartado, exploraremos cómo realizar una revisión efectiva del código fuente utilizando herramientas avanzadas.
+
+### 2.4.1. Revisión del Código Fuente
+
+La revisión del código fuente es un proceso de inspección detallada que se puede realizar manualmente o mediante herramientas automáticas. Su propósito es identificar problemas estructurales, posibles errores lógicos y oportunidades de refactorización antes de que el software se ejecute.
+
+#### Análisis Estático
+
+El análisis estático evalúa el código sin necesidad de ejecutarlo. Este tipo de análisis es particularmente útil para identificar errores de sintaxis, problemas de estilo, y detectar posibles vulnerabilidades. Algunas herramientas comunes incluyen:
+
+- **SonarQube**: Una herramienta robusta que permite analizar código en múltiples lenguajes. Identifica puntos débiles relacionados con seguridad, duplicación de código, complejidad y más.
+- **Pylint** (Python): Una herramienta popular para verificar la conformidad con las convenciones de estilo y detectar errores comunes en el código Python. [Ver ejemplo de uso](https://youtu.be/F-Yqal4kAQI)
+- **Bandit** (Python): Centrada en la seguridad, ayuda a identificar vulnerabilidades potenciales en el código Python.
+
+#### Análisis Dinámico
+
+El análisis dinámico examina el comportamiento del código durante la ejecución, permitiendo identificar problemas que no son evidentes en un análisis estático. Este método es útil para evaluar la cobertura de pruebas, uso de memoria y posibles errores en tiempo de ejecución. Herramientas como las siguientes destacan:
+
+- **PyTest Coverage**: Permite medir qué partes del código están cubiertas por las pruebas unitarias.
+- **Valgrind**: Una herramienta avanzada para la detección de fugas de memoria y optimización de programas.
+
+#### Proceso de Análisis con Herramientas
+
+1. **Configurar la Herramienta**: Descarga e instala la herramienta adecuada para tu proyecto. Por ejemplo, puedes configurar SonarQube como un servidor local para análisis estáticos.
+2. **Ejecutar el Análisis**: Apunta la herramienta hacia el repositorio del proyecto o un archivo específico. Las herramientas como Pylint pueden ejecutarse desde la línea de comandos para obtener un informe inmediato.
+3. **Revisar los Resultados**: Examina los informes generados, que generalmente incluyen métricas como complejidad ciclomática, duplicación de código, y alertas de vulnerabilidad.
+4. **Tomar Acciones**: Utiliza los resultados para decidir qué partes del código necesitan refactorización o atención inmediata.
+
+#### Ejemplo de Aplicación Práctica
+
+**Caso de Uso**: Un equipo detecta que el tiempo de mantenimiento del código ha aumentado debido a la complejidad de algunas funciones. Deciden usar Pylint para obtener métricas clave sobre el código Python.
+
+1. **Ejecutan Pylint**: Obtienen un informe que destaca una función con alta complejidad ciclomática.
+2. **Toman Decisiones**: Basándose en el informe, dividen la función en partes más pequeñas y refactorizan para mejorar la modularidad.
+
+#### Beneficios de Analizar el Código Fuente
+
+1. **Reducción de Errores**: Identificar errores comunes y potenciales vulnerabilidades antes de la ejecución minimiza los fallos en producción.
+2. **Estándares Consistentes**: Las herramientas de análisis ayudan a garantizar que el equipo sigue un estilo uniforme de codificación.
+3. **Optimización del Rendimiento**: Permite descubrir problemas de eficiencia en el código, mejorando el rendimiento general.
+4. **Facilita la Refactorización**: Proporciona métricas claras que señalan las áreas que necesitan mejoras, como código duplicado o funciones extensas.
+
+Este enfoque sistemático para la revisión del código fuente, utilizando herramientas de análisis estático y dinámico, asegura que el software no solo funcione correctamente, sino que también sea seguro, mantenible y eficiente a largo plazo. En los siguientes apartados, exploraremos cómo configurar y utilizar algunas de estas herramientas en un entorno de desarrollo real.
+
+### 2.4.2. Configuración de Herramientas de Análisis de Código
+
+Configurar herramientas de análisis de código es un paso fundamental para integrarlas en el flujo de trabajo de desarrollo. Este apartado explica cómo configurar y usar algunas herramientas populares, como **Pylint**, **SonarQube**, y **Bandit**, para analizar código Python.
+
+#### Configuración de Pylint
+
+**Pylint** es una herramienta de análisis estático para Python que verifica errores, evalúa la calidad del código y asegura que sigue las convenciones de estilo.
+
+1. **Instalación**: Pylint se puede instalar fácilmente con un gestor de paquetes como `pip`.
+
+```bash
+pip install pylint
+```
+
+2. **Ejecutar Análisis**: Permite analizar un archivo o proyecto Python completo, generando un informe con advertencias y sugerencias de mejora.
+
+```bash
+pylint my_script.py
+```
+
+3. **Configuración de un Archivo RC**: Pylint permite personalizar sus reglas creando un archivo `.pylintrc`. Este archivo puede ser modificado para ajustar las reglas según las necesidades del proyecto.
+
+```bash
+pylint --generate-rcfile > .pylintrc
+```
+
+#### Configuración de SonarQube
+
+**SonarQube** es una plataforma de análisis estático que admite múltiples lenguajes de programación y proporciona métricas detalladas.
+
+1. **Instalación Local**: Se descarga y ejecuta localmente, iniciando un servidor accesible desde el navegador.
+   - Paso 1. Descarga SonarQube desde su sitio oficial y descomprime los archivos.
+   - Paso 2. Inicia el servidor local con el siguiente comando desde el directorio de instalación:
+   ```bash
+   ./bin/[SO_Y_VERSION]/sonar.sh start
+   ```
+
+2. **Configurar Proyecto**: Desde su panel de control, se pueden crear proyectos y generar tokens para autenticar el análisis.
+   - Abre el navegador en `http://loalhost:9000``
+   - Crea un nuevo proyecto y genera un token de autenticación.
+
+3. **Instalar el Scanner**: SonarScanner es la herramienta que analiza el código y envía los resultados al servidor de SonarQube.
+   - Descarga e instala el **SonarScanner**, una herramienta de línea de comandos que envía el análisis al servidor.
+   - Ejecuta el análisis con:
+   ```bash
+   sonar-scanner \
+  -Dsonar.projectKey=my_project \
+  -Dsonar.sources=src \
+  -Dsonar.host.url=http://localhost:9000 \
+  -Dsonar.login=my_generated_token
+   ```
+
+4. **Revisar Resultados**: El panel de SonarQube muestra métricas como duplicación de código, complejidad ciclomática y vulnerabilidades de seguridad.
+
+
+#### Configuración de Bandit
+
+**Bandit** es una herramienta de análisis estático enfocada en encontrar vulnerabilidades de seguridad en código Python.
+
+1. **Instalación**: Se instala fácilmente con `pip`.
+
+```bash
+pip install bandit
+```
+
+2. **Ejecutar Análisis**: Permite analizar archivos individuales o directorios completos, generando un informe que identifica posibles problemas de seguridad.
+
+```bash
+bandit -r my_project/
+```
+
+3. **Exportar Resultados**: Los resultados se pueden exportar en diferentes formatos, como JSON, para integrarlos con otras herramientas.
+
+```bash
+bandit -r my_project/ -o report.json -f json
+```
+
+#### Integración en Entornos de Desarrollo
+
+1. **Integración con Visual Studio Code**: Extensiones como **Pylint** o **SonarLint** pueden integrarse en el editor para analizar el código en tiempo real y mostrar sugerencias de mejora.
+   - Prueba a instalar extensiones como **Pylint** o **SonarLint** desde el marketplace de Visual Studio Code.
+   - Configura estas herramientas en el archivo `settings.json`del proyecto:
+   ```json
+   {
+  "python.linting.pylintEnabled": true,
+  "python.linting.enabled": true,
+  "sonarlint.connectedMode.servers": [
+         {
+         "serverId": "my_sonar_server",
+         "serverUrl": "http://localhost:9000"
+         }
+      ]
+   }
+   ```
+2. **Integración Continua**: Herramientas como Pylint y Bandit pueden configurarse en pipelines de CI/CD, asegurando que cada push al repositorio se analice automáticamente en busca de problemas de calidad o seguridad. Por ejemplo, con GitHub Actions:
+
+```yaml
+name: Code Analysis
+
+on: [push]
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        pip install pylint bandit
+
+    - name: Run Pylint
+      run: pylint my_project/
+
+    - name: Run Bandit
+      run: bandit -r my_project/
+```
+
+
+### Beneficios de Configurar Herramientas de Análisis
+
+1. **Prevención Temprana**: Detectar problemas antes de que lleguen a producción.
+2. **Estándares Consistentes**: Garantizar que todo el equipo sigue las mismas prácticas de codificación.
+3. **Ahorro de Tiempo**: Automatizar la revisión del código reduce la carga de trabajo manual.
+
+Configurar herramientas como estas asegura que el código no solo sea funcional, sino también seguro, eficiente y fácil de mantener. Al incluirlas en el flujo de trabajo, se fortalece el ciclo de desarrollo continuo.
 
 
 # 3. Control de versiones y GitHub

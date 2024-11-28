@@ -4,7 +4,7 @@ title: UD02. Diseño de Bases de Datos, el modelo conceptual.
 permalink: /bases-de-datos/ud02/teoria/
 author: Teo Rojas
 date: Septiembre 2024
-abstract: Sinopsis de la unidad 02
+abstract: Criterios de evaluación:<br>RA06.CEb. Se han identificado las tablas del diseño lógico.<br>RA06.CEc. Se han identificado los campos que forman parte de las tablas del diseño lógico.<br>RA06.CEd. Se han analizado las relaciones entre las tablas del diseño lógico.<br>RA06.CEe. Se han identificado los campos clave.
 ---
 
 # Índice
