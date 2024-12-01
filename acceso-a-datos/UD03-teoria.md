@@ -8,17 +8,17 @@ abstract: Sinopsis de la unidad 03
 ---
 
 # Índice
-1. [Introducción a la Persistencia de Datos con ORM (CEa).](#1-introducción-a-la-persistencia-de-datos-con-orm-cea)  
-2. [¿Qué es Hibernate? (CEa).](#2-qué-es-hibernate-cea)  
-3. [Instalación de Hibernate (CEa).](#3-instalación-de-hibernate-cea)  
-4. [Configuración de Hibernate (CEb).](#4-configuración-de-hibernate-ceb)  
-5. [Iniciar Hibernate (CEb).](#5-iniciar-hibernate-ceb)  
-6. [Mapeo con Ficheros XML (CEc).](#6-mapeo-con-ficheros-xml-cec)  
-7. [Mapeo con Anotaciones (CEc).](#7-mapeo-con-anotaciones-cec)  
-8. [Insertar Datos con Hibernate (CEd).](#8-insertar-datos-con-hibernate-ced)  
-9. [Actualizar Datos con Hibernate (CEd).](#9-actualizar-datos-con-hibernate-ced)  
-10. [Eliminar Datos con Hibernate (CEd).](#10-eliminar-datos-con-hibernate-ced)  
-11. [Obtener Datos con Hibernate (CEd).](#11-obtener-datos-con-hibernate-ced)  
+1. [Introducción a la Persistencia de Datos con ORM (CEa)](#1-introducción-a-la-persistencia-de-datos-con-orm-cea)  
+2. [¿Qué es Hibernate? (CEa)](#2-qué-es-hibernate-cea)  
+3. [Instalación de Hibernate (CEa)](#3-instalación-de-hibernate-cea)  
+4. [Configuración de Hibernate (CEb)](#4-configuración-de-hibernate-ceb)  
+5. [Iniciar Hibernate (CEb)](#5-iniciar-hibernate-ceb)  
+6. [Mapeo con Ficheros XML (CEc)](#6-mapeo-con-ficheros-xml-cec)  
+7. [Mapeo con Anotaciones (CEc)](#7-mapeo-con-anotaciones-cec)  
+8. [Insertar Datos con Hibernate (CEd)](#8-insertar-datos-con-hibernate-ced)  
+9. [Actualizar Datos con Hibernate (CEd)](#9-actualizar-datos-con-hibernate-ced)  
+10. [Eliminar Datos con Hibernate (CEd)](#10-eliminar-datos-con-hibernate-ced)  
+11. [Obtener Datos con Hibernate (CEd)](#11-obtener-datos-con-hibernate-ced)  
 
 
 <!--
