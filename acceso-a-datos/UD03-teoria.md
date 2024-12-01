@@ -16,18 +16,14 @@ abstract: Sinopsis de la unidad 03
 6. [Mapeo con Ficheros XML (CEc).](#6-mapeo-con-ficheros-xml-cec)  
 7. [Mapeo con Anotaciones (CEc).](#7-mapeo-con-anotaciones-cec)  
 8. [Insertar Datos con Hibernate (CEd).](#8-insertar-datos-con-hibernate-ced)  
+9. [Actualizar Datos con Hibernate (CEd).](#9-actualizar-datos-con-hibernate-ced)  
+10. [Eliminar Datos con Hibernate (CEd).](#10-eliminar-datos-con-hibernate-ced)  
+11. [Obtener Datos con Hibernate (CEd).](#11-obtener-datos-con-hibernate-ced)  
+
 
 <!--
 # Índice
-   
 
-  
-10. [Actualizar Datos con Hibernate](#10-actualizar-datos-con-hibernate)  
-   - **CEd. Se han aplicado mecanismos de persistencia a los objetos.**
-11. [Eliminar Datos con Hibernate](#11-eliminar-datos-con-hibernate)  
-   - **CEd. Se han aplicado mecanismos de persistencia a los objetos.**
-12. [Obtener Datos con Hibernate](#12-obtener-datos-con-hibernate)  
-   - **CEd. Se han aplicado mecanismos de persistencia a los objetos.**
 13. [Repositorios en Hibernate](#13-repositorios-en-hibernate)  
    - **CEe. Se han desarrollado aplicaciones que modifican y recuperan objetos persistentes.**
 14. [Solucionar Problema con DeleteById](#14-solucionar-problema-con-deletebyid)  
@@ -854,3 +850,534 @@ System.out.println("Persona recuperada: " + personaRecuperada);
 ## 8.5. Conclusión
 
 Insertar datos con Hibernate es una operación sencilla gracias a su modelo de objetos y su abstracción del SQL. Usando las herramientas de Hibernate, puedes insertar datos de manera eficiente y sin necesidad de escribir consultas SQL manualmente. El uso de sesiones y transacciones asegura que las operaciones de persistencia se realicen de manera segura y eficiente, permitiendo a los desarrolladores centrarse en la lógica de negocio sin preocuparse por la gestión de la base de datos.
+
+# 9. Actualizar Datos con Hibernate (CEd)
+
+Actualizar datos en una base de datos es una operación fundamental en la gestión de la persistencia de datos en aplicaciones. En Hibernate, esta operación es muy sencilla gracias a su gestión automática de las entidades. Hibernate permite realizar operaciones de actualización utilizando una sesión que se conecta a la base de datos. Al actualizar una entidad, Hibernate se encarga de propagar los cambios a las tablas correspondientes.
+
+En este apartado, vamos a cubrir cómo realizar actualizaciones de registros utilizando Hibernate. Explicaremos los pasos necesarios para modificar los valores de una entidad persistente y cómo asegurar que los cambios se reflejen en la base de datos.
+
+## ¿Cómo Actualizar Datos con Hibernate?
+
+### Pasos para Actualizar Datos con Hibernate
+
+1. **Obtener la Sesión de Hibernate:**
+   Como en las otras operaciones de persistencia, primero necesitamos abrir una sesión de Hibernate utilizando `SessionFactory`.
+
+2. **Iniciar una Transacción:**
+   Hibernate trabaja dentro de un contexto de transacción, por lo que antes de realizar cualquier operación de actualización, necesitamos iniciar una transacción.
+
+3. **Obtener la Entidad a Actualizar:**
+   Para realizar la actualización, necesitamos cargar la entidad que queremos modificar. Esto se puede hacer utilizando el método `session.get()` o `session.load()`, que recupera la entidad de la base de datos.
+
+4. **Modificar los Valores de la Entidad:**
+   Una vez que tenemos la entidad, podemos modificar los valores de sus atributos.
+
+5. **Guardar la Entidad:**
+   Aunque no es necesario usar `session.update()`, ya que Hibernate realiza el seguimiento de los objetos persistentes, podemos simplemente realizar cambios en el objeto cargado. Hibernate detectará los cambios y los persistirá automáticamente en la base de datos al finalizar la transacción.
+
+6. **Confirmar la Transacción:**
+   Finalmente, debemos confirmar la transacción utilizando `session.getTransaction().commit()` para aplicar los cambios en la base de datos.
+
+### Ejemplo de Actualización de Datos en Hibernate
+
+A continuación se muestra cómo podríamos realizar una operación de actualización utilizando Hibernate.
+
+#### Paso 1: Crear una clase `Persona`
+
+Supongamos que la clase `Persona` está mapeada correctamente a la base de datos.
+
+```java
+import javax.persistence.*;
+
+@Entity
+@Table(name = "PERSONAS")
+public class Persona {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private int id;
+
+    @Column(name = "NOMBRE")
+    private String nombre;
+
+    @Column(name = "APELLIDO")
+    private String apellido;
+
+    @Column(name = "EDAD")
+    private String email;
+
+    // Constructor, Getters y Setters
+
+    public Persona(String nombre, String apellido, String email) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+}
+```
+
+#### Paso 2: Actualizar una Persona en la Base de Datos
+
+Aquí te mostramos cómo podríamos realizar una operación de actualización utilizando Hibernate.
+
+```java
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+public class Main {
+    public static void main(String[] args) {
+        // Paso 1.1: Crear SessionFactory
+        SessionFactory factory = new Configuration()
+                                    .configure("hibernate.cfg.xml")
+                                    .addAnnotatedClass(Persona.class)
+                                    .buildSessionFactory();
+
+        // Paso 1.2: Crear sesión
+        Session session = factory.getCurrentSession();
+
+        try {
+            // Paso 1.3: Iniciar una transacción
+            session.beginTransaction();
+
+            // Paso 2: Obtener la Persona con el id
+            int personaId = 1;  // Suponemos que este es el ID de una persona en la base de datos
+            Persona persona = session.get(Persona.class, personaId);
+
+            // Verificar si la persona fue encontrada
+            if (persona != null) {
+                // Paso 3: Modificar la persona
+                persona.setEmail("nuevo.email@example.com");  // Cambiar el correo electrónico
+
+                // No es necesario usar session.update() porque Hibernate hace un seguimiento de los objetos modificados
+            }
+
+            // Paso 4: Confirmar la transacción
+            session.getTransaction().commit();
+            System.out.println("Persona actualizada con éxito.");
+
+        } finally {
+            // Paso 5: Cerrar la transacción
+            factory.close();
+        }
+    }
+}
+```
+### Explicación del Código
+
+1. **Obtenemos la sesión** de Hibernate desde el `SessionFactory` y comenzamos una transacción con `session.beginTransaction()`.
+2. **Recuperamos el objeto Persona** utilizando el método `session.get()`, que busca una entidad en la base de datos utilizando el `id` proporcionado.
+3. **Modificamos el objeto Persona** en memoria. En este caso, actualizamos el correo electrónico utilizando `persona.setEmail("nuevo.email@example.com")`.
+4. **Completamos la transacción** con `session.getTransaction().commit()`. Hibernate se encarga de comparar el objeto en memoria con los valores en la base de datos, y realiza la actualización de los datos cuando la transacción se confirma.
+5. Finalmente, **cerramos la sesión** para liberar los recursos utilizados.
+
+### Consideraciones Importantes
+
+- **Detección Automática de Cambios:** Hibernate realiza un seguimiento automático de las entidades modificadas, por lo que no es necesario utilizar un método como `session.update()` para aplicar los cambios. Al llamar a `commit()`, Hibernate detecta los cambios y actualiza los registros en la base de datos.
+- **Uso de Transacciones:** Asegúrate de envolver todas las operaciones de actualización en una transacción. Si no lo haces, los cambios no se guardarán correctamente en la base de datos.
+- **Uso del Método `session.get()` vs. `session.load()`:** `session.get()` devuelve una entidad completa de la base de datos. Si la entidad no existe, devuelve `null`. Por otro lado, `session.load()` puede devolver un proxy de la entidad, lo que podría ser más eficiente en algunos casos si solo necesitas acceder a la entidad sin cargar todos sus atributos.
+
+
+# 10. Eliminar Datos con Hibernate (CEd)
+
+Eliminar datos de una base de datos es una de las operaciones básicas en cualquier aplicación que maneje persistencia de datos. En Hibernate, la operación de eliminación se realiza de manera sencilla utilizando las sesiones de Hibernate y gestionando las transacciones. Hibernate se encarga de identificar la entidad que se debe eliminar y propagará la acción de eliminación a la base de datos.
+
+En este apartado, aprenderemos cómo eliminar registros en una base de datos utilizando Hibernate, destacando los pasos necesarios para realizar la operación y las consideraciones a tener en cuenta.
+
+## ¿Cómo Eliminar Datos con Hibernate?
+
+Eliminar datos con Hibernate implica los siguientes pasos:
+
+1. **Obtener la Sesión de Hibernate:**
+   Primero, necesitamos abrir una sesión de Hibernate utilizando `SessionFactory`, de la misma manera que para las demás operaciones de persistencia.
+2. **Iniciar una Transacción:**
+   Como todas las operaciones de persistencia en Hibernate, la eliminación de datos debe realizarse dentro de una transacción.
+3. **Recuperar la Entidad a Eliminar:**
+   Para eliminar un registro, necesitamos cargar la entidad que deseamos eliminar. Esto se puede hacer usando `session.get()` o `session.load()`, que recuperan la entidad de la base de datos.
+4. **Eliminar la Entidad:**
+   Una vez que tenemos la entidad, utilizamos el método `session.delete()` para eliminarla de la base de datos. Hibernate se encargará de propagar la acción de eliminación a la base de datos cuando se confirme la transacción.
+5. **Confirmar la Transacción:**
+   Como en las otras operaciones de persistencia, debemos confirmar la transacción con `session.getTransaction().commit()` para aplicar los cambios en la base de datos.
+6. **Cerrar la Sesión:**
+   Finalmente, debemos cerrar la sesión de Hibernate para liberar los recursos utilizados.
+
+### Ejemplo de Eliminación de Datos en Hibernate
+
+A continuación, se muestra cómo realizar una operación de eliminación en Hibernate utilizando la clase `Persona` como ejemplo.
+
+#### Paso 1: Crear la clase `Persona`
+
+Supongamos que ya tenemos la clase `Persona` mapeada a una tabla en la base de datos.
+
+```java
+import javax.persistence.*;
+
+@Entity
+@Table(name = "PERSONAS")
+public class Persona {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private int id;
+
+    @Column(name = "NOMBRE")
+    private String nombre;
+
+    @Column(name = "APELLIDO")
+    private String apellido;
+
+    @Column(name = "EDAD")
+    private String email;
+
+    // Constructor, Getters y Setters
+    // ...
+}
+```
+
+#### Paso 2: Eliminar una Persona en la Base de Datos
+
+Aquí te mostramos cómo podríamos eliminar un registro de la base de datos utilizando Hibernate.
+
+```java
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import com.example.Persona;
+
+public class Main {
+    public static void main(String[] args) {
+        // Crear la SessionFactory
+        SessionFactory factory = new Configuration()
+                                    .configure("hibernate.cfg.xml")
+                                    .addAnnotatedClass(Persona.class)
+                                    .buildSessionFactory();
+        
+        // Obtener la sesión
+        Session session = factory.getCurrentSession();
+        
+        try {
+            // Iniciar una transacción
+            session.beginTransaction();
+
+            // Recuperar la persona con el id
+            int personaId = 1;
+            Persona persona = session.get(Persona.class, personaId);
+
+            if (persona != null) {
+                // Eliminar la persona
+                session.delete(persona);
+                System.out.println("Persona eliminada: " + persona);
+            } else {
+                System.out.println("La persona no existe con el id: " + personaId);
+            }
+
+            // Confirmar la transacción
+            session.getTransaction().commit();
+            System.out.println("La transacción fue confirmada.");
+        } finally {
+            factory.close(); // Cerrar la 'fábrica' de sesiones
+        }
+    }
+}
+```
+
+### Explicación del Código
+
+1. **Obtenemos la sesión** de Hibernate desde el `SessionFactory` y comenzamos una transacción con `session.beginTransaction()`.
+2. **Recuperamos el objeto Persona** utilizando `session.get()`, que busca una entidad en la base de datos utilizando el `id` proporcionado.
+3. **Eliminamos el objeto Persona** con `session.delete(persona)`, lo que marca la entidad como eliminada.
+4. **Confirmamos la transacción** con `session.getTransaction().commit()`. Hibernate propaga la eliminación a la base de datos y asegura que los cambios se apliquen correctamente.
+5. Finalmente, **cerramos la sesión** para liberar los recursos.
+
+### Consideraciones Importantes
+
+- **Eliminación y Relaciones entre Entidades:** Cuando una entidad tiene relaciones con otras (por ejemplo, una relación de uno a muchos o muchos a muchos), Hibernate puede eliminar las relaciones en cascada, dependiendo de cómo se haya configurado la entidad y sus relaciones. Asegúrate de configurar correctamente las relaciones de cascada en la clase para evitar eliminar datos relacionados accidentalmente.
+- **Comprobación de la Existencia de la Entidad:** Aunque no es estrictamente necesario, siempre es una buena práctica verificar si la entidad existe antes de intentar eliminarla. Si la entidad no se encuentra en la base de datos, el método `session.get()` devolverá `null`.
+- **Eliminación Física vs. Lógica:** En algunos casos, en lugar de eliminar un registro de manera permanente (eliminación física), puede ser más conveniente realizar una **eliminación lógica**, donde se marca un registro como eliminado, pero sigue existiendo en la base de datos. Esto se logra añadiendo un campo como `activo` o `eliminado` y actualizando su valor en lugar de eliminar el registro.
+- **Uso de `session.delete()`:** El método `delete()` de Hibernate es utilizado para eliminar un objeto de la base de datos. Asegúrate de que el objeto a eliminar esté gestionado por la sesión de Hibernate; de lo contrario, Hibernate no podrá realizar la eliminación.
+
+# 11. Obtener Datos con Hibernate (CEd)
+
+Obtener datos de una base de datos es una de las operaciones más comunes en cualquier aplicación que maneja persistencia. En Hibernate, este proceso se lleva a cabo utilizando la sesión de Hibernate y ejecutando consultas para recuperar objetos de la base de datos. Hibernate proporciona varios métodos para obtener datos, incluyendo consultas basadas en el lenguaje de consulta HQL (Hibernate Query Language), así como métodos para obtener entidades por su identificador.
+
+En este apartado, veremos cómo obtener datos con Hibernate, abarcando desde la recuperación simple de una entidad hasta consultas más complejas.
+
+## Métodos para Obtener Datos con Hibernate
+
+### 1. Recuperación de una Entidad por su Identificador
+
+El método más común para obtener una entidad es recuperarla utilizando su identificador (primary key). Para ello, se utilizan dos métodos principales de la sesión de Hibernate: `session.get()` y `session.load()`.
+
+- **`session.get()`**: Este método recupera la entidad por su identificador. Si la entidad no existe en la base de datos, devuelve `null`. Es un método de lectura completo y garantiza que el objeto esté cargado completamente.
+- **`session.load()`**: Este método también recupera la entidad por su identificador, pero devuelve un proxy de la entidad si no está cargada completamente. En ese caso, Hibernate cargará la entidad de la base de datos solo cuando se necesiten sus datos.
+
+#### Ejemplo de Recuperación con `session.get()`
+
+```java
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+public class Main {
+    public static void main(String[] args) {
+        // Crear la SessionFactory
+        SessionFactory factory = new Configuration()
+                                    .configure("hibernate.cfg.xml")
+                                    .addAnnotatedClass(Persona.class)
+                                    .buildSessionFactory();
+        
+        // Obtener la sesión
+        Session session = factory.getCurrentSession();
+        
+        try {
+            // Iniciar una transacción
+            session.beginTransaction();
+
+            // Recuperar la persona con el id
+            int personaId = 1;
+            Persona persona = session.get(Persona.class, personaId);
+
+            System.out.println("Persona encontrada: " + persona);
+
+            // Confirmar la transacción
+            session.getTransaction().commit();
+        } finally {
+            factory.close(); // Cerrar la fábrica de sesiones
+        }
+    }
+}
+```
+
+### 2. Consultas con HQL (Hibernate Query Language)
+
+Hibernate Query Language (HQL) es un lenguaje de consulta orientado a objetos, similar a SQL, pero que opera sobre las entidades Java en lugar de las tablas de la base de datos. Con HQL, puedes escribir consultas que devuelvan objetos o colecciones de objetos directamente, sin tener que preocuparte por el mapeo entre tablas y clases.
+
+#### Ejemplo de Consulta HQL
+
+```java
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        // Crear la SessionFactory
+        SessionFactory factory = new Configuration()
+                                    .configure("hibernate.cfg.xml")
+                                    .addAnnotatedClass(Persona.class)
+                                    .buildSessionFactory();
+        
+        // Obtener la sesión
+        Session session = factory.getCurrentSession();
+        
+        try {
+            // Iniciar una transacción
+            session.beginTransaction();
+
+            // Ejecutar una consulta HQL para obtener todas las personas
+            List<Persona> personas = session.createQuery("from Persona", Persona.class).getResultList();
+
+            // Mostrar los resultados
+            for (Persona persona : personas) {
+                System.out.println(persona);
+            }
+
+            // Confirmar la transacción
+            session.getTransaction().commit();
+        } finally {
+            factory.close(); // Cerrar la fábrica de sesiones
+        }
+    }
+}
+```
+
+En este ejemplo, se utiliza una consulta HQL simple: `"from Persona"`, que selecciona todas las entidades `Persona` de la base de datos. Hibernate convierte automáticamente esta consulta en una instrucción SQL adecuada para la base de datos.
+
+### 3. Consultas con Parámetros
+
+HQL también permite incluir parámetros en las consultas, lo que es útil para realizar búsquedas dinámicas. Los parámetros pueden ser pasados utilizando el método `setParameter()`.
+
+#### Ejemplo de Consulta de Parámetros
+
+```java
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        // Crear la SessionFactory
+        SessionFactory factory = new Configuration()
+                                    .configure("hibernate.cfg.xml")
+                                    .addAnnotatedClass(Persona.class)
+                                    .buildSessionFactory();
+        
+        // Obtener la sesión
+        Session session = factory.getCurrentSession();
+        
+        try {
+            // Iniciar una transacción
+            session.beginTransaction();
+
+            // Ejecutar una consulta HQL con un parámetro
+            String nombreBuscado = "Juan";
+            List<Persona> personas = session.createQuery("from Persona where nombre=:nombreParametro", Persona.class)
+                                             .setParameter("nombreParametro", nombreBuscado)
+                                             .getResultList();
+
+            // Mostrar los resultados
+            for (Persona persona : personas) {
+                System.out.println(persona);
+            }
+
+            // Confirmar la transacción
+            session.getTransaction().commit();
+        } finally {
+            factory.close(); // Cerrar la fábrica de sesiones
+        }
+    }
+}
+```
+
+En este ejemplo, la consulta HQL filtra las entidades `Persona` buscando por el nombre, utilizando el parámetro `:nombreParametro`.
+
+### 4. Consultas con Cláusulas de Ordenamiento y Filtrado
+
+Hibernate permite agregar filtros y cláusulas de ordenamiento a las consultas HQL, lo que te da más control sobre los resultados que quieres obtener.
+
+#### Ejemplo de Consulta con Ordenamiento y Filtrado
+
+```java
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        // Crear la SessionFactory
+        SessionFactory factory = new Configuration()
+                                    .configure("hibernate.cfg.xml")
+                                    .addAnnotatedClass(Persona.class)
+                                    .buildSessionFactory();
+        
+        // Obtener la sesión
+        Session session = factory.getCurrentSession();
+        
+        try {
+            // Iniciar una transacción
+            session.beginTransaction();
+
+            // Ejecutar una consulta HQL con ordenamiento y filtrado
+            List<Persona> personas = session.createQuery("from Persona where edad > 25 order by nombre", Persona.class)
+                                             .getResultList();
+
+            // Mostrar los resultados
+            for (Persona persona : personas) {
+                System.out.println(persona);
+            }
+
+            // Confirmar la transacción
+            session.getTransaction().commit();
+        } finally {
+            factory.close(); // Cerrar la fábrica de sesiones
+        }
+    }
+}
+```
+
+Este ejemplo utiliza HQL para seleccionar todas las personas cuya edad sea mayor a 25 y las ordena alfabéticamente por nombre.
+
+### 5. Consultas de Agregación
+
+Hibernate también permite realizar consultas de agregación como `COUNT`, `MAX`, `MIN`, `AVG` y `SUM`. Estas consultas te permiten obtener información agregada de la base de datos, como el número de registros o los valores máximos y mínimos de una columna.
+
+#### Ejemplo de Consulta de Agregación
+
+```java
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+public class Main {
+    public static void main(String[] args) {
+        // Crear la SessionFactory
+        SessionFactory factory = new Configuration()
+                                    .configure("hibernate.cfg.xml")
+                                    .addAnnotatedClass(Persona.class)
+                                    .buildSessionFactory();
+        
+        // Obtener la sesión
+        Session session = factory.getCurrentSession();
+        
+        try {
+            // Iniciar una transacción
+            session.beginTransaction();
+
+            // Ejecutar una consulta HQL para obtener el número de personas
+            Long totalPersonas = (Long) session.createQuery("select count(*) from Persona").getSingleResult();
+
+            System.out.println("Número total de personas: " + totalPersonas);
+
+            // Confirmar la transacción
+            session.getTransaction().commit();
+        } finally {
+            factory.close(); // Cerrar la fábrica de sesiones
+        }
+    }
+}
+```
+
+En este ejemplo, usamos `count(*)` para obtener el número total de registros en la tabla Persona.
+
+## Consideraciones al Obtener Datos con Hibernate
+
+1. **Lazy Loading vs Eager Loading:**
+   Hibernate utiliza un enfoque de **Lazy Loading** por defecto, lo que significa que las relaciones entre entidades no se cargan hasta que se accede a ellas explícitamente. Si necesitas cargar las relaciones de manera inmediata, puedes usar **Eager Loading** configurando las relaciones con `fetch = FetchType.EAGER`.
+2. **Consultas de Proyección:**
+   Si solo necesitas obtener ciertos campos de una entidad, puedes utilizar proyecciones en las consultas HQL, lo que te permite obtener solo las columnas necesarias.
+3. **Manejo de Sesiones y Caché:**
+   Hibernate utiliza un **caché de primer nivel** asociado a la sesión, lo que significa que si consultas la misma entidad varias veces dentro de la misma sesión, Hibernate no volverá a hacer la consulta a la base de datos, mejorando el rendimiento.
+4. **Desempeño en Consultas Complejas:**
+   Aunque Hibernate maneja la mayoría de las complejidades de la base de datos, las consultas muy complejas pueden requerir optimización, como el uso de índices o la escritura de consultas SQL específicas.
+
+
+
+
