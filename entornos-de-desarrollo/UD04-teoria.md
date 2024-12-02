@@ -28,6 +28,9 @@ abstract:
    2.4. [Análisis de Código con Herramientas](#24-análisis-de-código-con-herramientas)  
       &emsp;&emsp;2.4.1. [Revisión del código fuente](#241-revisión-del-código-fuente)  
       &emsp;&emsp;2.4.2. [Configuración de herramientas de análisis de código](#242-configuración-de-herramientas-de-análisis-de-código)  
+   2.5. [Aplicación de Patrones de Refactorización con Herramientas de Desarrollo](#25-aplicación-de-patrones-de-refactorización-con-herramientas-de-desarrollo)  
+      &emsp;&emsp;2.5.1. [Herramientas integradas en el entorno de desarrollo](#251-herramientas-integradas-en-el-entorno-de-desarrollo)  
+
 3. [Control de versiones y GitHub](#3-control-de-versiones-y-github)  
    3.1. [¿Qué es el control de versiones?](#31-qué-es-el-control-de-versiones)  
    3.2. [¿Qué es Git?](#32-qué-es-git)  
@@ -1056,6 +1059,215 @@ jobs:
 3. **Ahorro de Tiempo**: Automatizar la revisión del código reduce la carga de trabajo manual.
 
 Configurar herramientas como estas asegura que el código no solo sea funcional, sino también seguro, eficiente y fácil de mantener. Al incluirlas en el flujo de trabajo, se fortalece el ciclo de desarrollo continuo.
+
+## 2.5. Aplicación de Patrones de Refactorización con Herramientas de Desarrollo  
+
+### 2.5.1. Herramientas Integradas en el Entorno de Desarrollo  
+
+Los entornos de desarrollo integrados (IDEs) como Visual Studio Code, PyCharm, IntelliJ IDEA y Eclipse han evolucionado significativamente para incluir herramientas potentes que automatizan la refactorización del código. Estas herramientas están diseñadas para aplicar patrones de refactorización de forma segura, rápida y eficiente, reduciendo el riesgo de errores humanos y aumentando la productividad del desarrollador.
+
+#### Refactorización Automática con IDEs
+
+La mayoría de los IDEs modernos incluyen funciones específicas para refactorizar código. Estas herramientas permiten realizar operaciones comunes, como:
+
+1. **Renombrar Variables y Métodos**: Cambiar el nombre de una variable, función o clase en todo el proyecto, asegurando que todos los usos se actualicen automáticamente.
+2. **Extraer Métodos**: Seleccionar un bloque de código y convertirlo en un método separado, mejorando la modularidad.
+3. **Mover Clases o Métodos**: Reubicar clases, funciones o métodos entre diferentes archivos o módulos.
+4. **Simplificar Expresiones**: Automatizar la eliminación de redundancias, simplificar expresiones complejas o aplicar patrones como la reducción lógica.
+5. **Inline Methods**: Integrar métodos pequeños y redundantes directamente en el cuerpo del código donde se llaman.
+6. **Reorganización del Código**: Ajustar automáticamente el formato y la estructura del código para cumplir con las convenciones del proyecto.
+
+#### Ejemplo Práctico: Refactorización con Visual Studio Code
+
+Visual Studio Code, a través de extensiones como **Python Extension** o **Pylance**, permite realizar tareas de refactorización directamente desde el editor. Algunas características destacadas incluyen:
+
+- **Renombrar Elementos**: Hacer clic derecho en una variable o método y seleccionar "Rename Symbol" para cambiar su nombre en todo el proyecto.Supongamos que tenemos una variable llamada `userName`, pero queremos cambiarla a `customerName` en todo el proyecto. Visual Studio Code lo hace sencillo:
+
+   1. Selecciona la variable `userName` en el código.
+   2. Haz clic derecho y selecciona **Rename Symbol** o presiona `F2`.
+   3. Escribe el nuevo nombre `customerName` y presiona Enter.
+
+   **Antes de la refactorización:**
+   ```python
+   userName = "Alice"
+   print(f"Hola, {userName}")
+   ```
+   **Después de la refactorización:**
+   ```python
+   customerName = "Alice"
+   print(f"Hola, {customerName}")
+   ```
+
+- **Refactorizar Bloques de Código**: Seleccionar un bloque de código y usar el comando "Refactor..." para extraerlo a un nuevo método. Imagina que tienes el siguiente bloque de código que calcula un descuento:
+
+   ```python
+   price = 100
+   discount = 0.1
+   final_price = price - (price * discount)
+   print(f"El precio final es: {final_price}")
+   ```
+
+   Puedes extraer este cálculo en una función siguiendo estos pasos:
+
+   1. Selecciona el bloque de código.
+   2. Haz clic derecho y selecciona **Refactor**....
+   3. Escoge la opción **Extract Method**.
+   4. Asigna un nombre a la nueva función, por ejemplo, `calculate_discounted_price`.
+
+   **Después de la refactorización:**
+
+   ```python
+   def calculate_discounted_price(price, discount):
+      return price - (price * discount)
+
+   price = 100
+   discount = 0.1
+   final_price = calculate_discounted_price(price, discount)
+   print(f"El precio final es: {final_price}")
+   ```
+
+- **Acciones de Código**: Las sugerencias automáticas (marcadas con una bombilla) detectan posibles refactorizaciones, como simplificar una expresión o eliminar código muerto.
+
+
+#### Herramientas de Refactorización en PyCharm
+
+**PyCharm**, uno de los IDEs más populares para Python, incluye funcionalidades avanzadas para refactorizar:
+
+1. **Refactorización de Clases y Métodos**: Permite cambiar la estructura interna de una clase o sus relaciones sin afectar el comportamiento externo. 
+2. **Detección de Dependencias**: Antes de realizar una refactorización, analiza las dependencias para evitar introducir errores.
+3. **Vista Previa de Cambios**: Muestra una vista previa de las modificaciones que se realizarán en el código antes de aplicarlas, garantizando la seguridad del proceso. Por ejemplo, si deseas mover una función a otro archivo:
+   1. Selecciona la función que deseas mover.
+   2. Haz clic derecho y selecciona **Refactor > Move**....
+   3. Especifica el archivo de destino.
+
+
+   **Antes de la refactorización:**
+   Archivo original (`main.py`):
+   ```python
+   def greet_user(name):
+      print(f"Hola, {name}!")
+
+   greet_user("Alice")
+   ```
+
+   **Después de la refactorización:**
+   Archivo nuevo (`utils.py`):
+   ```python
+   def greet_user(name):
+      print(f"Hola, {name}!")
+   ```
+
+   Archivo original (`main.py`):
+   ```python
+   from utils import greet_user
+
+   greet_user("Alice")
+   ```
+
+#### Beneficios de Usar Herramientas Integradas para Refactorizar
+
+1. **Seguridad**: Los IDEs verifican automáticamente los cambios en el código, reduciendo el riesgo de romper dependencias o introducir errores.
+2. **Rapidez**: Realizar operaciones complejas, como renombrar variables en todo el proyecto, se hace en segundos.
+3. **Consistencia**: Los IDEs aseguran que las refactorizaciones se apliquen de manera uniforme en todo el proyecto, manteniendo la calidad del código.
+4. **Facilidad de Uso**: Las interfaces intuitivas hacen que los desarrolladores puedan aprender y usar estas herramientas sin una curva de aprendizaje pronunciada.
+
+Aplicar patrones de refactorización con herramientas integradas en IDEs no solo optimiza el proceso, sino que también permite a los desarrolladores enfocarse en aspectos más importantes del proyecto, como la funcionalidad y el diseño. Esto asegura que el código sea más legible, mantenible y preparado para escalar, sin comprometer la calidad ni aumentar los tiempos de desarrollo.
+
+### 2.5.2. Práctica de Refactorización Asistida por Herramientas  
+
+La refactorización asistida por herramientas es un enfoque práctico y eficiente que aprovecha las funcionalidades integradas de los IDEs modernos para aplicar patrones de refactorización de manera estructurada y guiada. Este flujo de trabajo no solo optimiza el tiempo, sino que también garantiza que los cambios realizados sean seguros y consistentes en todo el código.
+
+#### Ejemplo de Flujo de Trabajo: Refactorización en Visual Studio Code
+
+Supongamos que estamos trabajando en un programa que calcula el precio final de un producto aplicando un descuento y un impuesto. El código inicial contiene redundancias y falta de modularidad.
+
+```python
+# Código inicial
+price = 100
+discount = 0.1
+tax = 0.2
+
+discounted_price = price - (price * discount)
+final_price = discounted_price + (discounted_price * tax)
+print(f"The final price is {final_price}")
+```
+
+Queremos mejorar este código mediante refactorización asistida utilizando Visual Studio Code para hacerlo más modular, reutilizable y claro.
+
+#### Paso 1: Identificar Áreas de Mejora  
+
+Primero, analizamos el código y detectamos posibles mejoras:
+- El cálculo del precio con descuento y del precio final puede extraerse en funciones separadas.
+- Las constantes `discount` y `tax` relacionadas con el descuento y el impuesto deberían definirse como constantes globales para mejorar la claridad y facilitar futuros cambios.
+
+#### Paso 2: Aplicar Refactorización Guiada  
+
+**2.1. Extraer Funciones**  
+
+1. **Seleccionar Bloque de Código**: Identifica los cálculos específicos que se repiten `discount_price`.
+2. **Acción de Refactorización**: Utiliza las opciones del IDE para extraer esos cálculos en funciones independientes. En este caso se podría hacer clic derecho y seleccionar **Refactor...> Extract Function**.
+3. **Nombrar la Función**: Asigna nombres descriptivos a las nuevas funciones.
+
+Repite este proceso para cualquier otra lógica que pueda ser modularizada, asegurándote de que cada función tenga una única responsabilidad.
+
+#### **2.2. Convertir Valores en Constantes**  
+
+1. Selecciona los valores repetidos en el código (como por ejemplo `0.1` y `0.2`).
+2. Usa la opción del IDE para convertirlos en variables constantes globales (**Refactor...> Extract Variable**).
+3. Asigna nombres claros y representativos a estas constantes para que su propósito sea evidente (como por ejemplo `DISCOUNT` para descuento y `TAX` para impuesto).
+
+### Código Después de la Refactorización  
+
+Después de aplicar estos cambios, el código queda más modular y legible. Las constantes globales separan la lógica principal de valores fijos, y las funciones extraídas facilitan el mantenimiento del código.
+
+```python
+# Constantes globales
+DISCOUNT = 0.1
+TAX = 0.2
+
+def calculate_discounted_price(price):
+    return price - (price * DISCOUNT)
+
+def calculate_final_price(price):
+    discounted_price = calculate_discounted_price(price)
+    return discounted_price + (discounted_price * TAX)
+
+price = 100
+final_price = calculate_final_price(price)
+print(f"The final price is {final_price}")
+```
+
+#### Paso 3: Validar los Cambios  
+
+Después de refactorizar, es crucial validar que la funcionalidad sigue siendo correcta. Ejecuta pruebas unitarias para verificar que el código refactorizado produce los mismos resultados que el código original.
+
+**Ejemplo de Pruebas Unitarias**
+
+Escribe pruebas unitarias para las funciones `calculate_discounted_price` y `calculate_final_price`:
+
+```python
+import unittest
+
+class TestRefactor(unittest.TestCase):
+    def test_calculate_discounted_price(self):
+        self.assertEqual(calculate_discounted_price(100), 90)
+
+    def test_calculate_final_price(self):
+        self.assertEqual(calculate_final_price(100), 108)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+
+#### Beneficios del Flujo de Trabajo  
+
+1. **Automatización**: Las herramientas del IDE manejan tareas repetitivas y propensas a errores, como actualizar todas las referencias de una variable o método.
+2. **Rapidez y Eficiencia**: El proceso es más rápido que hacerlo manualmente, liberando tiempo para tareas más complejas.
+3. **Seguridad**: La refactorización asistida asegura que los cambios no rompan la funcionalidad existente.
+4. **Mejor Mantenimiento**: El código final es modular y más fácil de entender y modificar.
+
+La refactorización asistida por herramientas no solo mejora la calidad del código, sino que también reduce el tiempo necesario para implementar cambios. Este flujo de trabajo práctico demuestra cómo aplicar patrones de refactorización con herramientas integradas puede transformar un código poco estructurado en un programa claro, modular y eficiente.
 
 
 # 3. Control de versiones y GitHub
