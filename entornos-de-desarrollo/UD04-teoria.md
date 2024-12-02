@@ -30,6 +30,7 @@ abstract:
       &emsp;&emsp;2.4.2. [Configuración de herramientas de análisis de código](#242-configuración-de-herramientas-de-análisis-de-código)  
    2.5. [Aplicación de Patrones de Refactorización con Herramientas de Desarrollo](#25-aplicación-de-patrones-de-refactorización-con-herramientas-de-desarrollo)  
       &emsp;&emsp;2.5.1. [Herramientas integradas en el entorno de desarrollo](#251-herramientas-integradas-en-el-entorno-de-desarrollo)  
+      &emsp;&emsp;2.5.1. [Práctica de Refactorización Asistida por Herramientas](#252-práctica-de-refactorización-asistida-por-herramientas)        
 3. [Control de versiones y GitHub](#3-control-de-versiones-y-github)  
    3.1. [¿Qué es el control de versiones?](#31-qué-es-el-control-de-versiones)  
    3.2. [¿Qué es Git?](#32-qué-es-git)  
