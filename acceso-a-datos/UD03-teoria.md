@@ -19,17 +19,13 @@ abstract: Sinopsis de la unidad 03
 9. [Actualizar Datos con Hibernate (CEd)](#9-actualizar-datos-con-hibernate-ced)  
 10. [Eliminar Datos con Hibernate (CEd)](#10-eliminar-datos-con-hibernate-ced)  
 11. [Obtener Datos con Hibernate (CEd)](#11-obtener-datos-con-hibernate-ced)  
+12. [Repositorios en Hibernate (CEe)](#12-repositorios-en-hibernate-cee)    
+13. [Relaciones 1-N en Hibernate (CEe)](#13-relaciones-1-n-en-hibernate-cee)  
 
 
 <!--
 # Índice
 
-13. [Repositorios en Hibernate](#13-repositorios-en-hibernate)  
-   - **CEe. Se han desarrollado aplicaciones que modifican y recuperan objetos persistentes.**
-14. [Solucionar Problema con DeleteById](#14-solucionar-problema-con-deletebyid)  
-   - **CEe. Se han desarrollado aplicaciones que modifican y recuperan objetos persistentes.**
-15. [Mejorar el Repositorio](#15-mejorar-el-repositorio)  
-   - **CEe. Se han desarrollado aplicaciones que modifican y recuperan objetos persistentes.**
 16. [Relaciones 1-N en Hibernate](#16-relaciones-1-n-en-hibernate)  
    - **CEe. Se han desarrollado aplicaciones que modifican y recuperan objetos persistentes.**
 17. [Mapeo de Relaciones 1-N](#17-mapeo-de-relaciones-1-n)  
@@ -1379,5 +1375,312 @@ En este ejemplo, usamos `count(*)` para obtener el número total de registros en
    Aunque Hibernate maneja la mayoría de las complejidades de la base de datos, las consultas muy complejas pueden requerir optimización, como el uso de índices o la escritura de consultas SQL específicas.
 
 
+# 12. Repositorios en Hibernate (CEe)
 
+En el contexto de Hibernate, un **repositorio** es un patrón de diseño que facilita el acceso a los datos persistentes mediante la encapsulación de las operaciones de la base de datos. En lugar de interactuar directamente con la sesión de Hibernate en todo el código, se recomienda centralizar el acceso a las entidades en una clase o conjunto de clases especializadas, conocidas como repositorios. Esto ayuda a mantener el código limpio y bien estructurado, especialmente cuando se trabaja con aplicaciones más grandes.
+
+## ¿Qué es un Repositorio?
+
+Un **repositorio** es un componente que se encarga de interactuar con la base de datos para realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre las entidades de la aplicación. El patrón de repositorio proporciona una capa de abstracción entre la base de datos y la lógica de la aplicación, lo que hace que el código sea más fácil de mantener, probar y extender.
+
+## Funciones de un Repositorio
+
+Un repositorio en Hibernate generalmente tiene las siguientes funciones:
+- **Guardar entidades**: Insertar o actualizar objetos en la base de datos.
+- **Buscar entidades**: Recuperar objetos desde la base de datos, utilizando criterios específicos (por ejemplo, por `id`, por `email`, etc.).
+- **Eliminar entidades**: Eliminar objetos de la base de datos.
+- **Actualizar entidades**: Modificar los valores de las propiedades de una entidad.
+
+### Ejemplo de Implementación de un Repositorio en Hibernate
+
+Supongamos que tienes una entidad `Persona` y deseas crear un repositorio para manejar las operaciones de persistencia de personas. El repositorio puede estar representado por una clase como la siguiente:
+
+```java
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
+public class PersonaRepository {
+
+    private SessionFactory factory;
+
+    public PersonaRepository() {
+        factory = new Configuration().configure("hibernate.cfg.xml")
+                                     .addAnnotatedClass(Persona.class)
+                                     .buildSessionFactory();
+    }
+
+    public void guardarPersona(Persona persona) {
+        Session session = factory.getCurrentSession();
+        try {
+            session.beginTransaction();
+            session.saveOrUpdate(persona);
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+        }
+    }
+
+    public Persona obtenerPersonaPorId(int id) {
+        Session session = factory.getCurrentSession();
+        Persona persona = null;
+        try {
+            session.beginTransaction();
+            persona = session.get(Persona.class, id);
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+        }
+        return persona;
+    }
+
+    public void eliminarPersona(int id) {
+        Session session = factory.getCurrentSession();
+        try {
+            session.beginTransaction();
+            Persona persona = session.get(Persona.class, id);
+            if (persona != null) {
+                session.delete(persona);
+            }
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+        }
+    }
+
+    public void actualizarPersonaPorId(int id, Persona persona) {
+        Session session = factory.getCurrentSession();
+        try {
+            session.beginTransaction();
+
+            if (id != null) {
+                persona.setId(id);
+                session.update(persona);
+            }
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+        }
+    }
+
+    public void cerrar() {
+        factory.close();
+    }
+}
+```
+
+#### Explicación del Repositorio
+
+- `guardarPersona`: Este método recibe un objeto Persona y lo guarda o actualiza en la base de datos usando el método saveOrUpdate().
+- `obtenerPersonaPorId`: Este método utiliza el método session.get() para obtener una persona por su id y devuelve el objeto recuperado.
+- `eliminarPersona`: Este método elimina una persona de la base de datos dado su id utilizando session.delete().
+- `actualizarPersonaPorId`: Este método actualiza una persona teniendo como referencia el id.
+- `cerrar`: Este método cierra la sesión de Hibernate.
+
+#### Ventajas de Usar Repositorios
+
+- **Encapsulación del acceso a datos**: Los repositorios encapsulan la lógica de acceso a datos, lo que facilita su mantenimiento y hace que el código de la aplicación sea más limpio y comprensible.
+- **Facilita las pruebas**: Al centralizar las operaciones de persistencia en un solo lugar, es más fácil realizar pruebas unitarias de los métodos de acceso a datos.
+- **Separación de responsabilidades**: Los repositorios permiten separar la lógica de la base de datos de la lógica de negocio, lo que mejora la modularidad y la reutilización del código.
+- **Control de transacciones**: Los repositorios permiten gestionar las transacciones de manera eficiente, asegurando que las operaciones de la base de datos se realicen de forma atómica.
+
+Se hace evidente que los repositorios en Hibernate son fundamentales para desarrollar aplicaciones bien estructuradas, ya que proporcionan una capa de abstracción que permite gestionar las operaciones de persistencia sin exponer directamente la lógica de la base de datos en la capa de negocio. Al implementar un repositorio, se obtiene un código más limpio, modular y fácil de mantener, lo que facilita el desarrollo de aplicaciones escalables y robustas.
+
+# 13. Relaciones 1-N en Hibernate (CEe)
+
+En este apartado, exploraremos cómo modelar una relación **1-N** (uno a muchos) entre las entidades **Empresa** y **Persona** en Hibernate. En este ejemplo, una **Empresa** puede tener muchas **Personas** asociadas, pero una **Persona** solo puede estar asociada a una **Empresa**.
+
+### 13.1. ¿Qué es una Relación 1-N?
+
+Una relación **1-N** (uno a muchos) significa que una entidad **1** está relacionada con muchas instancias de otra entidad **N**. En este caso, una **Empresa** puede tener muchos **Empleados** (`Persona`), pero una **Persona** solo puede estar asociada a una **Empresa**.
+
+### 13.2. Definición de las Clases Java
+
+#### Clase Empresa (Entidad 1)
+
+La clase `Empresa` representa la empresa que puede tener muchas **Personas** asociadas. En esta clase, la relación con `Persona` será modelada como una colección de objetos `Persona`.
+
+```java
+@Entity
+@Table(name = "empresa")
+public class Empresa {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "nombre")
+    private String nombre;
+
+    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
+    private List<Persona> personas;
+
+    // Constructores, getters y setters
+    public Empresa() {}
+
+    public Empresa(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void addPersona(Persona persona) {
+        if (personas == null) {
+            personas = new ArrayList<>();
+        }
+        personas.add(persona);
+        persona.setEmpresa(this);  // Relación bidireccional
+    }
+
+    public List<Persona> getPersonas() {
+        return personas;
+    }
+
+    public void setPersonas(List<Persona> personas) {
+        this.personas = personas;
+    }
+}
+```
+
+- **@OneToMany(mappedBy = "empresa")**: Esta anotación indica que la relación entre `Empresa` y `Persona` es de uno a muchos. El campo `empresa` en la clase `Persona` mantiene la relación.
+- **cascade = CascadeType.ALL**: Indica que las operaciones de persistencia sobre `Empresa` (como insert, update, delete) también se aplicarán automáticamente a las `Personas` relacionadas.
+
+#### Clase Persona (Entidad N)
+
+La clase `Persona` representa a una persona (empleado) que puede estar asociada a una sola **Empresa**. En esta clase, la relación con **Empresa** será modelada como una clave foránea (`empresa_id`), que apunta a la empresa a la que pertenece la persona.
+
+```java
+@Entity
+@Table(name = "persona")
+public class Persona {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "nombre")
+    private String nombre;
+
+    @ManyToOne
+    @JoinColumn(name = "empresa_id")
+    private Empresa empresa;
+
+    // Constructores, getters y setters
+    public Persona() {}
+
+    public Persona(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+}
+```
+
+- **@ManyToOne**: Esta anotación indica que muchas instancias de `Persona` pueden estar relacionadas con un solo `Empresa`.
+- **@JoinColumn(name = "empresa_id")**: Especifica la columna que almacena la clave foránea en la tabla `persona`, que hace referencia a la empresa al que pertenece esa persona.
+
+### 13.3. Persistencia de las Entidades
+
+Ahora que tenemos las clases mapeadas, vamos a ver cómo realizar operaciones de persistencia en una relación **1-N**.
+
+#### Insertar una Empresa con Personas
+
+En este caso, creamos una **Empresa** y le asignamos varias **Personas**. Al guardar la **Empresa**, las **Personas** se guardan automáticamente gracias al `CascadeType.ALL`.
+
+```java
+public void agregarEmpresaConPersonas() {
+    Session session = factory.getCurrentSession();
+    try {
+        session.beginTransaction();
+
+        // Crear una empresa
+        Empresa empresa = new Empresa("TechCorp");
+
+        // Crear personas y agregarlas a la empresa
+        Persona persona1 = new Persona("Juan Pérez");
+        Persona persona2 = new Persona("Ana García");
+
+        empresa.addPersona(persona1);
+        empresa.addPersona(persona2);
+
+        // Guardar la empresa y las personas (gracias al cascade)
+        session.save(empresa);
+
+        session.getTransaction().commit();
+    } finally {
+        session.close();
+    }
+}
+```
+
+#### Consultar una Empresa con sus Personas
+
+Para obtener una **Empresa** y todas las **Personas** asociadas, utilizamos el método `get()` de Hibernate o una consulta HQL, que nos permite obtener la **Empresa** y recorrer la colección de **Personas** asociadas.
+
+```java
+public void obtenerEmpresaConPersonas(int empresaId) {
+    Session session = factory.getCurrentSession();
+    try {
+        session.beginTransaction();
+
+        // Obtener empresa por ID
+        Empresa empresa = session.get(Empresa.class, empresaId);
+
+        // Mostrar personas de la empresa
+        System.out.println("Empleados de la empresa " + empresa.getNombre() + ":");
+        for (Persona persona : empresa.getPersonas()) {
+            System.out.println(persona.getNombre());
+        }
+
+        session.getTransaction().commit();
+    } finally {
+        session.close();
+    }
+}
+```
+
+- Este método consulta la Empresa por su id y luego imprime los nombres de todas las Personas asociadas a esa Empresa.
+
+#### Eliminar una Persona de una Empresa
+
+Si necesitas eliminar una **Persona** de una **Empresa**, primero debes eliminarla de la lista de personas asociadas a la empresa y luego eliminarla de la base de datos.
+
+```java
+public void eliminarPersonaDeEmpresa(int empresaId, int personaId) {
+    Session session = factory.getCurrentSession();
+    try {
+        session.beginTransaction();
+
+        // Obtener la empresa por ID
+        Empresa empresa = session.get(Empresa.class, empresaId);
+
+        // Obtener la persona a eliminar
+        Persona persona = session.get(Persona.class, personaId);
+
+        // Eliminar la persona de la empresa
+        empresa.getPersonas().remove(persona);
+        session.delete(persona);  // Eliminar la persona de la base de datos
+
+        session.getTransaction().commit();
+    } finally {
+        session.close();
+    }
+}
+```
+
+- Este método elimina una `Persona` de la base de datos y también la elimina de la lista de personas asociadas a la Empresa.
+
+### 13.4. Consideraciones Finales
+
+- La relación **1-N** entre **Empresa** y **Persona** se maneja en Hibernate utilizando las anotaciones `@OneToMany` en la **Empresa** y `@ManyToOne` en la **Persona**.
+- Gracias a **CascadeType.ALL**, las operaciones de persistencia sobre **Empresa** también afectan a las **Personas** relacionadas.
+- Este tipo de relaciones son comunes en sistemas empresariales donde una **Empresa** tiene muchos **Empleados** (`Personas`).
+- Recuerda que cada clase correspondiente a una entidad nueva con la que trabajes debe ser añadida al archivo `hibernate.cfg.xml`.
 

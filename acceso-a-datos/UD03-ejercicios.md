@@ -22,6 +22,11 @@ abstract:
 11. [Ejercicio 11: Obtener Estudiantes con Edad Mayor a 25](#ejercicio-11-obtener-estudiantes-con-edad-mayor-a-25)
 12. [Ejercicio 12: Obtener el Número de Registros en la Tabla Estudiante](#ejercicio-12-obtener-el-número-de-registros-en-la-tabla-estudiante)
 13. [Ejercicio 13: Obtener el Estudiante Más Joven](#ejercicio-13-obtener-el-estudiante-más-joven)
+14. [Ejercicio 14: Crear un Repositorio Básico para Estudiantes](#ejercicio-14-crear-un-repositorio-básico-para-estudiantes)
+15. [Ejercicio 15: Agregar un Método Personalizado al Repositorio](#ejercicio-15-agregar-un-método-personalizado-al-repositorio)
+16. [Ejercicio 16: Crear una Relación 1-N entre Empresa y Estudiante](#ejercicio-16-crear-una-relación-1-n-entre-empresa-y-estudiante)
+17. [Ejercicio 17: Consultar Estudiantes por Empresa](#ejercicio-17-consultar-estudiantes-por-empresa)
+18. [Ejercicio 18: Eliminar un Estudiante de una Empresa](#ejercicio-18-eliminar-un-estudiante-de-una-empresa)
 
 [BDD de pruebas](/ud03/tablaEstudiante.sql)
 
@@ -200,3 +205,83 @@ Obtén los datos del estudiante más joven en la tabla `Estudiante`.
 
 **Objetivo del ejercicio:**  
 Aprender a realizar consultas de agregación utilizando HQL para obtener el registro con el valor mínimo de un atributo.
+
+# Ejercicio 14: Crear un Repositorio Básico para Estudiantes
+
+**Enunciado:**  
+Crea una clase `EstudianteRepository` que encapsule las operaciones CRUD para la entidad `Estudiante`.
+
+1. Implementa los métodos `guardarEstudiante`, `obtenerEstudiantePorId`, `actualizarEstudiante` y `eliminarEstudiante` en el repositorio.
+2. Asegúrate de que el repositorio utiliza una instancia de `SessionFactory` correctamente configurada.
+3. Crea una clase de prueba que:
+   - Guarde un nuevo estudiante en la base de datos.
+   - Obtenga y actualice el nombre del estudiante.
+   - Elimine al estudiante por su `id`.
+4. Verifica cada operación en la base de datos utilizando una herramienta de administración de bases de datos.
+
+**Objetivo del ejercicio:**  
+Aprender a implementar un repositorio básico para manejar operaciones CRUD y organizar el acceso a la base de datos de manera más estructurada.
+
+
+# Ejercicio 15: Agregar un Método Personalizado al Repositorio
+
+**Enunciado:**  
+Extiende la clase `EstudianteRepository` para incluir un método que obtenga todos los estudiantes con una edad mayor a 20 años.
+
+1. Implementa el método `obtenerEstudiantesConEdadMayorA(int edad)` en el repositorio.
+2. Utiliza HQL para realizar la consulta.
+3. Crea una clase de prueba que:
+   - Inserte tres estudiantes con edades de 18, 21 y 25 años.
+   - Obtenga e imprima en la consola los estudiantes con edad mayor a 20 años.
+4. Verifica los resultados en la base de datos.
+
+**Objetivo del ejercicio:**  
+Aprender a implementar métodos personalizados en un repositorio utilizando HQL.
+
+# Ejercicio 16: Crear una Relación 1-N entre Empresa y Estudiante
+
+**Enunciado:**  
+Modela una relación 1-N donde una **Empresa** puede tener varios **Estudiantes** asociados como practicantes.
+
+1. Define la entidad `Empresa` con los siguientes atributos:
+   - `id` (clave primaria)
+   - `nombre` (nombre de la empresa)
+   - Una lista de objetos `Estudiante` como relación 1-N.
+2. Modifica la clase `Estudiante` para incluir una referencia a la clase `Empresa` mediante una relación `@ManyToOne`.
+3. Inserta una empresa llamada "TechCorp" con tres estudiantes asociados.
+4. Verifica que los registros se han insertado correctamente en la base de datos, y que cada estudiante está asociado con la empresa "TechCorp".
+
+**Objetivo del ejercicio:**  
+Comprender cómo modelar y persistir relaciones 1-N en Hibernate.
+
+# Ejercicio 17: Consultar Estudiantes por Empresa
+
+**Enunciado:**  
+Realiza una consulta para obtener todos los estudiantes asociados a una empresa específica.
+
+1. Agrega un método `obtenerEstudiantesPorEmpresa(String nombreEmpresa)` en una clase `EmpresaRepository`.
+2. Utiliza HQL para realizar la consulta basada en el nombre de la empresa.
+3. Crea una clase de prueba que:
+   - Inserte una empresa con dos estudiantes asociados.
+   - Consulte e imprima en la consola los nombres de los estudiantes asociados a esa empresa.
+4. Verifica los resultados en la base de datos.
+
+**Objetivo del ejercicio:**  
+Aprender a consultar datos relacionados en una relación 1-N utilizando HQL.
+
+# Ejercicio 18: Eliminar un Estudiante de una Empresa
+
+**Enunciado:**  
+Elimina un estudiante de una empresa manteniendo la integridad de la relación.
+
+1. Crea un método `eliminarEstudianteDeEmpresa(int empresaId, int estudianteId)` en `EmpresaRepository`.
+2. Recupera la empresa y el estudiante, elimina al estudiante de la lista de la empresa y de la base de datos.
+3. Crea una clase de prueba que:
+   - Inserte una empresa con tres estudiantes asociados.
+   - Elimine a uno de los estudiantes.
+   - Verifique que el estudiante eliminado ya no está en la base de datos ni en la lista de estudiantes de la empresa.
+4. Comprueba que los cambios se han realizado correctamente en la base de datos.
+
+**Objetivo del ejercicio:**  
+Aprender a manejar la eliminación de entidades en relaciones 1-N y mantener la consistencia de los datos.
+
