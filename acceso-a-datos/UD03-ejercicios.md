@@ -27,8 +27,14 @@ abstract:
 16. [Ejercicio 16: Crear una Relación 1-N entre Empresa y Estudiante](#ejercicio-16-crear-una-relación-1-n-entre-empresa-y-estudiante)
 17. [Ejercicio 17: Consultar Estudiantes por Empresa](#ejercicio-17-consultar-estudiantes-por-empresa)
 18. [Ejercicio 18: Eliminar un Estudiante de una Empresa](#ejercicio-18-eliminar-un-estudiante-de-una-empresa)
+19. [Ejercicio 19: Crear una Relación ManyToMany entre Estudiante y Empresa](#ejercicio-19-crear-una-relación-manytomany-entre-estudiante-y-empresa)
+20. [Ejercicio 20: Asignar Empresas a un Estudiante](#ejercicio-20-asignar-empresas-a-un-estudiante)
+21. [Ejercicio 21: Obtener los Estudiantes Asociados a una Empresa](#ejercicio-21-obtener-los-estudiantes-asociados-a-una-empresa)
+22. [Ejercicio 22: Eliminar una Relación entre Estudiante y Empresa](#ejercicio-22-eliminar-una-relación-entre-estudiante-y-empresa)
+23. [Ejercicio 23: Consultar Empresas con Más de un Estudiante Asociado](#ejercicio-23-consultar-empresas-con-más-de-un-estudiante-asociado)
 
-[BDD de pruebas](/ud03/tablaEstudiante.sql)
+
+[BDD de pruebas](/ud03/crearEmpresaEstudianteDB.sql)
 
 # Ejercicio 1: Inserción Básica de Datos
 
@@ -285,3 +291,68 @@ Elimina un estudiante de una empresa manteniendo la integridad de la relación.
 **Objetivo del ejercicio:**  
 Aprender a manejar la eliminación de entidades en relaciones 1-N y mantener la consistencia de los datos.
 
+# Ejercicio 19: Crear una Relación ManyToMany entre Estudiante y Empresa
+
+**Enunciado:**  
+Modela una relación **many-to-many** entre las entidades `Estudiante` y `Empresa`.
+
+1. Define las entidades `Estudiante` y `Empresa` con una relación bidireccional **many-to-many** utilizando las anotaciones `@ManyToMany` y `@JoinTable`.
+2. Crea una tabla intermedia `empresa_estudiante` que relacione las entidades.
+3. Inserta tres estudiantes y dos empresas, asignando al menos dos empresas a cada estudiante.
+4. Verifica que la tabla intermedia `empresa_estudiante` se ha creado y contiene las relaciones correctas.
+
+**Objetivo del ejercicio:**  
+Comprender cómo modelar relaciones **many-to-many** en Hibernate y cómo Hibernate gestiona la tabla intermedia.
+
+
+# Ejercicio 20: Asignar Empresas a un Estudiante
+
+**Enunciado:**  
+Asigna varias empresas a un estudiante existente en la base de datos.
+
+1. Crea un método en un repositorio llamado `asignarEmpresasAEstudiante(Long estudianteId, List<Empresa> empresas)`.
+2. Recupera un estudiante existente por su `id` y asigna una lista de empresas.
+3. Verifica que las nuevas relaciones se han guardado correctamente en la tabla intermedia.
+4. Imprime las empresas asociadas al estudiante para confirmar los resultados.
+
+**Objetivo del ejercicio:**  
+Aprender a modificar relaciones **many-to-many** existentes en la base de datos.
+
+
+# Ejercicio 21: Obtener los Estudiantes Asociados a una Empresa
+
+**Enunciado:**  
+Crea un método en el repositorio de `Empresa` que permita obtener todos los estudiantes asociados a una empresa específica.
+
+1. Implementa el método `obtenerEstudiantesDeEmpresa(Long empresaId)` utilizando Hibernate.
+2. Recupera una empresa por su `id` y lista todos los estudiantes asociados a esa empresa.
+3. Verifica que las relaciones se reflejan correctamente en la base de datos y en la salida de la consola.
+
+**Objetivo del ejercicio:**  
+Aprender a consultar datos relacionados en relaciones **many-to-many** utilizando Hibernate.
+
+
+# Ejercicio 22: Eliminar una Relación entre Estudiante y Empresa
+
+**Enunciado:**  
+Elimina una relación específica entre un estudiante y una empresa sin eliminar las entidades de la base de datos.
+
+1. Implementa un método `eliminarRelacionEstudianteEmpresa(Long estudianteId, Long empresaId)` en el repositorio de `Estudiante`.
+2. Recupera el estudiante y la empresa correspondientes, elimina la relación de la colección y actualiza la base de datos.
+3. Verifica que la tabla intermedia ya no contiene la relación eliminada.
+
+**Objetivo del ejercicio:**  
+Aprender a gestionar la eliminación de relaciones en una tabla intermedia sin afectar las entidades principales.
+
+
+# Ejercicio 23: Consultar Empresas con Más de un Estudiante Asociado
+
+**Enunciado:**  
+Realiza una consulta para obtener todas las empresas que tienen más de un estudiante asociado.
+
+1. Implementa un método `obtenerEmpresasConMasDeUnEstudiante()` en el repositorio de `Empresa` utilizando HQL.
+2. Filtra las empresas que tienen más de un registro asociado en la tabla intermedia.
+3. Imprime en la consola los nombres de las empresas y el número de estudiantes asociados a cada una.
+
+**Objetivo del ejercicio:**  
+Aprender a realizar consultas avanzadas sobre relaciones **many-to-many** utilizando HQL.

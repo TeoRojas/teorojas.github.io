@@ -1,3 +1,10 @@
+-- Archivo: crearEmpresaEstudianteDB.sql
+-- Este script crea las tablas necesarias, establece las relaciones y rellena los datos.
+
+-- Crear base de datos
+CREATE DATABASE IF NOT EXISTS EmpresaEstudianteDB;
+USE EmpresaEstudianteDB;
+
 -- Crear la tabla Estudiante (si no existe)
 CREATE TABLE IF NOT EXISTS Estudiante (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -59,3 +66,38 @@ INSERT INTO Estudiante (nombre, apellido, email, edad) VALUES
 ('Carlos', 'Medina', 'carlos.medina@example.com', 28),
 ('José Antonio', 'Fernández', 'joseantonio.fernandez@example.com', 24);
 
+-- Crear la tabla Empresa
+CREATE TABLE IF NOT EXISTS Empresa (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL
+);
+
+-- Insertar datos en la tabla Empresa
+INSERT INTO Empresa (nombre) VALUES
+('Google'),
+('Microsoft'),
+('Amazon'),
+('Apple'),
+('Netflix');
+
+-- Crear la tabla intermedia Empresa_Estudiante
+CREATE TABLE IF NOT EXISTS Empresa_Estudiante (
+    empresa_id INT NOT NULL,
+    estudiante_id INT NOT NULL,
+    PRIMARY KEY (empresa_id, estudiante_id),
+    FOREIGN KEY (empresa_id) REFERENCES Empresa(id) ON DELETE CASCADE,
+    FOREIGN KEY (estudiante_id) REFERENCES Estudiante(id) ON DELETE CASCADE
+);
+
+-- Insertar datos en la tabla intermedia Empresa_Estudiante
+INSERT INTO Empresa_Estudiante (empresa_id, estudiante_id) VALUES
+(1, 1), -- Google y Juan Pérez
+(1, 2), -- Google y Ana García
+(2, 3), -- Microsoft y Luis Martínez
+(2, 4), -- Microsoft y Pedro Sánchez
+(3, 5), -- Amazon y Carlos Lopez
+(3, 6), -- Amazon y Maria Rodríguez
+(4, 7), -- Apple y Javier Hernández
+(4, 8), -- Apple y Sofia López
+(5, 9), -- Netflix y Rafael González
+(5, 10); -- Netflix y Laura Martínez

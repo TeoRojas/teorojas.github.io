@@ -21,6 +21,7 @@ abstract: Sinopsis de la unidad 03
 11. [Obtener Datos con Hibernate (CEd)](#11-obtener-datos-con-hibernate-ced)  
 12. [Repositorios en Hibernate (CEe)](#12-repositorios-en-hibernate-cee)    
 13. [Relaciones 1-N en Hibernate (CEe)](#13-relaciones-1-n-en-hibernate-cee)  
+14. [Relaciones ManyToMany (CEe)](#14-relaciones-manytomany-cee)  
 
 
 <!--
@@ -1683,4 +1684,170 @@ public void eliminarPersonaDeEmpresa(int empresaId, int personaId) {
 - Gracias a **CascadeType.ALL**, las operaciones de persistencia sobre **Empresa** también afectan a las **Personas** relacionadas.
 - Este tipo de relaciones son comunes en sistemas empresariales donde una **Empresa** tiene muchos **Empleados** (`Personas`).
 - Recuerda que cada clase correspondiente a una entidad nueva con la que trabajes debe ser añadida al archivo `hibernate.cfg.xml`.
+
+# 14. Relaciones ManyToMany (CEe)
+
+En las bases de datos, una relación **many-to-many** (muchos a muchos) es un tipo de relación en la que varios registros de una tabla pueden estar relacionados con varios registros de otra tabla. Este tipo de relación es común cuando hay una asociación recíproca entre dos entidades, y cada entidad puede estar asociada con múltiples registros de la otra entidad. Un ejemplo típico es una relación entre `Personas` y `Empresas`, donde una persona puede estar inscrito en varias empresas y, a su vez, una empresa puede tener múltiples personas.
+
+En Hibernate, una relación **many-to-many** se mapea utilizando la anotación `@ManyToMany`. Hibernate se encarga de gestionar la tabla intermedia que representa la relación entre las dos entidades. En este apartado, exploraremos cómo definir y gestionar relaciones **many-to-many** utilizando Hibernate.
+
+## 14.1. Conceptos Clave
+
+### ¿Qué es una relación ManyToMany?
+
+Una relación **many-to-many** implica que múltiples instancias de una entidad están relacionadas con múltiples instancias de otra entidad. En la base de datos, esta relación generalmente se modela mediante una tabla intermedia, que contiene las claves foráneas de las dos tablas relacionadas.
+
+Por ejemplo:
+- Una **Persona** puede trabajar en varias **Empresas**.
+- Una **Empresa** puede tener varias **Personas** trabajando en ella.
+
+En la base de datos, se puede crear una tabla intermedia `Persona_Empresa` para almacenar las relaciones entre las `Personas` y las `Empresas`.
+
+## Ejemplo con `Persona` y `Empresa`
+
+Para ilustrar cómo se define una relación **many-to-many** en Hibernate, usaremos el siguiente ejemplo:
+
+- **Persona**: Representa a una persona.
+- **Empresa**: Representa una empresa.
+- Cada **Persona** puede trabajar en varias **Empresas**, y cada **Empresa** puede tener varias **Personas** trabajando en ella.
+
+### 1. Definir las Clases `Persona` y `Empresa`
+
+Primero, definimos las clases `Persona` y `Empresa` que estarán relacionadas mediante una relación **many-to-many**.
+
+#### Clase `Persona`:
+
+La clase `Persona` tiene una relación con varias entidades de `Empresa`, utilizando una colección para almacenar estas relaciones.
+
+```java
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+public class Persona {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nombre;
+    
+    @ManyToMany
+    @JoinTable(
+      name = "persona_empresa", 
+      joinColumns = @JoinColumn(name = "persona_id"), 
+      inverseJoinColumns = @JoinColumn(name = "empresa_id"))
+    private Set<Empresa> empresas = new HashSet<>();
+    
+    // Constructor, getters y setters
+}
+```
+
+#### Clase `Empresa`:
+
+La clase `Empresa` también tiene una colección que almacena las `Personas` que trabajan en ella. Esta colección mapea la relación de vuelta desde el lado de la empresa hacia las personas asociadas.
+
+```java
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+public class Empresa {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nombre;
+
+    @ManyToMany(mappedBy = "empresas")
+    private Set<Persona> personas = new HashSet<>();
+    
+    // Constructor, getters y setters
+}
+```
+
+### 2. Explicación de las Anotaciones
+
+- **@ManyToMany**: En ambas clases (`Persona` y `Empresa`), usamos la anotación `@ManyToMany` para indicar que existe una relación **many-to-many** entre las dos entidades.
+- **@JoinTable**: Esta anotación se usa para definir la tabla intermedia que almacena las relaciones entre las dos entidades. En nuestro caso, la tabla intermedia se llama `persona_empresa`, y tiene dos claves foráneas: `persona_id` y `empresa_id`.
+- **@JoinColumn**: Especifica la columna que se utilizará como clave foránea en la tabla intermedia.
+- **mappedBy**: En la clase `Empresa`, usamos `mappedBy = "empresas"` para indicar que la relación se maneja desde la clase `Persona`.
+- La razón por la que no es necesario agregar una anotación `@JoinTable` en la clase `Empresa` cuando ya la tienes en la clase Persona se debe al uso de la propiedad `mappedBy` en la relación bidireccional en Hibernate. Cuando trabajamos con relaciones many-to-many en Hibernate, es común que la relación esté representada en una sola tabla intermedia que conecta las dos entidades. Hibernate maneja esto con el uso de las anotaciones `@ManyToMany` y `@JoinTable`, pero solo es necesario especificar `@JoinTable` en una de las dos entidades, ya que la relación es simétrica. Es decir, ambas entidades están relacionadas de manera equivalente, pero no necesitan definir las relaciones de manera duplicada.
+
+### 3. Crear una Persona y Asignarla a Empresas
+
+En este paso, puedes crear una nueva `Persona` y asignarle varias `Empresas` a la vez. Hibernate se encarga de gestionar la inserción en la tabla intermedia `Persona_Empresa`.
+
+```java
+public void agregarPersonaAEmpresas() {
+    Session session = factory.getCurrentSession();
+    try {
+        session.beginTransaction();
+
+        // Crear una nueva Persona
+        Persona persona = new Persona("Juan Pérez");
+
+        // Crear nuevas Empresas
+        Empresa empresa1 = new Empresa("Google");
+        Empresa empresa2 = new Empresa("Microsoft");
+
+        // Relacionar Persona con Empresas
+        persona.getEmpresas().add(empresa1);
+        persona.getEmpresas().add(empresa2);
+
+        // Guardar Persona (y las Empresas asociadas)
+        session.save(persona);
+
+        session.getTransaction().commit();
+    } finally {
+        session.close();
+    }
+}
+```
+
+### 4. Recuperar las Empresas de una Persona
+
+Para obtener las empresas en las que trabaja una persona, simplemente recuperamos la `Persona` y accedemos a su conjunto de `Empresas`.
+
+```java
+public void obtenerEmpresasDePersona(Long personaId) {
+    Session session = factory.getCurrentSession();
+    try {
+        session.beginTransaction();
+
+        // Obtener persona por id
+        Persona persona = session.get(Persona.class, personaId);
+
+        if (persona != null) {
+            System.out.println("Empresas de " + persona.getNombre() + ":");
+            for (Empresa empresa : persona.getEmpresas()) {
+                System.out.println(empresa.getNombre());
+            }
+        }
+
+        session.getTransaction().commit();
+    } finally {
+        session.close();
+    }
+}
+```
+
+### 5. Consultas SQL con Relaciones ManyToMany
+
+Al usar Hibernate, no es necesario escribir consultas SQL manualmente para recuperar las entidades relacionadas. Sin embargo, Hibernate genera automáticamente consultas SQL detrás de escenas para gestionar la relación. Estas consultas pueden incluir la selección de registros en la tabla intermedia para recuperar los registros de ambas entidades.
+
+Por ejemplo, cuando recuperamos una `Persona` con sus `Empresas`, Hibernate realiza la siguiente consulta SQL:
+
+```sql
+SELECT * FROM persona WHERE id = ?;
+SELECT * FROM empresa WHERE id IN (?, ?);
+SELECT * FROM persona_empresa WHERE persona_id = ?;
+```
+
+### 6. Consideraciones Finales
+
+Las relaciones **many-to-many** son muy comunes en bases de datos, e Hibernate facilita su implementación. La clave para definir estas relaciones en Hibernate es la anotación `@ManyToMany` y la tabla intermedia gestionada automáticamente. Sin embargo, es importante tener en cuenta las siguientes consideraciones:
+
+- **Cuidado con el rendimiento**: Las relaciones **many-to-many** pueden generar una gran cantidad de consultas a la base de datos, especialmente cuando se manejan grandes volúmenes de datos. Es recomendable usar el mecanismo de **caché** de Hibernate o técnicas como **fetching** para optimizar el rendimiento.
+- **Eliminación de relaciones**: Al eliminar una de las entidades relacionadas (por ejemplo, eliminar una `Persona`), es importante tener cuidado de no dejar registros huérfanos en la tabla intermedia.
+
 
