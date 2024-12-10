@@ -30,7 +30,8 @@ abstract:
       &emsp;&emsp;2.4.2. [Configuración de herramientas de análisis de código](#242-configuración-de-herramientas-de-análisis-de-código)  
    2.5. [Aplicación de Patrones de Refactorización con Herramientas de Desarrollo](#25-aplicación-de-patrones-de-refactorización-con-herramientas-de-desarrollo)  
       &emsp;&emsp;2.5.1. [Herramientas integradas en el entorno de desarrollo](#251-herramientas-integradas-en-el-entorno-de-desarrollo)  
-      &emsp;&emsp;2.5.1. [Práctica de Refactorización Asistida por Herramientas](#252-práctica-de-refactorización-asistida-por-herramientas)        
+      &emsp;&emsp;2.5.2. [Práctica de Refactorización Asistida por Herramientas](#252-práctica-de-refactorización-asistida-por-herramientas)  
+      &emsp;&emsp;2.5.3. [Ejercicios de Refactorización Asistida con Herramientas de Desarrollo](#253-ejercicios-de-refactorización-asistida-con-herramientas-de-desarrollo)
 3. [Control de versiones y GitHub](#3-control-de-versiones-y-github)  
    3.1. [¿Qué es el control de versiones?](#31-qué-es-el-control-de-versiones)  
    3.2. [¿Qué es Git?](#32-qué-es-git)  
@@ -1236,6 +1237,214 @@ price = 100
 final_price = calculate_final_price(price)
 print(f"The final price is {final_price}")
 ```
+
+### 2.5.3. Ejercicios de Refactorización Asistida con Herramientas de Desarrollo
+
+Utiliza el ide que más te guste, se recomienda Visual Studio Code o PyCharm.
+
+**Ejercicio 1: Renombrar Variables**  
+**Objetivo:** Cambiar nombres poco descriptivos a otros más significativos en un cálculo de salarios.  
+
+```python
+def calculate_salary(e, h):
+    s = e * h
+    print(f"Total salary: {s}")
+
+hourly_rate = 15
+hours_worked = 40
+calculate_salary(hourly_rate, hours_worked)
+```
+
+**Instrucciones:**  
+1. Renombra las variables `e`, `h` y `s` utilizando la función de refactorización del IDE.
+2. Asegúrate de que los nuevos nombres reflejen el propósito de las variables.
+
+
+**Ejercicio 2: Extraer Método**  
+**Objetivo:** Extraer bloques de código repetidos en una función que calcula el promedio de edades.
+
+```python
+def process_ages(ages):
+    total = 0
+    for age in ages:
+        if age > 0:
+            total += age
+    average = total / len(ages)
+    print(f"Total: {total}, Average: {average}")
+```
+
+**Instrucciones:**  
+1. Extrae el cálculo del total en un método independiente llamado `calculate_total`.
+2. Asegúrate de que la funcionalidad siga siendo la misma.
+
+
+**Ejercicio 3: Convertir Valores en Constantes**  
+**Objetivo:** Eliminar valores no-estáticos de un cálculo de descuentos.
+
+```python
+def calculate_price(price):
+    discounted_price = price - (price * 0.15)
+    final_price = discounted_price + (discounted_price * 0.21)
+    print(f"Final price: {final_price}")
+
+calculate_price(100)
+```
+
+**Instrucciones:**  
+1. Extrae los valores `0.15` y `0.21` como constantes `DISCOUNT_RATE` y `TAX_RATE`.
+2. Refactoriza el código para utilizarlas.
+
+
+**Ejercicio 4: Reorganizar Clases en Módulos**  
+**Objetivo:** Dividir un archivo monolítico en varios módulos.
+
+```python
+class Customer:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+class Order:
+    def __init__(self, customer, amount):
+        self.customer = customer
+        self.amount = amount
+
+class Product:
+    def __init__(self, name, price):
+        self.name = name
+        self.price = price
+```
+
+**Instrucciones:**  
+1. Usa el IDE para mover cada clase a su propio archivo (`customer.py`, `order.py`, `product.py`).
+2. Asegúrate de que las dependencias se actualicen automáticamente.
+
+
+**Ejercicio 5: Fusionar Métodos Redundantes**  
+**Objetivo:** Combinar métodos similares en un único método configurable.
+
+```python
+def calculate_discount(price):
+    return price * 0.1
+
+def calculate_tax(price):
+    return price * 0.2
+
+def calculate_final_price(price):
+    discount = calculate_discount(price)
+    tax = calculate_tax(price)
+    return price - discount + tax
+```
+
+**Instrucciones:**  
+1. Fusiona `calculate_discount` y `calculate_tax` en un solo método `apply_rate(price, rate)`.
+2. Modifica el resto del código para usar el nuevo método.
+
+
+**Ejercicio 6: Simplificar Expresiones**  
+**Objetivo:** Refactorizar un cálculo complejo en un formato más claro.
+
+```python
+def calculate_score(a, b, c):
+    if (a > 5 and b > 5) or (c > 10 and a < 3):
+        return True
+    return False
+```
+
+**Instrucciones:**  
+1. Usa las herramientas del IDE para simplificar la expresión lógica manteniendo la funcionalidad.
+
+
+**Ejercicio 7: Eliminar Código Muerto**  
+**Objetivo:** Identificar y eliminar funciones no utilizadas en el código.
+
+```python
+def unused_function():
+    print("I am not used")
+
+def main():
+    print("This is the main function")
+
+main()
+```
+
+**Instrucciones:**  
+1. Usa el análisis de código del IDE para detectar y eliminar la función `unused_function`.
+
+
+**Ejercicio 8: Refactorización de Clases**  
+**Objetivo:** Dividir una clase con demasiadas responsabilidades.
+
+```python
+class Store:
+    def __init__(self, name):
+        self.name = name
+        self.products = []
+        self.customers = []
+
+    def add_product(self, product):
+        self.products.append(product)
+
+    def add_customer(self, customer):
+        self.customers.append(customer)
+
+    def print_products(self):
+        for product in self.products:
+            print(product)
+
+    def print_customers(self):
+        for customer in self.customers:
+            print(customer)
+```
+
+**Instrucciones:**  
+1. Extrae las responsabilidades de productos y clientes en clases separadas (`ProductManager`, `CustomerManager`).
+2. Ajusta la clase `Store` para que utilice estas nuevas clases.
+
+
+**Ejercicio 9: Inline Methods**  
+**Objetivo:** Simplificar métodos pequeños que solo llaman a otros métodos.
+
+```python
+def calculate_discount(price):
+    return apply_discount(price, 0.1)
+
+def apply_discount(price, rate):
+    return price * rate
+```
+
+**Instrucciones:**  
+1. Usa **Inline Method** para eliminar `calculate_discount` y fusionar su funcionalidad en `apply_discount`.
+
+
+**Ejercicio 10: Detectar y Corregir Dependencias Cíclicas**  
+**Objetivo:** Resolver dependencias problemáticas entre dos módulos.
+
+- Archivo module_a.py:
+
+   ```python
+   from module_b import function_b
+
+   def function_a():
+      print("Function A")
+      function_b()
+   ```
+- Archivo module_b.py:
+
+   ```python
+   from module_a import function_a
+
+   def function_b():
+      print("Function B")
+      function_a()
+   ```
+
+**Instrucciones:**  
+1. Usa el análisis de dependencias del IDE para identificar el problema.
+2. Refactoriza el código moviendo las funciones problemáticas a un módulo común (`common.py`).
+
+
+
 
 #### Paso 3: Validar los Cambios  
 
