@@ -2146,3 +2146,4 @@ Mantener una buena documentación es fundamental para el éxito del proyecto. Es
 - **Documentación de código:** Agrega comentarios en el código que expliquen secciones complejas o pasos importantes. Esto facilita la comprensión de futuras contribuciones y el mantenimiento del proyecto.
 - **Historial de cambios (CHANGELOG):** Mantén un registro de los cambios significativos para que todos en el equipo puedan revisar las actualizaciones y adaptarse a ellas.
 
+##  3.7. Integración de GitHub con el entorno de desarrollo   
