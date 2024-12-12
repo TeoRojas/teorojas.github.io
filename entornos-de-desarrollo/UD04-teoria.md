@@ -50,7 +50,7 @@ abstract:
       &emsp;&emsp;3.5.6. [Ejercicios individuales](#356-ejercicios-individuales)  
       &emsp;&emsp;3.5.7. [Ejercicios en grupo](357-ejercicios-en-grupo-equipos-de-4-estudiantes)  
    3.6. [Trabajo colaborativo y GitHub](#36-trabajo-colaborativo-y-github)  
-   3.7. Integración de GitHub con el entorno de desarrollo   
+   3.7. [Integración de GitHub con el entorno de desarrollo](#37-integración-de-github-con-el-entorno-de-desarrollo)   
    3.8. Uso de GitHub para el control de versiones integrado
 5. Documentación efectiva 
 
