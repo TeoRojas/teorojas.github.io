@@ -61,13 +61,13 @@ abstract: Sinopsis de la unidad 03
 -->
 
 
-## 3.1. Introducción a los esquemas relacionales
+# 1. Introducción a los esquemas relacionales
 
 El **esquema relacional** es la representación formal de la estructura de una base de datos en el modelo relacional. Es el resultado de transformar el modelo conceptual, generalmente expresado en un diagrama Entidad-Relación (E/R), en una estructura que pueda implementarse en un sistema de gestión de bases de datos relacional (SGBDR).
 
 El esquema relacional define cómo se almacenan, organizan y manipulan los datos en la base de datos, estableciendo las tablas, los campos, las relaciones entre ellas y las restricciones de integridad necesarias para garantizar la consistencia y validez de los datos.
 
-### 3.1.1. ¿Qué es un esquema relacional?
+## 1.1. ¿Qué es un esquema relacional?
 
 Un **esquema relacional** es la descripción de la estructura de una base de datos en términos de:
 - **Tablas** (o relaciones): Representan las entidades o conceptos principales del modelo conceptual.
@@ -82,25 +82,25 @@ Cada tabla en un esquema relacional tiene:
 
 En términos simples, un esquema relacional actúa como un **mapa estructurado de la base de datos** que define cómo se organizan los datos y cómo interactúan entre sí.
 
-### 3.1.2. Componentes de un esquema relacional: tablas, campos y relaciones
+## 1.2. Componentes de un esquema relacional: tablas, campos y relaciones
 
-#### **Tablas**
+### **Tablas**
 - Son la representación de las entidades principales del modelo conceptual.
 - Contienen filas (o tuplas), que representan instancias de la entidad.
 - Ejemplo: Una tabla llamada `Empleado` podría tener filas que representen a cada empleado en la empresa.
 
-#### **Campos (o columnas)**
+### **Campos (o columnas)**
 - Representan las características o atributos de la entidad.
 - Cada columna tiene un nombre único dentro de la tabla y pertenece a un dominio específico.
 - Ejemplo: En la tabla `Empleado`, las columnas podrían ser `ID_Empleado`, `Nombre`, `Apellido`, `Departamento`.
 
-#### **Relaciones**
+### **Relaciones**
 - Establecen las conexiones lógicas entre diferentes tablas.
 - Se representan mediante claves foráneas, que actúan como un enlace entre las tablas.
 - Ejemplo: Una relación entre las tablas `Empleado` y `Departamento` podría indicar en qué departamento trabaja cada empleado.
 
 
-#### Ejemplo práctico:
+### Ejemplo práctico:
 - **Modelo E/R:** Una entidad llamada `Empleado` tiene atributos como `ID_Empleado`, `Nombre`, `Apellido`, `Cargo`, `Sueldo`, `Nacimiento`, `Sexo`, `Estado Civil`. 
 - **Esquema relacional:** Se crea una tabla llamada `Empleado` con columnas `ID_Empleado`, `Nombre`, `Apellido`, `Cargo`, `Sueldo`, `Nacimiento`, `Sexo`, `Estado Civil`.
 
@@ -127,15 +127,18 @@ En el **Modelo Relacional**, una **RELACIÓN** se refiere únicamente a la defin
 
 ![Modelo Relacional](/bases-de-datos/imgs/ud03/ud03_MR_e01.svg)
 
+Para este caso, se obrendrá el siguiente esquema relacional:
+- **Empleado** *([ID_Empleado](#), Nombre, Apellido, Cargo, Sueldo, Nacimiento, Sexo, Estado Civil)*
+
 Para identificar de manera única un registro dentro de una tabla, se utiliza la **clave primaria** o **clave principal**. 
 
 Es posible que en una relación existan varias combinaciones de atributos que permitan distinguir de forma unívoca una fila. Estas combinaciones se denominan **claves candidatas**. Sin embargo, de todas las claves candidatas, se seleccionará una para que funcione como **clave primaria**.
 
 Un punto importante es que los atributos que forman parte de la clave primaria no pueden contener valores nulos, lo que garantiza la unicidad y la consistencia de los datos en la tabla.
 
-## 3.2. Elementos y Propiedades del Modelo Relacional
+# 2. Elementos y Propiedades del Modelo Relacional
 
-### Relación (Tabla)
+## Relación (Tabla)
 
 En el modelo relacional, las **relaciones** representan las entidades sobre las que se desea almacenar información en la base de datos. Una relación está compuesta por:
 
@@ -144,7 +147,7 @@ En el modelo relacional, las **relaciones** representan las entidades sobre las 
 
 Siendo estrictos, una relación incluye únicamente los atributos (columnas) y no las tuplas.
 
-### Propiedades de las Relaciones
+## Propiedades de las Relaciones
 
 Las relaciones tienen las siguientes características clave:
 
@@ -154,29 +157,29 @@ Las relaciones tienen las siguientes características clave:
 4. Las tuplas son **únicas**; no puede haber tuplas duplicadas. (Al menos deben diferenciarse por la clave principal).
 5. El **orden de las tuplas** tampoco importa; no están ordenadas.
 
-### Tipos de Claves
+## Tipos de Claves
 
 - **Clave Candidata**: Es un atributo (o conjunto de atributos) que identifica de manera única una tupla. Cualquiera de estas claves podría ser elegida como clave principal.
 - **Clave Principal**: Es la clave candidata seleccionada para identificar las tuplas de manera única.
 - **Clave Alternativa**: Son las claves candidatas que no fueron seleccionadas como clave principal.
 
-### Reglas de Integridad
+## Reglas de Integridad
 
 - Una **clave principal** no puede contener valores nulos, lo que garantiza la **integridad de la entidad**.
 - El **dominio de un atributo** define el conjunto de valores que dicho atributo puede asumir.
 
-### Clave Externa o Foránea
+## Clave Externa o Foránea
 
 La **clave externa** (también llamada clave ajena) es un atributo o conjunto de atributos que forman la clave principal de otra relación. Cumple las siguientes condiciones:
 
 - Los valores en la clave externa deben coincidir con valores existentes en la clave principal correspondiente en otra tabla.
 - Esto asegura la **integridad referencial**, es decir, que los datos relacionados entre tablas sean válidos y consistentes.
 
-## 3.3. Transformación del modelo E/R al modelo relacional
+# 3. Transformación del modelo E/R al modelo relacional
 
 La transformación del modelo Entidad-Relación (E/R) al modelo relacional es un proceso fundamental para implementar una base de datos diseñada conceptualmente en un sistema de gestión de bases de datos. Este proceso consiste en convertir las entidades, atributos, relaciones y restricciones definidas en el modelo E/R en tablas, columnas, claves y reglas que representen correctamente la información en el modelo relacional.
 
-### 3.3.1. Proceso general de transformación
+## 3.1. Reglas básicas para transformar entidades
 
 El proceso general de transformación se lleva a cabo siguiendo estos pasos principales:
 
@@ -186,63 +189,34 @@ El proceso general de transformación se lleva a cabo siguiendo estos pasos prin
 4. **Transformar las relaciones:** Se crean nuevas tablas o columnas para representar las relaciones entre entidades, dependiendo de su cardinalidad.
 5. **Añadir restricciones:** Las restricciones del modelo E/R, como claves foráneas, unicidad y restricciones de integridad, se aplican en el modelo relacional.
 
-### 3.3.2. Reglas para transformar entidades
+## 3.2. Reglas para transformar relaciones Uno a Uno (1:1)
 
-1. **Entidades fuertes:** Cada entidad fuerte en el modelo E/R se convierte directamente en una tabla.  
-   - Los atributos de la entidad se convierten en columnas de la tabla.
-   - Uno o más atributos se seleccionan como clave primaria.
+En las relaciones uno a uno, el proceso de transformación **dependerá del valor de la participación mínima** asociada a cada tipo de entidad en la interrelación.
 
-2. **Entidades débiles:** Las entidades débiles se transforman en tablas con una clave primaria compuesta.  
-   - La clave primaria incluirá los atributos identificadores propios de la entidad débil junto con la clave primaria de su entidad fuerte asociada.
-   - Se agrega una clave foránea que vincule la tabla de la entidad débil con la tabla de su entidad fuerte.
+1. **Ambas participaciones mínimas con valor 1**: cuando en una relación binaria ambas entidades tienen una cardinalidad mínima igual a 1, significa que ambas participan de manera obligatoria. En este caso, **no es necesario crear una tabla adicional** aparte de las que ya representan a las entidades. La relación se implementa incorporando la clave primaria de una de las tablas como clave foránea en la otra, permitiendo así mantener la conexión entre ambas entidades.
 
-### 3.3.3. Reglas para transformar relaciones
+2. **Una participación mínima tiene valor 0**: cuando en una relación binaria solo una de las entidades tiene una participación mínima igual a 0 (es decir, participa de forma opcional), **no es necesario crear una tabla adicional**. En este caso, la clave primaria de la entidad con participación obligatoria se incorpora como clave foránea en la tabla de la entidad con participación opcional.
 
-#### Relaciones uno a uno
+3. **Ambas participaciones mínimas con valor 0**: cuando en una relación binaria ambas entidades tienen una cardinalidad mínima igual a 0 (es decir, ambas participan de forma opcional), **sí es necesario crear una tabla adicional**. En esta nueva tabla, las claves primarias de ambas entidades se incluyen como claves foráneas, y una de ellas se designa como clave primaria de la nueva tabla.
 
-- **Cuando ambas entidades tienen participación obligatoria:** Fusionar las tablas de las dos entidades en una sola tabla.
-- **Cuando una entidad tiene participación opcional:** Añadir una clave foránea en la tabla de la entidad con participación opcional que apunte a la clave primaria de la otra entidad.
-- **Cuando ambas entidades tienen participación opcional:** Crear una nueva tabla para representar la relación.  
-  - Incluir las claves primarias de ambas entidades como claves foráneas y combinarlas como clave primaria de la nueva tabla.
+## 3.3. Reglas para transformar relaciones Uno a Muchos (1:N)
 
-#### Relaciones uno a muchos
+1. **Participación mínima 0 en el lado 1**: cuando en una relación 1:N la entidad del lado con cardinalidad máxima 1 tiene una participación mínima igual a 0, **sí es necesario crear una tabla adicional**. En esta nueva tabla, las claves primarias de ambas entidades se incluyen como claves foráneas, y **la clave primaria de la entidad del lado N se define como la clave principal** de la nueva tabla.
 
-- Añadir una clave foránea en la tabla del lado "muchos" que apunte a la clave primaria de la tabla del lado "uno."
-- Si la relación tiene atributos propios, estos se añaden a la tabla del lado "muchos."
+2. **Participación mínima 1 en el lado 1**: cuando en una relación 1:N la entidad del lado con cardinalidad máxima 1 tiene una participación mínima igual a 1, **no se crea una tabla adicional**. En este caso, la clave primaria de la entidad del lado 1 se incorpora como clave foránea en la tabla de la entidad que participa con cardinalidad máxima muchos (N).
 
-#### Relaciones muchos a muchos
+## 3.4. Reglas para transformar relaciones Muchos a Muchos (N:M)
 
-- Crear una nueva tabla para representar la relación.
-- Incluir las claves primarias de las dos entidades relacionadas como claves foráneas.
-- La combinación de estas claves foráneas se usa como clave primaria de la tabla de relación.
-- Añadir columnas para los atributos propios de la relación, si los hay.
+En una relación N:M, **siempre se crea una tabla adicional**. Esta tabla está compuesta por los atributos identificadores de las entidades que participan en la relación, así como por todos los atributos asociados al tipo de interrelación. La clave primaria de esta tabla se define como la combinación de todas las claves primarias de las entidades participantes en la relación.
 
-### 3.3.4. Transformación de atributos complejos
+## 3.5. Reglas para transformar relaciones de dependencia
 
-#### Atributos compuestos
+1. **Débil en existencia**: en el caso de una relación débil por existencia, **no es necesario crear una tabla adicional**. Para implementar esta relación, **la clave primaria de la entidad del lado 1**(la entidad fuerte) **se transfiere como clave foránea a la tabla de la entidad del lado N** (la entidad débil). 
 
-- Descomponer los atributos compuestos en sus subatributos individuales.
-- Los subatributos se convierten en columnas separadas en la tabla correspondiente.
+2. **Débil en identificación**: en el caso de una relación débil por identificación, **no es necesario crear una tabla adicional**. Para implementar esta relación en la base de datos, la clave primaria de la entidad del lado 1 (la entidad fuerte) se transfiere a la tabla de la entidad del lado N (débil) como **foránea y principal**. Esto asegura que cada instancia de la entidad débil esté identificada de manera única en el contexto de su asociación con la entidad fuerte.
 
-#### Atributos multivaluados
+## 3.6. Reglas para transformar relaciones N-arias
 
-- Crear una nueva tabla para representar el atributo multivaluado.
-- La nueva tabla incluirá:
-  - La clave primaria de la entidad original como clave foránea.
-  - Una columna para almacenar los valores del atributo multivaluado.
-  - Opcionalmente, una clave primaria compuesta para evitar duplicados.
+En una relación N-aria, además de las tablas correspondientes a cada entidad participante, **se genera una tabla adicional** para representar la relación. La clave primaria de esta nueva tabla se construye combinando las claves primarias de las entidades que participan con cardinalidad máxima "Muchos". Estas claves primarias también se marcan como claves foráneas para garantizar la integridad referencial. Las claves primarias de las entidades con cardinalidad distinta de "Muchos" se incluyen en la tabla de la relación únicamente como claves foráneas, sin formar parte de la clave primaria.
 
-#### Atributos derivados
-
-- Los atributos derivados no se implementan directamente como columnas en el modelo relacional.
-- Su valor se calcula dinámicamente a partir de otros atributos o relaciones cuando sea necesario.
-
-### 3.3.5. Tratamiento de entidades débiles y sus claves foráneas
-
-1. **Identificar la relación con su entidad fuerte:** Cada entidad débil debe estar asociada a una entidad fuerte a través de una relación.
-2. **Transformar la entidad débil en una tabla:**  
-   - La clave primaria de la tabla incluirá la clave primaria de la entidad fuerte como clave foránea y el discriminador o atributo identificador de la entidad débil.
-3. **Representar la clave foránea:**  
-   - La clave foránea asegura que los valores de la entidad débil estén vinculados a una instancia válida de la entidad fuerte.
-4. **Añadir restricciones de integridad:**  
-   - Aplicar restricciones de integridad referencial para garantizar la dependencia en existencia e identificación entre la entidad débil y la fuerte.
+## 3.7. Reglas para transformar relaciones reflexivas
