@@ -195,29 +195,60 @@ En las relaciones uno a uno, el proceso de transformación **dependerá del valo
 
 1. **Ambas participaciones mínimas con valor 1**: cuando en una relación binaria ambas entidades tienen una cardinalidad mínima igual a 1, significa que ambas participan de manera obligatoria. En este caso, **no es necesario crear una tabla adicional** aparte de las que ya representan a las entidades. La relación se implementa incorporando la clave primaria de una de las tablas como clave foránea en la otra, permitiendo así mantener la conexión entre ambas entidades.
 
+![Uno a uno con ambas participaciones mínimas 1](/bases-de-datos/imgs/ud03/ud03_MR_e021.svg)
+
+o también sería una solución correcta:
+
+![Uno a uno con ambas participaciones mínimas 1, segunda opción](/bases-de-datos/imgs/ud03/ud03_MR_e022.svg)
+
+
+
 2. **Una participación mínima tiene valor 0**: cuando en una relación binaria solo una de las entidades tiene una participación mínima igual a 0 (es decir, participa de forma opcional), **no es necesario crear una tabla adicional**. En este caso, la clave primaria de la entidad con participación obligatoria se incorpora como clave foránea en la tabla de la entidad con participación opcional.
 
+![Uno a uno con Una participación mínima tiene valor 0](/bases-de-datos/imgs/ud03/ud03_MR_e03.svg)
+
 3. **Ambas participaciones mínimas con valor 0**: cuando en una relación binaria ambas entidades tienen una cardinalidad mínima igual a 0 (es decir, ambas participan de forma opcional), **sí es necesario crear una tabla adicional**. En esta nueva tabla, las claves primarias de ambas entidades se incluyen como claves foráneas, y una de ellas se designa como clave primaria de la nueva tabla y la otra como clave única (UQ).
+
+![Uno a uno con Ambas participaciones mínimas con valor 0](/bases-de-datos/imgs/ud03/ud03_MR_e04.svg)
+
 
 ## 3.3. Reglas para transformar relaciones Uno a Muchos (1:N)
 
 1. **Participación mínima 0 en el lado 1**: cuando en una relación 1:N la entidad del lado con cardinalidad máxima 1 tiene una participación mínima igual a 0, **sí es necesario crear una tabla adicional**. En esta nueva tabla, las claves primarias de ambas entidades se incluyen como claves foráneas, y **la clave primaria de la entidad del lado N se define como la clave principal** de la nueva tabla.
 
+![Uno a Muchos con Participación mínima 0 en el lado 1](/bases-de-datos/imgs/ud03/ud03_MR_e06.svg)
+
+
 2. **Participación mínima 1 en el lado 1**: cuando en una relación 1:N la entidad del lado con cardinalidad máxima 1 tiene una participación mínima igual a 1, **no se crea una tabla adicional**. En este caso, la clave primaria de la entidad del lado 1 se incorpora como clave foránea en la tabla de la entidad que participa con cardinalidad máxima muchos (N).
+
+![Uno a Muchos con Participación mínima 1 en el lado 1](/bases-de-datos/imgs/ud03/ud03_MR_e05.svg)
+
 
 ## 3.4. Reglas para transformar relaciones Muchos a Muchos (N:M)
 
 En una relación N:M, **siempre se crea una tabla adicional**. Esta tabla está compuesta por los atributos identificadores de las entidades que participan en la relación, así como por todos los atributos asociados al tipo de interrelación. La clave primaria de esta tabla se define como la combinación de todas las claves primarias de las entidades participantes en la relación.
 
+![Muchos a Muchos](/bases-de-datos/imgs/ud03/ud03_MR_e07.svg)
+
+
 ## 3.5. Reglas para transformar relaciones de dependencia
 
 1. **Débil en existencia**: en el caso de una relación débil por existencia, **no es necesario crear una tabla adicional**. Para implementar esta relación, **la clave primaria de la entidad del lado 1**(la entidad fuerte) **se transfiere como clave foránea a la tabla de la entidad del lado N** (la entidad débil). 
 
+![Relaciones de dependencia Débil en existencia](/bases-de-datos/imgs/ud03/ud03_MR_e09.svg)
+
+
 2. **Débil en identificación**: en el caso de una relación débil por identificación, **no es necesario crear una tabla adicional**. Para implementar esta relación en la base de datos, la clave primaria de la entidad del lado 1 (la entidad fuerte) se transfiere a la tabla de la entidad del lado N (débil) como **foránea y principal**. Esto asegura que cada instancia de la entidad débil esté identificada de manera única en el contexto de su asociación con la entidad fuerte.
+
+![Relaciones de dependencia Débil en identificación](/bases-de-datos/imgs/ud03/ud03_MR_e08.svg)
+
 
 ## 3.6. Reglas para transformar relaciones N-arias
 
 En una relación N-aria, además de las tablas correspondientes a cada entidad participante, **se genera una tabla adicional** para representar la relación. La clave primaria de esta nueva tabla se construye combinando las claves primarias de las entidades que participan con cardinalidad máxima "Muchos". Estas claves primarias también se marcan como claves foráneas para garantizar la integridad referencial. Las claves primarias de las entidades con cardinalidad distinta de "Muchos" se incluyen en la tabla de la relación únicamente como claves foráneas, sin formar parte de la clave primaria.
+
+![Relaciones N-arias](/bases-de-datos/imgs/ud03/ud03_MR_e13.svg)
+
 
 ## 3.7. Reglas para transformar relaciones reflexivas
 
@@ -226,14 +257,26 @@ En las relaciones reflexivas, el proceso de transformación a tabla es similar a
 ### 3.7.1. Relaciones reflexivas 1:1 
 En las relaciones reflexivas 1:1, si ambas entidades participan con cardinalidad máxima igual a 1, el tratamiento sigue siendo similar a las relaciones binarias 1:1. Si ambas participaciones mínimas son iguales a 1, **no es necesario crear una tabla adicional**. La clave primaria de la entidad se incluye como clave foránea dentro de la misma tabla, renombrada para evitar conflictos. 
 
+![Relaciones reflexivas 1:1](/bases-de-datos/imgs/ud03/ud03_MR_e10.svg)
+
+
 ### 3.7.2. Relaciones reflexivas 1:N con participación mínima 0 en el lado 1
 Cuando la participación mínima es 0 en el lado 1, **se debe generar una tabla adicional** para representar la relación reflexiva. Esta tabla incluirá la clave primaria de la entidad participante en dos campos distintos: uno de ellos actuará como clave primaria y clave foránea simultáneamente, mientras que el otro se utilizará únicamente como clave foránea. Además, la tabla podrá contener cualquier atributo propio de la relación reflexiva, y éste no será foráneo.
+
+![Relaciones reflexivas 1:N](/bases-de-datos/imgs/ud03/ud03_MR_e11.svg)
+
 
 ### 3.7.3. Relaciones reflexivas 1:N con participación mínima 1 en el lado 1
 En una relación reflexiva 1:N con participación mínima igual a 1 en el lado 1, **no se genera una tabla** adicional. En este caso, la clave primaria de la entidad se incluye como clave foránea dentro de la misma tabla para representar la relación reflexiva. Este campo debe ser renombrado, por ejemplo, como `ClaveForanea`, para evitar duplicidades. 
 
+![Relaciones reflexivas 1:N](/bases-de-datos/imgs/ud03/ud03_MR_e10.svg)
+
+
 ### 3.7.4. Relaciones reflexivas N:M
 En las relaciones reflexivas N:M, **siempre es necesario generar una tabla adicional** para representar la relación. Esta tabla incluirá dos claves foráneas que referencian la clave primaria de la entidad participante. Estas claves deben ser renombradas, por ejemplo, como `Clave1` y `Clave2`, para evitar conflictos dentro de la tabla. Además, la tabla puede contener los atributos propios de la relación reflexiva, si los hubiera. La clave primaria de esta tabla será la combinación de las dos claves foráneas, lo que garantiza que cada par de relaciones reflexivas se represente de forma única.
+
+![Relaciones reflexivas N:M](/bases-de-datos/imgs/ud03/ud03_MR_e13.svg)
+
 
 ## 3.8. Reglas para transformar relaciones jerárquicas
 
