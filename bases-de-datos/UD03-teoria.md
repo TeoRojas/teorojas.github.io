@@ -197,7 +197,7 @@ En las relaciones uno a uno, el proceso de transformación **dependerá del valo
 
 2. **Una participación mínima tiene valor 0**: cuando en una relación binaria solo una de las entidades tiene una participación mínima igual a 0 (es decir, participa de forma opcional), **no es necesario crear una tabla adicional**. En este caso, la clave primaria de la entidad con participación obligatoria se incorpora como clave foránea en la tabla de la entidad con participación opcional.
 
-3. **Ambas participaciones mínimas con valor 0**: cuando en una relación binaria ambas entidades tienen una cardinalidad mínima igual a 0 (es decir, ambas participan de forma opcional), **sí es necesario crear una tabla adicional**. En esta nueva tabla, las claves primarias de ambas entidades se incluyen como claves foráneas, y una de ellas se designa como clave primaria de la nueva tabla.
+3. **Ambas participaciones mínimas con valor 0**: cuando en una relación binaria ambas entidades tienen una cardinalidad mínima igual a 0 (es decir, ambas participan de forma opcional), **sí es necesario crear una tabla adicional**. En esta nueva tabla, las claves primarias de ambas entidades se incluyen como claves foráneas, y una de ellas se designa como clave primaria de la nueva tabla y la otra como clave única (UQ).
 
 ## 3.3. Reglas para transformar relaciones Uno a Muchos (1:N)
 
@@ -220,3 +220,23 @@ En una relación N:M, **siempre se crea una tabla adicional**. Esta tabla está 
 En una relación N-aria, además de las tablas correspondientes a cada entidad participante, **se genera una tabla adicional** para representar la relación. La clave primaria de esta nueva tabla se construye combinando las claves primarias de las entidades que participan con cardinalidad máxima "Muchos". Estas claves primarias también se marcan como claves foráneas para garantizar la integridad referencial. Las claves primarias de las entidades con cardinalidad distinta de "Muchos" se incluyen en la tabla de la relación únicamente como claves foráneas, sin formar parte de la clave primaria.
 
 ## 3.7. Reglas para transformar relaciones reflexivas
+
+En las relaciones reflexivas, el proceso de transformación a tabla es similar al de las relaciones binarias. Sin embargo, un aspecto fundamental a tener en cuenta es que no puede haber dos campos con el mismo nombre en una misma tabla. Por ello, al propagar las claves foráneas en relaciones reflexivas, es necesario renombrarlas para evitar conflictos. A continuación, se explica cómo transformar estas relaciones según sus cardinalidades y participaciones.
+
+### 3.7.1. Relaciones reflexivas 1:1 
+En las relaciones reflexivas 1:1, si ambas entidades participan con cardinalidad máxima igual a 1, el tratamiento sigue siendo similar a las relaciones binarias 1:1. Si ambas participaciones mínimas son iguales a 1, **no es necesario crear una tabla adicional**. La clave primaria de la entidad se incluye como clave foránea dentro de la misma tabla, renombrada para evitar conflictos. 
+
+### 3.7.2. Relaciones reflexivas 1:N con participación mínima 0 en el lado 1
+Cuando la participación mínima es 0 en el lado 1, **se debe generar una tabla adicional** para representar la relación reflexiva. Esta tabla incluirá la clave primaria de la entidad participante en dos campos distintos: uno de ellos actuará como clave primaria y clave foránea simultáneamente, mientras que el otro se utilizará únicamente como clave foránea. Además, la tabla podrá contener cualquier atributo propio de la relación reflexiva, y éste no será foráneo.
+
+### 3.7.3. Relaciones reflexivas 1:N con participación mínima 1 en el lado 1
+En una relación reflexiva 1:N con participación mínima igual a 1 en el lado 1, **no se genera una tabla** adicional. En este caso, la clave primaria de la entidad se incluye como clave foránea dentro de la misma tabla para representar la relación reflexiva. Este campo debe ser renombrado, por ejemplo, como `ClaveForanea`, para evitar duplicidades. 
+
+### 3.7.4. Relaciones reflexivas N:M
+En las relaciones reflexivas N:M, **siempre es necesario generar una tabla adicional** para representar la relación. Esta tabla incluirá dos claves foráneas que referencian la clave primaria de la entidad participante. Estas claves deben ser renombradas, por ejemplo, como `Clave1` y `Clave2`, para evitar conflictos dentro de la tabla. Además, la tabla puede contener los atributos propios de la relación reflexiva, si los hubiera. La clave primaria de esta tabla será la combinación de las dos claves foráneas, lo que garantiza que cada par de relaciones reflexivas se represente de forma única.
+
+## 3.8. Reglas para transformar relaciones jerárquicas
+
+- En el caso de jerarquías, se debe crear una tabla para la entidad supertipo, salvo que tenga tan pocos atributos que resulte más práctico no representarla como una tabla independiente. 
+- Si una entidad subtipo no tiene atributos propios ni está relacionada con ninguna otra entidad, desaparece del modelo. Sin embargo, si la entidad subtipo tiene algún atributo, se creará una tabla para ella. Si no posee una clave primaria propia, heredará la clave de la entidad supertipo.
+- Cuando la relación es exclusiva, el atributo que define la jerarquía se incorpora en la tabla de la entidad supertipo. No obstante, si se ha optado por crear una tabla independiente para cada una de las entidades subtipo, no es necesario incluir este atributo en la tabla de la entidad supertipo.
