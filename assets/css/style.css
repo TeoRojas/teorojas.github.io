@@ -108,8 +108,13 @@ p{
     /*margin: 0 13px 0 45px;*/
 }
 
+/*
 table {
     width: fit-content;
+    max-width: 100%;
+}
+*/
+table {
     border: 4px solid;
     padding: 0.4em;
     margin: 0 auto 15px;
@@ -122,6 +127,10 @@ th, td {
     border: 1px solid #ededed;
     padding: 0.5em;
     text-align: center;
+
+    word-wrap: break-word; /* Ajusta las palabras largas dentro de las celdas */
+    white-space: normal; /* Permite que el texto se ajuste al ancho disponible */
+
 }
 
 thead th {
@@ -385,6 +394,24 @@ nav ul li a:visited{
         width: 100%;
     }
 }
+
+@media print {
+    table {
+        max-width: 70%; /* Asegura que ninguna imagen exceda el ancho disponible */
+        margin: 0 auto; /* Centra todas las imágenes */
+        page-break-inside: avoid; /* Evita cortes en medio de una imagen */
+    }
+
+    .Margins, .AbstractMargins {
+        padding: 0;
+        margin: 0 auto;
+        width: 100%; /* Ajusta al ancho completo del folio */
+    }  
+
+}
+
+
+
 
 /* Dark Mode */
 /*
