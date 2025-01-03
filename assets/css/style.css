@@ -108,14 +108,86 @@ p{
     /*margin: 0 13px 0 45px;*/
 }
 
+table {
+    width: fit-content;
+    border: 4px solid;
+    padding: 0.4em;
+    margin: 0 auto 15px;
+    border-collapse: collapse;
+    font-size: 20px;
+    font-family: 'CMR';
+}
+
+th, td {
+    border: 1px solid #ededed;
+    padding: 0.5em;
+    text-align: center;
+}
+
+thead th {
+    border-bottom: 3px solid black;
+}
+
+tr:hover {
+    background-color: #ededed;
+}
+
+table.rouge-table {
+    border: none !important;
+    padding: 0 !important;
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    font-size: 14px !important;
+}
+
+table td {
+    padding: 5px 10px;
+}
+
+td.rouge-gutter.gl {
+    color: #cccccc;
+}
+
+table th {
+    letter-spacing: -1px;
+    font-family: 'CMB';
+}
+
+table t {
+    font-family: 'CMR';
+}
+
+thead th a {
+    font-family: 'CMB'; /* Hereda la fuente de la celda de la cabecera */
+    color: inherit; /* Hereda el color de texto de la celda */
+    font-size: inherit;
+}
+
+/*
+
 table{
-    font-size: 18px;
-    /* width: 100%; */
-    border: 2px solid;
-    border-radius: 8px;
+    width: fit-content;
+    border: 4px solid;
     padding: 0.4em;
     margin: 0 auto;
     margin-bottom: 15px;
+    border-collapse: collapse;
+}
+
+thead th {
+    border-bottom: 3px solid black;
+}
+
+th, td {
+    border: 1px solid #ededed; 
+    padding: 0.5em; 
+    text-align: center; 
+    font-family: 'CMB' !important;
+}
+
+tr:hover {
+    background-color: #ededed; 
 }
 
 table.rouge-table{
@@ -142,7 +214,7 @@ table th{
 
 table t{
     font-family: 'CMR';
-}
+}*/
 
 pre.highlight {
     overflow: auto;
