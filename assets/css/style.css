@@ -137,9 +137,16 @@ thead th {
     border-bottom: 3px solid black;
 }
 
+/*
 tr:hover {
     background-color: #ededed;
 }
+*/
+
+table:not(.rouge-table) tr:hover {
+    background-color: #ededed;
+}
+
 
 table.rouge-table {
     border: none !important;
@@ -152,6 +159,14 @@ table.rouge-table {
 
 table td {
     padding: 5px 10px;
+}
+
+td.rouge-gutter.gl, td.rouge-code {
+    border: none !important;
+}
+
+td.rouge-code {
+    text-align: left;
 }
 
 td.rouge-gutter.gl {
