@@ -93,7 +93,7 @@ En términos simples, un esquema relacional actúa como un **mapa estructurado d
 
 **Tabla: Empleado**
 
-| **ID_Empleado** | Nombre        | Apellido      | Cargo       | Sueldo  | Nacimiento   | Sexo | Estado Civil |
+| **[ID_Empleado](#)** | Nombre        | Apellido      | Cargo       | Sueldo  | Nacimiento   | Sexo | Estado Civil |
 |-------------|---------------|---------------|-------------|---------|--------------|------|--------------|
 | 001         | María         | López         | Gerente     | 45,000€ | 1985-03-12   | F    | Casada       |
 | 002         | Juan          | Fernández     | Analista    | 38,000€ | 1990-07-24   | M    | Soltero      |
@@ -291,11 +291,12 @@ El proceso de normalización busca alcanzar varios objetivos clave que son esenc
 
 Imagina una tabla que registra información sobre pedidos en una tienda online:
 
-| **Pedido_ID** | **Cliente_Nombre** | **Cliente_Dirección** | **Producto_Nombre** | **Cantidad** |
-|---------------|---------------------|-----------------------|----------------------|--------------|
-| 1             | Juan Pérez          | Calle Sol, 15         | Auriculares          | 2            |
-| 2             | Juan Pérez          | Calle Sol, 15         | Teclado              | 1            |
-| 3             | Ana López           | Calle Luna, 8         | Auriculares          | 1            |
+| **[Pedido_ID](#)** | **Cliente_ID** | **Cliente** | **Cliente_Dirección** | **Producto_ID** | **Producto** | **Uds** |
+|---------------------|----------------|---------------------|-----------------------|------------------|----------------------|--------------|
+| 1                   | C001           | Juan Pérez          | Calle Sol, 15         | P001             | Auriculares          | 2            |
+| 2                   | C001           | Juan Pérez          | Calle Sol, 15         | P002             | Teclado              | 1            |
+| 3                   | C002           | Ana López           | Calle Luna, 8         | P001             | Auriculares          | 1            |
+
 
 **Problemas:**
 1. La información del cliente (`Cliente_Nombre`, `Cliente_Dirección`) se repite para cada pedido que realiza, ocupando más espacio de almacenamiento.
@@ -308,25 +309,27 @@ Después de aplicar la normalización, un proceso que se verá más adelante en 
 
 **Tabla: Clientes**
 
-| **Cliente_ID** | **Nombre**    | **Dirección**     |
-|----------------|---------------|-------------------|
-| 1              | Juan Pérez    | Calle Sol, 15     |
-| 2              | Ana López     | Calle Luna, 8     |
+| **[Cliente_ID](#)** | **Cliente**    | **Dirección**     |
+|----------------------|---------------|-------------------|
+| C001                | Juan Pérez    | Calle Sol, 15     |
+| C002                | Ana López     | Calle Luna, 8     |
+
 
 **Tabla: Productos**
 
-| **Producto_ID** | **Nombre**     |
-|-----------------|----------------|
-| 1               | Auriculares    |
-| 2               | Teclado        |
+| **[Producto_ID](#)** | **Producto**     |
+|----------------------|----------------|
+| P001                | Auriculares    |
+| P002                | Teclado        |
+
 
 **Tabla: Pedidos**
 
-| **Pedido_ID** | **Cliente_ID** | **Producto_ID** | **Cantidad** |
+| **[Pedido_ID](#)** | **[Cliente_ID](#)** | **[Producto_ID](#)** | **Uds** |
 |---------------|----------------|-----------------|--------------|
-| 1             | 1              | 1               | 2            |
-| 2             | 1              | 2               | 1            |
-| 3             | 2              | 1               | 1            |
+| 1             | C001           | P001            | 2            |
+| 2             | C001           | P002            | 1            |
+| 3             | C002           | P001            | 1            |
 
 **Ventajas:**
 - La información del cliente y de los productos se almacena una sola vez en sus respectivas tablas.
@@ -338,6 +341,7 @@ Después de aplicar la normalización, un proceso que se verá más adelante en 
 - En la tabla original, si eliminas el único pedido de un cliente, también pierdes toda la información del cliente. Después de la normalización, puedes eliminar un pedido sin afectar los datos del cliente en la tabla `Clientes`.
 - Si el cliente `Juan Pérez` cambia de dirección, debes actualizar todas las filas que contienen su información en la tabla original. Después de la normalización, solo necesitas actualizar una fila en la tabla `Clientes`.
 
+> **Nota:** La normalización en este ejemplo no corresponde directamente a un proceso inverso que derive en un diagrama Entidad-Relación (E/R), ya que su punto de partida no es un modelo conceptual planificado, sino una tabla desestructurada que combina datos de múltiples entidades y relaciones. La normalización tiene como objetivo reorganizar los datos existentes para eliminar redundancias y dependencias indebidas, usando claves como `Cliente_ID` y `Producto_ID` para facilitar la referencia entre tablas. Si intentáramos reconstruir un modelo E/R desde las tablas normalizadas, el resultado reflejaría la estructura optimizada de las tablas y no necesariamente las entidades y relaciones originales del problema inicial. Esto refuerza la idea de que la normalización es un proceso orientado a la optimización de datos existentes, mientras que el diseño E/R se enfoca en la planificación conceptual de un sistema desde cero.
 
 
 ## 4.2. Dependencias Funcionales
@@ -544,7 +548,8 @@ La Quinta Forma Normal (5FN), también conocida como Forma Normal de Proyección
 
 La 5FN es necesaria en casos muy avanzados, donde las relaciones entre los datos son tan complejas que la eliminación completa de redundancias requiere un nivel adicional de descomposición. Aunque rara vez se aplica en la práctica, la 5FN garantiza un diseño relacional absolutamente optimizado y sin duplicaciones innecesarias.
 
-
+<!--
 ## 4.4. Denormalización y sus Aplicaciones
 ### 4.4.1. Ventajas y desventajas de la denormalización  
 ### 4.4.2. Casos prácticos y ejemplos de denormalización
+-->
