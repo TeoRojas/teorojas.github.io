@@ -12,6 +12,7 @@ abstract:
 1. [Ejercicio Práctico 1: Gestión de Estudiantes, Cursos y Notas](#ejercicio-práctico-1-gestión-de-estudiantes-cursos-y-notas)
 2. [Ejercicio Práctico 2: Gestión de Empresas, Departamentos y Empleados](#ejercicio-práctico-2-gestión-de-empresas-departamentos-y-empleados)
 3. [Ejercicio Práctico 3: Gestión de Proyectos, Participantes y Tareas](#ejercicio-práctico-3-gestión-de-proyectos-participantes-y-tareas)
+4. [Rúbrica](#4-rúbrica)
 
 ---
 
@@ -124,3 +125,46 @@ Desarrollar una aplicación Java que gestione proyectos, los participantes que t
 **Evaluación:**  
 Se valorará la correcta implementación del CRUD, las relaciones many-to-many y one-to-many, la integridad de los datos y la gestión adecuada de las excepciones.
 
+# 4. Rúbrica
+
+- **CEa**: Se ha instalado la herramienta ORM.
+- **CEb**: Se ha configurado la herramienta ORM.
+- **CEc**: Se han definido los ficheros de mapeo.
+- **CEd**: Se han aplicado mecanismos de persistencia a los objetos.
+- **CEe**: Se han desarrollado aplicaciones que modifican y recuperan objetos persistentes.
+- **CEf**: Se han desarrollado aplicaciones que realizan consultas usando el lenguaje SQL.
+- **CEg**: Se han gestionado las transacciones.
+
+**El criterio CEg incluye la defensa, presentación y documentación y valdrá un 35% de la nota final de este RA,** el resto de puntuación se repartirá equitativamente entre los CEs restantes.
+
+**Documentación:**
+- Incluir comentarios en el código para explicar la lógica y las decisiones de diseño.
+- Crear un documento de diseño que describa la estructura de las entidades, las relaciones ORM y cualquier decisión importante que se haya tomado.
+- Explicar el enfoque para gestionar la integridad referencial y las excepciones.
+
+## 4.1. Rúbrica de Evaluación
+
+| Criterio de Evaluación       | Puntuación (0-5) | Observaciones |
+|------------------------------|-------------------|---------------|
+| **CEa**: Instalación de la herramienta ORM |                   |               |
+| **CEb**: Configuración de la herramienta ORM |                   |               |
+| **CEc**: Definición de los ficheros de mapeo |                   |               |
+| **CEd**: Persistencia de objetos |                   |               |
+| **CEe**: Modificación y recuperación de objetos persistentes |                   |               |
+| **CEf**: Consultas con SQL |                   |               |
+| **CEg**: Gestión de transacciones y presentación |                   |               |
+
+**Total: /40 puntos**
+
+## 4.2. Notas para la Defensa
+
+- Cada alumno deberá presentar su trabajo, explicando:
+  - La estructura de las entidades y las relaciones ORM.
+  - La funcionalidad implementada (CRUD, consultas, transacciones).
+  - Las decisiones de diseño relacionadas con la persistencia y la gestión de excepciones.
+- Se evaluará la claridad y organización de la presentación, así como la capacidad para responder preguntas y defender su enfoque.
+
+## 4.3. Instrucciones Adicionales
+
+- Los estudiantes deben entregar su código fuente y la documentación en PDF de **un solo ejercicio** en la tarea de Moodle habilitada a tal efecto.
+- La defensa del ejercicio tendrá lugar en clase, donde cada alumno dispondrá de 5 minutos para presentar su trabajo y 5 minutos aproximadamente para responder preguntas.
