@@ -35,7 +35,7 @@ Elabora el esquema ER que contemple lo siguiente:
 - Un alumno puede estar matriculado de una o varias asignaturas.
 - Puede estar matriculado en la misma asignatura más de un curso escolar (si repite).
 - Se quiere saber el curso escolar en el que cada alumno está matriculado de cada asignatura.
-- En una asignatura habrá como mínimo 10 y como máximo 25 alumnos.
+- En una asignatura habrá como mínimo 10 y como máximo 20 alumnos.
 - Una asignatura es impartida por un único profesor.
 - Un profesor podrá impartir varias asignaturas.
 
