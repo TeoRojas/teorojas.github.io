@@ -121,7 +121,7 @@ Existen dos tipos principales de entidades: **entidades fuertes** y **entidades 
 - **Entidades fuertes**: Son aquellas cuya existencia es **independiente** de otras entidades. Se representan gráficamente con un **rectángulo de borde simple**. Estas entidades tienen un identificador único, lo que permite diferenciarlas de otras entidades sin la necesidad de apoyarse en ninguna otra entidad.
 - **Entidades débiles**: Son aquellas cuya existencia depende de la existencia de otra entidad, conocida como la **entidad propietaria**. Se representan con un **rectángulo de doble borde**. Las entidades débiles no tienen un identificador propio único y necesitan de una entidad fuerte para poder ser identificadas de manera única.
 
-![Entidades Fuertes y Débiles](/bases-de-datos/imgs/ud02/ud02_img01_fuertesDebiles.png)
+![Entidades Fuertes y Débiles](/bases-de-datos/imgs/ud02/ud02_img01_fuertesDebiles.svg)
 
 ## 3.2. Ejemplo de Entidad Fuerte y Débil
 
@@ -435,8 +435,8 @@ Los atributos propios de una relación son características especiales que perte
 
 Imaginemos una relación llamada *"Compra"* que conecta a los clientes y los productos que compran. Aquí tienes algunas características clave:
 
-- **Cliente** (*Cod_Cliente, Nombre, Dirección, Edad, Teléfono*): Esta entidad representa a los clientes y sus datos personales, como su nombre y dirección.
-- **Producto** (*Cod_Producto, Nombre, Descripción, Precio_Unidad*): Esta entidad describe los productos disponibles en la tienda en línea, incluyendo detalles como el nombre y el precio.
+- **Cliente** (*[Cod_Cliente](), Nombre, Dirección, Edad, Teléfono*): Esta entidad representa a los clientes y sus datos personales, como su nombre y dirección.
+- **Producto** (*[Cod_Producto](), Nombre, Descripción, Precio_Unidad*): Esta entidad describe los productos disponibles en la tienda en línea, incluyendo detalles como el nombre y el precio.
 
 **Atributo Propio: "Cantidad"**
 
