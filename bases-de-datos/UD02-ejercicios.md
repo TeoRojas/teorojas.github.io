@@ -46,6 +46,15 @@ Elabora el esquema ER que contemple lo siguiente:
 1. **Mayor Flexibilidad:** Permite abarcar un dominio más amplio, lo que significa que se pueden representar casos en los que un profesor no esté asignado a ninguna asignatura.
 2. **Casos Especiales:** Refleja la posibilidad de que haya profesores que no estén impartiendo ninguna asignatura en un momento determinado, por ejemplo, debido a una licencia o una baja temporal.
 
+**\*2**: Los requisitos del problema no especifican la participación mínima en la relación ASIGNATURA-EsImpartida-PROFESOR. Por consiguiente, se ha decidido establecer una participación mínima de 1. Esta elección se basa en la lógica del dominio del problema, donde se asume que una asignatura no puede impartirse si no cuenta con un profesor asignado que pueda resolver dudas del alumnado.
+
+> **Nota añadida: Por qué "Curso escolar" debe ser un atributo de la relación 'Matrícula':**  
+> - **Dependencia directa de la relación:** El atributo "Curso escolar" depende de la interacción específica entre **Alumno** y **Asignatura** en una matrícula, ya que no pertenece exclusivamente a ninguna de las dos entidades.  
+> - **Diferenciación de múltiples matrículas:** Permite distinguir entre diferentes matrículas del mismo alumno en la misma asignatura, ya que un alumno puede repetir la asignatura en distintos años escolares.  
+> - **Evitar redundancias:** Si "Curso escolar" estuviera como atributo de **Alumno** o **Asignatura**, se generarían redundancias innecesarias porque ambas entidades pueden estar relacionadas en múltiples cursos escolares.  
+> - **Cumplir con los requisitos:** El problema especifica que se quiere conocer el curso escolar en el que cada alumno está matriculado de cada asignatura, lo que refuerza que este dato debe ser parte de la relación **'Matrícula'**.  
+
+
 ## 2. Ejercicio 2: Esquema ER de Montador-Dormitorio-Cliente.
 
 Obtén el esquema ER para el siguiente supuesto. Una empresa dedicada a la instalación de dormitorios juveniles (a medida) quiere realizar una base de datos donde se reflejen las ventas y montajes, para lo cual se tiene en cuenta:
