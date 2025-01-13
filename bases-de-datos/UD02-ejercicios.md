@@ -48,7 +48,7 @@ Elabora el esquema ER que contemple lo siguiente:
 
 **\*2**: Los requisitos del problema no especifican la participación mínima en la relación ASIGNATURA-EsImpartida-PROFESOR. Por consiguiente, se ha decidido establecer una participación mínima de 1. Esta elección se basa en la lógica del dominio del problema, donde se asume que una asignatura no puede impartirse si no cuenta con un profesor asignado que pueda resolver dudas del alumnado.
 
-> **Nota añadida: Por qué "Curso escolar" debe ser un atributo de la relación 'Matrícula':**  
+> **Nota: Por qué "Curso escolar" debe ser un atributo de la relación 'Matrícula':**  
 > - **Dependencia directa de la relación:** El atributo "Curso escolar" depende de la interacción específica entre **Alumno** y **Asignatura** en una matrícula, ya que no pertenece exclusivamente a ninguna de las dos entidades.  
 > - **Diferenciación de múltiples matrículas:** Permite distinguir entre diferentes matrículas del mismo alumno en la misma asignatura, ya que un alumno puede repetir la asignatura en distintos años escolares.  
 > - **Evitar redundancias:** Si "Curso escolar" estuviera como atributo de **Alumno** o **Asignatura**, se generarían redundancias innecesarias porque ambas entidades pueden estar relacionadas en múltiples cursos escolares.  
@@ -71,7 +71,7 @@ Obtén el esquema ER para el siguiente supuesto. Una empresa dedicada a la insta
 
 - **\*1 Participación mínima en la relación MONTADOR-Monta-MODELO_DORMITORIO:** En los requisitos del problema no se menciona explícitamente la participación mínima de los montadores en la relación "MONTADOR-Monta-MODELO_DORMITORIO". Por esta razón, se ha optado por establecer una participación mínima de 1, lo que implica que en una fecha de montaje, un montador debe estar involucrado en la instalación de al menos un dormitorio. Esto garantiza que la relación sea consistente y refleja la necesidad de tener al menos un dormitorio montado en cualquier momento registrado.
 - **\*2. Montaje de múltiples modelos en la misma fecha:** Se asume que un montador puede montar más de un dormitorio en el mismo día. Esto significa que la relación `Monta` permite la posibilidad de que un montador realice montajes de varios dormitorios (mismo modelo o no) en el mismo día pero a distinta hora (se entiende que en fecha queda reflejada la hora), registrando cada uno de ellos como una entrada distinta en la base de datos.
-- **\*3. Calculo de la cantidad total de dormitorios montados por un montador:** Para determinar la cantidad total de dormitorios de un modelo montados por un montador, no es necesario añadir un atributo específico para esta información en el esquema ER. En su lugar, se puede calcular sumando los registros correspondientes en la tabla `Monta` que coinciden con el montador y el modelo de dormitorio en cuestión. Esto proporciona la flexibilidad para agregar nuevos registros de montajes sin necesidad de modificar la estructura del modelo de datos.
+> **Nota: Cálculo de la cantidad total de dormitorios montados por un montador:** Para determinar la cantidad total de dormitorios de un modelo montados por un montador, no es necesario añadir un atributo específico para esta información en el esquema ER. En su lugar, se puede calcular sumando los registros correspondientes en la tabla `Monta` que coinciden con el montador y el modelo de dormitorio en cuestión. Esto proporciona la flexibilidad para agregar nuevos registros de montajes sin necesidad de modificar la estructura del modelo de datos.
 
 ## 3. Ejercicio 3: Esquema ER de Red de Enseñanzas.
 

@@ -16,6 +16,7 @@ abstract: Criterios de evaluación:<br>RA06.CEb. Se han identificado las tablas 
    2.4. [Fase 3 del Diseño: Diseño Físico – Modelo Físico](#24-fase-3-del-diseño-diseño-físico--modelo-físico)  
 3. [Entidades](#3-entidades)  
    3.1. [Tipos de Entidades](#31-tipos-de-entidades)  
+   3.2. [Ejemplo de Entidad Fuerte y Débil](#32-ejemplo-de-entidad-fuerte-y-débil)
 4. [Atributos](#4-atributos)  
     4.1. [Atributos y su Significado](#41-atributos-y-su-significado)  
     4.2. [Tipos de Atributos](#42-tipos-de-atributos)  
@@ -29,12 +30,10 @@ abstract: Criterios de evaluación:<br>RA06.CEb. Se han identificado las tablas 
     4.2.8. [Tipos de Atributos, resumen](#428-tipos-de-atributos-resumen)  
 5. [Relaciones](#5-relaciones)  
    5.1. [Representación Gráfica de Relaciones](#51-representación-gráfica-de-relaciones)  
-   5.2. [Grado de una Relación](#52-grado-de-una-relación)  
-   5.3. [Cardinalidad en una Relación](#53-cardinalidad-en-una-relación)  
-   5.4. [Participación](#54-participación)  
-   5.5. [Cardinalidad de Relaciones no Binarias](#55-cardinalidad-de-relaciones-no-binarias)  
-   5.6. [Atributos Propios de una Relación](#56-atributos-propios-de-una-relación)  
-   5.7. [Dependencias e Interrelaciones](#57-dependencias-e-interrelaciones)  
+   5.2. [Grado de una relación](#52-grado-de-una-relación)  
+   5.3. [Cardinalidad en una relación](#53-cardinalidad-en-una-relación)  
+   5.4. [Atributos propios de una relación](#54-atributos-propios-de-una-relación)  
+   5.5. [Dependencias e interrelaciones](#55-dependencias-e-interrelaciones)  
 6. [Redundancia](#6-redundancia)  
    6.1. [Atributos Derivados (o Calculados)](#61-atributos-derivados-o-calculados)  
    6.2. [Interrelaciones Redundantes](#62-interrelaciones-redundantes)  
@@ -48,6 +47,7 @@ abstract: Criterios de evaluación:<br>RA06.CEb. Se han identificado las tablas 
    &emsp;&emsp;7.5.2. [Especialización PARCIAL SIN Solapamiento](#752-especialización-parcial-sin-solapamiento)  
    &emsp;&emsp;7.5.3. [Especialización TOTAL CON Solapamiento](#753-especialización-total-con-solapamiento)  
    &emsp;&emsp;7.5.4. [Especialización PARCIAL CON Solapamiento](#754-especialización-parcial-con-solapamiento)  
+   &emsp;&emsp;7.5.5. [Tabla resumen](#755-tabla-resumen)  
    7.6. [Cardinalidades en las Restricciones de Especialización](#76-cardinalidades-en-las-restricciones-de-especialización)  
    7.7. [Restricciones de las Relaciones](#77-restricciones-de-las-relaciones)  
    &emsp;&emsp;7.7.1. [Restricción de Exclusividad](#771-restricción-de-exclusividad)  
@@ -114,7 +114,7 @@ El diseño físico se implementa generalmente utilizando lenguajes de programaci
 
 Una **entidad** es cualquier cosa sobre la cual queremos almacenar información en la base de datos. Las entidades pueden ser personas, objetos, eventos o cualquier elemento relevante para el sistema. En un **diagrama Entidad/Relación (E/R)**, las entidades se representan gráficamente como **rectángulos** con un nombre en su interior. Cada entidad debe nombrarse solo una vez en el esquema conceptual, asegurando que no haya duplicación ni ambigüedad en la definición.
 
-## Tipos de Entidades
+## 3.1. Tipos de Entidades
 
 Existen dos tipos principales de entidades: **entidades fuertes** y **entidades débiles**. La distinción entre estos dos tipos es fundamental para el diseño de bases de datos.
 
@@ -123,7 +123,7 @@ Existen dos tipos principales de entidades: **entidades fuertes** y **entidades 
 
 ![Entidades Fuertes y Débiles](/bases-de-datos/imgs/ud02/ud02_img01_fuertesDebiles.png)
 
-## Ejemplo de Entidad Fuerte y Débil
+## 3.2. Ejemplo de Entidad Fuerte y Débil
 
 Para ilustrar la diferencia entre entidades fuertes y débiles, consideremos un ejemplo en el contexto de un banco:
 
@@ -277,7 +277,7 @@ Cada uno de estos tipos de atributos desempeña un papel esencial en la represen
 
 Las **relaciones** son una parte fundamental en un modelo de base de datos, ya que representan las asociaciones entre dos o más entidades. Una relación es la **conexión** o **asociación** que existe entre dos o más entidades. Cada relación tiene un nombre que describe su función o propósito en el contexto de la base de datos.
 
-## Representación Gráfica de Relaciones
+## 5.1. Representación Gráfica de Relaciones
 
 En un **diagrama Entidad-Relación (E/R)**, las relaciones se representan mediante **rombos**. El nombre de la relación se coloca en el interior del rombo. 
 
@@ -290,7 +290,7 @@ También podríamos haber utilizado un nombre más descriptivo para la relación
 
 ![Atributos](/bases-de-datos/imgs/ud02/ud02_img03_clienteCoche02.svg)
 
-## 5.1. Grado de una relación.
+## 5.2. Grado de una relación.
 
 El grado de una relación se refiere al **número de entidades participantes en esa relación**. Por ejemplo, si una relación conecta **dos entidades**, como "CLIENTE" y "COCHE," **se considera una relación de grado 2 o binaria**, ya que involucra dos entidades. Sin embargo, las relaciones también pueden ser ternarias (grado 3) o tener más entidades participantes, dependiendo de las necesidades del diseño de la base de datos.
 
@@ -316,7 +316,7 @@ Sin embargo, cuando una entidad está relacionada consigo misma, hablamos de rel
 
 **Ejercicio 5.6: Compras en Línea**. Imagina una tienda en línea. Diseña un modelo Entidad-Relación que incluya las entidades *"Cliente"*, *"Producto"*, y *"Pedido"*. Define una relación ternaria llamada *"Compra"* que relaciona a un cliente, un producto y un pedido. Esto permite registrar qué productos fueron comprados por qué clientes en qué pedidos.
 
-## 5.2. Cardinalidad en una relación.
+## 5.3. Cardinalidad en una relación.
 
 En las relaciones binarias, la cardinalidad se refiere a la cantidad de ocurrencias de una entidad que están asociadas a una ocurrencia de la otra entidad en una relación dada. Comprender estos tipos de cardinalidad es esencial para diseñar una base de datos precisa y eficiente. Aquí exploramos los tres tipos principales de cardinalidad en relaciones binarias:
 
@@ -394,7 +394,7 @@ La cardinalidad de una relación se calcula a través de las participaciones de 
 - Jugador juega en Equipo.
 - Político gobierna en País.
 
-## 5.3. Cardinalidad de relaciones no binarias.
+### Cardinalidad de relaciones no binarias.
 
 Para calcular la cardinalidad de una relación ternaria se agrupan (conceptualmente) las entidades en grupos de 2 vs 1 y se resuelve la participación del grupo con la entidad restante. El proceso se repite 3 veces, una para cada entidad independiente. Por último, tomando los máximos de las participaciones se generan las cardinalidades. Observa el siguiente ejemplo:
 
@@ -503,7 +503,7 @@ Es preciso, en los esquemas E/R, analizar la existencia de redundancias , por lo
 
 Existen dos formas principales de redundancia, según el elemento del modelo E/R al que está asociada: **redundancia en los atributos** (atributos derivados o calculados) y **redundancia en las interrelaciones** (denominadas también por algunos autores interrelaciones derivadas).
 
-### Atributos derivados (o calculados).
+## 6.1. Atributos derivados (o calculados).
 Son aquellos que se obtienen a partir de otros ya existentes, por lo que, aunque son redundantes, no dan lugar a inconsistencias, siempre que en el esquema se indique su condición de derivados (mediante la etiqueta Di). 
 - **Ejemplo 1:** En el tipo de entidad *Persona*, es redundante establecer el atributo fechaNacimiento y el atributo edad; este último puede ser calculado a partir de la fecha de nacimiento. 
 - **Ejemplo 2:** En el esquema de la figura siguiente, se puede añadir al tipo de entidad *Centro de Trabajo* el atributo Numero_dptos, el cual puede ser calculado a partir de los ejemplares de *Departamento* mediante la interrelación Tiene. 
@@ -518,7 +518,7 @@ El tomar una u otra decisión es propio del diseño físico, ya que se hace por 
 
 Tampoco hay que confundir un atributo derivado, cuyo valor no se introduce nunca -sino que se calcula-, con las restricciones que comprueban la consistencia entre valores que están almacenados en la base de datos, por haberlos introducido el usuario.
 
-### Interrelaciones redundantes.
+## 6.2. Interrelaciones redundantes.
 
 Se dice que una interrelación es redundante cuando su eliminación no implica pérdida de semántica porque existe la posibilidad de realizar la misma asociación de ejemplares por medio de otras interrelaciones.
 
@@ -605,7 +605,7 @@ En los diagramas de entidad-relación extendidos (EER), las relaciones entre gen
 
 Las restricciones definen cómo se organiza la jeraquía de subentidades bajo una superentidad. A continuación aparece una explicación detallada de cada una.
 
-### Especialización TOTAL SIN solapamiento.
+### 7.5.1. Especialización TOTAL SIN solapamiento.
 
 En esta restricción, se establece que cada entidad de la superentidad debe ser parte de al menos uno de los subtipos. Esto significa que no puede haber entidades en la superentidad que no estén especializadas en al menos un subtipo. Además, no puede haber solapamiento entre los subtipos, lo que significa que una entidad no puede pertenecer a más de un subtipo simultáneamente. 
 
@@ -616,7 +616,7 @@ Por ejemplo, **en el dominio del siguiente ejemplo**, una *PERSONA* sólo puede 
 - La TOTALidad queda reflejada en el diagrama con el círculo posicionado entre la superentidad PERSONA y el triángulo invertido de relación ES-UN.
 - La EXCLUSIVIDAD (sin solapamiento) queda reflejada por la semicircunferencia que existe entre el triángulo invertido y las subentidades HOMBRE y MUJER.
 
-### Especialización PARCIAL SIN solapamiento.
+### 7.5.2. Especialización PARCIAL SIN solapamiento.
 
 En esta restricción, se permite que algunas entidades de la superentidad no estén especializadas en ningún subtipo. Esto significa que puede haber entidades que pertenezcan a la superentidad pero no se clasifiquen en ninguno de los subtipos. Sin embargo, no se permite el solapamiento entre los subtipos, lo que significa que una entidad no puede pertenecer a más de un subtipo. 
 
@@ -627,7 +627,7 @@ Por ejemplo, **en el dominio del siguiente ejemplo**, la enfermedad cáncer no e
 - La PARCIALidad queda reflejada en el diagrama al conectar directamente la superentidad ENFERMEDAD y el triángulo invertido de relación ES-UN.
 - La EXCLUSIVIDAD (sin solapamiento) queda reflejada por la semicircunferencia que existe entre el triángulo invertido y las subentidades VÍRICA y BACTERIANA.
 
-### Especialización TOTAL CON solapamiento.
+### 7.5.3. Especialización TOTAL CON solapamiento.
 
 En esta restricción, se establece que cada entidad de la superentidad debe ser parte de al menos uno de los subtipos, pero también se permite el solapamiento. Esto significa que una entidad puede pertenecer a más de un subtipo a la vez. 
 
@@ -638,7 +638,7 @@ Por ejemplo, **en el dominio del siguiente ejemplo**, una EMPRESA puede ser PÚB
 - La TOTALidad queda reflejada en el diagrama con el círculo posicionado entre la superentidad EMPRESA y el triángulo invertido de relación ES-UN.
 - El SOLAPAMIENTO queda reflejado por la no existencia de la semicircunferencia el triángulo invertido y las subentidades.
 
-### Especialización PARCIAL CON solapamiento.
+### 7.5.4. Especialización PARCIAL CON solapamiento.
 
 En esta restricción, se establece que cada entidad de la superentidad debe ser parte de al menos uno de los subtipos, pero también se permite el solapamiento. Esto significa que una entidad puede pertenecer a más de un subtipo a la vez. 
 
@@ -649,7 +649,7 @@ Por ejemplo, **en el dominio del siguiente ejemplo**, una PERSONA puede ser un T
 - La PARCIALidad queda reflejada en el diagrama al conectar directamente la superentidad PERSONA y el triángulo invertido de relación ES-UN.
 - El SOLAPAMIENTO queda reflejado por la no existencia de la semicircunferencia el triángulo invertido y las subentidades.
 
-### Tabla Resumen
+### 7.5.5. Tabla Resumen
 
 | **Especialización TOTAL SIN** <br> **solapamiento**    |   |   |   | **Especialización PARCIAL SIN** <br> **solapamiento**  |
 | ![Especialización TOTAL SIN solapamiento](/bases-de-datos/imgs/ud02/ud02_img12_totalSinSolapamiento.svg) |   |   |   | ![Especialización PARCIAL SIN solapamiento](/bases-de-datos/imgs/ud02/ud02_img12_parcialSinSolapamiento.svg) |
