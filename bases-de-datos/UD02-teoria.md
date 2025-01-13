@@ -651,15 +651,13 @@ Por ejemplo, **en el dominio del siguiente ejemplo**, una PERSONA puede ser un T
 
 ### 7.5.5. Tabla Resumen
 
-| **Especialización TOTAL SIN** <br> **solapamiento**    |   |   |   | **Especialización PARCIAL SIN** <br> **solapamiento**  |
-| ![Especialización TOTAL SIN solapamiento](/bases-de-datos/imgs/ud02/ud02_img12_totalSinSolapamiento.svg) |   |   |   | ![Especialización PARCIAL SIN solapamiento](/bases-de-datos/imgs/ud02/ud02_img12_parcialSinSolapamiento.svg) |
-|-----------------------------------------------|---|---|---|-----------------------------------------------|
-|                                               |   |   |   |                                               |
-|-----------------------------------------------|---|---|---|-----------------------------------------------|
-|                                               |   |   |   |                                               |
-|-----------------------------------------------|---|---|---|-----------------------------------------------|
-| **Especialización TOTAL CON** <br> **solapamiento**    |   |   |   | **Especialización PARCIAL CON** <br> **solapamiento**  |
-| ![Especialización TOTAL CON solapamiento](/bases-de-datos/imgs/ud02/ud02_img12_totalConSolapamiento.svg) |   |   |   | ![Especialización PARCIAL CON solapamiento](/bases-de-datos/imgs/ud02/ud02_img12_parcialConSolapamiento.svg) |
+| **Especialización TOTAL <br> SIN solapamiento**    | **Especialización PARCIAL <br> SIN solapamiento**  |
+|-----------------------------------------------|-----------------------------------------------|
+| ![Especialización TOTAL SIN solapamiento](/bases-de-datos/imgs/ud02/ud02_img12_totalSinSolapamiento.svg) | ![Especialización PARCIAL SIN solapamiento](/bases-de-datos/imgs/ud02/ud02_img12_parcialSinSolapamiento.svg) |
+
+| **Especialización TOTAL <br> CON solapamiento**    | **Especialización PARCIAL <br> CON solapamiento**  |
+|-----------------------------------------------|-----------------------------------------------|
+| ![Especialización TOTAL CON solapamiento](/bases-de-datos/imgs/ud02/ud02_img12_totalConSolapamiento.svg) | ![Especialización PARCIAL CON solapamiento](/bases-de-datos/imgs/ud02/ud02_img12_parcialConSolapamiento.svg) |
 
 
 ## 7.6. Cardinalidades en las restricciones de especialización.
