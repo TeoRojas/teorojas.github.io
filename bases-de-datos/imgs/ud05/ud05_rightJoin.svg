@@ -141,7 +141,7 @@
          id="text1-0-7"><tspan
            sodipodi:role="line"
            id="tspan1-4-2"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;font-family:'Noto Serif Malayalam';-inkscape-font-specification:'Noto Serif Malayalam Bold';fill:#cccccc;fill-opacity:1;stroke-width:0.264583"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;font-family: Helvetica, monospace;-inkscape-font-specification:'Noto Serif Malayalam Bold';fill:#cccccc;fill-opacity:1;stroke-width:0.264583"
            x="34.028381"
            y="22.343359">A</tspan></text>
       <text
@@ -152,7 +152,7 @@
          id="text1-7-5-9"><tspan
            sodipodi:role="line"
            id="tspan1-0-7-8"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;font-family:'Noto Serif Malayalam';-inkscape-font-specification:'Noto Serif Malayalam Bold';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;font-family: Helvetica, monospace;-inkscape-font-specification:'Noto Serif Malayalam Bold';fill:#000000;fill-opacity:1;stroke-width:0.264583"
            x="53.331287"
            y="22.343359">B</tspan></text>
     </g>

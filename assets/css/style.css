@@ -250,6 +250,18 @@ pre.highlight {
     margin-bottom: 20px;      
 }
 
+span.k{
+    color: #6d6d6d;
+}
+
+span.c1{
+    color: #cccccc;
+}
+
+.highlighter-rouge{
+    width: -webkit-fill-available;    
+}
+
 strong{
     font-family: 'CMB';
     letter-spacing: -0.75px;
