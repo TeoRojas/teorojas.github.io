@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="48.171993mm"
+   height="29.882641mm"
+   viewBox="0 0 48.171993 29.882641"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (e7c3feb1, 2024-10-09)"
+   sodipodi:docname="joins.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.7198092"
+     inkscape:cx="351.48203"
+     inkscape:cy="530.69619"
+     inkscape:window-width="1424"
+     inkscape:window-height="1387"
+     inkscape:window-x="1145"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1"
+     showgrid="false">
+    <inkscape:page
+       x="2.8156193e-16"
+       y="0"
+       width="48.171989"
+       height="29.882641"
+       id="page2"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1">
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern13"
+       preserveAspectRatio="xMidYMid"
+       id="pattern5"
+       patternTransform="matrix(0.07071068,0.07071068,-0.07071068,0.07071068,-73.274756,135.76499)"
+       x="0"
+       y="0"
+       width="24" />
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern12"
+       preserveAspectRatio="xMidYMid"
+       id="pattern13"
+       patternTransform="matrix(0.07071068,0.07071068,-0.07071068,0.07071068,-3.1643856,0.59088827)"
+       x="0"
+       y="0"
+       width="16.8" />
+    <pattern
+       inkscape:collect="always"
+       patternUnits="userSpaceOnUse"
+       width="6"
+       height="1"
+       patternTransform="translate(0,0) scale(2,2)"
+       preserveAspectRatio="xMidYMid"
+       id="pattern12"
+       style="fill:#000000"
+       inkscape:stockid="Stripes 06 (1:5)"
+       inkscape:isstock="true"
+       inkscape:label="Rayas 06 (1:5)">
+      <rect
+         style="stroke:none"
+         x="0"
+         y="-0.5"
+         width="1"
+         height="2"
+         id="rect11" />
+    </pattern>
+    <linearGradient
+       id="swatch9"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#ededed;stop-opacity:1;"
+         offset="0"
+         id="stop9" />
+    </linearGradient>
+  </defs>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-19.719439,-35.714715)">
+    <g
+       id="g5"
+       transform="translate(-50.3057,-41.32637)"
+       inkscape:export-filename="InnerJoin.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <g
+         id="g3">
+        <g
+           id="g2"
+           transform="translate(-70.451495,20.350217)">
+          <circle
+             style="fill:#ededed;fill-opacity:1;stroke-width:0.264583"
+             id="path1-2-0-0"
+             cx="155.41795"
+             cy="71.632187"
+             r="14.941319" />
+          <circle
+             style="fill:#ededed;fill-opacity:1;stroke-width:0.264583"
+             id="path1-2-8-2-5"
+             cx="173.70731"
+             cy="71.632187"
+             r="14.941319" />
+        </g>
+        <path
+           id="path1-2-9-9"
+           style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:url(#pattern5);fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
+           d="m 94.136971,80.201983 a 14.941319,14.941319 0 0 0 -5.82238,11.78998 14.941319,14.941319 0 0 0 5.79655,11.770857 14.941319,14.941319 0 0 0 5.79654,-11.770857 14.941319,14.941319 0 0 0 -5.77071,-11.78998 z" />
+      </g>
+    </g>
+    <g
+       id="g13"
+       style="fill:#cccccc"
+       transform="translate(-2.0419267,29.854211)">
+      <text
+         xml:space="preserve"
+         style="font-size:4.23333px;fill:#cccccc;fill-opacity:1;stroke-width:0.264583"
+         x="34.028381"
+         y="22.343359"
+         id="text1"><tspan
+           sodipodi:role="line"
+           id="tspan1"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;font-family:'Noto Serif Malayalam';-inkscape-font-specification:'Noto Serif Malayalam Bold';fill:#cccccc;fill-opacity:1;stroke-width:0.264583"
+           x="34.028381"
+           y="22.343359">A</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:4.23333px;fill:#cccccc;fill-opacity:1;stroke-width:0.264583"
+         x="53.331287"
+         y="22.343359"
+         id="text1-7"><tspan
+           sodipodi:role="line"
+           id="tspan1-0"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;font-family:'Noto Serif Malayalam';-inkscape-font-specification:'Noto Serif Malayalam Bold';fill:#cccccc;fill-opacity:1;stroke-width:0.264583"
+           x="53.331287"
+           y="22.343359">B</tspan></text>
+    </g>
+    <g
+       id="g13-0"
+       style="fill:#cccccc"
+       transform="translate(54.648566,47.303773)">
+      <text
+         xml:space="preserve"
+         style="font-size:4.23333px;fill:#cccccc;fill-opacity:1;stroke-width:0.264583"
+         x="-3.3574517"
+         y="4.903986"
+         id="text1-7-0"><tspan
+           sodipodi:role="line"
+           id="tspan1-0-0"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;font-family:'Noto Serif Malayalam';-inkscape-font-specification:'Noto Serif Malayalam Bold';fill:#cccccc;fill-opacity:1;stroke-width:0.264583"
+           x="-3.3574517"
+           y="4.903986">B</tspan></text>
+    </g>
+  </g>
+</svg>

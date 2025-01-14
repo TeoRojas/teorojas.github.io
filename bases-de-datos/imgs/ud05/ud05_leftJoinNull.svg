@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="48.73378mm"
+   height="30.882935mm"
+   viewBox="0 0 48.73378 30.882935"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (e7c3feb1, 2024-10-09)"
+   sodipodi:docname="joins.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.7198092"
+     inkscape:cx="351.48203"
+     inkscape:cy="530.69619"
+     inkscape:window-width="1424"
+     inkscape:window-height="1387"
+     inkscape:window-x="1145"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1"
+     showgrid="false">
+    <inkscape:page
+       x="0"
+       y="0"
+       width="48.73378"
+       height="30.882935"
+       id="page2"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1">
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern13"
+       preserveAspectRatio="xMidYMid"
+       id="pattern5"
+       patternTransform="matrix(0.07071068,0.07071068,-0.07071068,0.07071068,-73.274756,135.76499)"
+       x="0"
+       y="0"
+       width="24" />
+    <pattern
+       inkscape:collect="always"
+       xlink:href="#pattern12"
+       preserveAspectRatio="xMidYMid"
+       id="pattern13"
+       patternTransform="matrix(0.07071068,0.07071068,-0.07071068,0.07071068,-3.1643856,0.59088827)"
+       x="0"
+       y="0"
+       width="16.8" />
+    <pattern
+       inkscape:collect="always"
+       patternUnits="userSpaceOnUse"
+       width="6"
+       height="1"
+       patternTransform="translate(0,0) scale(2,2)"
+       preserveAspectRatio="xMidYMid"
+       id="pattern12"
+       style="fill:#000000"
+       inkscape:stockid="Stripes 06 (1:5)"
+       inkscape:isstock="true"
+       inkscape:label="Rayas 06 (1:5)">
+      <rect
+         style="stroke:none"
+         x="0"
+         y="-0.5"
+         width="1"
+         height="2"
+         id="rect11" />
+    </pattern>
+    <linearGradient
+       id="swatch9"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#ededed;stop-opacity:1;"
+         offset="0"
+         id="stop9" />
+    </linearGradient>
+  </defs>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-19.438543,-183.6394)">
+    <g
+       id="g9"
+       transform="translate(-51.118105,-50.52069)">
+      <g
+         id="g2-4-3"
+         transform="translate(-69.358194,178.00388)">
+        <circle
+           style="fill:#ededed;fill-opacity:1;stroke-width:0.264583"
+           id="path1-2-0-91-0"
+           cx="155.41795"
+           cy="71.632187"
+           r="14.941319" />
+        <circle
+           style="fill:#ededed;fill-opacity:1;stroke-width:0.264583"
+           id="path1-2-8-2-55-6"
+           cx="173.70731"
+           cy="71.632187"
+           r="14.941319" />
+      </g>
+      <path
+         id="path1-2-0-4-9"
+         style="font-variation-settings:normal;opacity:1;vector-effect:none;fill:url(#pattern5);fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:none;stop-color:#000000;stop-opacity:1"
+         d="m 85.997849,234.66009 a 14.941319,14.941319 0 0 0 -14.9412,14.94121 14.941319,14.941319 0 0 0 14.9412,14.94173 14.941319,14.941319 0 0 0 9.14466,-3.17087 14.941319,14.941319 0 0 1 -5.79654,-11.77086 14.941319,14.941319 0 0 1 5.82238,-11.78998 14.941319,14.941319 0 0 0 -9.1705,-3.15123 z" />
+    </g>
+    <g
+       id="g13-8-9"
+       style="fill:#000000"
+       transform="translate(-1.4122885,178.27643)">
+      <text
+         xml:space="preserve"
+         style="font-size:4.23333px;fill:#000000;fill-opacity:1;stroke-width:0.264583"
+         x="34.028381"
+         y="22.343359"
+         id="text1-0-3"><tspan
+           sodipodi:role="line"
+           id="tspan1-4-9"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;font-family:'Noto Serif Malayalam';-inkscape-font-specification:'Noto Serif Malayalam Bold';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+           x="34.028381"
+           y="22.343359">A</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:4.23333px;fill:#cccccc;fill-opacity:1;stroke-width:0.264583"
+         x="53.331287"
+         y="22.343359"
+         id="text1-7-5-6"><tspan
+           sodipodi:role="line"
+           id="tspan1-0-7-6"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;font-family:'Noto Serif Malayalam';-inkscape-font-specification:'Noto Serif Malayalam Bold';fill:#cccccc;fill-opacity:1;stroke-width:0.264583"
+           x="53.331287"
+           y="22.343359">B</tspan></text>
+    </g>
+  </g>
+</svg>
