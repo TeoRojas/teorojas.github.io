@@ -12,7 +12,7 @@ abstract: Sinopsis de la unidad 05
 
 <div style="display: flex; align-items: center; gap: 40px;">
     <div>
-        <img src="/bases-de-datos/imgs/ud05/ud05_innerJoin.svg" alt="Full Join" />
+        <img src="/bases-de-datos/imgs/ud05/ud05_innerJoin.svg" alt="Inner Join" />
     </div>
 <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
