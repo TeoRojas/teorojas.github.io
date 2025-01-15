@@ -180,13 +180,29 @@ El proceso general de transformación se lleva a cabo siguiendo estos pasos prin
 
 En las relaciones uno a uno, el proceso de transformación **dependerá del valor de la participación mínima** asociada a cada tipo de entidad en la interrelación.
 
-1. **Ambas participaciones mínimas con valor 1**: cuando en una relación binaria ambas entidades tienen una cardinalidad mínima igual a 1, significa que ambas participan de manera obligatoria. En este caso, **no es necesario crear una tabla adicional** aparte de las que ya representan a las entidades. La relación se implementa incorporando la clave primaria de una de las tablas como clave foránea en la otra, permitiendo así mantener la conexión entre ambas entidades.
+1. **Ambas participaciones mínimas con valor 1**: cuando en una relación binaria ambas entidades tienen una cardinalidad mínima igual a 1, significa que ambas participan de manera obligatoria. En estos casos, **no es necesario crear una tabla adicional** aparte de las que ya representan a las entidades. La relación se implementa incorporando la clave primaria de una de las tablas como clave foránea en la otra, manteniendo así la conexión entre ambas entidades.
 
-![Uno a uno con ambas participaciones mínimas 1](/bases-de-datos/imgs/ud03/ud03_MR_e021.svg)
+   Para ilustrar este caso, consideremos el siguiente diagrama Entidad-Relación (E/R), donde ambas entidades tienen una participación mínima obligatoria igual a 1:
 
-o también sería una solución correcta:
+   ![Diagrama E/R - 1:1 con participaciones mínimas 1](/bases-de-datos/imgs/ud03/ud03_ER_e02.svg)
 
-![Uno a uno con ambas participaciones mínimas 1, segunda opción](/bases-de-datos/imgs/ud03/ud03_MR_e022.svg)
+   A partir de este diagrama, se obtiene el siguiente modelo relacional, donde la clave primaria de una entidad se utiliza como clave foránea en la otra:
+
+   ![Modelo Relacional - 1:1 con participaciones mínimas 1](/bases-de-datos/imgs/ud03/ud03_MR_e021.svg)
+
+   La conexión entre las tablas se puede representar gráficamente con el siguiente grafo, que refleja las claves foráneas utilizadas para establecer la relación:
+
+   ![Grafo Relacional - 1:1 con participaciones mínimas 1](/bases-de-datos/imgs/ud03/ud03_GF_e022.svg)
+
+   Otra solución igualmente válida sería representar la relación intercambiando las entidades en la clave foránea. En este caso, el modelo relacional sería el siguiente:
+
+   ![Modelo Relacional Alternativo - 1:1 con participaciones mínimas 1](/bases-de-datos/imgs/ud03/ud03_MR_e022.svg)
+
+   Y el grafo correspondiente a esta representación alternativa sería:
+
+   ![Grafo Relacional Alternativo - 1:1 con participaciones mínimas 1](/bases-de-datos/imgs/ud03/ud03_GF_e021.svg)
+
+   Ambas opciones son correctas y permiten implementar de manera eficiente la relación uno a uno con participaciones mínimas obligatorias en un sistema de bases de datos.
 
 
 
