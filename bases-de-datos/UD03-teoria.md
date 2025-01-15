@@ -208,24 +208,62 @@ En las relaciones uno a uno, el proceso de transformación **dependerá del valo
 
 2. **Una participación mínima tiene valor 0**: cuando en una relación binaria solo una de las entidades tiene una participación mínima igual a 0 (es decir, participa de forma opcional), **no es necesario crear una tabla adicional**. En este caso, la clave primaria de la entidad con participación obligatoria se incorpora como clave foránea en la tabla de la entidad con participación opcional.
 
-![Uno a uno con Una participación mínima tiene valor 0](/bases-de-datos/imgs/ud03/ud03_MR_e03.svg)
+   Para ilustrar este caso, consideremos el siguiente diagrama Entidad-Relación (E/R), donde una entidad tiene participación mínima de valor 0:
+
+   ![Diagrama E/R - 1:1 con participación mínima 0](/bases-de-datos/imgs/ud03/ud03_ER_e03.svg)
+
+   A partir de este diagrama, se obtiene el siguiente modelo relacional, donde la clave primaria de la entidad con participación mínima de 0 se utiliza como clave foránea en la otra:
+
+   ![Relacional - 1:1 con participación mínima 0](/bases-de-datos/imgs/ud03/ud03_MR_e03.svg)
+
+   Y el grafo correspondiente a esta representación sería:
+
+   ![Grafo Relacional  - 1:1 con participación mínima 0](/bases-de-datos/imgs/ud03/ud03_GF_e03.svg)   
 
 3. **Ambas participaciones mínimas con valor 0**: cuando en una relación binaria ambas entidades tienen una cardinalidad mínima igual a 0 (es decir, ambas participan de forma opcional), **sí es necesario crear una tabla adicional**. En esta nueva tabla, las claves primarias de ambas entidades se incluyen como claves foráneas, y una de ellas se designa como clave primaria de la nueva tabla y la otra como clave única (UQ).
 
-![Uno a uno con Ambas participaciones mínimas con valor 0](/bases-de-datos/imgs/ud03/ud03_MR_e04.svg)
+   Para ilustrar este caso, consideremos el siguiente diagrama Entidad-Relación (E/R), donde una entidad tiene participación mínima de valor 0:
 
+   ![Diagrama E/R - 1:1 con ambas participaciones mínimas 0](/bases-de-datos/imgs/ud03/ud03_ER_e04.svg)
+
+   A partir de este diagrama, se obtiene el siguiente modelo relacional, donde se crea la nueva tabla:
+
+   ![Relacional - 1:1 con ambas participaciones mínimas 0](/bases-de-datos/imgs/ud03/ud03_MR_e04.svg)
+
+   Y el grafo correspondiente a esta representación sería:
+
+   ![Grafo Relacional  - 1:1  con ambas participaciones mínimas 0](/bases-de-datos/imgs/ud03/ud03_GF_e04.svg) 
 
 ## 3.3. Reglas para transformar relaciones Uno a Muchos (1:N)
 
 1. **Participación mínima 0 en el lado 1**: cuando en una relación 1:N la entidad del lado con cardinalidad máxima 1 tiene una participación mínima igual a 0, **sí es necesario crear una tabla adicional**. En esta nueva tabla, las claves primarias de ambas entidades se incluyen como claves foráneas, y **la clave primaria de la entidad del lado N se define como la clave principal** de la nueva tabla.
 
-![Uno a Muchos con Participación mínima 0 en el lado 1](/bases-de-datos/imgs/ud03/ud03_MR_e06.svg)
+   Para ilustrar este caso, consideremos el siguiente diagrama Entidad-Relación (E/R):
+
+   ![Diagrama E/R - 1:N con participación mínima 0](/bases-de-datos/imgs/ud03/ud03_ER_e06.svg)
+
+   A partir de este diagrama, se obtiene el siguiente modelo relacional, donde en la nueva tabla adicional las claves primarias de ambas entidades se incluyen como claves foráneas, y **la clave primaria de la entidad del lado N se define como la clave principal**.
+
+   ![Diagrama M/R - 1:N con participación mínima 0](/bases-de-datos/imgs/ud03/ud03_MR_e06.svg)
+
+   Y el grafo correspondiente a esta representación sería:   
+
+   ![Diagrama GF - 1:N con participación mínima 0](/bases-de-datos/imgs/ud03/ud03_GF_e06.svg)
 
 
-2. **Participación mínima 1 en el lado 1**: cuando en una relación 1:N la entidad del lado con cardinalidad máxima 1 tiene una participación mínima igual a 1, **no se crea una tabla adicional**. En este caso, la clave primaria de la entidad del lado 1 se incorpora como clave foránea en la tabla de la entidad que participa con cardinalidad máxima muchos (N).
+2. **Participación mínima 1 en el lado 1**: cuando en una relación 1:N la entidad del lado con cardinalidad 1 tiene una participación mínima igual a 1, **no se crea una tabla adicional**. En este caso, la clave primaria de la entidad del lado 1 se incorpora como clave foránea en la tabla de la entidad que participa con cardinalidad máxima muchos (N) o lo que es lo mismo, la tabla que representa a la entidad del lado N 'atrae' como clave foránea a la clave primaria del lado 1.
 
-![Uno a Muchos con Participación mínima 1 en el lado 1](/bases-de-datos/imgs/ud03/ud03_MR_e05.svg)
+   Para ilustrar este caso, consideremos el siguiente diagrama Entidad-Relación (E/R):
 
+   ![Diagrama E/R - 1:N con participación mínima 01](/bases-de-datos/imgs/ud03/ud03_ER_e05.svg)
+
+   A partir de este diagrama, se obtiene el siguiente modelo relacional, donde la entidad del lado N atrae a la clave principal del lado 1 como foránea (y a los atributos de la relación si los hay, en este caso sin llegar a ser foráneos):
+
+   ![Uno a Muchos con Participación mínima 1 en el lado 1](/bases-de-datos/imgs/ud03/ud03_MR_e05.svg)
+
+   Y el grafo correspondiente a esta representación sería:
+
+   ![Grafo Relacional  - 1:1  con ambas participaciones mínimas 0](/bases-de-datos/imgs/ud03/ud03_GF_e05.svg) 
 
 ## 3.4. Reglas para transformar relaciones Muchos a Muchos (N:M)
 
