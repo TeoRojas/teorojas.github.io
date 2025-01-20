@@ -19,13 +19,33 @@ abstract: Sinopsis de la unidad 04
    3.2. [Declaración y manipulación de tipos de datos personalizados](#32-declaración-y-manipulación-de-tipos-de-datos-personalizados)
 4. [Gestores de bases de datos objeto-relacionales y conectores](#4-gestores-de-bases-de-datos-objeto-relacionales-y-conectores)  
    4.1. [Principales sistemas de gestión](#41-principales-sistemas-de-gestión)  
-   4.2. [Configuración y uso de conectores](#42-configuración-y-uso-de-conectores)  
-
-<!--  
+   4.2. [Configuración y uso de conectores](#42-configuración-y-uso-de-conectores) 
 5. [Acceso a las funciones del gestor desde el lenguaje de programación](#5-acceso-a-las-funciones-del-gestor-desde-el-lenguaje-de-programación)  
+   5.1. [Tecnologías y herramientas para el acceso a bases de datos](#51-tecnologías-y-herramientas-para-el-acceso-a-bases-de-datos)  
+   5.2. [Pasos para establecer una conexión desde una aplicación](#52-pasos-para-establecer-una-conexión-desde-una-aplicación)  
+   5.3. [Gestión de errores y excepciones en la conexión](#53-gestión-de-errores-y-excepciones-en-la-conexión)  
+   5.4. [Mejores prácticas para el acceso a bases de datos](#54-mejores-prácticas-para-el-acceso-a-bases-de-datos)  
+   5.5. [Ejercicio práctico: Conexión desde una aplicación Java](#55-ejercicio-práctico-conexión-desde-una-aplicación-java)    
 6. [Características de las bases de datos orientadas a objetos](#6-características-de-las-bases-de-datos-orientadas-a-objetos)  
+   6.1. [Principales características de las bases de datos orientadas a objetos](#61-principales-características-de-las-bases-de-datos-orientadas-a-objetos)  
+   6.2. [Ventajas y desventajas de las bases de datos orientadas a objetos](#62-ventajas-y-desventajas-de-las-bases-de-datos-orientadas-a-objetos)  
+   6.3. [Comparación con bases de datos objeto-relacionales](#63-comparación-con-bases-de-datos-objeto-relacionales)  
+   6.4. [Aplicaciones prácticas de las bases de datos orientadas a objetos](#64-aplicaciones-prácticas-de-las-bases-de-datos-orientadas-a-objetos)
 7. [Gestores de bases de datos orientadas a objetos](#7-gestores-de-bases-de-datos-orientadas-a-objetos)  
+   7.1. [Características de los gestores de bases de datos orientadas a objetos](#71-características-de-los-gestores-de-bases-de-datos-orientadas-a-objetos)  
+   7.2. [Principales gestores de bases de datos orientadas a objetos](#72-principales-gestores-de-bases-de-datos-orientadas-a-objetos)   
+   7.3. [Comparación entre gestores de bases de datos orientadas a objetos](#73-comparación-entre-gestores-de-bases-de-datos-orientadas-a-objetos)  
+   7.4. [Criterios de selección de un gestor de bases de datos orientadas a objetos](#74-criterios-de-selección-de-un-gestor-de-bases-de-datos-orientadas-a-objetos)  
+   7.5. [Ejercicio práctico: Uso de db4o en una aplicación Java](#75-ejercicio-práctico-uso-de-db4o-en-una-aplicación-java)
 8. [Tipos de datos en bases de datos objeto-relacionales y orientadas a objetos](#8-tipos-de-datos-en-bases-de-datos-objeto-relacionales-y-orientadas-a-objetos)  
+   8.1. [Tipos de datos básicos](#81-tipos-de-datos-básicos)  
+   8.2. [Tipos de datos estructurados](#82-tipos-de-datos-estructurados)  
+   8.3. [Definición y uso de tipos de datos personalizados](#83-definición-y-uso-de-tipos-de-datos-personalizados)   
+   8.4. [Comparación entre tipos de datos relacionales y orientados a objetos](#84-comparación-entre-tipos-de-datos-relacionales-y-orientados-a-objetos)  
+   8.5. [Buenas prácticas en el uso de tipos de datos](#85-buenas-prácticas-en-el-uso-de-tipos-de-datos)  
+   8.6. [Ejercicio práctico: Creación y uso de tipos de datos en PostgreSQL](#86-ejercicio-práctico-creación-y-uso-de-tipos-de-datos-en-postgresql)
+
+<!--
 9. [Definición y modificación de objetos. Consultas](#9-definición-y-modificación-de-objetos-consultas)  
 10. [Interfaces de programación de aplicaciones (API)](#10-interfaces-de-programación-de-aplicaciones-api)  
 11. [Gestión de transacciones](#11-gestión-de-transacciones)  
@@ -414,3 +434,619 @@ Para mejorar el rendimiento y la eficiencia en la comunicación con la base de d
 - **Uso de pools de conexiones:** Herramientas como HikariCP o Apache Commons DBCP permiten reutilizar conexiones, reduciendo la sobrecarga de crear nuevas conexiones repetidamente.
 - **Preparación de consultas:** Evitar la ejecución de consultas dinámicas y preferir el uso de consultas preparadas para optimizar el rendimiento y prevenir ataques de inyección SQL.
 - **Monitoreo y registro:** Implementar herramientas para monitorear el rendimiento de las conexiones y detectar posibles cuellos de botella.
+
+# 5. Acceso a las funciones del gestor desde el lenguaje de programación
+
+El acceso a bases de datos objeto-relacionales desde un lenguaje de programación es un aspecto clave en el desarrollo de aplicaciones que requieren interactuar con los datos almacenados. La mayoría de los gestores de bases de datos proporcionan interfaces de conexión que permiten a las aplicaciones realizar operaciones como inserción, consulta, actualización y eliminación de datos de manera eficiente y segura.
+
+El acceso a las funciones del gestor desde el lenguaje de programación permite a los desarrolladores integrar la lógica de negocio de sus aplicaciones con la base de datos, utilizando diversas tecnologías como controladores JDBC en Java, librerías de conexión en Python y frameworks en otros lenguajes. La correcta configuración de estas conexiones es esencial para garantizar el rendimiento, la seguridad y la escalabilidad de las aplicaciones.
+
+## 5.1. Tecnologías y herramientas para el acceso a bases de datos
+
+Existen diversas tecnologías y herramientas que permiten a los lenguajes de programación comunicarse con gestores de bases de datos objeto-relacionales. Algunas de las más utilizadas son:
+
+- **JDBC (Java Database Connectivity):** Proporciona una API para conectar aplicaciones Java con bases de datos relacionales y objeto-relacionales, permitiendo la ejecución de consultas SQL desde código Java.
+- **ODBC (Open Database Connectivity):** Una interfaz estándar utilizada en múltiples lenguajes de programación, permitiendo la conexión a diferentes sistemas de bases de datos.
+- **ORM (Object-Relational Mapping):** Frameworks como Hibernate en Java o SQLAlchemy en Python que facilitan la persistencia de objetos en bases de datos relacionales mediante mapeo de entidades.
+- **Librerías específicas del lenguaje:** Como `psycopg2` para Python, `Npgsql` para .NET o `PHP PDO` para PHP, que ofrecen funcionalidades nativas de conexión a bases de datos.
+
+## 5.2. Pasos para establecer una conexión desde una aplicación
+
+El acceso a una base de datos desde una aplicación sigue generalmente los siguientes pasos:
+1. **Configuración del entorno:** Se debe asegurar que el controlador o librería de conexión correspondiente está correctamente instalado o referenciado en el proyecto.
+2. **Definición de los parámetros de conexión:** Se deben establecer parámetros clave como la URL del servidor de la base de datos, el nombre de la base de datos, el usuario y la contraseña.
+3. **Establecimiento de la conexión:** Utilizando las funciones proporcionadas por el controlador del lenguaje de programación elegido, se debe crear una conexión con la base de datos.
+4. **Ejecución de sentencias SQL:** Se pueden ejecutar consultas para la recuperación, inserción, actualización o eliminación de datos.
+5. **Cierre de la conexión:** Una vez completadas las operaciones, es importante cerrar la conexión para liberar recursos.
+
+A continuación, se muestra un ejemplo de conexión a una base de datos PostgreSQL desde Java utilizando JDBC:
+
+```java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class ConexionPostgreSQL {
+    public static void main(String[] args) {
+        String url = "jdbc:postgresql://localhost:5432/escuela";
+        String usuario = "postgres";
+        String contraseña = "admin";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, usuario, contraseña);
+            System.out.println("Conexión exitosa.");
+
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM estudiantes");
+
+            while (rs.next()) {
+                System.out.println("ID: " + rs.getInt("id") + ", Nombre: " + rs.getString("nombre") + ", Edad: " + rs.getInt("edad"));
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println("Error de conexión: " + e.getMessage());
+        }
+    }
+}
+```
+
+## 5.3. Gestión de errores y excepciones en la conexión
+
+Durante el acceso a bases de datos pueden surgir errores relacionados con problemas de conexión, credenciales incorrectas o errores en la ejecución de consultas. Para manejar estos errores, es fundamental implementar estrategias adecuadas de gestión de excepciones, como:
+- **Captura y manejo de excepciones SQL:** Utilizar bloques `try-catch` para capturar errores específicos y registrar información útil para la depuración.
+- **Validación de parámetros de conexión:** Verificar que los parámetros como URL, usuario y contraseña sean correctos antes de intentar la conexión.
+- **Uso de reintentos automáticos:** En entornos de alta disponibilidad, se pueden implementar mecanismos de reintento en caso de fallos intermitentes.
+
+## 5.4. Mejores prácticas para el acceso a bases de datos
+
+Para garantizar un acceso eficiente y seguro a las bases de datos, se deben seguir algunas mejores prácticas:
+- **Uso de conexiones seguras:** Configurar conexiones SSL/TLS para proteger la comunicación entre la aplicación y la base de datos.
+- **Pools de conexiones:** Utilizar herramientas como HikariCP o Apache DBCP para gestionar conexiones de manera eficiente y evitar la sobrecarga del servidor de bases de datos.
+- **Consultas preparadas:** Evitar la inyección SQL mediante el uso de consultas preparadas con parámetros en lugar de concatenación de cadenas.
+
+## 5.5. Ejercicio práctico: Conexión desde una aplicación Java
+
+Se propone a los estudiantes realizar el siguiente ejercicio:
+
+1. Crear una base de datos PostgreSQL llamada `empresa` con una tabla `empleados` que contenga los campos `id`, `nombre` y `salario`.
+2. Configurar un proyecto Java utilizando Maven e incluir la dependencia del conector JDBC de PostgreSQL.
+3. Implementar una clase en Java que permita insertar nuevos empleados en la base de datos a través de consultas preparadas.
+4. Ejecutar la aplicación y verificar que los datos se han almacenado correctamente en la base de datos.
+5. Documentar los pasos seguidos en la configuración y ejecución del proyecto.
+
+# 6. Características de las bases de datos orientadas a objetos
+
+Las bases de datos orientadas a objetos (BDOO) se diseñaron para superar las limitaciones de las bases de datos relacionales, ofreciendo un modelo de almacenamiento más natural para aplicaciones que trabajan con estructuras de datos complejas. Este tipo de bases de datos integra las características del paradigma de orientación a objetos, permitiendo almacenar y gestionar objetos completos, junto con su estado y comportamiento, de manera eficiente.
+
+Las bases de datos orientadas a objetos son especialmente útiles en aplicaciones que requieren manejar grandes volúmenes de datos interrelacionados, como sistemas de diseño asistido por computadora (CAD), sistemas de información geográfica (GIS) y aplicaciones científicas o de ingeniería.
+
+## 6.1. Principales características de las bases de datos orientadas a objetos
+
+Las bases de datos orientadas a objetos ofrecen una serie de características distintivas que las diferencian de las bases de datos relacionales tradicionales:
+
+- **Encapsulación:** Los datos y los métodos que los manipulan se agrupan dentro de los objetos, asegurando una mejor organización y protección de la información.
+- **Herencia:** Permite que los objetos hereden propiedades y métodos de clases padre, facilitando la reutilización del código y la creación de jerarquías de datos.
+- **Polimorfismo:** Los objetos pueden compartir la misma interfaz, permitiendo el uso de diferentes implementaciones según el tipo de objeto en tiempo de ejecución.
+- **Persistencia de objetos:** Los objetos se almacenan directamente en la base de datos, conservando su identidad y sus relaciones con otros objetos sin necesidad de transformaciones.
+- **Identidad de los objetos:** Cada objeto tiene un identificador único que lo diferencia de otros objetos, independientemente de su contenido o estado.
+- **Relaciones complejas:** Se pueden establecer relaciones entre objetos de manera más intuitiva y eficiente que en las bases de datos relacionales, utilizando referencias directas en lugar de claves foráneas.
+- **Consultas orientadas a objetos:** Se utilizan lenguajes de consulta específicos, como OQL (Object Query Language), que permiten manipular los datos mediante sentencias similares a SQL pero adaptadas a la orientación a objetos.
+
+## 6.2. Ventajas y desventajas de las bases de datos orientadas a objetos
+
+El uso de bases de datos orientadas a objetos conlleva una serie de ventajas y desafíos que deben ser considerados a la hora de seleccionar la tecnología más adecuada para un proyecto.
+
+### Ventajas:
+
+1. **Mayor expresividad:** Permiten modelar datos de manera más natural y cercana a la realidad del problema, facilitando su comprensión y mantenimiento.
+
+2. **Reutilización y extensibilidad:** Gracias a la herencia y encapsulación, se pueden reutilizar estructuras de datos en diferentes contextos y ampliar su funcionalidad sin grandes modificaciones.
+3. **Menor impedancia entre el modelo de datos y el modelo de aplicación:** Al utilizar los mismos conceptos de orientación a objetos en la base de datos y en el código de la aplicación, se reducen las dificultades de integración.
+4. **Alto rendimiento en aplicaciones con datos complejos:** Facilitan el almacenamiento y recuperación de estructuras de datos jerárquicas sin necesidad de múltiples consultas o uniones.
+### Desventajas:
+
+1. **Curva de aprendizaje más pronunciada:** Requieren un conocimiento más profundo del paradigma de orientación a objetos y de los sistemas de gestión específicos.
+2. **Menor compatibilidad con herramientas existentes:** Muchas aplicaciones y herramientas están optimizadas para bases de datos relacionales, lo que puede generar dificultades de integración.
+3. **Mayor consumo de recursos:** La gestión de objetos y sus relaciones puede implicar un mayor uso de memoria y procesamiento en comparación con los modelos relacionales.
+4. **Estandarización limitada:** Aunque existen estándares como ODMG (Object Data Management Group), su adopción es menos extendida en comparación con el estándar SQL.
+
+## 6.3. Comparación con bases de datos objeto-relacionales
+
+Las bases de datos orientadas a objetos y las bases de datos objeto-relacionales comparten algunas características, pero también presentan diferencias clave:
+
+| Característica                  | Bases de datos orientadas a objetos | Bases de datos objeto-relacionales |
+|----------------------------------|-------------------------------------|------------------------------------|
+| Modelo de datos                  | Completamente orientado a objetos  | Híbrido entre objetos y relacional |
+| Lenguaje de consulta              | OQL u otros lenguajes específicos  | SQL con extensiones orientadas a objetos |
+| Flexibilidad                      | Alta, modelado complejo             | Media, estructura híbrida          |
+| Rendimiento en datos complejos     | Alto                               | Medio                             |
+| Curva de aprendizaje               | Elevada                            | Moderada                          |
+| Integración con aplicaciones       | Compleja                           | Más sencilla con herramientas SQL |
+
+## 6.4. Aplicaciones prácticas de las bases de datos orientadas a objetos
+
+Las bases de datos orientadas a objetos son particularmente útiles en una variedad de aplicaciones donde se requiere gestionar datos complejos con estructuras jerárquicas o con relaciones altamente interconectadas. Algunas aplicaciones comunes incluyen:
+
+- **Sistemas de diseño asistido por computadora (CAD):** Gestión de modelos complejos de ingeniería con múltiples relaciones entre objetos.
+- **Sistemas de información geográfica (GIS):** Almacenamiento de datos espaciales con estructuras anidadas y alto nivel de detalle.
+- **Aplicaciones multimedia:** Gestión de contenidos digitales como imágenes, videos y documentos con metadatos complejos.
+- **Sistemas de simulación científica:** Manejo de modelos complejos de datos utilizados en simulaciones de fenómenos físicos o biológicos.
+- **Aplicaciones de inteligencia artificial:** Almacenamiento de estructuras de datos relacionadas con aprendizaje automático y sistemas expertos.
+En conclusión, las bases de datos orientadas a objetos proporcionan una solución poderosa para aplicaciones con requisitos de modelado de datos avanzados, ofreciendo una integración más natural con lenguajes de programación orientados a objetos y un rendimiento optimizado para estructuras de datos complejas.
+
+# 7. Gestores de bases de datos orientadas a objetos
+
+Los gestores de bases de datos orientadas a objetos (ODBMS, por sus siglas en inglés) son sistemas diseñados para almacenar, gestionar y manipular datos en forma de objetos, alineándose con los principios de la programación orientada a objetos. Estos gestores proporcionan una integración más natural con lenguajes de programación orientados a objetos, permitiendo almacenar objetos complejos sin necesidad de transformaciones a estructuras relacionales.
+
+Los gestores de bases de datos orientadas a objetos permiten modelar estructuras de datos complejas y relaciones jerárquicas de manera eficiente, lo que los hace ideales para aplicaciones que requieren almacenar datos con estructuras dinámicas y múltiples interconexiones.
+
+## 7.1. Características de los gestores de bases de datos orientadas a objetos
+
+Los gestores de bases de datos orientadas a objetos ofrecen una serie de características clave que los diferencian de los gestores relacionales tradicionales, entre las que destacan:
+
+- **Almacenamiento de objetos completos:** Permiten almacenar objetos en su totalidad, incluidos sus atributos y métodos, manteniendo la integridad de la encapsulación y la identidad de los objetos.
+- **Persistencia transparente:** Los objetos pueden persistir en la base de datos sin necesidad de transformar su estructura a modelos relacionales.
+- **Soporte para herencia y polimorfismo:** Facilitan la reutilización de estructuras de datos y la implementación de jerarquías de clases mediante relaciones padre-hijo.
+- **Integración con lenguajes de programación:** Proporcionan APIs nativas para lenguajes como Java, C++, Python y .NET, lo que permite trabajar con objetos directamente en el código de la aplicación.
+- **Consultas orientadas a objetos:** Soportan lenguajes de consulta específicos, como OQL (Object Query Language), que permiten realizar búsquedas basadas en propiedades y relaciones entre objetos.
+- **Eficiencia en la manipulación de datos complejos:** Están optimizados para el almacenamiento y recuperación de estructuras de datos complejas, como gráficos y jerarquías.
+
+## 7.2. Principales gestores de bases de datos orientadas a objetos
+
+A lo largo de los años, han surgido varios gestores de bases de datos orientadas a objetos que se han consolidado en el mercado. A continuación, se presentan algunos de los más destacados:
+
+### 7.2.1. db4o (Database for Objects)
+
+db4o es un sistema de gestión de bases de datos orientadas a objetos diseñado para aplicaciones embebidas y de escritorio. Es una solución ligera que ofrece las siguientes características:
+
+- Integración nativa con Java y .NET.
+- Persistencia transparente de objetos sin necesidad de realizar transformaciones.
+- Alta eficiencia en la recuperación de datos gracias a su optimización para consultas de objetos.
+- Soporte para replicación y cifrado de datos.
+
+**Ejemplo de uso en Java:**
+
+```java
+ObjectContainer db = Db4oEmbedded.openFile("estudiantes.db");
+Estudiante estudiante = new Estudiante("Juan Pérez", 22);
+db.store(estudiante);
+db.close();
+```
+
+### 7.2.2. ObjectDB
+
+ObjectDB es un potente gestor de bases de datos orientadas a objetos diseñado específicamente para la plataforma Java. Algunas de sus características clave son:
+
+- Totalmente compatible con JPA (Java Persistence API).
+- No requiere configuración compleja ni servidores adicionales.
+- Soporte para consultas OQL y JPQL (Java Persistence Query Language).
+- Optimización para aplicaciones de alto rendimiento.
+
+**Ejemplo de conexión con JPA en Java:**
+
+```java
+EntityManagerFactory emf = Persistence.createEntityManagerFactory("objectdb:mydb.odb");
+EntityManager em = emf.createEntityManager();
+em.getTransaction().begin();
+Estudiante estudiante = new Estudiante("Ana López", 20);
+em.persist(estudiante);
+em.getTransaction().commit();
+em.close();
+```
+
+## 7.3. Comparación entre gestores de bases de datos orientadas a objetos
+
+| Característica        | db4o            | ObjectDB         |
+|----------------------|-----------------|-----------------|
+| Lenguajes soportados  | Java, .NET       | Java            |
+| Persistencia         | Transparente     | JPA/JDO compatible |
+| Rendimiento          | Alto             | Muy alto        |
+
+## 7.4. Criterios de selección de un gestor de bases de datos orientadas a objetos
+
+Se deben considerar varios factores clave según los requisitos específicos de la aplicación:
+
+1. **Escalabilidad:** Si la aplicación requiere manejar grandes volúmenes de datos, es importante elegir un gestor que ofrezca particionamiento y replicación.
+2. **Compatibilidad con el entorno de desarrollo:** La integración con el lenguaje de programación utilizado es crucial para garantizar una experiencia de desarrollo fluida.
+
+## 7.5. Ejercicio práctico: Uso de db4o en una aplicación Java
+
+Se propone a los estudiantes realizar el siguiente ejercicio para familiarizarse con el uso de un gestor de bases de datos orientadas a objetos:
+
+1. Instalar y configurar db4o en un proyecto Java.
+2. Definir una clase `Producto` con atributos como `id`, `nombre` y `precio`.
+3. Implementar un programa que permita almacenar objetos de tipo `Producto` en la base de datos db4o.
+
+# 8. Tipos de datos en bases de datos objeto-relacionales y orientadas a objetos
+
+En las bases de datos objeto-relacionales y orientadas a objetos, los tipos de datos juegan un papel fundamental en la modelización de la información, ya que permiten definir estructuras complejas que representan entidades del mundo real de una manera más intuitiva y cercana a los paradigmas de programación orientada a objetos.
+
+## 8.1. Tipos de datos básicos
+
+Las bases de datos objeto-relacionales y orientadas a objetos admiten tipos de datos básicos similares a los encontrados en bases de datos relacionales, tales como:
+
+- **Enteros:** Representan valores numéricos enteros de distintos tamaños, como `SMALLINT` (2 bytes), `INTEGER` (4 bytes) y `BIGINT` (8 bytes). Son adecuados para almacenar datos como identificadores, cantidades y contadores.  
+  ```sql
+  CREATE TABLE productos (
+      id SERIAL PRIMARY KEY,
+      stock INTEGER
+  );
+  ```
+
+- **Decimales:** Permiten almacenar números con decimales con precisión definida, utilizando tipos como `NUMERIC(precision, scale)` y `DECIMAL`. Son ideales para almacenar valores financieros y mediciones precisas.  
+  ```sql
+  CREATE TABLE transacciones (
+      id SERIAL PRIMARY KEY,
+      monto DECIMAL(10,2)
+  );
+  ```
+
+- **Cadenas de texto:** Se utilizan para almacenar información textual de longitud fija o variable mediante los tipos `CHAR(n)` (longitud fija), `VARCHAR(n)` (longitud variable) y `TEXT` (longitud ilimitada).  
+  ```sql
+  CREATE TABLE clientes (
+      id SERIAL PRIMARY KEY,
+      nombre VARCHAR(100),
+      descripcion TEXT
+  );
+  ```
+
+- **Booleanos:** Representan valores lógicos de verdadero o falso mediante el tipo de dato `BOOLEAN`, utilizado para flags o indicadores binarios.  
+  ```sql
+  CREATE TABLE usuarios (
+      id SERIAL PRIMARY KEY,
+      activo BOOLEAN
+  );
+  ```
+
+- **Fechas y horas:** Permiten gestionar información temporal utilizando tipos como `DATE` (solo fecha), `TIME` (solo hora), `TIMESTAMP` (fecha y hora), y `INTERVAL` (para diferencias temporales).  
+  ```sql
+  CREATE TABLE eventos (
+      id SERIAL PRIMARY KEY,
+      fecha_evento TIMESTAMP,
+      duracion INTERVAL
+  );
+  ```
+
+- **Datos binarios:** Se utilizan para almacenar archivos binarios como imágenes, audios o documentos mediante el tipo `BYTEA` en PostgreSQL.  
+  ```sql
+  CREATE TABLE archivos (
+      id SERIAL PRIMARY KEY,
+      contenido BYTEA
+  );
+  ```
+
+Cada uno de estos tipos de datos básicos se pueden utilizar de manera combinada con otros tipos más avanzados para proporcionar una representación eficiente y estructurada de los datos en una base de datos objeto-relacional u orientada a objetos.
+
+## 8.2. Tipos de datos estructurados
+
+Los tipos de datos estructurados permiten agrupar múltiples atributos en una sola entidad, proporcionando una mayor flexibilidad en la organización de la información. Estos tipos permiten modelar estructuras complejas de datos de forma más eficiente, reduciendo la necesidad de múltiples tablas y simplificando las consultas.
+
+### 8.2.1. Tipos compuestos
+
+Los tipos compuestos permiten encapsular múltiples atributos en un solo tipo de dato, lo que facilita la organización de información relacionada. Estos tipos permiten definir estructuras de datos más precisas y reducir la redundancia.
+
+**Ejemplo en PostgreSQL:**
+
+```sql
+CREATE TYPE direccion AS (
+    calle VARCHAR(100),
+    ciudad VARCHAR(50),
+    codigo_postal VARCHAR(10)
+);
+
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    domicilio direccion
+);
+```
+
+El tipo `direccion` permite almacenar la información de la dirección en una sola columna, lo que facilita la manipulación de los datos sin necesidad de múltiples columnas.
+
+### 8.2.2. Tipos de colección
+
+Los tipos de colección permiten almacenar múltiples valores en una sola columna, lo que resulta útil para modelar relaciones uno a muchos dentro de una misma tabla. Los tipos de colección más comunes incluyen:
+
+- **Arrays:** Permiten almacenar una lista ordenada de elementos del mismo tipo.  
+  ```sql
+  CREATE TABLE empleados (
+      id SERIAL PRIMARY KEY,
+      nombre VARCHAR(100),
+      telefonos VARCHAR(15)[]
+  );
+  ```
+
+- **Listas:** Similares a los arrays, pero con capacidad de almacenar elementos duplicados.  
+- **Conjuntos:** No permiten duplicados y se utilizan para almacenar valores únicos.  
+- **Mapas (diccionarios):** Permiten almacenar pares clave-valor, útiles para datos con relaciones complejas.
+
+### 8.2.3. Referencias y asociaciones
+
+Las bases de datos objeto-relacionales permiten definir referencias entre objetos para modelar relaciones de una forma más directa y eficiente que mediante claves foráneas en bases de datos relacionales. Las referencias permiten establecer asociaciones directas entre objetos de distintas tablas.
+
+**Ejemplo en PostgreSQL utilizando referencias:**
+
+```sql
+CREATE TABLE productos (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100)
+);
+
+CREATE TABLE pedidos (
+    id SERIAL PRIMARY KEY,
+    producto_id INTEGER REFERENCES productos(id),
+    cantidad INTEGER
+);
+```
+
+En este ejemplo, la tabla `pedidos` mantiene una relación con la tabla `productos` utilizando una clave foránea, lo que permite acceder a los productos solicitados en cada pedido.
+
+### 8.2.4. Objetos anidados
+
+Las bases de datos orientadas a objetos permiten anidar objetos dentro de otros objetos, lo que facilita la organización jerárquica de datos complejos. Este tipo de modelado permite una representación más natural de estructuras como árboles o grafos.
+
+**Ejemplo de objeto anidado en PostgreSQL:**
+
+```sql
+CREATE TYPE departamento AS (
+    nombre VARCHAR(100),
+    ubicacion VARCHAR(100)
+);
+
+CREATE TABLE empresa (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    depto departamento
+);
+```
+
+### 8.2.5. Ventajas de los tipos de datos estructurados
+
+El uso de tipos de datos estructurados proporciona varias ventajas, entre ellas:
+
+1. **Reducción de la redundancia de datos:** Permiten almacenar información relacionada en una sola estructura, reduciendo la duplicación de datos.
+2. **Mejora del rendimiento:** Se pueden realizar consultas más rápidas y eficientes al evitar la necesidad de múltiples uniones.
+3. **Mayor claridad del modelo de datos:** La estructura de datos refleja de manera más natural los objetos del mundo real.
+4. **Facilidad de mantenimiento:** Los cambios en la estructura se pueden realizar de manera más sencilla sin afectar múltiples tablas.
+
+## 8.3. Definición y uso de tipos de datos personalizados
+
+Las bases de datos objeto-relacionales permiten la creación de tipos de datos personalizados, brindando la posibilidad de definir estructuras de datos específicas para la aplicación. Estos tipos pueden encapsular información compleja, mejorar la legibilidad del modelo de datos y proporcionar una mayor cohesión entre la lógica de negocio y el almacenamiento.
+
+### 8.3.1. Definición de tipos de datos personalizados
+
+En bases de datos como PostgreSQL, los tipos de datos personalizados pueden definirse utilizando la sentencia `CREATE TYPE`. Estos tipos pueden ser compuestos, enumerados o basados en dominios preexistentes.
+
+**Ejemplo de tipo compuesto:**
+
+```sql
+CREATE TYPE direccion AS (
+    calle VARCHAR(100),
+    ciudad VARCHAR(50),
+    codigo_postal VARCHAR(10)
+);
+```
+
+Este tipo compuesto permite encapsular múltiples atributos relacionados con una dirección, evitando la dispersión de datos en múltiples columnas.
+
+**Ejemplo de tipo enumerado:**
+
+```sql
+CREATE TYPE estado_pedido AS ENUM ('pendiente', 'enviado', 'entregado', 'cancelado');
+```
+
+Los tipos enumerados son útiles para restringir los valores de una columna a un conjunto predefinido de opciones.
+
+**Ejemplo de tipo basado en dominio:**
+
+```sql
+CREATE DOMAIN email AS VARCHAR(255) CHECK (VALUE ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z]{2,}$');
+```
+
+Los dominios permiten definir restricciones adicionales sobre un tipo de dato existente.
+
+### 8.3.2. Uso de tipos de datos personalizados en tablas
+
+Una vez definidos, los tipos personalizados pueden ser utilizados en la creación de tablas para mejorar la estructura de datos y facilitar su manipulación.
+
+```sql
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    contacto direccion,
+    estado estado_pedido
+);
+```
+
+En este caso, la columna `contacto` almacena datos utilizando el tipo `direccion`, lo que permite mantener la estructura de la dirección encapsulada en una única columna.
+
+### 8.3.3. Inserción y manipulación de datos con tipos personalizados
+
+Para insertar datos en una tabla que utiliza un tipo compuesto, se emplea la función `ROW` o la sintaxis específica del gestor de base de datos.
+
+```sql
+INSERT INTO clientes (nombre, contacto, estado)
+VALUES ('Juan Pérez', ROW('Calle Mayor', 'Madrid', '28001'), 'pendiente');
+```
+
+La manipulación de los datos almacenados en tipos personalizados puede realizarse accediendo a los atributos individuales:
+
+```sql
+SELECT nombre, (contacto).calle, (contacto).ciudad FROM clientes;
+```
+
+### 8.3.4. Ventajas del uso de tipos de datos personalizados
+
+El uso de tipos de datos personalizados ofrece diversas ventajas, entre las que se destacan:
+
+- **Modularidad:** Permite reutilizar estructuras de datos en múltiples tablas.
+- **Coherencia:** Facilita la gestión de datos relacionados, reduciendo errores y redundancias.
+- **Mantenimiento simplificado:** Los cambios en la estructura del tipo se reflejan automáticamente en todas las tablas donde se utilicen.
+- **Expresividad:** Proporciona una representación más natural de las entidades del mundo real.
+
+### 8.3.5. Consideraciones al utilizar tipos de datos personalizados
+
+A pesar de sus ventajas, el uso de tipos de datos personalizados requiere considerar algunos aspectos, como:
+
+- **Compatibilidad:** No todos los sistemas de gestión de bases de datos admiten tipos personalizados con el mismo nivel de soporte.
+- **Desempeño:** Aunque los tipos compuestos pueden mejorar la organización de datos, pueden introducir cierta sobrecarga en consultas complejas.
+- **Migración:** La portabilidad de esquemas con tipos personalizados puede ser más compleja en entornos multi-plataforma.
+
+## 8.4. Comparación entre tipos de datos relacionales y orientados a objetos
+
+A continuación, se comparan los tipos de datos utilizados en bases de datos relacionales y orientadas a objetos:
+
+| Característica        | Relacionales            | Orientadas a objetos        |
+|----------------------|-------------------------|-----------------------------|
+| Tipos de datos        | Simples (int, varchar)   | Complejos (objetos, listas)  |
+| Relaciones            | Claves foráneas          | Referencias entre objetos   |
+| Encapsulación         | No                       | Sí                          |
+| Herencia              | No                       | Sí                          |
+
+## 8.5. Buenas prácticas en el uso de tipos de datos
+
+Para optimizar el uso de tipos de datos en bases de datos objeto-relacionales y orientadas a objetos, se deben seguir algunas buenas prácticas:
+
+1. **Seleccionar el tipo adecuado:** Usar el tipo de datos que mejor represente la información para optimizar el almacenamiento y acceso.
+2. **Evitar redundancias:** Utilizar tipos de datos estructurados para agrupar información relacionada y reducir la duplicación.
+3. **Optimización de consultas:** Elegir tipos de datos que permitan consultas eficientes y eviten conversiones innecesarias.
+4. **Documentación:** Definir y documentar adecuadamente los tipos de datos personalizados para facilitar su mantenimiento y uso.
+
+## 8.6. Ejercicio práctico: Creación y uso de tipos de datos en PostgreSQL
+
+Se propone a los estudiantes realizar el siguiente ejercicio para comprender mejor el uso de tipos de datos en bases de datos objeto-relacionales:
+
+1. Crear un tipo de dato compuesto llamado `cliente` con los atributos `nombre`, `email` y `telefono`.
+2. Crear una tabla llamada `pedidos` que contenga una columna de tipo `cliente` y otra columna para la fecha del pedido.
+3. Insertar algunos registros utilizando datos de ejemplo.
+4. Consultar la tabla y extraer información específica de los clientes almacenados.
+
+# 9. Definición y modificación de objetos. Consultas
+
+Las bases de datos objeto-relacionales y orientadas a objetos permiten la creación, manipulación y consulta de objetos de una manera más intuitiva y alineada con la programación orientada a objetos. Esto permite que las estructuras de datos se almacenen de forma que reflejan la realidad del negocio, mejorando la eficiencia y reduciendo la brecha entre la aplicación y la base de datos.
+
+## 9.1. Definición de objetos
+
+La definición de objetos en bases de datos objeto-relacionales y orientadas a objetos permite encapsular datos y comportamiento en una única entidad. La definición se realiza utilizando tipos de datos personalizados, que pueden incluir atributos y métodos.
+
+### Ejemplo de definición de objetos en PostgreSQL:
+
+```sql
+CREATE TYPE vehiculo AS (
+    marca VARCHAR(50),
+    modelo VARCHAR(50),
+    anio INTEGER
+);
+
+CREATE TABLE flota (
+    id SERIAL PRIMARY KEY,
+    info_vehiculo vehiculo,
+    disponibilidad BOOLEAN
+);
+```
+
+En este ejemplo, se ha creado un tipo de objeto `vehiculo` que encapsula la información de un coche y se utiliza en la tabla `flota`.
+
+### Definición de objetos en una base de datos orientada a objetos (db4o en Java):
+
+```java
+public class Vehiculo {
+    private String marca;
+    private String modelo;
+    private int anio;
+
+    public Vehiculo(String marca, String modelo, int anio) {
+        this.marca = marca;
+        this.modelo = modelo;
+        this.anio = anio;
+    }
+
+    // Getters y Setters
+}
+```
+
+## 9.2. Modificación de objetos
+
+Modificar objetos en bases de datos objeto-relacionales implica actualizar los valores de sus atributos mediante sentencias `UPDATE` o mediante métodos específicos en bases de datos orientadas a objetos.
+
+### Modificación de objetos en PostgreSQL:
+
+```sql
+UPDATE flota
+SET info_vehiculo = ROW('Toyota', 'Corolla', 2022)
+WHERE id = 1;
+```
+
+En este ejemplo, se actualiza la información del vehículo con una nueva marca, modelo y año.
+
+### Modificación de objetos en db4o con Java:
+
+```java
+ObjectContainer db = Db4oEmbedded.openFile("flota.db");
+Vehiculo vehiculo = db.queryByExample(new Vehiculo("Toyota", null, 0)).get(0);
+vehiculo.setModelo("Corolla");
+vehiculo.setAnio(2022);
+db.store(vehiculo);
+db.close();
+```
+
+Este ejemplo demuestra cómo buscar un objeto en la base de datos, modificar sus atributos y almacenarlo de nuevo.
+
+## 9.3. Consultas sobre objetos
+
+Las consultas en bases de datos objeto-relacionales pueden realizarse utilizando SQL extendido, mientras que en bases de datos orientadas a objetos se utilizan métodos de consulta nativos o lenguajes específicos como OQL.
+
+### Consultas en PostgreSQL:
+
+```sql
+SELECT (info_vehiculo).marca, (info_vehiculo).modelo
+FROM flota
+WHERE (info_vehiculo).anio > 2020;
+```
+
+Este ejemplo recupera la marca y modelo de los vehículos cuyo año es posterior a 2020.
+
+### Consultas en db4o con Java:
+
+```java
+ObjectContainer db = Db4oEmbedded.openFile("flota.db");
+List<Vehiculo> resultados = db.query(new Predicate<Vehiculo>() {
+    public boolean match(Vehiculo v) {
+        return v.getAnio() > 2020;
+    }
+});
+
+for (Vehiculo v : resultados) {
+    System.out.println(v.getMarca() + " " + v.getModelo());
+}
+db.close();
+```
+
+En este caso, se realiza una consulta utilizando una condición que devuelve todos los vehículos cuya fecha de fabricación es posterior a 2020.
+
+## 9.4. Buenas prácticas en la gestión de objetos
+
+Para garantizar un rendimiento óptimo y una correcta organización de los datos, se deben seguir algunas buenas prácticas:
+
+1. **Definir tipos de datos claros y reutilizables:** Facilita el mantenimiento y la escalabilidad de la base de datos.
+2. **Optimizar las consultas:** Utilizar índices y particionamiento de datos cuando sea necesario.
+3. **Evitar la redundancia:** Aprovechar las características de encapsulación para mantener la integridad de los datos.
+4. **Mantener coherencia en la actualización:** Asegurarse de actualizar todos los atributos relacionados de un objeto para evitar inconsistencias.
+
+## 9.5. Ejercicio práctico
+
+Se propone el siguiente ejercicio para consolidar los conceptos aprendidos:
+
+1. Definir un tipo de dato `empleado` con los atributos `nombre`, `departamento` y `salario`.
+2. Crear una tabla `empresa` que utilice el tipo de dato `empleado`.
+3. Insertar algunos registros de prueba con valores ficticios.
+4. Actualizar la información de un empleado específico.
+5. Realizar consultas para extraer empleados de un departamento específico con salario superior a 3000 euros.
+6. Documentar los resultados obtenidos.
+
+Este ejercicio permitirá aplicar los conocimientos sobre definición, modificación y consulta de objetos en bases de datos objeto-relacionales y orientadas a objetos.
