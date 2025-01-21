@@ -1048,5 +1048,3 @@ Se propone el siguiente ejercicio para consolidar los conceptos aprendidos:
 4. Actualizar la información de un empleado específico.
 5. Realizar consultas para extraer empleados de un departamento específico con salario superior a 3000 euros.
 6. Documentar los resultados obtenidos.
-
-Este ejercicio permitirá aplicar los conocimientos sobre definición, modificación y consulta de objetos en bases de datos objeto-relacionales y orientadas a objetos.
