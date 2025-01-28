@@ -44,14 +44,11 @@ abstract: Sinopsis de la unidad 04
    8.4. [Comparación entre tipos de datos relacionales y orientados a objetos](#84-comparación-entre-tipos-de-datos-relacionales-y-orientados-a-objetos)  
    8.5. [Buenas prácticas en el uso de tipos de datos](#85-buenas-prácticas-en-el-uso-de-tipos-de-datos)  
    8.6. [Ejercicio práctico: Creación y uso de tipos de datos en PostgreSQL](#86-ejercicio-práctico-creación-y-uso-de-tipos-de-datos-en-postgresql)
-
-<!--
 9. [Definición y modificación de objetos. Consultas](#9-definición-y-modificación-de-objetos-consultas)  
 10. [Interfaces de programación de aplicaciones (API)](#10-interfaces-de-programación-de-aplicaciones-api)  
 11. [Gestión de transacciones](#11-gestión-de-transacciones)  
 12. [Prueba y documentación de las aplicaciones desarrolladas](#12-prueba-y-documentación-de-las-aplicaciones-desarrolladas)
 
-!-->
 
 ## 1. Introducción y diferencias con la gestión de persistencia con ORM
 
@@ -1048,3 +1045,390 @@ Se propone el siguiente ejercicio para consolidar los conceptos aprendidos:
 4. Actualizar la información de un empleado específico.
 5. Realizar consultas para extraer empleados de un departamento específico con salario superior a 3000 euros.
 6. Documentar los resultados obtenidos.
+
+# 10. Interfaces de programación de aplicaciones (API)
+
+Las interfaces de programación de aplicaciones (API, por sus siglas en inglés) permiten que las aplicaciones interactúen con bases de datos objeto-relacionales y orientadas a objetos de manera eficiente. Estas interfaces actúan como un puente entre el software y el sistema de gestión de bases de datos (SGBD), proporcionando un conjunto de funciones y métodos que simplifican el acceso, la manipulación y la gestión de los datos. Además de ofrecer métodos para conectar aplicaciones con bases de datos, las API modernas incluyen herramientas para manejar la seguridad, las transacciones y la escalabilidad, haciendo que sean indispensables en el desarrollo de aplicaciones complejas.
+
+## 10.1. Concepto y funciones principales de las API
+
+Una API es un conjunto de reglas y protocolos que permite que diferentes software se comuniquen entre sí. En el contexto de bases de datos, las API proporcionan un nivel de abstracción que permite a los desarrolladores interactuar con el SGBD sin necesidad de conocer los detalles internos de su implementación. Por ejemplo, al utilizar una API como JDBC o JPA, el desarrollador puede centrarse en la lógica del negocio en lugar de preocuparse por cómo se envían y procesan las consultas SQL en el SGBD. 
+
+```java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class ConexionJDBC {
+    public static void main(String[] args) {
+        String url = "jdbc:postgresql://localhost:5432/mi_base";
+        String usuario = "usuario";
+        String contrasena = "contraseña";
+
+        try (Connection conexion = DriverManager.getConnection(url, usuario, contrasena)) {
+            System.out.println("Conexión exitosa a la base de datos.");
+        } catch (SQLException e) {
+            System.out.println("Error al conectar: " + e.getMessage());
+        }
+    }
+}
+```
+
+Entre las principales funciones de las API para bases de datos se incluyen establecer conexiones seguras y eficientes con el SGBD, ejecutar sentencias SQL, gestionar transacciones mediante mecanismos como commits y rollbacks, y manejar errores o inconsistencias mediante excepciones.
+
+Además, las API permiten una mayor interoperabilidad entre sistemas al ofrecer un lenguaje común para interactuar con diferentes bases de datos, lo que las convierte en una herramienta esencial para aplicaciones que necesitan funcionar en entornos variados.
+
+## 10.2. Ejemplos de API para bases de datos
+
+En el desarrollo de aplicaciones, existen múltiples API que permiten interactuar con bases de datos. Estas API proporcionan enfoques distintos, desde la conexión directa mediante comandos SQL hasta el mapeo de objetos a tablas de forma automática. Algunas de las más comunes incluyen JDBC, JPA y frameworks basados en ORM como Hibernate.
+
+### JDBC (Java Database Connectivity)
+JDBC es una API estándar de Java que permite a las aplicaciones interactuar directamente con bases de datos mediante la ejecución de comandos SQL. Es ampliamente utilizada debido a su flexibilidad y su capacidad para conectarse a diferentes tipos de bases de datos utilizando controladores específicos. Aunque requiere más configuración y código que otros enfoques como JPA, JDBC proporciona un control granular sobre las operaciones en la base de datos.
+
+Por ejemplo, una conexión básica con JDBC incluye definir la URL de la base de datos, establecer el usuario y la contraseña, y utilizar clases como `Connection`, `Statement` y `ResultSet` para ejecutar consultas y procesar los resultados. Este enfoque permite manejar transacciones manualmente y ofrece un control detallado sobre el flujo de datos entre la aplicación y la base de datos.
+
+```java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class EjemploJDBC {
+    public static void main(String[] args) {
+        String url = "jdbc:postgresql://localhost:5432/mi_base";
+        String usuario = "usuario";
+        String contrasena = "contraseña";
+
+        try (Connection conexion = DriverManager.getConnection(url, usuario, contrasena)) {
+            String consulta = "SELECT * FROM empleados WHERE salario > ?";
+            PreparedStatement stmt = conexion.prepareStatement(consulta);
+            stmt.setDouble(1, 3000.0);
+
+            ResultSet resultados = stmt.executeQuery();
+            while (resultados.next()) {
+                System.out.println("Empleado: " + resultados.getString("nombre"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### JPA (Java Persistence API)
+JPA es una API de persistencia en Java que abstrae gran parte de las operaciones SQL, permitiendo que los desarrolladores trabajen directamente con objetos en lugar de tablas. Este enfoque de mapeo objeto-relacional (ORM) facilita la creación de aplicaciones más legibles y mantenibles. JPA utiliza anotaciones para definir las relaciones entre clases y tablas, y su integración con frameworks como Hibernate mejora aún más su funcionalidad.
+
+```java
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+public class Empleado {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nombre;
+    private Double salario;
+
+    // Getters y Setters
+}
+```
+
+Con JPA, las consultas pueden ejecutarse utilizando un EntityManager:
+
+```java
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+
+public class EjemploJPA {
+    public static void main(String[] args) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("miUnidadPersistencia");
+        EntityManager em = emf.createEntityManager();
+
+        em.getTransaction().begin();
+        Empleado emp = new Empleado();
+        emp.setNombre("Ana Pérez");
+        emp.setSalario(3500.0);
+        em.persist(emp);
+        em.getTransaction().commit();
+
+        em.close();
+        emf.close();
+    }
+}
+```
+
+### Hibernate
+Hibernate es un framework ORM que implementa JPA, proporcionando herramientas avanzadas para la gestión de datos, como la capacidad de generar consultas utilizando HQL (Hibernate Query Language), que es similar a SQL pero más orientado a objetos. Además, Hibernate simplifica la gestión de transacciones y ofrece mecanismos para la caché de datos, mejorando el rendimiento de las aplicaciones.
+
+```java
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+public class EjemploHibernate {
+    public static void main(String[] args) {
+        SessionFactory factory = new Configuration().configure().buildSessionFactory();
+        Session session = factory.openSession();
+
+        session.beginTransaction();
+        Empleado emp = new Empleado();
+        emp.setNombre("Carlos López");
+        emp.setSalario(4000.0);
+        session.save(emp);
+        session.getTransaction().commit();
+
+        session.close();
+        factory.close();
+    }
+}
+```
+
+## 10.3. Ventajas de utilizar API para bases de datos
+
+El uso de API para bases de datos ofrece múltiples beneficios que van más allá de la simplicidad en la conexión y el acceso a los datos. Una de las principales ventajas es la abstracción que proporcionan, permitiendo a los desarrolladores centrarse en la lógica de negocio sin preocuparse por los detalles técnicos del SGBD. Además, muchas API son independientes del sistema de bases de datos, lo que facilita la migración entre diferentes plataformas sin realizar cambios significativos en el código de la aplicación.
+
+Otra ventaja importante es la mejora en la productividad, ya que las API simplifican tareas complejas como la gestión de transacciones y la recuperación de datos. También garantizan consistencia en la forma en que se interactúa con las bases de datos, reduciendo el riesgo de errores y mejorando la mantenibilidad del código. Por último, el uso de consultas preparadas y la gestión automatizada de conexiones ayudan a mejorar la seguridad y el rendimiento general de las aplicaciones.
+
+## 10.4. Buenas prácticas en el uso de API
+
+Para maximizar los beneficios de utilizar API para bases de datos, es esencial seguir buenas prácticas de desarrollo. Una de las más importantes es la gestión adecuada de las conexiones. Siempre se deben cerrar las conexiones, declaraciones y resultados una vez que ya no se necesiten para evitar fugas de memoria y garantizar un uso eficiente de los recursos.
+
+Además, se recomienda utilizar transacciones para controlar las operaciones críticas y garantizar la consistencia de los datos en caso de errores. Las consultas preparadas también son fundamentales para prevenir ataques de inyección SQL y mejorar la eficiencia en la ejecución de las operaciones.
+
+Finalmente, el manejo adecuado de excepciones es esencial para garantizar que la aplicación pueda recuperarse de errores sin interrumpir su funcionamiento. Esto incluye capturar y registrar los errores de manera informativa y ofrecer soluciones alternativas cuando sea posible.
+
+En conclusión, las interfaces de programación de aplicaciones son herramientas fundamentales para el desarrollo moderno, proporcionando abstracción, productividad y seguridad en la interacción con bases de datos. Desde la conexión básica con JDBC hasta el uso de frameworks avanzados como Hibernate, las API simplifican y optimizan el trabajo con datos, permitiendo a los desarrolladores centrarse en lo que realmente importa: crear aplicaciones robustas y funcionales.
+
+# 11. Gestión de transacciones
+
+La gestión de transacciones es un componente esencial en cualquier sistema de bases de datos. Una transacción representa una unidad de trabajo que se ejecuta de manera completa o no se ejecuta en absoluto, garantizando la consistencia y la integridad de los datos. En bases de datos objeto-relacionales y orientadas a objetos, la gestión de transacciones asegura que las operaciones complejas que involucran varios objetos o estructuras de datos se realicen correctamente, incluso en caso de fallos.
+
+## 11.1. Concepto de transacción
+
+Una transacción se define como un conjunto de operaciones que se realizan como una unidad lógica. Las transacciones deben cumplir con las propiedades ACID:
+
+- **Atomicidad**: Todas las operaciones de la transacción se completan o ninguna de ellas se realiza.
+- **Consistencia**: La base de datos pasa de un estado consistente a otro estado consistente.
+- **Aislamiento**: Las operaciones de una transacción no son visibles para otras transacciones hasta que se completa.
+- **Durabilidad**: Una vez que una transacción se confirma, sus cambios persisten incluso en caso de fallos del sistema.
+
+Las bases de datos gestionan transacciones utilizando mecanismos como logs de transacciones, checkpoints y algoritmos de recuperación para garantizar estas propiedades.
+
+## 11.2. Comandos básicos para la gestión de transacciones
+
+En bases de datos relacionales y objeto-relacionales, se utilizan los siguientes comandos básicos para controlar las transacciones:
+
+- `BEGIN`: Inicia una nueva transacción.
+- `COMMIT`: Confirma los cambios realizados durante la transacción.
+- `ROLLBACK`: Revierte los cambios realizados en la transacción.
+
+### Ejemplo en SQL:
+
+```sql
+BEGIN;
+UPDATE cuentas SET saldo = saldo - 100 WHERE id = 1;
+UPDATE cuentas SET saldo = saldo + 100 WHERE id = 2;
+COMMIT;
+```
+
+En este ejemplo, se transfiere dinero de una cuenta a otra como una transacción única. Si alguna de las operaciones falla, los cambios se pueden revertir utilizando `ROLLBACK`.
+
+## 11.3. Gestión de transacciones en JDBC
+
+En JDBC, las transacciones se gestionan manualmente mediante el uso del método `setAutoCommit`. Por defecto, cada operación SQL se ejecuta como una transacción independiente. Sin embargo, es posible desactivar este comportamiento y gestionar las transacciones manualmente.
+
+### Ejemplo en JDBC:
+
+```java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class GestionTransacciones {
+    public static void main(String[] args) {
+        String url = "jdbc:postgresql://localhost:5432/mi_base";
+        String usuario = "usuario";
+        String contrasena = "contraseña";
+
+        try (Connection conexion = DriverManager.getConnection(url, usuario, contrasena)) {
+            conexion.setAutoCommit(false);
+
+            Statement stmt = conexion.createStatement();
+            stmt.executeUpdate("UPDATE cuentas SET saldo = saldo - 100 WHERE id = 1");
+            stmt.executeUpdate("UPDATE cuentas SET saldo = saldo + 100 WHERE id = 2");
+
+            conexion.commit();
+            System.out.println("Transacción completada con éxito.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                if (conexion != null) {
+                    conexion.rollback();
+                    System.out.println("Transacción revertida.");
+                }
+            } catch (SQLException rollbackEx) {
+                rollbackEx.printStackTrace();
+            }
+        }
+    }
+}
+```
+
+## 11.4. Transacciones en JPA
+
+JPA proporciona un manejo de transacciones simplificado mediante el uso de un `EntityManager`. Las transacciones en JPA se controlan utilizando métodos como `begin`, `commit` y `rollback` del objeto `EntityTransaction`.
+
+### Ejemplo en JPA:
+
+```java
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+
+public class TransaccionesJPA {
+    public static void main(String[] args) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("miUnidadPersistencia");
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            Cuenta cuenta1 = em.find(Cuenta.class, 1L);
+            Cuenta cuenta2 = em.find(Cuenta.class, 2L);
+
+            cuenta1.setSaldo(cuenta1.getSaldo() - 100);
+            cuenta2.setSaldo(cuenta2.getSaldo() + 100);
+
+            em.getTransaction().commit();
+            System.out.println("Transacción completada con éxito.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+                System.out.println("Transacción revertida.");
+            }
+        } finally {
+            em.close();
+            emf.close();
+        }
+    }
+}
+```
+
+## 11.5. Buenas prácticas en la gestión de transacciones
+
+1. **Asegurar atomicidad**: Agrupar las operaciones lógicas relacionadas en una única transacción para garantizar la coherencia de los datos.
+2. **Manejar excepciones adecuadamente**: Implementar bloques try-catch para controlar errores y garantizar que se realicen rollbacks cuando sea necesario.
+3. **Limitar el alcance de las transacciones**: Mantener las transacciones lo más cortas posible para minimizar el bloqueo de recursos y mejorar el rendimiento.
+4. **Utilizar niveles de aislamiento apropiados**: Seleccionar el nivel de aislamiento adecuado según los requisitos de la aplicación para equilibrar consistencia y concurrencia.
+5. **Monitorear el rendimiento**: Utilizar herramientas para identificar transacciones largas o problemáticas que puedan afectar el rendimiento del sistema.
+
+## 11.6. Ejercicio práctico
+
+Se propone el siguiente ejercicio para consolidar los conocimientos sobre la gestión de transacciones:
+
+1. Crear una base de datos llamada `banco` con una tabla `cuentas` que contenga las columnas `id`, `nombre` y `saldo`.
+2. Insertar registros de prueba con saldos iniciales en las cuentas.
+3. Implementar un programa en Java que transfiera dinero entre cuentas utilizando transacciones en JDBC.
+4. Modificar el programa para utilizar JPA en lugar de JDBC.
+5. Probar escenarios donde una de las operaciones falle y verificar que los cambios se revierten correctamente.
+
+Este ejercicio permitirá a los estudiantes comprender cómo implementar y manejar transacciones en diferentes contextos, reforzando las buenas prácticas y garantizando la integridad de los datos.
+
+# 12. Prueba y documentación de las aplicaciones desarrolladas
+
+La prueba y documentación de aplicaciones son componentes esenciales del ciclo de vida del desarrollo de software. Garantizan que las aplicaciones cumplan con los requisitos funcionales, operen de manera correcta y sean fáciles de mantener y entender a lo largo del tiempo. En el contexto de aplicaciones que gestionan bases de datos objeto-relacionales y orientadas a objetos, estas actividades son particularmente importantes debido a la complejidad inherente del modelo de datos y las interacciones con el sistema de gestión de bases de datos.
+
+## 12.1. Prueba de aplicaciones
+
+La prueba de aplicaciones que interactúan con bases de datos tiene como objetivo verificar la funcionalidad, el rendimiento y la seguridad de las operaciones de acceso y manipulación de datos. Esto incluye probar consultas SQL, transacciones, integridad de datos y comportamientos en condiciones de error.
+
+### 12.1.1. Tipos de pruebas
+
+1. **Pruebas unitarias:** Verifican el correcto funcionamiento de métodos individuales que interactúan con la base de datos. Por ejemplo, se puede probar que un método que inserta un registro en la base de datos lo haga correctamente.
+    ```java
+    @Test
+    public void testInsertarEmpleado() {
+        Empleado empleado = new Empleado("Juan Pérez", 3500.0);
+        empleadoDAO.insertar(empleado);
+        Empleado resultado = empleadoDAO.buscarPorId(empleado.getId());
+        assertEquals("Juan Pérez", resultado.getNombre());
+        assertEquals(3500.0, resultado.getSalario(), 0.01);
+    }
+    ```
+2. **Pruebas de integración:** Evalúan cómo interactúan los diferentes componentes del sistema con la base de datos, incluyendo la ejecución de consultas SQL y transacciones complejas.
+3. **Pruebas de rendimiento:** Miden el tiempo de respuesta y el consumo de recursos para operaciones comunes, como consultas y actualizaciones masivas.
+4. **Pruebas de seguridad:** Aseguran que las operaciones con la base de datos sean resistentes a vulnerabilidades como la inyección SQL.
+    ```java
+    @Test
+    public void testInyeccionSQL() {
+        String entradaMaliciosa = "' OR 1=1; --";
+        List<Empleado> resultados = empleadoDAO.buscarPorNombre(entradaMaliciosa);
+        assertTrue(resultados.isEmpty(), "La base de datos es vulnerable a inyecciones SQL");
+    }
+    ```
+
+### 12.1.2. Herramientas para la prueba
+
+El ecosistema de herramientas para pruebas de aplicaciones es amplio y variado. JUnit es uno de los frameworks más utilizados para la creación de pruebas unitarias en Java, permitiendo a los desarrolladores definir pruebas automatizadas para validar métodos individuales. Por otro lado, DBUnit amplía las capacidades de JUnit al facilitar la configuración del estado inicial de la base de datos antes de ejecutar las pruebas, garantizando así un entorno controlado y replicable.
+
+Postman es una herramienta popular para probar APIs que interactúan con bases de datos, proporcionando una interfaz gráfica para enviar solicitudes HTTP y analizar las respuestas. Finalmente, SQL Profiler es invaluable para analizar el rendimiento de consultas SQL, ayudando a identificar cuellos de botella y optimizar la ejecución de operaciones complejas. Estas herramientas, utilizadas en conjunto, ofrecen un enfoque integral para la validación de aplicaciones que interactúan con bases de datos.
+
+Resumiendo, existen diversas herramientas que facilitan la prueba de aplicaciones que interactúan con bases de datos:
+
+- **JUnit:** Framework de pruebas unitarias para aplicaciones Java.
+- **DBUnit:** Extensión de JUnit que permite preparar y validar datos en la base de datos para pruebas.
+- **Postman:** Herramienta para probar APIs que interactúan con bases de datos.
+- **SQL Profiler:** Útil para analizar el rendimiento de consultas SQL.
+
+## 12.2. Documentación de aplicaciones
+
+La documentación de aplicaciones es clave para garantizar su mantenibilidad y facilitar la comprensión por parte de otros desarrolladores y usuarios. Incluye tanto documentación técnica como documentación del usuario.
+
+### 12.2.1. Documentación técnica
+
+La documentación técnica describe la arquitectura, diseño y componentes del sistema, proporcionando detalles sobre cómo funciona la aplicación y cómo interactúa con la base de datos.
+
+1. **Diagramas de arquitectura:** Representan la estructura del sistema, mostrando cómo se conectan los módulos y componentes.
+2. **Modelos de datos:** Incluyen diagramas E/R y definiciones de tablas, vistas y relaciones.
+3. **Explicación de la lógica de negocio:** Describe cómo se implementan los procesos clave en la aplicación.
+
+### 12.2.2. Documentación del usuario
+
+La documentación es esencial para garantizar que las aplicaciones sean comprensibles y mantenibles a lo largo del tiempo. Esto incluye tanto documentación técnica, dirigida a los desarrolladores, como documentación del usuario, destinada a los operadores finales. La documentación técnica detalla la arquitectura del sistema, los modelos de datos y los procesos internos. Por ejemplo, los diagramas de arquitectura muestran cómo se conectan los diferentes módulos de la aplicación, mientras que los modelos de datos incluyen diagramas entidad-relación y definiciones de tablas, vistas y relaciones clave.
+
+La documentación del usuario, por su parte, se enfoca en proporcionar instrucciones claras y prácticas sobre cómo utilizar la aplicación. Un manual de usuario bien diseñado explica tareas comunes, como la gestión de datos o la generación de reportes, de manera detallada y accesible. Además, se pueden incluir secciones de preguntas frecuentes (FAQs) para resolver dudas recurrentes y guías de solución de problemas que ayuden a los usuarios a diagnosticar y resolver errores comunes de manera independiente.
+
+Resumiendo, la documentación del usuario está destinada a los operadores finales de la aplicación, proporcionando instrucciones claras sobre cómo utilizar las funcionalidades principales.
+
+1. **Manual de usuario:** Explica paso a paso cómo realizar tareas comunes, como gestionar datos o generar reportes.
+2. **FAQs:** Responde a preguntas frecuentes sobre el uso de la aplicación.
+3. **Guías de solución de problemas:** Ayudan a diagnosticar y resolver problemas comunes.
+
+## 12.3. Estrategias para una documentación efectiva
+
+Para que la documentación sea realmente efectiva, es fundamental que sea clara, precisa y esté siempre actualizada. Usar un lenguaje sencillo y directo facilita su comprensión, incluso para personas con conocimientos técnicos limitados. Es igualmente importante que la documentación se mantenga alineada con los cambios en la aplicación; por ejemplo, cuando se agrega una nueva funcionalidad, su descripción y uso deben reflejarse inmediatamente en el manual del usuario y en la documentación técnica.
+
+El uso de herramientas adecuadas puede mejorar significativamente la calidad de la documentación. Por ejemplo, Swagger es una excelente opción para documentar APIs, permitiendo generar documentación interactiva a partir de las definiciones de las rutas y endpoints. Para la documentación técnica colaborativa, herramientas como Confluence o Notion permiten centralizar la información y facilitar su edición en equipo. Incluir ejemplos prácticos y capturas de pantalla ayuda a ilustrar conceptos clave, haciendo que la documentación sea más atractiva y fácil de seguir.
+
+Resumiendo, para garantizar que la documentación sea útil y efectiva, se recomienda:
+
+1. **Mantener la claridad:** Usar lenguaje claro y evitar términos técnicos innecesarios.
+2. **Actualizar regularmente:** Asegurarse de que la documentación refleje los cambios en la aplicación.
+3. **Utilizar herramientas adecuadas:** Emplear herramientas como Swagger para documentar APIs y herramientas como Confluence para mantener documentación colaborativa.
+4. **Incluir ejemplos prácticos:** Proporcionar ejemplos de uso para ilustrar conceptos clave.
+
+## 12.4. Ejercicio práctico
+
+Se propone el siguiente ejercicio para reforzar los conceptos de prueba y documentación:
+
+1. Implementar un método que permita realizar transferencias entre cuentas en una base de datos.
+2. Crear pruebas unitarias y de integración para verificar que el método funciona correctamente, incluyendo casos de error.
+3. Documentar el proceso de implementación, incluyendo diagramas de flujo y ejemplos de uso del método.
+4. Crear un manual de usuario que explique cómo realizar transferencias utilizando la aplicación desarrollada.
+
