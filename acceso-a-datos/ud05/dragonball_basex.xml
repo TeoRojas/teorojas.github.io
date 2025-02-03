@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dragonball>
+    <personajes>
+        <personaje id="1">
+            <nombre>Goku</nombre>
+            <raza>Saiyajin</raza>
+            <nivel_poder>9001</nivel_poder>
+        </personaje>
+        <personaje id="2">
+            <nombre>Vegeta</nombre>
+            <raza>Saiyajin</raza>
+            <nivel_poder>8500</nivel_poder>
+        </personaje>
+        <personaje id="3">
+            <nombre>Piccolo</nombre>
+            <raza>Namekiano</raza>
+            <nivel_poder>7000</nivel_poder>
+        </personaje>
+    </personajes>
+    <planetas>
+        <planeta id="1">
+            <nombre>Tierra</nombre>
+            <habitantes>7000000000</habitantes>
+        </planeta>
+        <planeta id="2">
+            <nombre>Namek</nombre>
+            <habitantes>100000</habitantes>
+        </planeta>
+        <planeta id="3">
+            <nombre>Vegeta</nombre>
+            <habitantes>0</habitantes>
+        </planeta>
+    </planetas>
+    <tecnicas>
+        <tecnica id="1">
+            <nombre>Kamehameha</nombre>
+            <usuario>Goku</usuario>
+        </tecnica>
+        <tecnica id="2">
+            <nombre>Final Flash</nombre>
+            <usuario>Vegeta</usuario>
+        </tecnica>
+        <tecnica id="3">
+            <nombre>Makankosappo</nombre>
+            <usuario>Piccolo</usuario>
+        </tecnica>
+    </tecnicas>
+</dragonball>

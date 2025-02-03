@@ -541,6 +541,8 @@ En este apartado se analizarán estos lenguajes, su sintaxis y su aplicación en
 
 ## 5.1. Introducción a XPath y XQuery
 
+Para los siguientes apartados se invita a usar la Base de datos de pruebas siguiente:  [BDD Dragon ball](/ud05/dragonball_basex.xml)
+
 ### 5.1.1. XPath: Lenguaje para la navegación en XML
 
 **XPath** (XML Path Language) es un lenguaje que permite acceder a partes específicas de un documento XML mediante expresiones de ruta. Se basa en una estructura jerárquica que facilita la selección de elementos, atributos y valores.
@@ -572,7 +574,9 @@ En este apartado se analizarán estos lenguajes, su sintaxis y su aplicación en
 
 Podemos ejecutar las siguientes consultas XPath en BaseX:
 
-1. Obtener todos los nombres de los personajes:
+### 5.1.2. Consultas XPath básicas
+
+1. **Obtener todos los nombres de los personajes:**
     ```xquery
     //personaje/nombre/text()
     ```
@@ -580,23 +584,130 @@ Podemos ejecutar las siguientes consultas XPath en BaseX:
     ```
     Goku
     Vegeta
+    Piccolo
     ```
-
-2. Seleccionar los personajes que sean Saiyajin:
+2. **Seleccionar todos los personajes que sean Saiyajin:**
     ```xquery
     //personaje[raza="Saiyajin"]
     ```
-    **Resultado:**
-    ```xml
-    <personaje id="1">
-        <nombre>Goku</nombre>
-        <raza>Saiyajin</raza>
-    </personaje>
-    <personaje id="2">
-        <nombre>Vegeta</nombre>
-        <raza>Saiyajin</raza>
-    </personaje>
+3. **Obtener el nivel de poder de Vegeta:**
+    ```xquery
+    //personaje[nombre="Vegeta"]/nivel_poder/text()
     ```
+
+### 5.1.3. Consultas XPath avanzadas
+
+#### Selección de nodos específicos
+
+4. **Obtener el primer personaje en el documento XML:**
+    ```xquery
+    //personaje[1]
+    ```
+5. **Obtener el último personaje en el documento XML:**
+    ```xquery
+    //personaje[last()]
+    ```
+6. **Seleccionar todos los personajes cuyo nombre comience con "G":**
+    ```xquery
+    //personaje[starts-with(nombre, "G")]
+    ```
+7. **Seleccionar todos los personajes cuyo nombre termine en "a":**
+    ```xquery
+    //personaje[ends-with(nombre, "a")]
+    ```
+8. **Seleccionar todos los personajes que contengan la letra "o" en su nombre:**
+    ```xquery
+    //personaje[contains(nombre, "o")]
+    ```
+
+#### Uso de condiciones en XPath
+
+9. **Seleccionar personajes con un nivel de poder superior a 8000:**
+    ```xquery
+    //personaje[nivel_poder > 8000]
+    ```
+10. **Seleccionar personajes que NO sean Saiyajin:**
+    ```xquery
+    //personaje[not(raza="Saiyajin")]
+    ```
+11. **Seleccionar personajes que tengan un atributo `id`:**
+    ```xquery
+    //personaje[@id]
+    ```
+12. **Seleccionar personajes con un `id` mayor a 1:**
+    ```xquery
+    //personaje[@id > 1]
+    ```
+
+#### Uso de expresiones XPath combinadas
+
+13. **Seleccionar el nombre y el nivel de poder de todos los personajes:**
+    ```xquery
+    //personaje/(nombre|nivel_poder)
+    ```
+14. **Seleccionar personajes con nivel de poder entre 7000 y 9000:**
+    ```xquery
+    //personaje[nivel_poder >= 7000 and nivel_poder <= 9000]
+    ```
+15. **Seleccionar personajes Saiyajin con nivel de poder mayor a 8500:**
+    ```xquery
+    //personaje[raza="Saiyajin" and nivel_poder > 8500]
+    ```
+
+#### Consultas con atributos en XPath
+
+16. **Seleccionar todos los valores del atributo `id`:**
+    ```xquery
+    //personaje/@id
+    ```
+17. **Seleccionar personajes con un atributo `id` igual a 2:**
+    ```xquery
+    //personaje[@id="2"]
+    ```
+18. **Obtener el nombre del personaje con el id más alto:**
+    ```xquery
+    //personaje[@id = max(//personaje/@id)]/nombre
+    ```
+
+#### Uso de funciones avanzadas en XPath
+
+19. **Contar cuántos personajes hay en el documento XML:**
+    ```xquery
+    count(//personaje)
+    ```
+20. **Obtener la suma de todos los niveles de poder:**
+    ```xquery
+    sum(//personaje/nivel_poder)
+    ```
+21. **Obtener el nivel de poder promedio:**
+    ```xquery
+    avg(//personaje/nivel_poder)
+    ```
+22. **Obtener el nivel de poder máximo:**
+    ```xquery
+    max(//personaje/nivel_poder)
+    ```
+23. **Obtener el nivel de poder mínimo:**
+    ```xquery
+    min(//personaje/nivel_poder)
+    ```
+
+#### Consultas con múltiples niveles de profundidad
+
+24. **Seleccionar todos los personajes que tengan un `nivel_poder` dentro de un nodo `<datos>`:**
+    ```xquery
+    //datos/personaje/nivel_poder
+    ```
+25. **Seleccionar el nodo `personaje` que tenga un hijo con `nivel_poder` mayor a 8000:**
+    ```xquery
+    //personaje[nivel_poder > 8000]
+    ```
+26. **Seleccionar solo los nombres de los personajes que tengan un atributo `id`:**
+    ```xquery
+    //personaje[@id]/nombre
+    ```
+
+XPath proporciona una forma poderosa y flexible de consultar documentos XML. Con estas consultas avanzadas, se pueden extraer, filtrar y transformar datos de manera eficiente dentro de BaseX. En la siguiente sección, exploraremos el uso de XQuery en consultas más complejas.
 
 ### 5.1.2. XQuery: Lenguaje de consulta y transformación de XML
 
@@ -633,4 +744,119 @@ Podemos ejecutar las siguientes consultas XPath en BaseX:
     return $p
     ```
 
+### Uso de `for` y `return`
+XQuery permite iterar sobre elementos XML y devolver información personalizada.
+
+Ejemplo: Lista de nombres envueltos en etiquetas `<nombre>`:
+
+```xquery
+for $p in //personaje
+return <nombre>{$p/nombre/text()}</nombre>
+```
+
+**Resultado:**
+```xml
+<nombre>Goku</nombre>
+<nombre>Vegeta</nombre>
+<nombre>Piccolo</nombre>
+```
+
+### Uso de `where` para filtrar datos
+Podemos obtener solo los personajes con un nivel de poder mayor a 8000:
+
+```xquery
+for $p in //personaje
+where $p/nivel_poder > 8000
+return $p
+```
+
+### Uso de `let` para asignación de variables
+Podemos almacenar valores y reutilizarlos en la consulta:
+
+```xquery
+let $poderMin := 8500
+for $p in //personaje
+where $p/nivel_poder > $poderMin
+return $p/nombre
+```
+
+### Ordenación de resultados con `order by`
+Para ordenar los personajes por nivel de poder de mayor a menor:
+
+```xquery
+for $p in //personaje
+order by $p/nivel_poder descending
+return <ordenado>{$p/nombre/text()}</ordenado>
+```
+
+### Creación de un nuevo XML con `return`
+Podemos transformar la información en un nuevo formato XML:
+
+```xquery
+<personajes_fortalecidos>
+{
+    for $p in //personaje
+    return <luchador>
+                <nombre>{$p/nombre/text()}</nombre>
+                <poder_multiplicado>{number($p/nivel_poder) * 2}</poder_multiplicado>
+           </luchador>
+}
+</personajes_fortalecidos>
+```
+
+### Uso de `if-then-else` en XQuery
+Para etiquetar personajes según su nivel de poder:
+
+```xquery
+for $p in //personaje
+return <luchador>
+    <nombre>{$p/nombre/text()}</nombre>
+    <categoria>
+        {
+            if ($p/nivel_poder > 8500) then "Clase S"
+            else "Clase A"
+        }
+    </categoria>
+</luchador>
+```
+
+### Uso de agregaciones en XQuery
+Para calcular el nivel de poder promedio de todos los personajes:
+
+```xquery
+let $total := count(//personaje)
+let $suma := sum(//personaje/nivel_poder)
+return <promedio>{$suma div $total}</promedio>
+```
+
+### Consultas anidadas con `some` y `every`
+Podemos verificar si al menos un personaje es Saiyajin:
+
+```xquery
+some $p in //personaje satisfies $p/raza = "Saiyajin"
+```
+
+Verificar si **todos** los personajes tienen un nivel de poder mayor a 5000:
+
+```xquery
+every $p in //personaje satisfies $p/nivel_poder > 5000
+```
+
+### Agrupación de datos con `group by`
+Para agrupar los personajes por raza:
+
+```xquery
+for $r in distinct-values(//personaje/raza)
+let $personas := //personaje[raza = $r]
+return <grupo>
+    <raza>{$r}</raza>
+    <cantidad>{count($personas)}</cantidad>
+</grupo>
+```
+
+---
+
+# Conclusión
+
 Con XPath y XQuery, es posible realizar consultas rápidas y eficientes en bases de datos XML, permitiendo filtrar, transformar y recuperar información estructurada de manera flexible. En la siguiente sección, se abordará el uso de XQuery dentro de las bases de datos nativas XML para consultas avanzadas.
+
