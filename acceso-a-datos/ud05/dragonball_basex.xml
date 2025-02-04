@@ -4,45 +4,108 @@
         <personaje id="1">
             <nombre>Goku</nombre>
             <raza>Saiyajin</raza>
+            <edad>45</edad>
+            <afiliacion>Guerreros Z</afiliacion>
             <nivel_poder>9001</nivel_poder>
+            <transformaciones>
+                <forma>Super Saiyajin</forma>
+                <forma>Super Saiyajin Dios</forma>
+                <forma>Ultra Instinto</forma>
+            </transformaciones>
+            <planeta_origen>Vegeta</planeta_origen>
         </personaje>
         <personaje id="2">
             <nombre>Vegeta</nombre>
             <raza>Saiyajin</raza>
+            <edad>48</edad>
+            <afiliacion>Guerreros Z</afiliacion>
             <nivel_poder>8500</nivel_poder>
+            <transformaciones>
+                <forma>Super Saiyajin</forma>
+                <forma>Super Saiyajin Blue</forma>
+            </transformaciones>
+            <planeta_origen>Vegeta</planeta_origen>
         </personaje>
         <personaje id="3">
             <nombre>Piccolo</nombre>
             <raza>Namekiano</raza>
+            <edad>200</edad>
+            <afiliacion>Guerreros Z</afiliacion>
             <nivel_poder>7000</nivel_poder>
+            <transformaciones>
+                <forma>Fusión con Nail</forma>
+                <forma>Fusión con Kami</forma>
+            </transformaciones>
+            <planeta_origen>Namek</planeta_origen>
         </personaje>
     </personajes>
+
     <planetas>
         <planeta id="1">
             <nombre>Tierra</nombre>
-            <habitantes>7000000000</habitantes>
+            <habitantes>8000000000</habitantes>
+            <gravedad>1.0</gravedad>
+            <destruido>false</destruido>
+            <habitabilidad>Alta</habitabilidad>
         </planeta>
         <planeta id="2">
             <nombre>Namek</nombre>
             <habitantes>100000</habitantes>
+            <gravedad>0.8</gravedad>
+            <destruido>true</destruido>
+            <habitabilidad>Media</habitabilidad>
         </planeta>
         <planeta id="3">
             <nombre>Vegeta</nombre>
             <habitantes>0</habitantes>
+            <gravedad>10.0</gravedad>
+            <destruido>true</destruido>
+            <habitabilidad>Baja</habitabilidad>
         </planeta>
     </planetas>
+
     <tecnicas>
         <tecnica id="1">
             <nombre>Kamehameha</nombre>
             <usuario>Goku</usuario>
+            <tipo>Ataque</tipo>
+            <nivel_poder_requerido>7000</nivel_poder_requerido>
+            <descripcion>Rayo de energía azul lanzado con las manos.</descripcion>
         </tecnica>
         <tecnica id="2">
             <nombre>Final Flash</nombre>
             <usuario>Vegeta</usuario>
+            <tipo>Ataque</tipo>
+            <nivel_poder_requerido>8000</nivel_poder_requerido>
+            <descripcion>Explosión de energía masiva con ambas manos.</descripcion>
         </tecnica>
         <tecnica id="3">
             <nombre>Makankosappo</nombre>
             <usuario>Piccolo</usuario>
+            <tipo>Ataque</tipo>
+            <nivel_poder_requerido>6000</nivel_poder_requerido>
+            <descripcion>Rayo perforador en espiral.</descripcion>
         </tecnica>
     </tecnicas>
+
+    <batallas>
+        <batalla id="1">
+            <combatiente1>Goku</combatiente1>
+            <combatiente2>Vegeta</combatiente2>
+            <ganador>Goku</ganador>
+            <planeta>Tierra</planeta>
+        </batalla>
+        <batalla id="2">
+            <combatiente1>Goku</combatiente1>
+            <combatiente2>Piccolo</combatiente2>
+            <ganador>Goku</ganador>
+            <planeta>Tierra</planeta>
+        </batalla>
+        <batalla id="3">
+            <combatiente1>Vegeta</combatiente1>
+            <combatiente2>Piccolo</combatiente2>
+            <ganador>Vegeta</ganador>
+            <planeta>Namek</planeta>
+        </batalla>
+    </batallas>
 </dragonball>

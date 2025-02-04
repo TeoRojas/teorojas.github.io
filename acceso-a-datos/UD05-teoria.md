@@ -709,6 +709,22 @@ Podemos ejecutar las siguientes consultas XPath en BaseX:
 
 XPath proporciona una forma poderosa y flexible de consultar documentos XML. Con estas consultas avanzadas, se pueden extraer, filtrar y transformar datos de manera eficiente dentro de BaseX. En la siguiente sección, exploraremos el uso de XQuery en consultas más complejas.
 
+#### Ejercicios de XPath en BaseX
+
+A continuación, se presentan **10 ejercicios prácticos** de XPath para bases de datos nativas XML en **BaseX**. Cada ejercicio debe resolverse utilizando consultas XPath sobre la base de datos **Dragon Ball** previamente cargada.
+
+**Ejercicio 1: Recuperar las técnicas de combate de cada personaje**: Obtener todas las técnicas de los personajes junto con el nombre del personaje que las ejecuta.  
+**Ejercicio 2: Identificar los planetas destruidos**: Obtener una lista de los planetas que han sido destruidos (`destruido=true`).  
+**Ejercicio 3: Listar los personajes de una raza específica**: Mostrar los nombres de los personajes que pertenecen a una raza determinada.  
+**Ejercicio 4: Buscar personajes con más de una transformación**: Identificar personajes que tienen más de una transformación registrada.  
+**Ejercicio 5: Contar el número total de técnicas en la base de datos**: Determinar cuántas técnicas existen registradas en la base de datos.  
+**Ejercicio 6: Identificar batallas que ocurrieron en un planeta específico**: Obtener todas las batallas que ocurrieron en **Namek**.  
+**Ejercicio 7: Ordenar los personajes por nivel de poder de menor a mayor**: Mostrar los personajes ordenados por su nivel de poder en **orden ascendente**.  
+**Ejercicio 8: Obtener el personaje con más nivel de poder**: Extraer el personaje con el nivel de poder más alto en la base de datos.  
+**Ejercicio 9: Agrupar personajes según su raza**: Generar una lista de personajes agrupados por su raza.  
+**Ejercicio 10: Verificar si un personaje ha participado en batallas**: Determinar si un personaje específico (ej. **Vegeta**) ha participado en alguna batalla.  
+
+
 ### 5.1.2. XQuery: Lenguaje de consulta y transformación de XML
 
 **XQuery** es un lenguaje diseñado para la consulta y manipulación de datos XML. Se basa en XPath, pero agrega funcionalidades adicionales como:
@@ -744,7 +760,7 @@ XPath proporciona una forma poderosa y flexible de consultar documentos XML. Con
     return $p
     ```
 
-### Uso de `for` y `return`
+#### Uso de `for` y `return`
 XQuery permite iterar sobre elementos XML y devolver información personalizada.
 
 Ejemplo: Lista de nombres envueltos en etiquetas `<nombre>`:
@@ -761,7 +777,7 @@ return <nombre>{$p/nombre/text()}</nombre>
 <nombre>Piccolo</nombre>
 ```
 
-### Uso de `where` para filtrar datos
+#### Uso de `where` para filtrar datos
 Podemos obtener solo los personajes con un nivel de poder mayor a 8000:
 
 ```xquery
@@ -770,7 +786,7 @@ where $p/nivel_poder > 8000
 return $p
 ```
 
-### Uso de `let` para asignación de variables
+#### Uso de `let` para asignación de variables
 Podemos almacenar valores y reutilizarlos en la consulta:
 
 ```xquery
@@ -780,7 +796,7 @@ where $p/nivel_poder > $poderMin
 return $p/nombre
 ```
 
-### Ordenación de resultados con `order by`
+#### Ordenación de resultados con `order by`
 Para ordenar los personajes por nivel de poder de mayor a menor:
 
 ```xquery
@@ -789,7 +805,7 @@ order by $p/nivel_poder descending
 return <ordenado>{$p/nombre/text()}</ordenado>
 ```
 
-### Creación de un nuevo XML con `return`
+#### Creación de un nuevo XML con `return`
 Podemos transformar la información en un nuevo formato XML:
 
 ```xquery
@@ -804,7 +820,7 @@ Podemos transformar la información en un nuevo formato XML:
 </personajes_fortalecidos>
 ```
 
-### Uso de `if-then-else` en XQuery
+#### Uso de `if-then-else` en XQuery
 Para etiquetar personajes según su nivel de poder:
 
 ```xquery
@@ -820,7 +836,7 @@ return <luchador>
 </luchador>
 ```
 
-### Uso de agregaciones en XQuery
+#### Uso de agregaciones en XQuery
 Para calcular el nivel de poder promedio de todos los personajes:
 
 ```xquery
@@ -829,7 +845,7 @@ let $suma := sum(//personaje/nivel_poder)
 return <promedio>{$suma div $total}</promedio>
 ```
 
-### Consultas anidadas con `some` y `every`
+#### Consultas anidadas con `some` y `every`
 Podemos verificar si al menos un personaje es Saiyajin:
 
 ```xquery
@@ -842,7 +858,7 @@ Verificar si **todos** los personajes tienen un nivel de poder mayor a 5000:
 every $p in //personaje satisfies $p/nivel_poder > 5000
 ```
 
-### Agrupación de datos con `group by`
+#### Agrupación de datos con `group by`
 Para agrupar los personajes por raza:
 
 ```xquery
@@ -853,10 +869,6 @@ return <grupo>
     <cantidad>{count($personas)}</cantidad>
 </grupo>
 ```
-
----
-
-# Conclusión
 
 Con XPath y XQuery, es posible realizar consultas rápidas y eficientes en bases de datos XML, permitiendo filtrar, transformar y recuperar información estructurada de manera flexible. En la siguiente sección, se abordará el uso de XQuery dentro de las bases de datos nativas XML para consultas avanzadas.
 
