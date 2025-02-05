@@ -872,3 +872,18 @@ return <grupo>
 
 Con XPath y XQuery, es posible realizar consultas rápidas y eficientes en bases de datos XML, permitiendo filtrar, transformar y recuperar información estructurada de manera flexible. En la siguiente sección, se abordará el uso de XQuery dentro de las bases de datos nativas XML para consultas avanzadas.
 
+
+#### Ejercicios de XQuery en BaseX
+
+A continuación, se presentan **10 ejercicios prácticos** de XQuery para bases de datos nativas XML en **BaseX**. Cada ejercicio debe resolverse utilizando consultas XQuery sobre la base de datos **Dragon Ball** previamente cargada.
+
+**Ejercicio 1: Generar un listado de personajes con su nivel de poder**: Crear un nuevo XML que contenga los nombres de los personajes y su nivel de poder dentro de etiquetas `<personaje>` y `<poder>`.  
+**Ejercicio 2: Filtrar personajes con transformaciones**: Obtener una lista de los personajes que poseen al menos una transformación registrada.  
+**Ejercicio 3: Calcular la media del nivel de poder de los personajes**: Determinar el nivel de poder promedio de todos los personajes en la base de datos.  
+**Ejercicio 4: Crear una lista de técnicas con su usuario correspondiente**: Generar un nuevo XML donde cada técnica esté dentro de una etiqueta `<tecnica>` junto con el nombre del personaje que la usa.  
+**Ejercicio 5: Identificar el personaje con mayor nivel de poder**: Extraer el personaje con el nivel de poder más alto en la base de datos y mostrarlo en un nuevo XML.  
+**Ejercicio 6: Agrupar personajes por raza**: Crear un XML que muestre cuántos personajes hay de cada raza en la base de datos.  
+**Ejercicio 7: Determinar si todos los personajes tienen nivel de poder superior a 5000**: Usar la función `every` para comprobar si todos los personajes cumplen esta condición.  
+**Ejercicio 8: Ordenar los planetas por número de habitantes de mayor a menor**: Generar un XML que muestre los planetas ordenados según su cantidad de habitantes.  
+**Ejercicio 9: Mostrar batallas en las que participó un personaje específico**: Filtrar y devolver todas las batallas en las que haya participado un personaje determinado.  
+**Ejercicio 10: Clasificar personajes en "Clase S" o "Clase A" según su nivel de poder**: Crear un nuevo XML donde los personajes sean categorizados en **Clase S** si su nivel de poder es superior a 8500, y en **Clase A** si es inferior.  
