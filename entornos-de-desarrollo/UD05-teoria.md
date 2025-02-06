@@ -393,3 +393,49 @@ En este caso, `Perro` hereda de `Animal`, lo que le permite compartir atributos 
 El uso correcto de las relaciones entre clases permite diseñar software de manera **modular y escalable**. La asociación facilita la interacción entre diferentes entidades sin generar dependencias rígidas. La composición permite organizar los objetos de manera estructurada, asegurando que cada componente cumpla una función específica. Por último, la herencia favorece la reutilización del código, evitando repeticiones innecesarias y permitiendo modificaciones más ágiles en la arquitectura del software.
 
 Comprender cómo se relacionan las clases y los objetos es fundamental para diseñar sistemas bien estructurados, donde cada parte del código tenga una función clara. En el siguiente apartado, exploraremos cómo estas relaciones pueden representarse visualmente a través de los **diagramas de clases**, una herramienta esencial en el modelado de software.
+
+## 1.5. Conceptos clave en la Programación Orientada a Objetos
+
+En la Programación Orientada a Objetos (POO) existen ciertos conceptos fundamentales que permiten comprender mejor su estructura y funcionamiento. Estos términos son esenciales para entender cómo se diseñan y organizan los sistemas basados en objetos.
+
+- **Atributo**: un **atributo** es una característica o propiedad de una clase. Representa datos asociados a un objeto y define su estado. En una clase `Persona`, por ejemplo, los atributos pueden ser `nombre` y `edad`.
+
+    ```python
+    class Persona:
+        def __init__(self, nombre, edad):
+            self.nombre = nombre
+            self.edad = edad
+    ```
+ 
+- **Clase**: una **clase** es una plantilla o molde a partir del cual se crean objetos. Define atributos y métodos que determinan el comportamiento de sus instancias.
+- **Objeto**: un **objeto** es una instancia concreta de una clase, con valores específicos en sus atributos y la capacidad de ejecutar métodos.
+
+    ```python
+    persona1 = Persona("Carlos", 30)  # Objeto de la clase Persona
+    ```
+
+- **Instancia**: una **instancia anónima** se refiere a un objeto que se crea sin asignarlo a una variable. Es útil cuando el objeto solo se usa temporalmente.
+
+    ```python
+    print(Persona("Ana", 25).nombre)  # Output: Ana
+    ```
+
+- **Jerarquía de clases**: la **jerarquía de clases** es una estructura que organiza las clases en niveles, donde las clases más generales se ubican en la parte superior y las clases más específicas en niveles inferiores, heredando características de las superiores.
+- **Mensajes**: en POO, los **mensajes** son las interacciones entre objetos mediante la invocación de métodos. Cuando un objeto llama a un método de otro objeto, está enviando un mensaje.
+
+    ```python
+    class Perro:
+        def ladrar(self):
+            return "Guau!"
+
+    perro1 = Perro()
+    print(perro1.ladrar())  # Output: Guau!
+    ```
+ 
+- **UML**: el **Unified Modeling Language (UML)** es un lenguaje de modelado que permite representar sistemas orientados a objetos mediante diagramas. Su propósito es visualizar y documentar la arquitectura del software.Realmente es un estándar gráfico para modelar sistemas orientados a objetos. No define cómo se implementará el sistema, sino cómo está estructurado.
+- **CASE**: las herramientas **CASE** (*Computer-Aided Software Engineering*) son programas diseñados para facilitar el desarrollo de software, incluyendo modelado de clases y generación de código a partir de diagramas UML.
+- **OMG**: el **Object Management Group (OMG)** es una organización responsable del desarrollo y mantenimiento de estándares relacionados con la POO, como UML y CORBA.
+- **OO**: significa **Orientación a Objetos**, mientras que **POO** se refiere a **Programación Orientada a Objetos**, que es la aplicación de este paradigma en el desarrollo de software.
+
+
+Estos conceptos forman la base de la POO y su correcta comprensión es clave para el desarrollo eficiente de software orientado a objetos. En los siguientes apartados exploraremos cómo estas ideas se representan mediante diagramas UML, facilitando la planificación y documentación del diseño de software.
