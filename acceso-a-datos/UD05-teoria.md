@@ -887,3 +887,265 @@ A continuación, se presentan **10 ejercicios prácticos** de XQuery para bases 
 **Ejercicio 8: Ordenar los planetas por número de habitantes de mayor a menor**: Generar un XML que muestre los planetas ordenados según su cantidad de habitantes.  
 **Ejercicio 9: Mostrar batallas en las que participó un personaje específico**: Filtrar y devolver todas las batallas en las que haya participado un personaje determinado.  
 **Ejercicio 10: Clasificar personajes en "Clase S" o "Clase A" según su nivel de poder**: Crear un nuevo XML donde los personajes sean categorizados en **Clase S** si su nivel de poder es superior a 8500, y en **Clase A** si es inferior.  
+
+
+## 5.2. Uso de XQuery en bases de datos XML
+
+XQuery es un lenguaje que permite realizar consultas avanzadas sobre documentos XML, pero también ofrece herramientas para la transformación, manipulación y optimización de datos en bases de datos XML como **BaseX**. Su versatilidad lo convierte en una opción ideal para el desarrollo de aplicaciones que trabajan con datos semiestructurados. En este apartado se explorarán técnicas avanzadas de XQuery, incluyendo la creación y modificación de documentos XML, la optimización de consultas mediante índices y la conversión de datos a otros formatos.
+
+### 5.2.1. Creación de nuevos documentos XML con XQuery
+
+Una de las ventajas de XQuery es la posibilidad de generar nuevos documentos XML basados en la información existente. Esto permite estructurar los datos de una forma más eficiente o prepararlos para ser utilizados en otros sistemas. A continuación, se muestra un ejemplo en el que se genera un documento XML con los personajes de raza Saiyajin:
+
+```xquery
+<saiyajines>
+{
+    for $p in //personaje
+    where $p/raza = "Saiyajin"
+    return <luchador>
+                <nombre>{$p/nombre/text()}</nombre>
+                <nivel_poder>{$p/nivel_poder/text()}</nivel_poder>
+           </luchador>
+}
+</saiyajines>
+```
+
+El resultado será un nuevo documento XML que solo contendrá a los personajes de la raza especificada, facilitando su manipulación posterior.
+
+### 5.2.2. Modificación de datos XML en BaseX
+
+XQuery no solo permite consultar datos, sino que también posibilita su modificación dentro de una base de datos XML. En **BaseX**, las operaciones de actualización permiten modificar valores existentes, insertar nuevos elementos y eliminar nodos específicos. Para actualizar el nivel de poder de un personaje, se puede utilizar la siguiente consulta:
+
+```xquery
+replace value of node //personaje[nombre="Goku"]/nivel_poder
+with "9500"
+```
+
+También es posible insertar información dentro de un nodo ya existente. Si se quiere agregar una nueva técnica a Goku, se puede hacer con:
+
+```xquery
+insert node <tecnica>Ultra Instinto</tecnica> 
+into //personaje[nombre="Goku"]/tecnicas
+```
+
+Si en cambio se desea eliminar un personaje de la base de datos, se puede ejecutar:
+
+```xquery
+delete node //personaje[nombre="Piccolo"]
+```
+
+Estas operaciones permiten mantener la base de datos XML actualizada y en óptimas condiciones.
+
+### 5.2.3. Optimización de consultas con índices en BaseX
+
+Cuando una base de datos XML contiene una gran cantidad de información, las consultas pueden volverse más lentas. Para mejorar su rendimiento, **BaseX** permite la creación de índices que agilizan la búsqueda de elementos y atributos. Para acelerar la recuperación de datos textuales, se puede crear un índice de texto con:
+
+```xquery
+CREATE TEXT INDEX
+```
+
+Si la base de datos contiene muchos atributos y se necesitan búsquedas rápidas sobre ellos, se recomienda la creación de un índice de atributos:
+
+```xquery
+CREATE ATTRIBUTE INDEX
+```
+
+Por último, para mejorar el acceso a los elementos XML en función de sus nombres, se puede usar un índice de nombres:
+
+```xquery
+CREATE NAME INDEX
+```
+
+El uso de estos índices reduce significativamente los tiempos de respuesta de las consultas.
+
+### 5.2.4. Exportación de datos desde XML a otros formatos
+
+Muchas veces es necesario convertir datos XML a otros formatos para su integración con otros sistemas. XQuery permite transformar XML en **JSON, CSV o HTML** de manera eficiente. Para convertir datos XML a JSON, se puede utilizar:
+
+```xquery
+json:serialize(
+    for $p in //personaje
+    return map {
+        "nombre": $p/nombre/text(),
+        "raza": $p/raza/text(),
+        "nivel_poder": $p/nivel_poder/text()
+    }
+)
+```
+
+Si en cambio se necesita exportar la información en formato CSV, se puede usar:
+
+```xquery
+let $header := "Nombre,Raza,Nivel de Poder"
+let $rows := 
+    for $p in //personaje
+    return string-join(($p/nombre, $p/raza, $p/nivel_poder), ",")
+return string-join(($header, $rows), "
+")
+```
+
+Por otro lado, si se quiere mostrar los datos en una tabla HTML para su visualización en una página web, se puede emplear:
+
+```xquery
+<html>
+    <body>
+        <h1>Lista de Personajes</h1>
+        <table border="1">
+            <tr><th>Nombre</th><th>Raza</th><th>Nivel de Poder</th></tr>
+            {
+                for $p in //personaje
+                return <tr>
+                           <td>{$p/nombre/text()}</td>
+                           <td>{$p/raza/text()}</td>
+                           <td>{$p/nivel_poder/text()}</td>
+                       </tr>
+            }
+        </table>
+    </body>
+</html>
+```
+
+La conversión de datos a otros formatos facilita la interoperabilidad con otros sistemas y la presentación de la información de manera más amigable.
+
+El uso avanzado de XQuery en bases de datos XML permite no solo realizar consultas eficientes, sino también manipular, optimizar y transformar la información de manera estructurada. La capacidad de modificar documentos XML, mejorar la velocidad de acceso mediante índices y exportar datos en otros formatos hace que XQuery sea una herramienta clave en el manejo de bases de datos XML. En el siguiente apartado, se explorará cómo integrar XQuery con **Java** y otras tecnologías para el desarrollo de aplicaciones que gestionan datos XML de manera dinámica.
+
+## 5.3. Consultas desde Java con XPath y XQuery
+
+La integración de **XPath y XQuery** en aplicaciones Java permite la manipulación eficiente de bases de datos XML dentro de entornos de programación. Gracias a las bibliotecas especializadas, es posible ejecutar consultas XML desde Java y procesar los resultados de manera programática. En este apartado se explorará cómo utilizar XPath y XQuery en Java para consultar y modificar bases de datos XML almacenadas en **BaseX**.
+
+### 5.3.1. Uso de XPath en Java
+
+XPath se puede utilizar en Java para navegar y extraer información de documentos XML. Para ello, se emplea la API **javax.xml.xpath**, que permite ejecutar expresiones XPath sobre un documento XML cargado en memoria. A continuación, se muestra un ejemplo de cómo obtener el nombre de todos los personajes de un archivo XML utilizando Java y XPath:
+
+```java
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+
+import java.io.File;
+
+public class XPathExample {
+    public static void main(String[] args) throws Exception {
+        File inputFile = new File("dragonball.xml");
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document doc = builder.parse(inputFile);
+        
+        XPathFactory xPathFactory = XPathFactory.newInstance();
+        XPath xpath = xPathFactory.newXPath();
+        
+        XPathExpression expr = xpath.compile("//personaje/nombre/text()");
+        NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+
+        for (int i = 0; i < nodes.getLength(); i++) {
+            System.out.println(nodes.item(i).getNodeValue());
+        }
+    }
+}
+```
+
+Este código carga un documento XML, ejecuta una expresión XPath para seleccionar todos los nombres de los personajes y los imprime por pantalla.
+
+### 5.3.2. Uso de XQuery en Java con BaseX
+
+Mientras que XPath se centra en la navegación dentro de documentos XML, **XQuery** permite realizar consultas avanzadas y transformaciones sobre bases de datos XML. Para ejecutar consultas XQuery desde Java, se puede utilizar la API de **BaseX**, que permite la conexión con una base de datos XML y la ejecución de sentencias XQuery de manera programática.
+
+#### 5.3.2.1. Conexión a BaseX y ejecución de consultas
+
+El siguiente código muestra cómo conectarse a un servidor BaseX y ejecutar una consulta XQuery para recuperar los nombres de todos los personajes:
+
+```java
+import org.basex.api.client.Session;
+
+public class XQueryBaseX {
+    public static void main(String[] args) {
+        try {
+            Session session = new Session("localhost", 1984, "admin", "admin");
+
+            String query = "for $p in //personaje return <nombre>{$p/nombre/text()}</nombre>";
+            String result = session.execute("XQUERY " + query);
+
+            System.out.println("Resultado de la consulta:");
+            System.out.println(result);
+
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+Este código establece una conexión con un servidor **BaseX** en la máquina local y ejecuta una consulta XQuery. El resultado es devuelto en formato XML.
+
+### 5.3.3. Modificación de bases de datos XML desde Java
+
+Además de realizar consultas, es posible modificar bases de datos XML desde Java utilizando XQuery. BaseX permite ejecutar sentencias de actualización directamente desde una conexión remota. A continuación, se muestra cómo actualizar el nivel de poder de un personaje:
+
+```java
+import org.basex.api.client.Session;
+
+public class UpdateXQueryBaseX {
+    public static void main(String[] args) {
+        try {
+            Session session = new Session("localhost", 1984, "admin", "admin");
+
+            String updateQuery = "replace value of node //personaje[nombre='Goku']/nivel_poder with '9500'";
+            session.execute("XQUERY " + updateQuery);
+
+            System.out.println("Nivel de poder actualizado correctamente.");
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+Con este código, se actualiza el nodo `<nivel_poder>` del personaje Goku directamente en la base de datos.
+
+### 5.3.4. Conversión de datos XML desde Java
+
+En algunas aplicaciones, puede ser necesario convertir datos XML en otros formatos como JSON o CSV. Desde Java, se pueden procesar los resultados de consultas XQuery y exportarlos a otros formatos.
+
+#### 5.3.4.1. Conversión de XML a JSON en Java
+
+Para convertir un documento XML en formato JSON, se puede usar la biblioteca **Jackson**:
+
+```java
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
+import java.io.File;
+
+public class XMLtoJSON {
+    public static void main(String[] args) throws Exception {
+        File xmlFile = new File("dragonball.xml");
+        XmlMapper xmlMapper = new XmlMapper();
+        Object obj = xmlMapper.readValue(xmlFile, Object.class);
+
+        ObjectMapper jsonMapper = new ObjectMapper();
+        String jsonOutput = jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+
+        System.out.println(jsonOutput);
+    }
+}
+```
+
+Este código convierte un documento XML en un formato JSON estructurado y lo imprime en pantalla.
+
+### 5.3.5. Beneficios de la integración de XQuery con Java
+
+El uso de XQuery dentro de aplicaciones Java ofrece numerosas ventajas, entre ellas:
+
+- **Automatización de consultas y actualizaciones XML**: Permite ejecutar consultas avanzadas sobre bases de datos XML sin intervención manual.
+- **Integración con aplicaciones empresariales**: XQuery se puede usar dentro de sistemas ERP, CRM o cualquier aplicación que requiera procesamiento de XML.
+- **Conversión de datos**: Facilita la transformación de XML a otros formatos estándar como JSON o CSV.
+- **Manipulación eficiente de datos**: Permite trabajar con grandes volúmenes de datos de manera estructurada y optimizada.
+
+La combinación de **Java, XPath y XQuery** permite desarrollar aplicaciones capaces de gestionar y manipular bases de datos XML de manera eficiente. Gracias a las bibliotecas especializadas, se pueden ejecutar consultas, realizar modificaciones en tiempo real y convertir datos XML en otros formatos. En el siguiente apartado, se explorará la gestión de transacciones en bases de datos XML y su importancia en entornos donde la integridad de los datos es fundamental.
