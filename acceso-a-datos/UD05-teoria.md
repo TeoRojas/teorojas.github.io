@@ -475,7 +475,6 @@ CREATE FULLTEXT INDEX
 
 Cada índice puede ser gestionado con los comandos `DROP INDEX` y `OPTIMIZE` para mejorar el rendimiento.
 
----
 
 ## 2.4.3. Optimización del rendimiento
 
@@ -529,6 +528,262 @@ DROP DATABASE MiBase
 ```
 
 Con estas estrategias, BaseX puede manejar de manera eficiente bases de datos XML de gran tamaño, garantizando consultas rápidas y un uso optimizado del almacenamiento. En la siguiente sección, se explorará la manipulación de datos en bases de datos XML.
+
+# 5. Consultas en bases de datos XML
+
+El acceso y recuperación de datos en bases de datos nativas XML se realiza mediante lenguajes de consulta especializados que permiten extraer información de manera eficiente. En este contexto, **XPath** y **XQuery** son los dos lenguajes principales utilizados para realizar consultas en documentos XML.
+
+- **XPath** se emplea para navegar y seleccionar elementos dentro de un documento XML a través de expresiones estructuradas.
+- **XQuery** es un lenguaje más avanzado que permite realizar consultas complejas, transformaciones de datos y generación de nuevos documentos XML.
+
+En este apartado se analizarán estos lenguajes, su sintaxis y su aplicación en bases de datos XML como **BaseX**.
+
+# 3. Modelado de datos en bases de datos XML
+
+El modelado de datos en bases de datos XML es el proceso mediante el cual se define la estructura y organización de los datos dentro de un entorno XML. A diferencia de las bases de datos relacionales, que utilizan tablas con columnas y filas, las bases de datos nativas XML almacenan la información en documentos XML estructurados de manera jerárquica. Esta organización proporciona una mayor flexibilidad para trabajar con datos semiestructurados y con estructuras cambiantes.
+
+Uno de los principales beneficios del modelado en XML es la capacidad de representar relaciones complejas entre los datos sin la necesidad de claves foráneas ni esquemas rígidos. Cada documento XML actúa como una unidad de almacenamiento autónoma, lo que permite una mayor independencia y adaptabilidad en la gestión de datos. Sin embargo, un diseño deficiente puede llevar a problemas de redundancia, dificultad en la consulta y un acceso ineficiente a la información.
+
+Para diseñar una estructura XML eficiente, es fundamental seguir principios de organización y modularidad. El uso de esquemas XML, como DTD o XML Schema, puede ayudar a validar la estructura y garantizar la coherencia de los datos almacenados en la base de datos.
+
+## 3.1. Estructura de documentos XML en bases de datos nativas
+
+En una base de datos nativa XML, los documentos XML se almacenan en su formato original, manteniendo su estructura jerárquica y relaciones internas sin necesidad de ser transformados en un modelo tabular. Cada documento se organiza a través de elementos anidados, atributos y valores, lo que facilita la representación de estructuras de datos complejas.
+
+Un documento XML típico sigue una estructura bien definida, como se muestra en el siguiente ejemplo:
+
+```xml
+<dragonball>
+    <personajes>
+        <personaje id="1">
+            <nombre>Goku</nombre>
+            <raza>Saiyajin</raza>
+            <nivel_poder>9001</nivel_poder>
+        </personaje>
+        <personaje id="2">
+            <nombre>Vegeta</nombre>
+            <raza>Saiyajin</raza>
+            <nivel_poder>8500</nivel_poder>
+        </personaje>
+    </personajes>
+</dragonball>
+```
+
+En este ejemplo, la estructura jerárquica se define claramente mediante la relación entre `<dragonball>`, `<personajes>` y cada `<personaje>`. Cada nodo contiene información relevante encapsulada dentro de etiquetas específicas, lo que permite una organización intuitiva y una fácil navegación mediante XPath o XQuery.
+
+El uso de atributos en XML también es una técnica común para almacenar información dentro de los nodos. Por ejemplo, en lugar de representar el identificador y la raza como elementos separados, podrían almacenarse como atributos del nodo `<personaje>`:
+
+```xml
+<personaje id="1" raza="Saiyajin">
+    <nombre>Goku</nombre>
+    <nivel_poder>9001</nivel_poder>
+</personaje>
+```
+
+El uso de atributos puede ser útil para almacenar metadatos o información adicional sobre un nodo, aunque en algunos casos se prefiere el uso de elementos para mejorar la escalabilidad y la capacidad de consulta de los datos.
+
+Dentro de una base de datos nativa XML, cada documento se considera una entidad independiente, lo que permite realizar consultas y manipulaciones sin alterar la estructura global de la base de datos. Esta independencia estructural facilita la integración de datos procedentes de múltiples fuentes y la interoperabilidad con otros sistemas.
+
+El diseño adecuado de la estructura de documentos XML en bases de datos nativas también debe considerar la optimización del almacenamiento y la eficiencia en la consulta. Factores como la indexación de elementos y atributos, el uso de colecciones y la organización en clústeres pueden mejorar significativamente el rendimiento del sistema.
+
+En el siguiente apartado, se analizarán las colecciones y documentos en bases de datos nativas XML, destacando su importancia en la organización eficiente de la información y su impacto en la ejecución de consultas.
+
+## 3.2. Uso de colecciones y documentos
+
+En una base de datos nativa XML, la organización de la información es un factor clave para garantizar su eficiencia y facilidad de acceso. A diferencia de las bases de datos relacionales, donde la información se almacena en tablas estructuradas, en una base de datos XML los datos se organizan en documentos y colecciones. Esta organización permite almacenar datos semiestructurados y mantener su jerarquía natural, facilitando consultas flexibles mediante XPath y XQuery.
+
+En este apartado, se explorará la diferencia entre documentos individuales y colecciones de documentos en bases de datos XML, así como su impacto en la recuperación y manipulación de la información.
+
+### 3.2.1. Documentos individuales en bases de datos XML
+
+Un **documento XML individual** es la unidad básica de almacenamiento en una base de datos nativa XML. Cada documento representa una entidad completa y autónoma que puede contener una o varias estructuras de datos jerárquicas.
+
+Por ejemplo, en una base de datos XML sobre Dragon Ball, cada documento XML podría representar un conjunto de personajes:
+
+```xml
+<personajes>
+    <personaje id="1">
+        <nombre>Goku</nombre>
+        <raza>Saiyajin</raza>
+        <nivel_poder>9001</nivel_poder>
+    </personaje>
+    <personaje id="2">
+        <nombre>Vegeta</nombre>
+        <raza>Saiyajin</raza>
+        <nivel_poder>8500</nivel_poder>
+    </personaje>
+</personajes>
+```
+
+En este caso, el documento XML almacena información sobre múltiples personajes dentro de una única estructura jerárquica. Cada documento XML puede ser consultado y manipulado de manera independiente, lo que facilita la gestión de la información dentro de la base de datos.
+
+### 3.2.2. Colecciones de documentos XML
+
+Si bien los documentos XML individuales pueden contener grandes volúmenes de información, en muchos casos es más eficiente organizarlos dentro de **colecciones**. Una colección en una base de datos XML es un conjunto de documentos XML relacionados que se almacenan juntos para mejorar la organización y la recuperación de datos.
+
+Por ejemplo, en una base de datos XML de Dragon Ball, en lugar de almacenar todos los personajes en un solo documento, se podrían dividir en colecciones según su tipo:
+
+- Una colección para los personajes: `/db/personajes/`
+- Una colección para los planetas: `/db/planetas/`
+- Una colección para las técnicas de combate: `/db/tecnicas/`
+
+Cada colección contendría documentos XML individuales organizados por categoría:
+
+```
+/db/personajes/goku.xml
+/db/personajes/vegeta.xml
+/db/planetas/tierra.xml
+/db/planetas/namek.xml
+/db/tecnicas/kamehameha.xml
+```
+
+La ventaja de este enfoque es que permite una mayor granularidad en la gestión de los datos. Por ejemplo, se pueden realizar consultas en una colección específica sin necesidad de procesar toda la base de datos. Además, mejora la escalabilidad y la capacidad de manejar grandes volúmenes de información de manera eficiente.
+
+### 3.2.3. Consultas en colecciones de documentos XML
+
+En bases de datos nativas XML como **BaseX**, es posible realizar consultas sobre colecciones completas en lugar de trabajar con documentos individuales. Para acceder a todos los documentos dentro de una colección específica, se puede utilizar la función `collection()`, como en el siguiente ejemplo:
+
+```xquery
+for $p in collection("/db/personajes")//personaje
+return <nombre>{$p/nombre/text()}</nombre>
+```
+
+Esta consulta recupera el nombre de todos los personajes almacenados dentro de la colección **personajes**, sin importar en qué documento se encuentren.
+
+Otra ventaja de las colecciones es que permiten aplicar filtros más específicos sobre los datos. Por ejemplo, para obtener solo los personajes de raza **Saiyajin**, se puede ejecutar:
+
+```xquery
+for $p in collection("/db/personajes")//personaje
+where $p/raza = "Saiyajin"
+return $p
+```
+
+Esto permite realizar búsquedas eficientes sobre grandes volúmenes de datos sin necesidad de recorrer documentos innecesarios.
+
+### 3.2.4. Creación y administración de colecciones en BaseX
+
+En BaseX, las colecciones se pueden administrar mediante comandos específicos que facilitan la creación, actualización y eliminación de documentos XML dentro de una colección. Para crear una nueva colección y agregar un documento XML, se puede ejecutar:
+
+```xquery
+CREATE DB dragonball
+ADD TO dragonball/personajes goku.xml
+ADD TO dragonball/personajes vegeta.xml
+```
+
+Para listar todos los documentos almacenados en una colección, se puede utilizar:
+
+```xquery
+LIST /db/personajes
+```
+
+Para eliminar un documento de una colección:
+
+```xquery
+DELETE FROM dragonball/personajes/goku.xml
+```
+
+La administración de colecciones en una base de datos XML facilita la organización de grandes cantidades de información, permitiendo acceder a los datos de manera estructurada y eficiente.
+
+Por lo tanto, el uso de colecciones y documentos XML en bases de datos nativas XML permite estructurar la información de forma jerárquica y organizada. Mientras que los documentos individuales ofrecen una unidad de almacenamiento autónoma, las colecciones agrupan documentos relacionados, mejorando la eficiencia en la consulta y recuperación de datos. La correcta organización de colecciones en una base de datos XML permite un acceso más rápido a la información y una administración más sencilla de grandes volúmenes d...
+
+## 3.3. Identificadores únicos e indexación
+
+En una base de datos XML, garantizar la unicidad de los datos y optimizar la recuperación de información son aspectos clave para mantener la eficiencia y la integridad de los datos almacenados. Para ello, se emplean **identificadores únicos** y mecanismos de **indexación** que permiten mejorar el rendimiento de las consultas.
+
+Los identificadores únicos facilitan la distinción de elementos dentro de un documento XML, mientras que la indexación optimiza la búsqueda y el acceso a los datos en bases de datos de gran tamaño. Ambos conceptos son fundamentales en el diseño de bases de datos XML eficientes y bien estructuradas.
+
+### 3.3.1. Uso de identificadores únicos en XML
+
+Los identificadores únicos en XML permiten diferenciar elementos dentro de un documento, asegurando que no haya duplicados y facilitando la referenciación entre diferentes nodos. En XML, se pueden definir identificadores únicos mediante atributos, como en el siguiente ejemplo:
+
+```xml
+<personaje id="1">
+    <nombre>Goku</nombre>
+    <raza>Saiyajin</raza>
+    <nivel_poder>9001</nivel_poder>
+</personaje>
+```
+
+En este caso, el atributo `id` actúa como un identificador único para cada personaje, permitiendo realizar búsquedas eficientes y establecer relaciones entre elementos. En bases de datos XML más avanzadas, los esquemas XML (XML Schema) pueden utilizarse para definir restricciones de unicidad y asegurar que los valores de los identificadores sean únicos en todo el documento.
+
+En **XML Schema**, la unicidad se puede garantizar con la siguiente definición:
+
+```xml
+<xsd:element name="personaje">
+    <xsd:complexType>
+        <xsd:attribute name="id" type="xsd:ID" use="required"/>
+    </xsd:complexType>
+</xsd:element>
+```
+
+Esta estructura garantiza que cada nodo `<personaje>` tenga un identificador único dentro del documento.
+
+### 3.3.2. Importancia de la indexación en bases de datos XML
+
+En bases de datos XML de gran tamaño, la búsqueda de elementos específicos puede volverse costosa en términos de tiempo de ejecución. Para mejorar el rendimiento, las bases de datos nativas XML como **BaseX** permiten la creación de **índices**, que aceleran el acceso a los datos al evitar la necesidad de recorrer todo el documento en cada consulta.
+
+Existen diferentes tipos de índices que pueden aplicarse en una base de datos XML:
+
+#### 3.3.2.1. Índice de texto
+
+Este tipo de índice mejora la velocidad de búsqueda en textos dentro de un documento XML. Se crea con la siguiente instrucción en BaseX:
+
+```xquery
+CREATE TEXT INDEX
+```
+
+Una vez creado, las consultas que buscan valores dentro de nodos de texto se ejecutarán mucho más rápido.
+
+#### 3.3.2.2. Índice de atributos
+
+Si se realizan búsquedas frecuentes en atributos XML, se recomienda crear un índice de atributos para mejorar el rendimiento:
+
+```xquery
+CREATE ATTRIBUTE INDEX
+```
+
+Este índice optimiza las consultas que buscan valores dentro de atributos, como el identificador único de un personaje (`id`).
+
+#### 3.3.2.3. Índice de nombres de elementos
+
+Para mejorar el acceso a nodos específicos por su nombre, se puede crear un índice de nombres de elementos:
+
+```xquery
+CREATE NAME INDEX
+```
+
+Este índice facilita la búsqueda de elementos sin necesidad de recorrer todo el documento XML.
+
+### 3.3.3. Uso de identificadores e índices en consultas XQuery
+
+Para aprovechar los identificadores únicos y los índices creados en la base de datos, se pueden realizar consultas optimizadas en **XQuery**. Por ejemplo, para encontrar un personaje por su identificador único, se puede utilizar:
+
+```xquery
+for $p in //personaje[@id="1"]
+return $p/nombre/text()
+```
+
+Si se ha creado un índice de atributos previamente, esta consulta se ejecutará de manera más eficiente al evitar recorrer todo el documento de manera secuencial.
+
+Otro ejemplo de optimización con índices es la búsqueda de personajes con un nivel de poder superior a 8000:
+
+```xquery
+for $p in //personaje[nivel_poder > 8000]
+return $p/nombre/text()
+```
+
+Si se ha creado un **índice de texto**, la ejecución de esta consulta será mucho más rápida.
+
+Finalmente, el uso de **identificadores únicos** y **mecanismos de indexación** es esencial en bases de datos nativas XML para garantizar la eficiencia en la recuperación y manipulación de la información. Los identificadores permiten estructurar y referenciar datos de manera organizada, facilitando la navegación y la integridad de los documentos XML. Por otro lado, los índices optimizan el acceso a los datos al reducir el tiempo de ejecución de las consultas, lo que resulta fundamental en bases de datos XML de gran escala.
+
+Un adecuado diseño de identificadores y el uso estratégico de los índices pueden marcar la diferencia en el rendimiento de un sistema basado en XML. Gracias a estas técnicas, es posible gestionar grandes volúmenes de información de manera eficiente, asegurando una respuesta rápida a las consultas y reduciendo la carga computacional en la base de datos.
+
+En el siguiente apartado, se explorará el **modelado de datos en bases de datos XML**, abordando cómo estructurar correctamente la información para mejorar su acceso y gestión en bases de datos nativas XML.
+
+
+
+---
+
 
 # 5. Consultas en bases de datos XML
 
