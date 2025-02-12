@@ -319,7 +319,7 @@ CREATE DATABASE MiBase "ruta/datos.xml"
 Para listar todas las bases de datos disponibles:
 
 ```sh
-SHOW DATABASES
+LIST
 ```
 
 Con estos pasos, BaseX estará listo para su uso en la gestión de bases de datos XML. En la siguiente sección, se abordará la administración de usuarios y estrategias de almacenamiento para optimizar su rendimiento.
@@ -346,7 +346,7 @@ Los archivos de configuración de usuarios se encuentran en la carpeta `data/.us
 Para crear un nuevo usuario en BaseX, se utiliza el siguiente comando en la terminal o consola de BaseX:
 
 ```sh
-CREATE USER usuario_nuevo IDENTIFIED BY "contraseña_segura"
+CREATE USER usuario_nuevo contraseña_segura
 ```
 
 Para listar todos los usuarios del sistema:
@@ -377,7 +377,7 @@ BaseX permite asignar distintos roles a los usuarios según sus necesidades. Los
 Para asignar un rol a un usuario:
 
 ```sh
-GRANT user TO usuario_nuevo
+GRANT admin TO usuario_nuevo
 ```
 
 Para revocar un rol:
@@ -529,14 +529,6 @@ DROP DATABASE MiBase
 
 Con estas estrategias, BaseX puede manejar de manera eficiente bases de datos XML de gran tamaño, garantizando consultas rápidas y un uso optimizado del almacenamiento. En la siguiente sección, se explorará la manipulación de datos en bases de datos XML.
 
-# 5. Consultas en bases de datos XML
-
-El acceso y recuperación de datos en bases de datos nativas XML se realiza mediante lenguajes de consulta especializados que permiten extraer información de manera eficiente. En este contexto, **XPath** y **XQuery** son los dos lenguajes principales utilizados para realizar consultas en documentos XML.
-
-- **XPath** se emplea para navegar y seleccionar elementos dentro de un documento XML a través de expresiones estructuradas.
-- **XQuery** es un lenguaje más avanzado que permite realizar consultas complejas, transformaciones de datos y generación de nuevos documentos XML.
-
-En este apartado se analizarán estos lenguajes, su sintaxis y su aplicación en bases de datos XML como **BaseX**.
 
 # 3. Modelado de datos en bases de datos XML
 
@@ -1312,18 +1304,100 @@ Este código carga un documento XML, ejecuta una expresión XPath para seleccion
 
 Mientras que XPath se centra en la navegación dentro de documentos XML, **XQuery** permite realizar consultas avanzadas y transformaciones sobre bases de datos XML. Para ejecutar consultas XQuery desde Java, se puede utilizar la API de **BaseX**, que permite la conexión con una base de datos XML y la ejecución de sentencias XQuery de manera programática.
 
-#### 5.3.2.1. Conexión a BaseX y ejecución de consultas
+#### 5.3.2.1. Conexión y autenticación en BaseX desde Java
 
-El siguiente código muestra cómo conectarse a un servidor BaseX y ejecutar una consulta XQuery para recuperar los nombres de todos los personajes:
+Para conectar una aplicación Java a **BaseX**, es necesario configurar correctamente el servidor y asegurarse de que los usuarios tienen los permisos adecuados. A continuación, se presentan los pasos detallados para establecer un entorno funcional.
+
+> Paso 1: Iniciar el servidor BaseX
+
+Antes de poder conectarse desde Java, es necesario asegurarse de que el servidor BaseX está en ejecución. Para iniciarlo, abre una terminal y ejecuta el siguiente comando:
+
+```sh
+basexserver
+```
+
+Este comando iniciará el servidor en segundo plano y lo mantendrá en ejecución mientras se realicen las conexiones.
+
+> Paso 2: Abrir el cliente BaseX
+
+En otra terminal, abre el cliente BaseX con el siguiente comando:
+
+```sh
+basex
+```
+
+Desde esta sesión del cliente, se realizarán diversas operaciones para configurar los usuarios y bases de datos.
+
+> Paso 2.1: Crear un usuario con permisos de administrador
+
+Para crear un usuario llamado **Goku** con la contraseña **Goku** y otorgarle permisos de administrador, ejecuta los siguientes comandos en la consola de BaseX:
+
+```xquery
+CREATE USER Goku Goku
+```
+
+Para darle los permisos suficientes, ejecuta lo siguiente en la consola de comandos de BaseX:
+
+```xquery
+GRANT admin TO Goku
+```
+
+Para confirmar que el usuario ha sido creado correctamente y que tiene los permisos adecuados, usa:
+
+```xquery
+SHOW USERS
+```
+
+El resultado esperado es:
+
+```
+Username  Permission
+--------------------
+admin     admin       
+Goku      admin             
+```
+
+> Paso 2.2: Crear una base de datos en BaseX
+
+Para crear una base de datos llamada **dragonball** y cargar un archivo XML específico, usa el siguiente comando:
+
+```xquery
+CREATE DATABASE dragonball /home/teo/basex/data/miPrimeraBD/dragonball_basex.xml
+```
+
+Este comando creará la base de datos y almacenará el documento **dragonball_basex.xml** en la ubicación especificada.
+
+> Paso 2.3: Listar las bases de datos disponibles
+
+Para verificar que la base de datos **dragonball** ha sido creada correctamente, usa el siguiente comando:
+
+```xquery
+LIST
+```
+
+Esto debería mostrar una lista de bases de datos existentes:
+
+```
+Name         Resources  Size   Input Path                                             
+------------------------------------------------------------------------------------
+dragonball   1          13677  /home/teo/basex/data/miPrimeraBD/dragonball_basex.xml  
+miPrimeraBD  1          8788   /home/teo/basex/
+```
+
+> Paso 2.4: Conectarse desde Java a BaseX
+
+Una vez que el servidor está en ejecución y la base de datos ha sido creada, se puede conectar una aplicación Java a BaseX utilizando el siguiente código:
 
 ```java
+package org.example;
+
 import org.basex.api.client.ClientSession;
 
 public class XQueryBaseX {
     public static void main(String[] args) {
         try {
-            // Conectar al servidor BaseX
-            ClientSession session = new ClientSession("localhost", 1984, "test", "admin");
+            // Conectar a BaseX con usuario y contraseña
+            ClientSession session = new ClientSession("localhost", 1984, "Goku", "Goku");
 
             // Abrir la base de datos antes de ejecutar la consulta
             session.execute("OPEN dragonball");
@@ -1345,7 +1419,10 @@ public class XQueryBaseX {
 }
 ```
 
-Este código establece una conexión con un servidor **BaseX** en la máquina local y ejecuta una consulta XQuery. El resultado es devuelto en formato XML.
+Este código establece una conexión con BaseX en el puerto `1984`, usando el usuario **Goku** con la contraseña **Goku**. Luego, abre la base de datos **dragonball** y ejecuta una consulta para obtener todos los nombres de los personajes almacenados.
+
+
+Con estos pasos, se establece una conexión segura entre **BaseX y una aplicación Java**, asegurando que los usuarios tienen los permisos adecuados y que la base de datos está correctamente configurada. Esta integración permite ejecutar consultas XQuery desde Java y recuperar datos XML de manera eficiente.
 
 ### 5.3.3. Modificación de bases de datos XML desde Java
 
@@ -1357,7 +1434,8 @@ import org.basex.api.client.Session;
 public class UpdateXQueryBaseX {
     public static void main(String[] args) {
         try {
-            Session session = new Session("localhost", 1984, "admin", "admin");
+            // Conectar a BaseX con usuario y contraseña
+            ClientSession session = new ClientSession("localhost", 1984, "Goku", "Goku");
 
             String updateQuery = "replace value of node //personaje[nombre='Goku']/nivel_poder with '9500'";
             session.execute("XQUERY " + updateQuery);
