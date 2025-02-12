@@ -1219,11 +1219,13 @@ Muchas veces es necesario convertir datos XML a otros formatos para su integraci
 
 ```xquery
 json:serialize(
-    for $p in //personaje
-    return map {
-        "nombre": $p/nombre/text(),
-        "raza": $p/raza/text(),
-        "nivel_poder": $p/nivel_poder/text()
+    array {
+        for $p in //personaje
+        return map {
+            "nombre": $p/nombre/text(),
+            "raza": $p/raza/text(),
+            "nivel_poder": $p/nivel_poder/text()
+        }
     }
 )
 ```
@@ -1315,19 +1317,26 @@ Mientras que XPath se centra en la navegación dentro de documentos XML, **XQuer
 El siguiente código muestra cómo conectarse a un servidor BaseX y ejecutar una consulta XQuery para recuperar los nombres de todos los personajes:
 
 ```java
-import org.basex.api.client.Session;
+import org.basex.api.client.ClientSession;
 
 public class XQueryBaseX {
     public static void main(String[] args) {
         try {
-            Session session = new Session("localhost", 1984, "admin", "admin");
+            // Conectar al servidor BaseX
+            ClientSession session = new ClientSession("localhost", 1984, "test", "admin");
 
+            // Abrir la base de datos antes de ejecutar la consulta
+            session.execute("OPEN dragonball");
+
+            // Consulta XQuery
             String query = "for $p in //personaje return <nombre>{$p/nombre/text()}</nombre>";
             String result = session.execute("XQUERY " + query);
 
+            // Mostrar resultado
             System.out.println("Resultado de la consulta:");
             System.out.println(result);
 
+            // Cerrar la sesión
             session.close();
         } catch (Exception e) {
             e.printStackTrace();
