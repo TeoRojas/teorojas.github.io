@@ -18,11 +18,11 @@ abstract:
    &emsp;&emsp;1.3.3. [Métodos estáticos y de clase](#133-métodos-estáticos-y-de-clase)  
    1.4. [Relación entre objetos y clases en el diseño de software](#14-relación-entre-objetos-y-clases-en-el-diseño-de-software)  
    1.5. [Conceptos clave en la Programación Orientada a Objetos](#15-conceptos-clave-en-la-programación-orientada-a-objetos)  
-
-<!--
 2. [Introducción a los Diagramas de Clases](#2-introducción-a-los-diagramas-de-clases)  
    2.1. [Importancia en el desarrollo de aplicaciones](#21-importancia-en-el-desarrollo-de-aplicaciones)  
    2.2. [Relación con otros diagramas UML](#22-relación-con-otros-diagramas-uml)  
+
+<!--   
 3. [Herramientas para la Creación de Diagramas de Clases](#3-herramientas-para-la-creación-de-diagramas-de-clases)  
    3.1. [Herramientas CASE y su utilidad](#31-herramientas-case-y-su-utilidad)  
    3.2. [Plugins y extensiones en entornos de desarrollo](#32-plugins-y-extensiones-en-entornos-de-desarrollo)  
@@ -439,3 +439,166 @@ En la Programación Orientada a Objetos (POO) existen ciertos conceptos fundamen
 
 
 Estos conceptos forman la base de la POO y su correcta comprensión es clave para el desarrollo eficiente de software orientado a objetos. En los siguientes apartados exploraremos cómo estas ideas se representan mediante diagramas UML, facilitando la planificación y documentación del diseño de software.
+
+# 2. Introducción a los Diagramas de Clases
+
+Los diagramas de clases son una de las herramientas más utilizadas en la modelización de sistemas orientados a objetos. Estos diagramas permiten visualizar la estructura de un sistema de software, mostrando las clases que lo componen, sus atributos, métodos y las relaciones entre ellas. Se utilizan en todas las etapas del desarrollo de software, desde el análisis y diseño hasta la implementación y mantenimiento.
+
+En el desarrollo de software, los diagramas de clases desempeñan un papel fundamental al proporcionar una representación estática del sistema. A diferencia de otros diagramas UML que se centran en el comportamiento y la dinámica del sistema, los diagramas de clases se enfocan en la organización estructural de los datos y las relaciones entre los distintos elementos del sistema.
+
+La utilidad de los diagramas de clases no se limita únicamente a la representación gráfica del código, sino que también ayudan a mejorar la comunicación entre los miembros del equipo de desarrollo y a mantener la coherencia del diseño a lo largo del ciclo de vida del software.
+
+## 2.1. Importancia en el desarrollo de aplicaciones
+
+El uso de diagramas de clases en el desarrollo de software ofrece numerosos beneficios, entre los que destacan:
+
+1. **Claridad en el diseño**: Al representar visualmente las clases y sus interacciones, los diagramas de clases permiten comprender de manera intuitiva la estructura del sistema.
+2. **Facilitación de la comunicación**: Son una herramienta clave para la documentación y la comunicación entre los distintos actores del proyecto, como desarrolladores, diseñadores, analistas y clientes.
+3. **Estandarización**: Al utilizar notación UML, los diagramas de clases garantizan un lenguaje común que facilita la comprensión y el intercambio de información entre equipos.
+4. **Mejor mantenimiento y evolución del software**: La existencia de un modelo claro facilita la localización de errores, la incorporación de nuevas funcionalidades y la optimización del código.
+
+Por ejemplo, en el desarrollo de un sistema de gestión de estudiantes, un diagrama de clases puede mostrar las clases `Estudiante`, `Curso` y `Profesor`, junto con sus atributos y métodos. Esto ayuda a visualizar cómo se relacionan estos elementos y qué operaciones pueden realizarse sobre ellos.
+
+```python
+class Estudiante:
+    def __init__(self, nombre, edad, matricula):
+        self.nombre = nombre
+        self.edad = edad
+        self.matricula = matricula
+
+class Curso:
+    def __init__(self, nombre, codigo):
+        self.nombre = nombre
+        self.codigo = codigo
+
+class Profesor:
+    def __init__(self, nombre, especialidad):
+        self.nombre = nombre
+        self.especialidad = especialidad
+```
+
+En este caso, la representación visual en un diagrama de clases ayudaría a entender mejor la estructura del sistema y a detectar posibles mejoras en el diseño antes de implementar el código.
+
+En los siguientes apartados, exploraremos cómo los diagramas de clases se relacionan con otros diagramas UML y cómo pueden ser generados y utilizados en diferentes entornos de desarrollo.
+
+## 2.2. Relación con otros diagramas UML
+
+Los diagramas de clases son una parte fundamental del lenguaje de modelado unificado (UML, por sus siglas en inglés) y tienen una estrecha relación con otros tipos de diagramas UML utilizados en el desarrollo de software. A través de estos diagramas, se puede representar tanto la estructura estática de un sistema como su comportamiento dinámico.
+
+### Relación con los Diagramas de Caso de Uso
+
+Los diagramas de caso de uso proporcionan una visión general del sistema desde el punto de vista del usuario. Mientras que estos diagramas muestran cómo los actores interactúan con el sistema y qué funcionalidades están disponibles, los diagramas de clases complementan esta visión al definir las estructuras internas necesarias para implementar esas funcionalidades.
+
+Por ejemplo, un sistema de gestión de biblioteca puede tener un caso de uso para "Prestar libro", donde un usuario solicita un préstamo. El diagrama de clases correspondiente definiría las entidades involucradas, como `Libro`, `Usuario` y `Préstamo`, estableciendo sus relaciones y comportamientos.
+
+### Relación con los Diagramas de Secuencia
+
+Los diagramas de secuencia representan la comunicación y el flujo de mensajes entre objetos a lo largo del tiempo. A diferencia de los diagramas de clases, que son estáticos, los diagramas de secuencia muestran cómo los objetos interactúan dinámicamente en la ejecución de un caso de uso.
+
+Por ejemplo, en un sistema de compra en línea, un diagrama de secuencia podría representar la interacción entre las clases `Cliente`, `Pedido` y `Pago`, mostrando el orden en que se envían los mensajes para completar una transacción.
+
+```python
+class Cliente:
+    def __init__(self, nombre):
+        self.nombre = nombre
+
+    def realizar_pedido(self, pedido):
+        return f"Pedido {pedido.id} realizado por {self.nombre}"
+
+class Pedido:
+    def __init__(self, id, total):
+        self.id = id
+        self.total = total
+
+class Pago:
+    def procesar_pago(self, pedido):
+        return f"Pago de {pedido.total} procesado"
+
+# Simulación de interacción
+cliente = Cliente("Carlos")
+pedido = Pedido(101, 150.0)
+pago = Pago()
+
+print(cliente.realizar_pedido(pedido))
+print(pago.procesar_pago(pedido))
+```
+### Relación con los Diagramas de Actividad
+Los diagramas de actividad son útiles para modelar flujos de trabajo y procesos dentro de un sistema. Pueden mostrar cómo interactúan las clases definidas en un diagrama de clases para completar un flujo de negocio específico.
+
+Por ejemplo, en un sistema de reserva de vuelos, un diagrama de actividad puede describir el proceso de compra de un boleto, desde la selección del vuelo hasta la confirmación del pago. El diagrama de clases correspondiente definiría las entidades Vuelo, Pasajero y Reserva, asegurando que las interacciones en el flujo de trabajo tengan una estructura bien definida.
+
+### Importancia de la Integración de Diagramas UML
+El uso combinado de diferentes diagramas UML ayuda a capturar la complejidad de los sistemas de software desde múltiples perspectivas:
+
+- Los diagramas de clases proporcionan la estructura estática del sistema.
+- Los diagramas de caso de uso muestran las funcionalidades desde el punto de vista del usuario.
+- Los diagramas de secuencia detallan la interacción dinámica entre los objetos.
+- Los diagramas de actividad ilustran los procesos y flujos de trabajo.
+Esta integración permite a los desarrolladores y diseñadores construir sistemas bien estructurados, facilitando la comunicación y reduciendo errores en la implementación.
+
+
+## 2.3. Herramientas para la Creación de Diagramas de Clases
+Para crear diagramas de clases de manera eficiente y profesional, existen diversas herramientas especializadas que permiten modelar, visualizar y compartir estos diagramas de forma clara y estructurada. Estas herramientas pueden ser tanto de escritorio como en línea, y cada una ofrece diferentes características para facilitar el diseño y documentación del software.
+
+### 2.3.1. Herramientas de Código Abierto y Gratuitas
+
+- **PlantUML** es una herramienta de modelado basada en texto que permite generar diagramas de clases a partir de descripciones en un lenguaje simple y estructurado. Se integra fácilmente en editores de código como Visual Studio Code y en plataformas como GitHub. Ejemplo de sintaxis en PlantUML:
+
+    ```typescript
+    @startuml
+    class Estudiante {
+        - nombre: string
+        - edad: int
+        - matricula: string
+        + inscribirse()
+    }
+    @enduml
+    ```
+
+    Este código genera un diagrama visual en el que se representa la clase `Estudiante` con sus atributos y métodos.
+
+- [**Dia**](http://dia-installer.de/download/index.html) es una herramienta sencilla y liviana que permite crear diagramas UML de manera gráfica, sin necesidad de escribir código. Es ideal para usuarios que prefieren una interfaz visual sin utilizar lenguajes de marcado.
+
+- [**Draw.io**](https://draw.io/) (ahora conocido como diagrams.net) es una de las herramientas más utilizadas para la creación de diagramas UML, incluyendo diagramas de clases. Es una plataforma en línea gratuita que permite diseñar diagramas de manera intuitiva sin necesidad de instalar software adicional. Es ampliamente utilizada por su flexibilidad y compatibilidad con múltiples plataformas.
+
+    Draw.io ofrece una interfaz visual amigable que permite arrastrar y soltar elementos fácilmente, facilitando la creación de diagramas sin necesidad de conocimientos avanzados en diseño gráfico. Además, cuenta con una amplia biblioteca de elementos UML, que incluye plantillas para diagramas de clases, diagramas de secuencia y otros diagramas UML, lo que agiliza el proceso de modelado. Una de sus principales ventajas es la capacidad de colaboración en equipo, ya que permite guardar y compartir diagramas en la nube a través de servicios como Google Drive, OneDrive y Dropbox, además de ofrecer la posibilidad de exportarlos en formatos como PNG, SVG y PDF. Asimismo, Draw.io se integra con plataformas como GitHub y GitLab, lo que facilita su uso en entornos de desarrollo y permite documentar software dentro de repositorios de manera eficiente.
+
+### 2.3.2. Herramientas Profesionales y Comerciales
+
+- **Enterprise Architect**. Es una de las herramientas más utilizadas en entornos empresariales, ya que permite modelado UML avanzado y generación de código a partir de los diagramas. Ofrece soporte para bases de datos y arquitecturas empresariales.
+
+- **Microsoft Visio**. Visio es una herramienta de modelado visual que permite diseñar diagramas UML mediante una interfaz gráfica intuitiva. Es ampliamente utilizada en entornos corporativos por su integración con el ecosistema de Microsoft.
+
+- **Lucidchart** es una aplicación web que permite crear diagramas de clases de manera colaborativa. Es fácil de usar y permite exportar los diagramas en múltiples formatos.
+
+### 2.3.3. Selección de la Herramienta Adecuada
+
+La elección de una herramienta dependerá de diversos factores, como la facilidad de uso, la integración con otros sistemas, el nivel de personalización requerido y la colaboración en equipo. Para proyectos individuales o educativos, herramientas como **PlantUML** y **Draw.io** pueden ser suficientes, mientras que para entornos empresariales se recomienda el uso de Enterprise Architect o Microsoft Visio.
+
+En los siguientes apartados, exploraremos cómo utilizar estas herramientas en el proceso de modelado y cómo pueden integrarse en los entornos de desarrollo de software.
+
+## **Ejercicio Práctico: Creación de un Diagrama de Clases**
+
+En este ejercicio, los alumnos deben **crear el siguiente diagrama de clases** utilizando tres herramientas diferentes: **Draw.io, PlantUML y Dia**.  
+
+A continuación, se presenta el **diagrama de clases de un coche**, donde se definen los atributos y métodos de la clase `Coche`.
+
+**Diagrama de Clases: Coche**
+
+![Muchos a Muchos](/entornos-de-desarrollo/imgs/ud05/ud05_classCoche.svg)
+
+### **Ejemplo de código para PlantUML**
+Si utilizan PlantUML, pueden generar el diagrama escribiendo el siguiente código en su editor compatible con PlantUML:
+
+```typescript
+@startuml
+class Coche {
+    - marca: string
+    - modelo: string
+    - año: int
+    + arrancar(): void
+    + frenar(): void
+    + acelerar(velocidad: int): void
+}
+@enduml
+```
