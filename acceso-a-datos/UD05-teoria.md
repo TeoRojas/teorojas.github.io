@@ -1533,7 +1533,89 @@ public class XMLtoJSON {
 
 ```
 
-Este código convierte un documento XML en un formato JSON estructurado y lo imprime en pantalla.
+El siguiente código permite obtener datos XML directamente desde una base de datos **BaseX** y convertirlos a **JSON** utilizando la biblioteca **Jackson** en Java.
+
+**Flujo del código**:
+1. **Conectar con BaseX usando `ClientSession`**  
+   - Se establece una conexión con el servidor BaseX en `localhost` puerto `1984`, usando el usuario `Goku` y la contraseña `Goku`.
+2. **Abrir la base de datos `dragonball`**  
+   - Antes de ejecutar consultas, se abre la base de datos con:
+   ```java
+   session.execute("OPEN dragonball");
+   ```
+3. **Ejecutar una consulta XQuery para obtener los personajes**  
+   - La consulta devuelve todos los nodos `<personaje>`:
+   ```java
+   String query = "for $p in //personaje return $p";
+   String xmlResult = session.execute("XQUERY " + query);
+   ```
+4. **Cerrar la conexión con BaseX**  
+   - Se cierra la sesión después de obtener los datos para evitar mantener conexiones abiertas innecesarias.
+   ```java
+   session.close();
+   ```
+5. **Verificar si la consulta devolvió datos**  
+   - Si no hay resultados, se muestra un mensaje y se detiene el programa:
+   ```java
+   if (xmlResult.isEmpty()) {
+       System.out.println("No se encontraron datos en la base de datos.");
+       return;
+   }
+   ```
+6. **Convertir la respuesta XML en JSON con Jackson**  
+   - Se utiliza `XmlMapper` de **Jackson** para leer el XML como un objeto Java:
+   ```java
+   XmlMapper xmlMapper = new XmlMapper();
+   Object obj = xmlMapper.readValue(new StringReader("<personajes>" + xmlResult + "</personajes>"), Object.class);
+   ```
+   - Luego, se convierte este objeto a **JSON** con `ObjectMapper`:
+   ```java
+   ObjectMapper jsonMapper = new ObjectMapper();
+   String jsonOutput = jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+   ```
+7. **Mostrar el resultado en JSON formateado**  
+   - Finalmente, el JSON resultante se imprime en pantalla:
+   ```java
+   System.out.println("Resultado en formato JSON:");
+   System.out.println(jsonOutput);
+   ```
+8. **Salida esperada**
+    Si en la base de datos **BaseX** existe la siguiente información en XML:
+
+    ```xml
+    <personaje>
+        <nombre>Goku</nombre>
+        <raza>Saiyajin</raza>
+        <nivel_poder>9001</nivel_poder>
+    </personaje>
+    <personaje>
+        <nombre>Vegeta</nombre>
+        <raza>Saiyajin</raza>
+        <nivel_poder>8500</nivel_poder>
+    </personaje>
+    ```
+
+    El programa generará la siguiente salida en **JSON**:
+
+    ```json
+    {
+    "personajes": {
+        "personaje": [
+        {
+            "nombre": "Goku",
+            "raza": "Saiyajin",
+            "nivel_poder": "9001"
+        },
+        {
+            "nombre": "Vegeta",
+            "raza": "Saiyajin",
+            "nivel_poder": "8500"
+        }
+        ]
+    }
+    }
+    ```
+
 
 ### 5.3.5. Beneficios de la integración de XQuery con Java
 
