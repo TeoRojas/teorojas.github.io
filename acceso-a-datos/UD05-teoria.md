@@ -814,10 +814,18 @@ Estos comandos añaden los documentos XML a la base de datos abierta.
 
 ### Listar los documentos dentro de una base de datos
 
-Para comprobar qué documentos se encuentran almacenados en una base de datos, se utiliza el comando `LIST`:
+Para comprobar qué documentos se encuentran almacenados en una base de datos, se utiliza el comando `LIST` junto con el alias de la base de datos:
 
 ```xquery
-LIST guerrerosZ
+> LIST guerrerosZ
+Input Path   Type  Content-Type     Size  
+----------------------------------------
+broly.xml    xml   application/xml  13    
+freezer.xml  xml   application/xml  13    
+nappa.xml    xml   application/xml  13    
+raditz.xml   xml   application/xml  13    
+
+4 Resource(s).
 ```
 
 Este comando mostrará el nombre de la base de datos y los documentos almacenados dentro de ella.
@@ -827,7 +835,19 @@ Este comando mostrará el nombre de la base de datos y los documentos almacenado
 Si un documento ya no es necesario, se puede eliminar usando el comando `DELETE`:
 
 ```xquery
-DELETE "broly.xml"
+> DELETE "broly.xml"
+1 resource(s) deleted in 2.93 ms.
+```
+
+```xquery
+> LIST guerrerosZ
+Input Path   Type  Content-Type     Size  
+----------------------------------------
+freezer.xml  xml   application/xml  13    
+nappa.xml    xml   application/xml  13    
+raditz.xml   xml   application/xml  13    
+
+3 Resource(s).
 ```
 
 Esto eliminará únicamente el documento `broly.xml` sin afectar los demás documentos almacenados en la base de datos.
@@ -842,25 +862,17 @@ DROP DB dragonball
 
 Este comando eliminará la base de datos **dragonball** y todos los documentos que contiene.
 
-
-### Importancia de la organización en colecciones
-
-El uso adecuado de colecciones permite mejorar la organización y el rendimiento en la consulta de datos XML. Al agrupar documentos relacionados, se optimizan las búsquedas y se facilita el acceso a la información sin necesidad de recorrer toda la base de datos.
-
-En la siguiente sección, se explorará cómo añadir, modificar y eliminar documentos XML dentro de estas colecciones.
-
-
-A continuación, se presentan **tres ejercicios prácticos** sobre la gestión de colecciones en **BaseX**. Cada ejercicio debe resolverse utilizando consultas XQuery para crear, añadir y eliminar colecciones dentro de la base de datos **dragonball**. Para ello, vas a necesitar los siguientes archivos:
+A continuación, se presentan **tres ejercicios prácticos** sobre la gestión de colecciones en **BaseX**. Cada ejercicio debe resolverse utilizando consultas para crear, añadir y eliminar datos dentro de la base de datos **`guerrerosZ`**. Para ello, vas a necesitar los siguientes archivos:
 > [BDD Dragon ball](/ud05/dragonball_basex.xml) | [Broly](/ud05/broly.xml) | [Freezer](/ud05/freezer.xml) | [Nappa](/ud05/nappa.xml) | [Raditz](/ud05/raditz.xml)
 
-**Ejercicio 1: Crear una colección `guerrerosZ` y añadir personajes**:  
+**Ejercicio 1: Crear una base de datos `guerrerosZ` y añadir los personajes**:  
 Crear una colección llamada **`guerrerosZ`** y añadir los archivos XML de los personajes **Broly, Freezer, Nappa y Raditz** dentro de esta colección.  
 **Ejercicio 2: Listar los documentos dentro de la colección**:  
-Después de añadir los personajes a la colección **`guerrerosZ`**, listar todos los documentos almacenados en la colección.  
-**Ejercicio 3: Eliminar una colección específica**:  
+Después de añadir los personajes a la colección **`guerrerosZ`**, listar todos los documentos almacenados en la base de datos.  
+**Ejercicio 3: Eliminar una base de datos**:  
 Eliminar la colección **`guerrerosZ`** sin afectar otras colecciones de la base de datos.  
  
-## 4.2. Añadir, modificar y eliminar documentos XML en BaseX
+## 4.2. Modificar y eliminar documentos XML en BaseX
 
 BaseX permite la gestión dinámica de documentos XML almacenados en bases de datos. Se pueden **añadir nuevos documentos**, **modificar su contenido** y **eliminarlos** utilizando comandos específicos.
 
