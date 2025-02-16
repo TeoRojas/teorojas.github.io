@@ -1429,7 +1429,9 @@ Con estos pasos, se establece una conexión segura entre **BaseX y una aplicaci�
 Además de realizar consultas, es posible modificar bases de datos XML desde Java utilizando XQuery. BaseX permite ejecutar sentencias de actualización directamente desde una conexión remota. A continuación, se muestra cómo actualizar el nivel de poder de un personaje:
 
 ```java
-import org.basex.api.client.Session;
+package org.example;
+
+import org.basex.api.client.ClientSession;
 
 public class UpdateXQueryBaseX {
     public static void main(String[] args) {
@@ -1437,10 +1439,16 @@ public class UpdateXQueryBaseX {
             // Conectar a BaseX con usuario y contraseña
             ClientSession session = new ClientSession("localhost", 1984, "Goku", "Goku");
 
+            // Abrir la base de datos antes de ejecutar la actualización
+            session.execute("OPEN dragonball");
+
+            // Consulta XQuery para modificar el nivel de poder de Goku
             String updateQuery = "replace value of node //personaje[nombre='Goku']/nivel_poder with '9500'";
             session.execute("XQUERY " + updateQuery);
 
             System.out.println("Nivel de poder actualizado correctamente.");
+
+            // Cerrar la sesión
             session.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -1451,6 +1459,22 @@ public class UpdateXQueryBaseX {
 
 Con este código, se actualiza el nodo `<nivel_poder>` del personaje Goku directamente en la base de datos.
 
+#### Ejercicios de modificación con XQuery en BaseX
+
+A continuación, se presentan **5 ejercicios prácticos** de modificación en bases de datos nativas XML en **BaseX**. Cada ejercicio debe resolverse utilizando consultas XQuery sobre la base de datos **Dragon Ball** previamente cargada.
+
+**Ejercicio 1: Aumentar el nivel de poder de todos los Saiyajin**: Incrementar en **500 unidades** el nivel de poder de todos los personajes cuya raza sea **Saiyajin**.  
+_Pista_: Utiliza `replace value of node` con una operación matemática sobre el valor actual.  
+**Ejercicio 2: Cambiar el planeta de origen de Vegeta**: Modificar el planeta de origen de Vegeta y establecerlo en **"Tierra"**.  
+_Pista_: Usa `replace value of node` para actualizar el contenido del nodo.  
+**Ejercicio 3: Añadir una nueva técnica a Goku**: Insertar la técnica **"Ultra Instinto"** en la lista de técnicas de Goku.  
+_Pista_: Utiliza `insert node ... into ...` para agregar un nuevo nodo dentro de `<tecnicas>`.  
+**Ejercicio 4: Eliminar a Freezer de la base de datos**: Borrar completamente el nodo `<personaje>` de Freezer si existe en la base de datos.  
+_Pista_: Usa `delete node` para eliminar el personaje correspondiente.  
+**Ejercicio 5: Reducir a la mitad el número de habitantes de Namek**: Actualizar el número de habitantes del planeta Namek dividiéndolo entre **2**.  
+_Pista_: Usa `replace value of node` con una operación matemática para modificar el valor.  
+
+
 ### 5.3.4. Conversión de datos XML desde Java
 
 En algunas aplicaciones, puede ser necesario convertir datos XML en otros formatos como JSON o CSV. Desde Java, se pueden procesar los resultados de consultas XQuery y exportarlos a otros formatos.
@@ -1460,6 +1484,8 @@ En algunas aplicaciones, puede ser necesario convertir datos XML en otros format
 Para convertir un documento XML en formato JSON, se puede usar la biblioteca **Jackson**:
 
 ```java
+package org.example;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
