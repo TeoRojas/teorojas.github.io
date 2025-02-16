@@ -1,0 +1,5 @@
+<personaje id="4">
+    <nombre>Broly</nombre>
+    <raza>Saiyajin</raza>
+    <nivel_poder>10000</nivel_poder>
+</personaje>

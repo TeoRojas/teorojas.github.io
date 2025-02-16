@@ -773,6 +773,89 @@ Un adecuado diseño de identificadores y el uso estratégico de los índices pue
 En el siguiente apartado, se explorará el **modelado de datos en bases de datos XML**, abordando cómo estructurar correctamente la información para mejorar su acceso y gestión en bases de datos nativas XML.
 
 
+# 4. Manipulación de datos en bases de datos XML
+
+El manejo de datos en bases de datos XML implica una serie de operaciones que permiten gestionar la información almacenada en documentos XML. Estas operaciones incluyen la creación, eliminación, modificación y consulta de documentos XML dentro de la base de datos.
+
+A diferencia de las bases de datos relacionales, donde los datos se manipulan mediante comandos SQL, en las bases de datos nativas XML se utilizan lenguajes específicos como **XQuery** y **XPath** para interactuar con los documentos XML. Estos lenguajes permiten navegar por la estructura jerárquica del XML y realizar modificaciones de manera eficiente.
+
+El proceso de manipulación de datos en bases de datos XML puede dividirse en varias acciones clave:
+
+- **Creación y eliminación de colecciones**: Organizar documentos XML en agrupaciones lógicas.
+- **Añadir, modificar y eliminar documentos XML**: Gestionar el contenido de la base de datos.
+- **Uso de clases y métodos en Java para bases de datos XML**: Integrar la manipulación de datos XML en aplicaciones Java.
+- **Manejo de excepciones en operaciones con bases de datos XML**: Asegurar la integridad de los datos mediante un control adecuado de errores.
+
+A continuación, se detalla cada una de estas acciones fundamentales.
+
+## 4.1. Creación y eliminación de colecciones
+
+En bases de datos nativas XML como **BaseX**, los documentos XML se almacenan dentro de **colecciones**, que funcionan de manera similar a las tablas en bases de datos relacionales. Una colección puede contener múltiples documentos XML y permite organizarlos de forma estructurada.
+
+### Creación de colecciones
+
+Para crear una nueva colección en BaseX, se utiliza el comando `CREATE COLLECTION`. Este comando permite definir una colección y añadir documentos XML desde una ruta específica:
+
+```xquery
+CREATE DATABASE dragonball
+ADD TO dragonball "ruta/del/documento.xml"
+```
+
+También es posible crear una colección vacía y añadir documentos posteriormente:
+
+```xquery
+CREATE COLLECTION personajes
+```
+
+Una vez creada la colección, se pueden añadir documentos XML individuales mediante el comando `ADD`:
+
+```xquery
+ADD TO personajes "ruta/del/personaje1.xml"
+ADD TO personajes "ruta/del/personaje2.xml"
+```
+
+### Eliminación de colecciones
+
+Si una colección ya no es necesaria, se puede eliminar junto con todos sus documentos utilizando el comando `DROP DATABASE` o `DROP COLLECTION`:
+
+```xquery
+DROP DATABASE dragonball
+```
+
+Si solo se quiere eliminar una colección específica dentro de una base de datos sin borrar la base de datos completa:
+
+```xquery
+DROP COLLECTION personajes
+```
+
+### Verificación de colecciones existentes
+
+Para comprobar qué colecciones están almacenadas en la base de datos, se puede ejecutar:
+
+```xquery
+LIST
+```
+
+Esto mostrará todas las colecciones disponibles y sus respectivos documentos.
+
+### Importancia de la organización en colecciones
+
+El uso adecuado de colecciones permite mejorar la organización y el rendimiento en la consulta de datos XML. Al agrupar documentos relacionados, se optimizan las búsquedas y se facilita el acceso a la información sin necesidad de recorrer toda la base de datos.
+
+En la siguiente sección, se explorará cómo añadir, modificar y eliminar documentos XML dentro de estas colecciones.
+
+
+A continuación, se presentan **tres ejercicios prácticos** sobre la gestión de colecciones en **BaseX**. Cada ejercicio debe resolverse utilizando consultas XQuery para crear, añadir y eliminar colecciones dentro de la base de datos **dragonball**. Para ello, vas a necesitar los siguientes archivos:
+> [BDD Dragon ball](/ud05/dragonball_basex.xml) | [Broly](/ud05/broly.xml) | [Freezer](/ud05/freezer.xml) | [Nappa](/ud05/nappa.xml) | [Raditz](/ud05/raditz.xml)
+
+**Ejercicio 1: Crear una colección y añadir personajes**:  
+Crear una colección llamada **"guerrerosZ"** y añadir los archivos XML de los personajes **Broly, Freezer, Nappa y Raditz** dentro de esta colección.  
+**Ejercicio 2: Listar los documentos dentro de la colección**:  
+Después de añadir los personajes a la colección **"guerrerosZ"**, listar todos los documentos almacenados en la colección.  
+**Ejercicio 3: Eliminar una colección específica**:  
+Eliminar la colección **"guerrerosZ"** sin afectar otras colecciones de la base de datos.  
+ 
+
 
 ---
 
