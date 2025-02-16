@@ -775,68 +775,73 @@ En el siguiente apartado, se explorará el **modelado de datos en bases de datos
 
 # 4. Manipulación de datos en bases de datos XML
 
-El manejo de datos en bases de datos XML implica una serie de operaciones que permiten gestionar la información almacenada en documentos XML. Estas operaciones incluyen la creación, eliminación, modificación y consulta de documentos XML dentro de la base de datos.
+El manejo de datos en bases de datos XML permite gestionar documentos XML mediante la creación, modificación y eliminación de información almacenada. En bases de datos nativas XML como **BaseX**, estos procesos se realizan utilizando **XQuery**, permitiendo la manipulación de datos de manera eficiente y estructurada.
 
-A diferencia de las bases de datos relacionales, donde los datos se manipulan mediante comandos SQL, en las bases de datos nativas XML se utilizan lenguajes específicos como **XQuery** y **XPath** para interactuar con los documentos XML. Estos lenguajes permiten navegar por la estructura jerárquica del XML y realizar modificaciones de manera eficiente.
+A diferencia de las bases de datos relacionales, donde los datos se almacenan en tablas, en las bases de datos XML los documentos están organizados en una estructura jerárquica, agrupados en **bases de datos** que pueden contener múltiples documentos XML. La correcta gestión de estos documentos es clave para garantizar un acceso eficiente y organizado.
 
-El proceso de manipulación de datos en bases de datos XML puede dividirse en varias acciones clave:
+Las operaciones más comunes en la manipulación de datos incluyen:
 
-- **Creación y eliminación de colecciones**: Organizar documentos XML en agrupaciones lógicas.
-- **Añadir, modificar y eliminar documentos XML**: Gestionar el contenido de la base de datos.
-- **Uso de clases y métodos en Java para bases de datos XML**: Integrar la manipulación de datos XML en aplicaciones Java.
-- **Manejo de excepciones en operaciones con bases de datos XML**: Asegurar la integridad de los datos mediante un control adecuado de errores.
+- **Añadir y eliminar documentos XML en una base de datos**.
+- **Modificar información dentro de los documentos XML**.
+- **Manejo de excepciones en operaciones con bases de datos XML**.
 
-A continuación, se detalla cada una de estas acciones fundamentales.
+En los siguientes apartados se detallan los procedimientos para trabajar con documentos XML en **BaseX**.
 
-## 4.1. Creación y eliminación de colecciones
+## 4.1. Gestión de documentos en bases de datos XML
 
-En bases de datos nativas XML como **BaseX**, los documentos XML se almacenan dentro de **colecciones**, que funcionan de manera similar a las tablas en bases de datos relacionales. Una colección puede contener múltiples documentos XML y permite organizarlos de forma estructurada.
+En **BaseX**, un conjunto de documentos XML se almacena dentro de una **base de datos**. No existen colecciones independientes como en otros sistemas XML; en su lugar, una base de datos puede contener múltiples documentos, agrupados de manera lógica. Cada base de datos puede aceptar cualquier tipo de documento XML sin restricciones de estructura.
 
-### Creación de colecciones
+### 4.1.2 Añadir documentos XML a una base de datos
 
-Para crear una nueva colección en BaseX, se utiliza el comando `CREATE COLLECTION`. Este comando permite definir una colección y añadir documentos XML desde una ruta específica:
-
-```xquery
-CREATE DATABASE dragonball
-ADD TO dragonball "ruta/del/documento.xml"
-```
-
-También es posible crear una colección vacía y añadir documentos posteriormente:
+Para añadir un documento XML a una base de datos en BaseX, primero se debe crear, para después abrir y por último agregar el documento con el comando `ADD`:
 
 ```xquery
-CREATE COLLECTION personajes
+CREATE DATABASE guerrerosZ
+OPEN guerrerosZ
+ADD "ruta/broly.xml"
 ```
 
-Una vez creada la colección, se pueden añadir documentos XML individuales mediante el comando `ADD`:
+A continuación obsérvese el ejemplo de agregar varios documentos a la misma base de datos:
 
 ```xquery
-ADD TO personajes "ruta/del/personaje1.xml"
-ADD TO personajes "ruta/del/personaje2.xml"
+ADD broly.xml
+ADD freezer.xml
+ADD nappa.xml
+ADD raditz.xml
 ```
 
-### Eliminación de colecciones
+Estos comandos añaden los documentos XML a la base de datos abierta.
 
-Si una colección ya no es necesaria, se puede eliminar junto con todos sus documentos utilizando el comando `DROP DATABASE` o `DROP COLLECTION`:
+### Listar los documentos dentro de una base de datos
+
+Para comprobar qué documentos se encuentran almacenados en una base de datos, se utiliza el comando `LIST`:
 
 ```xquery
-DROP DATABASE dragonball
+LIST guerrerosZ
 ```
 
-Si solo se quiere eliminar una colección específica dentro de una base de datos sin borrar la base de datos completa:
+Este comando mostrará el nombre de la base de datos y los documentos almacenados dentro de ella.
+
+### Eliminar un documento de la base de datos
+
+Si un documento ya no es necesario, se puede eliminar usando el comando `DELETE`:
 
 ```xquery
-DROP COLLECTION personajes
+DELETE "broly.xml"
 ```
 
-### Verificación de colecciones existentes
+Esto eliminará únicamente el documento `broly.xml` sin afectar los demás documentos almacenados en la base de datos.
 
-Para comprobar qué colecciones están almacenadas en la base de datos, se puede ejecutar:
+### Eliminar una base de datos completa
+
+Si se desea eliminar completamente una base de datos y todos sus documentos, se puede usar el comando `DROP DB` seguido del nombre de la base de datos:
 
 ```xquery
-LIST
+DROP DB dragonball
 ```
 
-Esto mostrará todas las colecciones disponibles y sus respectivos documentos.
+Este comando eliminará la base de datos **dragonball** y todos los documentos que contiene.
+
 
 ### Importancia de la organización en colecciones
 
@@ -848,13 +853,103 @@ En la siguiente sección, se explorará cómo añadir, modificar y eliminar docu
 A continuación, se presentan **tres ejercicios prácticos** sobre la gestión de colecciones en **BaseX**. Cada ejercicio debe resolverse utilizando consultas XQuery para crear, añadir y eliminar colecciones dentro de la base de datos **dragonball**. Para ello, vas a necesitar los siguientes archivos:
 > [BDD Dragon ball](/ud05/dragonball_basex.xml) | [Broly](/ud05/broly.xml) | [Freezer](/ud05/freezer.xml) | [Nappa](/ud05/nappa.xml) | [Raditz](/ud05/raditz.xml)
 
-**Ejercicio 1: Crear una colección y añadir personajes**:  
-Crear una colección llamada **"guerrerosZ"** y añadir los archivos XML de los personajes **Broly, Freezer, Nappa y Raditz** dentro de esta colección.  
+**Ejercicio 1: Crear una colección `guerrerosZ` y añadir personajes**:  
+Crear una colección llamada **`guerrerosZ`** y añadir los archivos XML de los personajes **Broly, Freezer, Nappa y Raditz** dentro de esta colección.  
 **Ejercicio 2: Listar los documentos dentro de la colección**:  
-Después de añadir los personajes a la colección **"guerrerosZ"**, listar todos los documentos almacenados en la colección.  
+Después de añadir los personajes a la colección **`guerrerosZ`**, listar todos los documentos almacenados en la colección.  
 **Ejercicio 3: Eliminar una colección específica**:  
-Eliminar la colección **"guerrerosZ"** sin afectar otras colecciones de la base de datos.  
+Eliminar la colección **`guerrerosZ`** sin afectar otras colecciones de la base de datos.  
  
+## 4.2. Añadir, modificar y eliminar documentos XML en BaseX
+
+BaseX permite la gestión dinámica de documentos XML almacenados en bases de datos. Se pueden **añadir nuevos documentos**, **modificar su contenido** y **eliminarlos** utilizando comandos específicos.
+
+### 4.2.1. Añadir documentos XML a una base de datos
+
+En BaseX, un conjunto de documentos XML se almacena dentro de una **base de datos**. Para añadir documentos, primero hay que asegurarse de que la base de datos está abierta y luego utilizar el comando `db:add()`:
+
+```xquery
+db:add("guerrerosZ", "broly.xml")
+db:add("guerrerosZ", "freezer.xml")
+db:add("guerrerosZ", "nappa.xml")
+db:add("guerrerosZ", "raditz.xml")
+```
+
+Si el archivo XML se encuentra en una carpeta específica, también se puede indicar su ruta:
+
+```xquery
+db:add("guerrerosZ", "/ruta/documentos/broly.xml")
+```
+
+Para listar los documentos agregados a la base de datos, se puede ejecutar:
+
+```xquery
+db:list("guerrerosZ")
+```
+
+Esto mostrará todos los documentos almacenados dentro de la base de datos `guerrerosZ`.
+
+### 4.2.2. Modificar documentos XML en BaseX
+
+La modificación de datos en BaseX se realiza con `replace`, `insert` y `delete`. Estas funciones permiten actualizar valores dentro de los documentos XML almacenados en la base de datos.
+
+**Modificar el contenido de un nodo**
+
+Para actualizar el valor de un nodo específico dentro de un documento XML, se usa `replace value of node`:
+
+```xquery
+replace value of node db:open("guerrerosZ")//personaje[nombre="Broly"]/nivel_poder 
+with "12000"
+```
+
+Este comando cambia el nivel de poder de **Broly** dentro de la base de datos.
+
+**Añadir un nuevo nodo dentro de un documento XML**
+
+Si se quiere añadir un nuevo nodo dentro de un documento almacenado en la base de datos, se usa `insert node`:
+
+```xquery
+insert node <tecnica>Final Flash</tecnica> 
+into db:open("guerrerosZ")//personaje[nombre="Vegeta"]/tecnicas
+```
+
+Este comando añade la técnica **Final Flash** a la lista de técnicas de Vegeta.
+
+### 4.2.3. Eliminar documentos XML en BaseX
+
+Si un documento ya no es necesario, se puede eliminar de la base de datos con el comando `db:delete()`:
+
+```xquery
+db:delete("guerrerosZ", "broly.xml")
+```
+
+Esto eliminará únicamente el documento `broly.xml` sin afectar los demás documentos almacenados en la base de datos.
+
+Si en lugar de eliminar un documento completo se desea eliminar un nodo dentro de un documento específico, se puede hacer con:
+
+```xquery
+delete node db:open("guerrerosZ")//personaje[nombre="Raditz"]
+```
+
+Este comando eliminará el nodo `<personaje>` que contiene a **Raditz**, sin afectar el resto del documento.
+
+**Eliminar una base de datos completa**
+
+Si se necesita eliminar por completo una base de datos junto con todos sus documentos, se usa el comando:
+
+```xquery
+db:drop("guerrerosZ")
+```
+
+Este comando eliminará la base de datos **guerrerosZ** y todos sus documentos.
+
+BaseX permite realizar operaciones de **inserción, modificación y eliminación** de documentos XML de manera flexible y optimizada. Gracias a su soporte para **XQuery Update Facility**, es posible actualizar el contenido de los documentos sin necesidad de reconstruir toda la base de datos. Estas operaciones son esenciales para mantener la información actualizada y organizada dentro del sistema de almacenamiento XML.
+
+
+
+
+
+
 
 
 ---
