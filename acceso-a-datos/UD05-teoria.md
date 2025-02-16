@@ -1486,23 +1486,51 @@ Para convertir un documento XML en formato JSON, se puede usar la biblioteca **J
 ```java
 package org.example;
 
+import org.basex.api.client.ClientSession;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
-import java.io.File;
+import java.io.StringReader;
 
 public class XMLtoJSON {
-    public static void main(String[] args) throws Exception {
-        File xmlFile = new File("dragonball.xml");
-        XmlMapper xmlMapper = new XmlMapper();
-        Object obj = xmlMapper.readValue(xmlFile, Object.class);
+    public static void main(String[] args) {
+        try {
+            // Conectar a BaseX con usuario y contraseña
+            ClientSession session = new ClientSession("localhost", 1984, "Goku", "Goku");
 
-        ObjectMapper jsonMapper = new ObjectMapper();
-        String jsonOutput = jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+            // Abrir la base de datos antes de ejecutar la consulta
+            session.execute("OPEN dragonball");
 
-        System.out.println(jsonOutput);
+            // Consulta XQuery para obtener todos los personajes en XML
+            String query = "for $p in //personaje return $p";
+            String xmlResult = session.execute("XQUERY " + query);
+
+            // Cerrar la sesión con BaseX
+            session.close();
+
+            // Verificar si la consulta devolvió datos
+            if (xmlResult.isEmpty()) {
+                System.out.println("No se encontraron datos en la base de datos.");
+                return;
+            }
+
+            // Convertir la respuesta XML en JSON con Jackson
+            XmlMapper xmlMapper = new XmlMapper();
+            Object obj = xmlMapper.readValue(new StringReader("<personajes>" + xmlResult + "</personajes>"), Object.class);
+
+            ObjectMapper jsonMapper = new ObjectMapper();
+            String jsonOutput = jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+
+            // Imprimir el resultado en formato JSON
+            System.out.println("Resultado en formato JSON:");
+            System.out.println(jsonOutput);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
+
 ```
 
 Este código convierte un documento XML en un formato JSON estructurado y lo imprime en pantalla.
