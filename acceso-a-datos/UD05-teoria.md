@@ -24,12 +24,12 @@ abstract: Sinopsis de la unidad 05
 4. [Manipulación de datos en bases de datos XML](#4-manipulación-de-datos-en-bases-de-datos-xml)  
    4.1. [Gestión de documentos en bases de datos XML](#41-gestión-de-documentos-en-bases-de-datos-xml)  
    4.2. [Modificar y eliminar documentos XML en BaseX](#42-modificar-y-eliminar-documentos-xml-en-basex)  
-   4.3. [Clases y métodos en Java para bases de datos XML](#43-clases-y-métodos-en-java-para-bases-de-datos-xml)  
-   4.4. [Tratamiento de excepciones en operaciones con bases de datos XML](#44-tratamiento-de-excepciones-en-operaciones-con-bases-de-datos-xml)  
 5. [Consultas en bases de datos XML](#5-consultas-en-bases-de-datos-xml)  
    5.1. [Introducción a XPath y XQuery](#51-introducción-a-xpath-y-xquery)  
    5.2. [Uso de XQuery en bases de datos XML](#52-uso-de-xquery-en-bases-de-datos-xml)  
    5.3. [Consultas desde Java con XPath y XQuery](#53-consultas-desde-java-con-xpath-y-xquery)  
+   5.4. [Tratamiento de excepciones en operaciones con bases de datos XML](#54-tratamiento-de-excepciones-en-operaciones-con-bases-de-datos-xml)  
+
 
 <!-- 
 6. [Integración con aplicaciones Java](#6-integración-con-aplicaciones-java)  
@@ -919,7 +919,6 @@ Este comando eliminará la base de datos **guerrerosZ** y todos sus documentos.
 
 BaseX permite realizar operaciones de **inserción, modificación y eliminación** de documentos XML de manera flexible y optimizada. Gracias a su soporte para **XQuery Update Facility**, es posible actualizar el contenido de los documentos sin necesidad de reconstruir toda la base de datos. Estas operaciones son esenciales para mantener la información actualizada y organizada dentro del sistema de almacenamiento XML.
 
-
 # 5. Consultas en bases de datos XML
 
 El acceso y recuperación de datos en bases de datos nativas XML se realiza mediante lenguajes de consulta especializados que permiten extraer información de manera eficiente. En este contexto, **XPath** y **XQuery** son los dos lenguajes principales utilizados para realizar consultas en documentos XML.
@@ -1115,7 +1114,7 @@ A continuación, se presentan **10 ejercicios prácticos** de XPath para bases d
 **Ejercicio 10: Verificar si un personaje ha participado en batallas**: Determinar si un personaje específico (ej. **Vegeta**) ha participado en alguna batalla.  
 
 
-### 5.1.2. XQuery: Lenguaje de consulta y transformación de XML
+### 5.1.4. XQuery: Lenguaje de consulta y transformación de XML
 
 **XQuery** es un lenguaje diseñado para la consulta y manipulación de datos XML. Se basa en XPath, pero agrega funcionalidades adicionales como:
 - Operaciones condicionales (`if-then-else`).
@@ -1529,7 +1528,33 @@ miPrimeraBD  1          8788   /home/teo/basex/
 
 > Paso 2.4: Conectarse desde Java a BaseX
 
-Una vez que el servidor está en ejecución y la base de datos ha sido creada, se puede conectar una aplicación Java a BaseX utilizando el siguiente código:
+Una vez que el servidor está en ejecución y la base de datos ha sido creada, para conectarse a un servidor **BaseX**, se utiliza la clase `ClientSession`. A continuación, se muestra un ejemplo de cómo establecer la conexión y verificar su estado:
+
+```java
+package org.example;
+
+import org.basex.api.client.ClientSession;
+
+public class BaseXConnection {
+    public static void main(String[] args) {
+        try {
+            // Establecer conexión con BaseX
+            ClientSession session = new ClientSession("localhost", 1984, "Goku", "Goku");
+
+            // Comprobar conexión ejecutando un comando
+            String response = session.execute("INFO");
+            System.out.println("Conectado a BaseX: " + response);
+
+            // Cerrar la sesión
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+También se puede realizar una consulta a la misma vez que se realiza la conexión:
 
 ```java
 package org.example;
@@ -1617,12 +1642,72 @@ _Pista_: Usa `delete node` para eliminar el personaje correspondiente.
 **Ejercicio 5: Reducir a la mitad el número de habitantes de Namek**: Actualizar el número de habitantes del planeta Namek dividiéndolo entre **2**.  
 _Pista_: Usa `replace value of node` con una operación matemática para modificar el valor.  
 
+### 5.3.4. Añadir documentos XML desde Java
 
-### 5.3.4. Conversión de datos XML desde Java
+Para añadir documentos XML a una base de datos en BaseX, como se ha visto en apartados anteriores, se usa el método `ADD`. En este ejemplo, se añade el archivo `broly.xml` a la base de datos `guerrerosZ`:
+
+```java
+package org.example;
+
+import org.basex.api.client.ClientSession;
+
+public class AddXMLBaseX {
+    public static void main(String[] args) {
+        try {
+            // Conectar con BaseX
+            ClientSession session = new ClientSession("localhost", 1984, "admin", "admin");
+
+            // Abrir la base de datos antes de añadir el documento
+            session.execute("OPEN guerrerosZ");
+
+            // Añadir un documento XML
+            session.execute("ADD TO guerrerosZ broly.xml");
+
+            System.out.println("Documento añadido correctamente.");
+
+            // Cerrar la sesión
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### 5.3.5. Eliminar documentos XML desde Java
+
+Para eliminar documentos de la base de datos, se usa `db:delete()`. En el siguiente código se elimina el documento `raditz.xml` de la base de datos `guerrerosZ` vista en apartados anteriores:
+
+```java
+package org.example;
+
+import org.basex.api.client.ClientSession;
+
+public class DeleteBaseX {
+    public static void main(String[] args) {
+        try {
+            // Conectar con BaseX
+            ClientSession session = new ClientSession("localhost", 1984, "Goku", "Goku");
+
+            // Eliminar un documento XML
+            session.execute("DELETE raditz.xml");
+
+            System.out.println("Documento eliminado correctamente.");
+
+            // Cerrar la sesión
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### 5.3.6. Conversión de datos XML desde Java
 
 En algunas aplicaciones, puede ser necesario convertir datos XML en otros formatos como JSON o CSV. Desde Java, se pueden procesar los resultados de consultas XQuery y exportarlos a otros formatos.
 
-#### 5.3.4.1. Conversión de XML a JSON en Java
+#### 5.3.6.1. Conversión de XML a JSON en Java
 
 Para convertir un documento XML en formato JSON, se puede usar la biblioteca **Jackson**:
 
@@ -1760,7 +1845,7 @@ El siguiente código permite obtener datos XML directamente desde una base de da
     ```
 
 
-### 5.3.5. Beneficios de la integración de XQuery con Java
+### 5.3.7. Beneficios de la integración de XQuery con Java
 
 El uso de XQuery dentro de aplicaciones Java ofrece numerosas ventajas, entre ellas:
 
@@ -1770,3 +1855,111 @@ El uso de XQuery dentro de aplicaciones Java ofrece numerosas ventajas, entre el
 - **Manipulación eficiente de datos**: Permite trabajar con grandes volúmenes de datos de manera estructurada y optimizada.
 
 La combinación de **Java, XPath y XQuery** permite desarrollar aplicaciones capaces de gestionar y manipular bases de datos XML de manera eficiente. Gracias a las bibliotecas especializadas, se pueden ejecutar consultas, realizar modificaciones en tiempo real y convertir datos XML en otros formatos. En el siguiente apartado, se explorará la gestión de transacciones en bases de datos XML y su importancia en entornos donde la integridad de los datos es fundamental.
+
+## 5.4. Tratamiento de excepciones en operaciones con bases de datos XML
+
+El tratamiento de excepciones es una parte fundamental en la gestión de bases de datos XML, ya que permite manejar errores durante la ejecución de operaciones como inserción, modificación, eliminación y consultas de datos en **BaseX**. Implementar correctamente el manejo de excepciones mejora la estabilidad y confiabilidad de las aplicaciones que trabajan con bases de datos XML.
+
+### 5.4.1. Tipos de errores en BaseX
+
+Al trabajar con **BaseX**, pueden ocurrir distintos tipos de errores, entre ellos:
+
+- **Errores de sintaxis en XQuery**: Se producen cuando una consulta XQuery está mal estructurada o contiene errores en su sintaxis.
+- **Errores de acceso a la base de datos**: Pueden ocurrir si se intenta acceder a una base de datos inexistente o a documentos que han sido eliminados.
+- **Errores en la manipulación de datos**: Aparecen cuando se intenta modificar o eliminar datos que no existen.
+- **Errores de concurrencia**: Se producen cuando múltiples procesos intentan acceder simultáneamente a la base de datos sin un control adecuado.
+
+### 5.4.2. Manejo de excepciones en XQuery
+
+BaseX permite capturar y manejar excepciones en XQuery utilizando `try...catch`. A continuación, se muestra un ejemplo de cómo capturar una excepción al ejecutar una consulta:
+
+```xquery
+try {
+  db:open("guerrerosZ")//personaje[nombre='Goku']/nivel_poder
+} catch * {
+  "Error: No se pudo acceder al documento."
+}
+```
+
+Este código intenta abrir la base de datos **guerrerosZ** y acceder al nivel de poder de **Goku**. Si la base de datos no existe o el documento no se encuentra, se captura el error y se devuelve un mensaje informativo.
+
+### 5.4.3. Manejo de excepciones en Java con BaseX
+
+En **Java**, el tratamiento de excepciones se realiza utilizando bloques `try-catch`. BaseX proporciona excepciones específicas a través de la API de cliente. A continuación, se muestra un ejemplo de manejo de excepciones al intentar abrir una base de datos:
+
+```java
+package org.example;
+
+import org.basex.api.client.ClientSession;
+
+public class BaseXExceptionHandling {
+    public static void main(String[] args) {
+        try {
+            // Conectar con BaseX
+            ClientSession session = new ClientSession("localhost", 1984, "admin", "admin");
+
+            // Intentar abrir una base de datos
+            session.execute("OPEN guerrerosZ");
+            System.out.println("Base de datos abierta con éxito.");
+
+            // Cerrar la sesión
+            session.close();
+        } catch (Exception e) {
+            System.out.println("Error al acceder a la base de datos: " + e.getMessage());
+        }
+    }
+}
+```
+
+En este código, si la base de datos **guerrerosZ** no existe, la excepción será capturada y mostrará un mensaje de error sin detener la ejecución del programa.
+
+### 5.4.4. Validación de datos antes de la ejecución
+
+Para reducir la cantidad de excepciones en tiempo de ejecución, se recomienda validar los datos antes de ejecutar operaciones sobre la base de datos. En **BaseX**, se puede verificar si una base de datos existe antes de abrirla:
+
+```xquery
+if(db:exists("guerrerosZ")) then db:open("guerrerosZ") else "La base de datos no existe."
+```
+
+En **Java**, se puede validar la existencia de documentos antes de intentar acceder a ellos:
+
+```java
+String query = "if(db:exists('guerrerosZ')) then 'OK' else 'ERROR'";
+String result = session.execute("XQUERY " + query);
+
+if ("ERROR".equals(result)) {
+    System.out.println("Error: La base de datos no existe.");
+} else {
+    System.out.println("Base de datos encontrada.");
+}
+```
+
+### 5.4.5. Reintentos y recuperación ante fallos
+
+En entornos críticos, puede ser útil reintentar una operación en caso de error antes de lanzar una excepción definitiva. Se puede implementar un mecanismo de reintento en **Java** de la siguiente manera:
+
+```java
+public static void main(String[] args) {
+    int intentos = 3;
+    while (intentos > 0) {
+        try {
+            ClientSession session = new ClientSession("localhost", 1984, "admin", "admin");
+            session.execute("OPEN guerrerosZ");
+            System.out.println("Conexión establecida.");
+            session.close();
+            break;
+        } catch (Exception e) {
+            intentos--;
+            System.out.println("Error al conectar. Reintentando... (" + intentos + " intentos restantes)");
+            if (intentos == 0) {
+                System.out.println("Fallo definitivo al conectar con BaseX.");
+            }
+        }
+    }
+}
+```
+
+Este código intenta conectarse a BaseX hasta **tres veces** antes de mostrar un mensaje de error definitivo.
+
+
+El tratamiento de excepciones en **BaseX** es una parte esencial para el desarrollo de aplicaciones robustas y seguras. Utilizando estructuras de control en **XQuery** y bloques `try-catch` en **Java**, es posible manejar errores de manera eficiente, evitando fallos inesperados en la ejecución de consultas y operaciones sobre bases de datos XML.
