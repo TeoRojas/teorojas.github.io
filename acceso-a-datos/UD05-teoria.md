@@ -32,21 +32,17 @@ abstract: Sinopsis de la unidad 05
 
 
 <!-- 
-6. [Integración con aplicaciones Java](#6-integración-con-aplicaciones-java)  
-   6.1. [Establecimiento y cierre de conexiones](#61-establecimiento-y-cierre-de-conexiones)  
-   6.2. [Acceso a bases de datos XML desde Java](#62-acceso-a-bases-de-datos-xml-desde-java)  
-   6.3. [Transformación de XML a otros formatos (JSON, CSV, HTML)](#63-transformación-de-xml-a-otros-formatos-json-csv-html)  
-7. [Gestión de transacciones en bases de datos XML](#7-gestión-de-transacciones-en-bases-de-datos-xml)  
-   7.1. [Concepto de transacción en bases de datos XML](#71-concepto-de-transacción-en-bases-de-datos-xml)  
-   7.2. [Control de concurrencia y consistencia](#72-control-de-concurrencia-y-consistencia)  
-   7.3. [Implementación de transacciones en Java](#73-implementación-de-transacciones-en-java)  
-8. [Casos prácticos y ejercicios](#8-casos-prácticos-y-ejercicios)  
-   8.1. [Implementación de una base de datos XML para gestión de bibliotecas](#81-implementación-de-una-base-de-datos-xml-para-gestión-de-bibliotecas)  
-   8.2. [Desarrollo de una aplicación de facturación basada en XML](#82-desarrollo-de-una-aplicación-de-facturación-basada-en-xml)  
-   8.3. [Ejercicios de optimización y rendimiento](#83-ejercicios-de-optimización-y-rendimiento)  
-9. [Pruebas y documentación de las aplicaciones desarrolladas](#9-pruebas-y-documentación-de-las-aplicaciones-desarrolladas)  
-   9.1. [Estrategias de prueba para bases de datos XML](#91-estrategias-de-prueba-para-bases-de-datos-xml)  
-   9.2. [Documentación y mantenimiento](#92-documentación-y-mantenimiento)  
+6. [Gestión de transacciones en bases de datos XML](#7-gestión-de-transacciones-en-bases-de-datos-xml)  
+   6.1. [Concepto de transacción en bases de datos XML](#71-concepto-de-transacción-en-bases-de-datos-xml)  
+   6.2. [Control de concurrencia y consistencia](#72-control-de-concurrencia-y-consistencia)  
+   6.3. [Implementación de transacciones en Java](#73-implementación-de-transacciones-en-java)  
+7. [Casos prácticos y ejercicios](#8-casos-prácticos-y-ejercicios)  
+   7.1. [Implementación de una base de datos XML para gestión de bibliotecas](#81-implementación-de-una-base-de-datos-xml-para-gestión-de-bibliotecas)  
+   7.2. [Desarrollo de una aplicación de facturación basada en XML](#82-desarrollo-de-una-aplicación-de-facturación-basada-en-xml)  
+   7.3. [Ejercicios de optimización y rendimiento](#83-ejercicios-de-optimización-y-rendimiento)  
+8. [Pruebas y documentación de las aplicaciones desarrolladas](#9-pruebas-y-documentación-de-las-aplicaciones-desarrolladas)  
+   8.1. [Estrategias de prueba para bases de datos XML](#91-estrategias-de-prueba-para-bases-de-datos-xml)  
+   8.2. [Documentación y mantenimiento](#92-documentación-y-mantenimiento)  
 -->
 
 # 1. Introducción y diferencias con bases de datos relacionales y objeto-relacionales
