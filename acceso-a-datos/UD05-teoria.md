@@ -29,20 +29,19 @@ abstract: Sinopsis de la unidad 05
    5.2. [Uso de XQuery en bases de datos XML](#52-uso-de-xquery-en-bases-de-datos-xml)  
    5.3. [Consultas desde Java con XPath y XQuery](#53-consultas-desde-java-con-xpath-y-xquery)  
    5.4. [Tratamiento de excepciones en operaciones con bases de datos XML](#54-tratamiento-de-excepciones-en-operaciones-con-bases-de-datos-xml)  
+6. [Gestión de transacciones en bases de datos XML](#6-gestión-de-transacciones-en-bases-de-datos-xml)  
+   6.1. [Concepto de transacción en bases de datos XML](#61-concepto-de-transacción-en-bases-de-datos-xml)  
+   6.2. [Control de concurrencia y consistencia](#62-control-de-concurrencia-y-consistencia)  
+   6.3. [Implementación de transacciones en Java](#63-implementación-de-transacciones-en-java)  
 
-
-<!-- 
-6. [Gestión de transacciones en bases de datos XML](#7-gestión-de-transacciones-en-bases-de-datos-xml)  
-   6.1. [Concepto de transacción en bases de datos XML](#71-concepto-de-transacción-en-bases-de-datos-xml)  
-   6.2. [Control de concurrencia y consistencia](#72-control-de-concurrencia-y-consistencia)  
-   6.3. [Implementación de transacciones en Java](#73-implementación-de-transacciones-en-java)  
-7. [Casos prácticos y ejercicios](#8-casos-prácticos-y-ejercicios)  
-   7.1. [Implementación de una base de datos XML para gestión de bibliotecas](#81-implementación-de-una-base-de-datos-xml-para-gestión-de-bibliotecas)  
-   7.2. [Desarrollo de una aplicación de facturación basada en XML](#82-desarrollo-de-una-aplicación-de-facturación-basada-en-xml)  
-   7.3. [Ejercicios de optimización y rendimiento](#83-ejercicios-de-optimización-y-rendimiento)  
-8. [Pruebas y documentación de las aplicaciones desarrolladas](#9-pruebas-y-documentación-de-las-aplicaciones-desarrolladas)  
-   8.1. [Estrategias de prueba para bases de datos XML](#91-estrategias-de-prueba-para-bases-de-datos-xml)  
-   8.2. [Documentación y mantenimiento](#92-documentación-y-mantenimiento)  
+<!--    
+7. [Casos prácticos y ejercicios](#7-casos-prácticos-y-ejercicios)  
+   7.1. [Implementación de una base de datos XML para gestión de bibliotecas](#71-implementación-de-una-base-de-datos-xml-para-gestión-de-bibliotecas)  
+   7.2. [Desarrollo de una aplicación de facturación basada en XML](#72-desarrollo-de-una-aplicación-de-facturación-basada-en-xml)  
+   7.3. [Ejercicios de optimización y rendimiento](#73-ejercicios-de-optimización-y-rendimiento)  
+8. [Pruebas y documentación de las aplicaciones desarrolladas](#8-pruebas-y-documentación-de-las-aplicaciones-desarrolladas)  
+   8.1. [Estrategias de prueba para bases de datos XML](#81-estrategias-de-prueba-para-bases-de-datos-xml)  
+   8.2. [Documentación y mantenimiento](#82-documentación-y-mantenimiento)  
 -->
 
 # 1. Introducción y diferencias con bases de datos relacionales y objeto-relacionales
@@ -1959,3 +1958,276 @@ Este código intenta conectarse a BaseX hasta **tres veces** antes de mostrar un
 
 
 El tratamiento de excepciones en **BaseX** es una parte esencial para el desarrollo de aplicaciones robustas y seguras. Utilizando estructuras de control en **XQuery** y bloques `try-catch` en **Java**, es posible manejar errores de manera eficiente, evitando fallos inesperados en la ejecución de consultas y operaciones sobre bases de datos XML.
+
+# 6. Gestión de transacciones en bases de datos XML en BaseX
+
+En bases de datos tradicionales, las transacciones garantizan la coherencia de los datos a través de las propiedades **ACID** (Atomicidad, Consistencia, Aislamiento y Durabilidad). En el caso de **BaseX**, el manejo de transacciones se realiza de forma implícita, asegurando que cada consulta o comando se ejecute completamente o se rechace en caso de error.
+
+BaseX **no soporta transacciones de manera tradicional** con `BEGIN TRANSACTION`, `COMMIT` o `ROLLBACK`, sino que maneja cada operación como una transacción individual. Esto significa que cualquier consulta enviada al servidor se ejecuta de manera atómica y no se aplican cambios parciales.
+
+## 6.1. Concepto de transacción en bases de datos XML
+
+En **BaseX**, una transacción es equivalente a una consulta o comando enviado al servidor. Cada operación se procesa de manera individual, y si ocurre un error en la ejecución, el comando no se aplica y la base de datos permanece en su estado anterior. Esto garantiza que la base de datos se mantenga consistente y libre de errores.
+
+### 6.1.1. Creación de backups y restauración en BaseX
+
+Para garantizar la seguridad de los datos, **BaseX permite realizar copias de seguridad** de bases de datos, que luego pueden ser restauradas en caso de error.
+
+#### Creación de un backup en la consola de BaseX
+Si estás en la **consola de BaseX**, usa el siguiente comando para crear una copia de seguridad:
+
+```sh
+CREATE BACKUP guerrerosZ
+```
+
+#### Creación de un backup en XQuery
+Si estás ejecutando un **script en XQuery**, usa el siguiente comando para crear un backup:
+
+```xquery
+db:create-backup("guerrerosZ")
+```
+
+#### Listar backups disponibles
+Si necesitas ver los backups almacenados en BaseX, usa:
+
+```xquery
+db:backups() (: Lista todos los backups disponibles en el sistema :)
+db:backups("guerrerosZ") (: Lista los backups de la base de datos guerrerosZ :)
+```
+
+#### Restaurar una base de datos desde un backup
+Si necesitas **restaurar** una base de datos desde un backup en XQuery, usa:
+
+```xquery
+db:restore("guerrerosZ")
+```
+
+Si lo estás haciendo desde la **consola de BaseX**, usa:
+
+```sh
+RESTORE guerrerosZ
+```
+
+### 6.1.2. Actualización de datos con control de errores en BaseX
+
+Dado que **no se pueden mezclar expresiones de actualización y consulta en una misma operación**, la forma correcta de verificar la existencia de la base de datos antes de modificarla es utilizando `update:output()` en **XQuery**.
+
+#### Código correcto en XQuery
+```xquery
+if (db:exists("guerrerosZ")) then (
+  replace value of node db:open("guerrerosZ")//personaje[nombre="Freezer"]/nivel_poder with "119500"
+) else (
+  update:output("Error: La base de datos no existe.")
+)
+```
+
+En este código:
+- Si la base de datos **existe**, la actualización se ejecuta normalmente.
+- Si la base de datos **no existe**, se devuelve un mensaje de error con `update:output()`, evitando errores de ejecución.
+
+### 6.1.3. Control de concurrencia en BaseX
+
+BaseX **permite múltiples lecturas simultáneas**, pero solo permite una **transacción de escritura** a la vez. Si dos usuarios intentan modificar la base de datos al mismo tiempo, el segundo usuario deberá esperar hasta que la primera operación termine.
+
+```xquery
+db:open("guerrerosZ")//personaje[nombre="Goku"]/nivel_poder
+```
+
+Si la base de datos está bloqueada por otra operación de escritura, este comando **esperará** hasta que la base de datos quede libre.
+
+### 6.1.4. Eliminación de archivos de bloqueo en BaseX
+
+Si BaseX se bloquea debido a una **transacción fallida**, es posible que no puedas realizar modificaciones en la base de datos. En estos casos, puedes **eliminar el archivo de bloqueo** manualmente.
+
+1. **Busca el archivo de bloqueo** en la carpeta de datos de BaseX:
+   ```sh
+   ls /home/teo/basex/data/
+   ```
+
+2. **Elimina el archivo `upd.basex` si existe**:
+   ```sh
+   rm /home/teo/basex/data/upd.basex
+   ```
+
+3. **Reinicia el servidor BaseX**:
+   ```sh
+   basexserver stop
+   basexserver start
+   ```
+
+Esto asegurará que la base de datos quede libre de bloqueos y pueda ser utilizada nuevamente.
+
+Por lo tanto, BaseX **no maneja transacciones de la manera tradicional**, pero ofrece mecanismos robustos para garantizar la **coherencia y seguridad** de los datos. Gracias a su ejecución atómica de consultas y su monitor de transacciones, es posible evitar inconsistencias sin necesidad de `BEGIN TRANSACTION` o `ROLLBACK`. Además, las herramientas de **backup y restauración** permiten recuperar datos en caso de errores inesperados.
+
+En este apartado hemos visto:
+- **Cómo crear y restaurar backups en BaseX**, tanto en **consola** como en **XQuery**.
+- **Cómo manejar errores al modificar datos en la base de datos** con `update:output()`.
+- **Cómo controlar el acceso concurrente** a la base de datos.
+- **Cómo desbloquear una base de datos si una transacción fallida la ha bloqueado.**
+
+## 6.2. Control de concurrencia y consistencia en BaseX
+
+En bases de datos que manejan múltiples accesos simultáneos, el **control de concurrencia y consistencia** es fundamental para evitar **inconsistencias, corrupción de datos y bloqueos inesperados**. BaseX implementa un **monitor de transacciones** que regula las operaciones de lectura y escritura, asegurando que los datos se mantengan íntegros.
+
+### 6.2.1. Monitor de transacciones en BaseX
+
+BaseX utiliza un mecanismo de **FIFO (First-In First-Out)** para manejar las transacciones de escritura. Esto significa que:
+- **Múltiples transacciones de lectura pueden ejecutarse simultáneamente.**
+- **Solo una transacción de escritura puede ejecutarse a la vez.**
+- **Las transacciones de escritura se ejecutan en el orden en que llegan.**
+
+Este control evita **deadlocks** y asegura que las actualizaciones de la base de datos se procesen de manera ordenada.
+
+### 6.2.2. Bloqueo de bases de datos en BaseX
+
+Cuando una base de datos es abierta, BaseX aplica bloqueos de acceso para evitar que múltiples procesos realicen cambios conflictivos. Hay dos tipos de bloqueos:
+
+- **Bloqueo compartido** (lecturas concurrentes permitidas)
+- **Bloqueo exclusivo** (una sola escritura a la vez)
+
+Si una actualización falla o se interrumpe de forma abrupta, BaseX crea un archivo de bloqueo `upd.basex`. En estos casos, la base de datos no podrá ser abierta hasta que se elimine manualmente este archivo.
+
+**Eliminación manual de bloqueos**. 
+Si BaseX muestra el error **"Database ... is being updated, or update was not completed"**, el bloqueo puede eliminarse con:
+
+```sh
+rm /home/teo/basex/data/upd.basex
+```
+
+Después de eliminar el archivo, es recomendable **restaurar la base de datos desde un backup**.
+
+### 6.2.3. Consistencia de datos en BaseX
+
+Para garantizar la consistencia de los datos, BaseX:
+- **Asegura que cada operación de actualización se complete antes de permitir una nueva escritura.**
+- **Evita la corrupción de datos al rechazar transacciones conflictivas.**
+- **Recomienda el uso de backups periódicos** en caso de fallos inesperados.
+
+**Optimización y reparación de bases de datos**. 
+Si una base de datos presenta inconsistencias, se puede ejecutar:
+
+```xquery
+db:optimize("guerrerosZ")
+```
+
+Este comando **reorganiza los índices y estructura interna** de la base de datos para mejorar el rendimiento y corregir errores estructurales.
+
+### 6.2.4. Acceso concurrente en BaseX Server vs. Standalone
+
+BaseX puede ejecutarse en dos modos:
+- **Standalone (modo local):** No soporta sincronización entre múltiples usuarios.
+- **Server (modo cliente-servidor):** Permite **control de concurrencia** entre múltiples conexiones.
+
+Si se requiere un entorno multiusuario, se recomienda utilizar BaseX en **modo servidor**:
+
+```sh
+basexserver start
+```
+
+Los clientes pueden conectarse con:
+
+```sh
+basexclient -U usuario -P contraseña
+```
+
+BaseX implementa **mecanismos de bloqueo y control de concurrencia** para garantizar la integridad de los datos. Su **monitor de transacciones FIFO**, junto con el sistema de **bloqueo de bases de datos y optimización de datos**, permite un manejo eficiente de múltiples accesos simultáneos. Para entornos multiusuario, se recomienda utilizar **BaseX Server**, asegurando que las operaciones de escritura y lectura sean gestionadas de manera óptima.
+
+## 6.3. Implementación de transacciones en Java
+
+El control de transacciones en **BaseX** desde **Java** se gestiona mediante la API de cliente, utilizando la clase **`ClientSession`**. Como **BaseX no soporta transacciones tradicionales con COMMIT y ROLLBACK**, cada operación se ejecuta de forma atómica. Sin embargo, es posible manejar la concurrencia y la consistencia de datos utilizando **validaciones previas, backups y recuperación ante fallos**.
+
+### 6.3.1. Establecer conexión y manejo de errores
+
+El primer paso para implementar transacciones en **BaseX con Java** es establecer una conexión segura con la base de datos. Para ello, utilizamos `ClientSession`, asegurándonos de capturar errores mediante `try-catch`.
+
+### Ejemplo: Conexión con BaseX y manejo de errores
+```java
+package org.example;
+
+import org.basex.api.client.ClientSession;
+
+public class BaseXTransaction {
+    public static void main(String[] args) {
+        try {
+            // Establecer conexión con BaseX
+            ClientSession session = new ClientSession("localhost", 1984, "admin", "admin");
+
+            // Verificar conexión
+            System.out.println("Conectado a BaseX.");
+
+            // Cerrar la sesión
+            session.close();
+        } catch (Exception e) {
+            System.out.println("Error al conectar con BaseX: " + e.getMessage());
+        }
+    }
+}
+```
+
+### 6.3.2. Actualización de datos con persistencia en BaseX
+
+Para garantizar que los cambios realizados en la base de datos **sean persistentes y se reflejen en el archivo XML original**, se deben seguir estos pasos:
+
+1. **Realizar la actualización en la base de datos**
+2. **Forzar la escritura en disco**
+3. **Actualizar el archivo XML original si es necesario**
+
+### Ejemplo: Actualización con `EXPORT` para modificar el archivo XML original
+
+Si la base de datos fue creada a partir de un archivo XML y queremos que los cambios **se reflejen en el archivo original**, debemos exportar los datos después de hacer la actualización:
+
+```java
+package org.example;
+
+import org.basex.api.client.ClientSession;
+
+public class UpdateAndExportBaseX {
+    public static void main(String[] args) {
+        try {
+            ClientSession session = new ClientSession("localhost", 1984, "admin", "admin");
+
+            // Ejecutar actualización en BaseX - si pide abrir antes la bdd hacerlo:
+            // session.execute("OPEN db_persistencia");
+            session.execute("XQUERY replace value of node db:open('db_persistencia')//personaje[nombre='Goku']/nivel_poder with '11000'");
+
+            // Guardar cambios en el archivo XML original
+            session.execute("EXPORT /home/teo/basex/data/db_persistencia.xml");
+
+            System.out.println("Transacción completada y archivo XML actualizado.");
+            
+            session.close();
+        } catch (Exception e) {
+            System.out.println("Error en la transacción: " + e.getMessage());
+        }
+    }
+}
+```
+
+En este código:
+- Se actualiza la base de datos con una modificación.
+- Luego se usa `EXPORT "ruta/del/archivo.xml"` para escribir los cambios en el archivo XML original.
+
+### Nota sobre `WRITEBACK`
+
+Alternativamente, si se quiere que los cambios **se reflejen automáticamente en el archivo XML de origen**, se puede activar la opción `WRITEBACK`:
+
+```sh
+SET WRITEBACK true
+```
+
+O desde XQuery:
+```xquery
+db:system("WRITEBACK", "true")
+```
+
+Sin embargo, **se recomienda utilizar `EXPORT`**, ya que `WRITEBACK` **solo funciona en bases de datos que se crearon directamente desde un archivo XML externo**.
+
+## Conclusión
+
+Dado que **BaseX no soporta transacciones con COMMIT y ROLLBACK**, es importante **implementar buenas prácticas** para garantizar la seguridad de los datos en aplicaciones Java:
+- **Verificar la existencia de la base de datos antes de modificarla.**
+- **Manejar errores y excepciones para evitar bloqueos.**
+- **Usar `EXPORT` para garantizar que los cambios se reflejen en el archivo XML original.**
+- **Utilizar `WRITEBACK` si la base de datos se creó directamente desde un archivo XML externo.**
+
+Estas estrategias permiten que la integración de **Java con BaseX** sea segura y confiable, asegurando la integridad de la información almacenada en bases de datos XML.
