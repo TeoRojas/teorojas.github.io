@@ -33,12 +33,12 @@ abstract: Sinopsis de la unidad 05
    6.1. [Concepto de transacción en bases de datos XML](#61-concepto-de-transacción-en-bases-de-datos-xml)  
    6.2. [Control de concurrencia y consistencia](#62-control-de-concurrencia-y-consistencia)  
    6.3. [Implementación de transacciones en Java](#63-implementación-de-transacciones-en-java)  
-
-<!--    
 7. [Casos prácticos y ejercicios](#7-casos-prácticos-y-ejercicios)  
    7.1. [Implementación de una base de datos XML para gestión de bibliotecas](#71-implementación-de-una-base-de-datos-xml-para-gestión-de-bibliotecas)  
    7.2. [Desarrollo de una aplicación de facturación basada en XML](#72-desarrollo-de-una-aplicación-de-facturación-basada-en-xml)  
    7.3. [Ejercicios de optimización y rendimiento](#73-ejercicios-de-optimización-y-rendimiento)  
+
+<!--  
 8. [Pruebas y documentación de las aplicaciones desarrolladas](#8-pruebas-y-documentación-de-las-aplicaciones-desarrolladas)  
    8.1. [Estrategias de prueba para bases de datos XML](#81-estrategias-de-prueba-para-bases-de-datos-xml)  
    8.2. [Documentación y mantenimiento](#82-documentación-y-mantenimiento)  
@@ -2222,8 +2222,6 @@ db:system("WRITEBACK", "true")
 
 Sin embargo, **se recomienda utilizar `EXPORT`**, ya que `WRITEBACK` **solo funciona en bases de datos que se crearon directamente desde un archivo XML externo**.
 
-## Conclusión
-
 Dado que **BaseX no soporta transacciones con COMMIT y ROLLBACK**, es importante **implementar buenas prácticas** para garantizar la seguridad de los datos en aplicaciones Java:
 - **Verificar la existencia de la base de datos antes de modificarla.**
 - **Manejar errores y excepciones para evitar bloqueos.**
@@ -2231,3 +2229,221 @@ Dado que **BaseX no soporta transacciones con COMMIT y ROLLBACK**, es importante
 - **Utilizar `WRITEBACK` si la base de datos se creó directamente desde un archivo XML externo.**
 
 Estas estrategias permiten que la integración de **Java con BaseX** sea segura y confiable, asegurando la integridad de la información almacenada en bases de datos XML.
+
+
+# 7. Casos prácticos y ejercicios
+
+El presente apartado expone diversas actividades prácticas orientadas a la aplicación de técnicas para el manejo de bases de datos nativas XML. Se abordan ejercicios que permiten experimentar con la creación, consulta, actualización y eliminación de documentos XML en un entorno de base de datos nativa, facilitando la comprensión de conceptos como la indexación, la optimización de consultas y la integración con aplicaciones. Estas prácticas ofrecen la oportunidad de aplicar de forma integrada los conocimientos adquiridos, promoviendo el desarrollo de soluciones eficientes en escenarios reales.
+
+## 7.1. Implementación de una base de datos XML para gestión de bibliotecas
+
+La implementación de una base de datos XML para la gestión de bibliotecas consiste en diseñar y desarrollar una solución que permita almacenar y administrar la información relativa a los recursos bibliográficos mediante documentos XML. El ejercicio plantea la elaboración de un esquema XML que represente, de forma jerárquica y estructurada, los elementos fundamentales de una biblioteca, tales como libros, autores, categorías, usuarios y préstamos.
+
+En el diseño del documento se propone utilizar un elemento raíz, por ejemplo, `<biblioteca>`, que contenga a su vez subelementos para agrupar la información de libros, usuarios y préstamos. Cada libro se puede definir con un identificador único y elementos que especifiquen su título, autor, año de publicación y categoría. De manera similar, se deben representar los usuarios con sus datos básicos (como nombre y correo electrónico) y los préstamos mediante elementos que establezcan la relación entre un libro y un usuario, junto con las fechas correspondientes a la fecha de préstamo y la fecha de devolución.
+
+A continuación, se muestra un ejemplo de estructura XML para una biblioteca:
+
+```xml
+<biblioteca>
+  <libros>
+    <libro id="L001">
+      <titulo>El Quijote</titulo>
+      <autor>Miguel de Cervantes</autor>
+      <anio>1605</anio>
+      <categoria>Literatura clásica</categoria>
+    </libro>
+    <libro id="L002">
+      <titulo>Cien años de soledad</titulo>
+      <autor>Gabriel García Márquez</autor>
+      <anio>1967</anio>
+      <categoria>Realismo mágico</categoria>
+    </libro>
+  </libros>
+  <usuarios>
+    <usuario id="U001">
+      <nombre>Juan Pérez</nombre>
+      <correo>juan.perez@example.com</correo>
+    </usuario>
+  </usuarios>
+  <prestamos>
+    <prestamo id="P001">
+      <libroRef>L001</libroRef>
+      <usuarioRef>U001</usuarioRef>
+      <fechaPrestamo>2025-03-10</fechaPrestamo>
+      <fechaDevolucion>2025-03-24</fechaDevolucion>
+    </prestamo>
+  </prestamos>
+</biblioteca>
+```
+
+Para resolver el ejercicio se recomienda el uso de herramientas especializadas en bases de datos XML, como BaseX o eXist-db. La actividad implica configurar el entorno de trabajo, importar el documento XML y realizar diversas operaciones de consulta y modificación mediante lenguajes como XPath y XQuery. Por ejemplo, para obtener la lista de títulos de libros que pertenezcan a la categoría "Literatura clásica", se podría ejecutar la siguiente consulta XQuery:
+
+```xquery
+for $libro in /biblioteca/libros/libro[categoria = "Literatura clásica"]
+return $libro/titulo
+```
+
+Esta consulta recorre los elementos `<libro>` que cumplen con el criterio especificado y retorna el contenido del elemento `<titulo>` correspondiente. Asimismo, se pueden plantear ejercicios adicionales que involucren la inserción de nuevos registros, la actualización de datos (por ejemplo, modificar el año de publicación o la categoría de un libro) y la eliminación de elementos que hayan quedado obsoletos.
+
+La resolución de este caso práctico exige prestar atención al diseño del esquema XML, garantizando una estructura coherente y extensible, así como optimizar las consultas mediante la indexación de elementos clave para mejorar el rendimiento. Además, se sugiere la integración de la base de datos XML con una aplicación Java utilizando APIs específicas, lo que permitirá gestionar de forma programática la información bibliográfica.
+
+En síntesis, este ejercicio combina aspectos teóricos y prácticos de la gestión de bases de datos nativas XML, proporcionando una experiencia integral en el diseño, implementación y manipulación de documentos XML en contextos reales de gestión de bibliotecas.
+
+## 7.2. Desarrollo de una aplicación de facturación basada en XML
+
+El desarrollo de una aplicación de facturación basada en XML consiste en diseñar y construir una solución que permita la generación, almacenamiento y consulta de facturas mediante documentos XML. Para ello, se define un esquema XML que modele de manera integral la estructura de una factura, abarcando tanto los datos generales como los detalles de cada transacción. En este esquema se incluyen elementos que contienen la información del emisor y del receptor, la fecha de emisión, un detalle de los ítems facturados y un resumen de totales que comprenda el subtotal, los impuestos y el total final.
+
+Un ejemplo de estructura XML para una factura es el siguiente:
+
+```xml
+<factura id="F2025001">
+  <emisor>
+    <nombre>Empresa ABC S.A.</nombre>
+    <ruc>1234567890</ruc>
+    <direccion>Calle Falsa 123, Ciudad Ejemplo</direccion>
+  </emisor>
+  <receptor>
+    <nombre>Cliente XYZ</nombre>
+    <ruc>0987654321</ruc>
+    <direccion>Avenida Siempre Viva 742, Ciudad Prueba</direccion>
+  </receptor>
+  <fechaEmision>2025-03-15</fechaEmision>
+  <detalle>
+    <item>
+      <codigo>P001</codigo>
+      <descripcion>Producto A</descripcion>
+      <cantidad>2</cantidad>
+      <precioUnitario>50.00</precioUnitario>
+      <importe>100.00</importe>
+    </item>
+    <item>
+      <codigo>P002</codigo>
+      <descripcion>Servicio B</descripcion>
+      <cantidad>1</cantidad>
+      <precioUnitario>75.00</precioUnitario>
+      <importe>75.00</importe>
+    </item>
+  </detalle>
+  <totales>
+    <subTotal>175.00</subTotal>
+    <impuestos>17.50</impuestos>
+    <total>192.50</total>
+  </totales>
+</factura>
+```
+
+En esta estructura, el elemento `<factura>` actúa como contenedor principal e incorpora información relevante en sus subelementos: `<emisor>` y `<receptor>` contienen los datos de las partes involucradas, `<fechaEmision>` especifica la fecha de creación de la factura, `<detalle>` agrupa cada uno de los items facturados, y `<totales>` resume los montos correspondientes al subtotal, impuestos y total final.
+
+Para interactuar con la base de datos XML en la aplicación de facturación, se recomienda el uso de herramientas como BaseX o eXist-db. La aplicación puede integrarse con un entorno de desarrollo Java mediante APIs específicas que permitan ejecutar consultas XQuery o XPath para extraer información relevante. Por ejemplo, para obtener una lista de todas las facturas emitidas a un determinado receptor, se podría emplear la siguiente consulta XQuery:
+
+```xquery
+for $factura in /factura[receptor/nombre = "Cliente XYZ"]
+return
+  <resultado>
+    { $factura/fechaEmision }
+    { $factura/totales/total }
+  </resultado>
+```
+
+Esta consulta recorre el conjunto de facturas que cumplen la condición especificada en el elemento `<receptor>` y retorna la fecha de emisión y el total de cada factura en un formato estructurado. Asimismo, la aplicación puede incluir funcionalidades para la actualización de datos, la inserción de nuevas facturas y la eliminación de registros antiguos, garantizando una gestión integral y dinámica de la información.
+
+Por otro lado, otro ejemplo interesante podría ser el insertar una nueva factura en el documento XML, que se resuelve con la siguiente consulta XQuery Update:
+
+```xquery
+insert node
+  <factura id="F2025002">
+    <emisor>
+      <nombre>Empresa DEF S.A.</nombre>
+      <ruc>1122334455</ruc>
+      <direccion>Calle Nueva 456, Ciudad Ejemplo</direccion>
+    </emisor>
+    <receptor>
+      <nombre>Cliente LMN</nombre>
+      <ruc>5566778899</ruc>
+      <direccion>Avenida Central 789, Ciudad Prueba</direccion>
+    </receptor>
+    <fechaEmision>2025-03-16</fechaEmision>
+    <detalle>
+      <item>
+        <codigo>P003</codigo>
+        <descripcion>Producto C</descripcion>
+        <cantidad>3</cantidad>
+        <precioUnitario>30.00</precioUnitario>
+        <importe>90.00</importe>
+      </item>
+    </detalle>
+    <totales>
+      <subTotal>90.00</subTotal>
+      <impuestos>9.00</impuestos>
+      <total>99.00</total>
+    </totales>
+  </factura>
+into /facturas
+```
+
+Esta consulta inserta un nuevo nodo `<factura>` con el identificador "F2025002" dentro del contenedor `<facturas>`, agregando toda la información necesaria para la nueva factura.
+
+Por otra parte, para modificar el importe de una factura existente, por ejemplo, actualizar el importe del primer ítem de la factura con id "F2025001" a un nuevo valor, se puede emplear la siguiente consulta:
+
+```xquery
+xquery version "3.0";
+replace value of node /facturas/factura[@id="F2025001"]/detalle/item[1]/importe with "110.00"
+```
+
+Esta instrucción actualiza el valor del nodo `<importe>` del primer elemento `<item>` de la factura identificada con "F2025001", estableciendo el nuevo importe en "110.00".
+
+La combinación de estas operaciones (inserción y actualización) permite desarrollar una aplicación de facturación basada en XML que gestione de forma dinámica la información, facilitando tanto la adición de nuevas facturas como la modificación de los datos existentes. Es recomendable integrar estas funcionalidades en un entorno de desarrollo, por ejemplo, utilizando Java y las APIs específicas para ejecutar consultas XQuery, y gestionar estas operaciones dentro de transacciones para asegurar la integridad y consistencia de los datos.
+
+En conclusión, el desarrollo de una aplicación de facturación basada en XML abarca el diseño cuidadoso del esquema XML, la implementación de operaciones de inserción, consulta y actualización mediante XQuery Update, y la integración con herramientas y lenguajes que permitan una gestión eficiente y dinámica de la información facturable.
+
+## 7.3. Ejercicios de optimización y rendimiento
+
+Este apartado está orientado a mejorar la eficiencia y el rendimiento en el manejo de bases de datos nativas XML. Los ejercicios propuestos incluyen la optimización de consultas XQuery, la configuración de índices y el uso de mecanismos de caché, con el fin de reducir los tiempos de respuesta y mejorar el desempeño de las operaciones.
+
+Una serie de prácticas permiten experimentar con distintas técnicas:
+
+Se propone, por ejemplo, optimizar consultas mediante la reestructuración de expresiones que recorren el documento. En lugar de recorrer todos los nodos y aplicar el filtro en la cláusula where, es más eficiente incorporar el predicado directamente en la selección de nodos. Considera la siguiente consulta sin optimización:
+
+```xquery
+for $factura in /facturas/factura
+where $factura/fechaEmision >= "2025-03-15"
+return $factura
+```
+La consulta optimizada, en la que se utiliza el predicado en la ruta de acceso, es:
+
+```xquery
+xquery version "3.0";
+for $factura in /facturas/factura[fechaEmision >= "2025-03-15"]
+return $factura
+```
+
+Esta reestructuración reduce la cantidad de nodos que se deben procesar, ya que el filtrado se aplica de forma directa en la selección.
+
+Otro ejercicio consiste en aprovechar la indexación de elementos clave. Muchos sistemas de bases de datos XML (por ejemplo, BaseX) permiten crear índices sobre elementos o atributos que se consultan con frecuencia. Por ejemplo, si se configura un índice sobre el elemento `<fechaEmision>` o sobre el `<nombre>` del receptor, las consultas que involucren esos elementos se ejecutarán de forma más rápida. Un ejemplo de consulta utilizando un índice de texto (suponiendo que el índice ya ha sido creado en el sistema) es:
+
+```xquery
+for $factura in /facturas/factura[receptor/nombre = "Cliente XYZ"]
+return <resultado>
+  { $factura/fechaEmision }
+  { $factura/totales/total }
+</resultado>
+```
+
+Esta consulta extrae únicamente las facturas que pertenecen a "Cliente XYZ" y retorna, de forma estructurada, la fecha de emisión y el total de la factura. Al aprovechar el índice, la base de datos puede localizar rápidamente los nodos relevantes sin recorrer el documento completo.
+
+Además, se puede realizar un ejercicio de medición de rendimiento utilizando mecanismos de caché. Muchos motores de bases de datos XML mantienen un caché interno de resultados. Para evaluar el impacto del caché, se pueden ejecutar repetidamente consultas y comparar los tiempos de respuesta antes y después de su activación. Por ejemplo:
+
+```xquery
+(: Esta consulta se ejecuta varias veces para comprobar la mejora en el tiempo de respuesta gracias al caché :)
+for $factura in /facturas/factura[fechaEmision >= "2025-03-15"]
+return $factura/totales/total
+```
+
+Se recomienda usar la funcionalidad de "EXPLAIN" o "PROFILE" (disponible en algunos sistemas como BaseX) para analizar el plan de ejecución de las consultas. Esto permite identificar cuellos de botella y confirmar que el uso de índices y otros mecanismos de optimización se está aplicando correctamente.
+
+En resumen, los ejercicios de optimización y rendimiento incluyen:
+
+- Reescritura de consultas: Incorporar filtros directamente en las rutas de acceso para reducir el número de nodos a procesar.
+- Uso de índices: Configurar índices sobre elementos y atributos de consulta frecuente para mejorar la velocidad de respuesta.
+- Evaluación de caché: Ejecutar consultas en repetidas ocasiones y comparar tiempos, utilizando herramientas de profiling para analizar la ejecución.
+- Análisis del plan de ejecución: Emplear herramientas de "EXPLAIN" o "PROFILE" para identificar y corregir ineficiencias.
