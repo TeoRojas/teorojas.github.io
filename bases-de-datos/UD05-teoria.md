@@ -8,7 +8,22 @@ abstract: Sinopsis de la unidad 05
 ---
 
 # Índice
-1. [Introducción a los esquemas relacionales]()
+1. [Introducción y objetivos del lenguaje de consulta](#1-introducción-y-objetivos-del-lenguaje-de-consulta)  
+2. [Ejecución de consultas en MySQL](#2-ejecución-de-consultas-en-mysql)  
+3. [La sentencia SELECT](#3-la-sentencia-select)  
+4. [Operadores y cálculos en consultas](#4-operadores-y-cálculos-en-consultas)  
+   4.1. [Operadores de comparación, lógicos y precedencia](#41-operadores-de-comparación-lógicos-y-precedencia)  
+   4.2. [Cálculos aritméticos](#42-cálculos-aritméticos)  
+5. [Consultas resumen y funciones de agregado](#5-consultas-resumen-y-funciones-de-agregado)  
+6. [Unión de consultas](#6-unión-de-consultas)  
+7. [Subconsultas](#7-subconsultas)  
+   7.1. [Ubicación y anidación de subconsultas](#71-ubicación-y-anidación-de-subconsultas)  
+   7.2. [Rendimiento de subconsultas](#72-rendimiento-de-subconsultas)  
+8. [Consultas multitabla](#8-consultas-multitabla)  
+   8.1. [Composición interna (INNER JOIN)](#81-composición-interna-inner-join)  
+   8.2. [Composición externa (OUTER JOIN)](#82-composición-externa-outer-join)  
+9. [Optimización y rendimiento de consultas](#9-optimización-y-rendimiento-de-consultas)  
+10. [Herramientas y asistentes para consultas](#10-herramientas-y-asistentes-para-consultas)
 
 <div style="display: flex; align-items: center; gap: 40px;">
     <div>
