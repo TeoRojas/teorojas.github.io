@@ -396,9 +396,9 @@ En este ejemplo:
 
 ## 2.5. Creacion de tablas con foraneidad
 
-Cuando se diseña una base de datos relacional, es fundamental establecer relaciones entre las tablas para asegurar la integridad de los datos. Esto se logra mediante el uso de claves foráneas, que permiten vincular una columna (o conjunto de columnas) de una tabla con la clave primaria de otra. En este apartado, exploraremos en detalle cómo crear tablas con foraneidad, explicando conceptos como la integridad referencial y las opciones de "CASCADE" para operaciones de actualización y eliminación, utilizando ejemplos basados en la base de datos **DragonBallZ**.
+Cuando se diseña una base de datos relacional, es fundamental establecer relaciones entre las tablas para asegurar la integridad de los datos. Esto se logra mediante el uso de claves foráneas, que permiten vincular una columna (o conjunto de columnas) de una tabla con la clave primaria de otra. En este apartado, exploraremos en detalle cómo crear tablas con foraneidad, explicando conceptos como la integridad referencial y las opciones de `CASCADE` para operaciones de actualización y eliminación, utilizando ejemplos basados en la base de datos **DragonBallZ**.
 
-Una **clave foránea** (FOREIGN KEY) es un atributo o conjunto de atributos en una tabla que hace referencia a la clave primaria de otra tabla. Su propósito es garantizar que el valor almacenado en la columna foránea exista en la tabla referenciada, manteniendo la integridad referencial de los datos. Esto significa que no se puede insertar un valor en la columna foránea si no existe en la clave primaria de la tabla padre. Por lo tanto, **es fundamental crear primero la tabla que contiene la clave primaria a la que se hará referencia, y luego crear la tabla que incorpora la clave foránea.s**.
+Una **clave foránea** (`FOREIGN KEY`) es un atributo o conjunto de atributos en una tabla que hace referencia a la clave primaria de otra tabla. Su propósito es garantizar que el valor almacenado en la columna foránea exista en la tabla referenciada, manteniendo la integridad referencial de los datos. Esto significa que no se puede insertar un valor en la columna foránea si no existe en la clave primaria de la tabla padre. Por lo tanto, **es fundamental crear primero la tabla que contiene la clave primaria a la que se hará referencia, y luego crear la tabla que incorpora la clave foránea.s**.
 
 La sintaxis básica para definir una clave foránea en el momento de crear una tabla es la siguiente:
 
@@ -412,27 +412,27 @@ CREATE TABLE nombre_tabla (
         [ON UPDATE acción]
 )
 ```
-- **columna_foranea**: Es la columna de la tabla actual que contendrá los valores que deben existir en la tabla referenciada.
-- **tabla_referencia(columna_referencia)**: Es la tabla y columna (usualmente la clave primaria) a la que se hace referencia.
-- **ON DELETE acción** y **ON UPDATE acción**: Son opciones que definen qué sucede cuando se elimina o actualiza un registro en la tabla referenciada.
+- **`columna_foranea`**: Es la columna de la tabla actual que contendrá los valores que deben existir en la tabla referenciada.
+- **tabla_referencia(`columna_referencia`)**: Es la tabla y columna (usualmente la clave primaria) a la que se hace referencia.
+- **`ON DELETE` acción** y **`ON UPDATE` acción**: Son opciones que definen qué sucede cuando se elimina o actualiza un registro en la tabla referenciada.
 
-1. **Opciones de Acción: CASCADE, SET NULL, RESTRICT, etc**
+1. **Opciones de Acción: `CASCADE`, `SET NULL`, `RESTRICT`, etc**
     Cuando se define una clave foránea, es posible especificar acciones para los eventos de eliminación y actualización en la tabla padre. Las opciones más comunes son:
-    - CASCADE:
-        - ON DELETE CASCADE: Si se elimina un registro en la tabla referenciada, se eliminarán automáticamente todos los registros de la tabla hija que dependen de ese registro.
-        - ON UPDATE CASCADE: Si se actualiza el valor de la clave primaria en la tabla referenciada, el cambio se propagará automáticamente a la tabla hija.
+    - `CASCADE`:
+        - `ON DELETE CASCADE`: Si se elimina un registro en la tabla referenciada, se eliminarán automáticamente todos los registros de la tabla hija que dependen de ese registro.
+        - `ON UPDATE CASCADE`: Si se actualiza el valor de la clave primaria en la tabla referenciada, el cambio se propagará automáticamente a la tabla hija.
 
-    - SET NULL:
-        - ON DELETE SET NULL: Si se elimina el registro en la tabla padre, el valor de la columna foránea en la tabla hija se establecerá en NULL (esto requiere que la columna foránea permita valores nulos).
-        - ON UPDATE SET NULL: Si se actualiza la clave primaria, los valores correspondientes en la tabla hija se fijarán en NULL.
+    - `SET NULL`:
+        - `ON DELETE SET NULL`: Si se elimina el registro en la tabla padre, el valor de la columna foránea en la tabla hija se establecerá en NULL (esto requiere que la columna foránea permita valores nulos).
+        - `ON UPDATE SET NULL`: Si se actualiza la clave primaria, los valores correspondientes en la tabla hija se fijarán en NULL.
 
-    - RESTRICT:
-        - ON DELETE RESTRICT / ON UPDATE RESTRICT: Impide la eliminación o actualización en la tabla referenciada si existen registros relacionados en la tabla hija. Es la opción predeterminada en muchos casos.
+    - `RESTRICT`:
+        - `ON DELETE RESTRICT` / `ON UPDATE RESTRICT`: Impide la eliminación o actualización en la tabla referenciada si existen registros relacionados en la tabla hija. Es la opción predeterminada en muchos casos.
 
-    - NO ACTION: Similar a RESTRICT, pero se evalúa al final de la transacción.
+    - `NO ACTION`: Similar a `RESTRICT`, pero se evalúa al final de la transacción.
 
 2. **Ejemplo con la Base de Datos DragonBallZ**
-    Supongamos que en nuestra base de datos DragonBallZ queremos gestionar dos tablas: una para almacenar información de los Guerreros y otra para registrar las Peleas en las que participan. Cada pelea debe estar asociada a un guerrero, por lo que en la tabla de Peleas se establecerá una clave foránea que haga referencia a la clave primaria de la tabla Guerreros.
+    Supongamos que en nuestra base de datos DragonBallZ queremos gestionar dos tablas: una para almacenar información de los `Guerreros` y otra para registrar las `Peleas` en las que participan. En este ejemplo, cada pelea debe estar asociada a un solo guerrero, por lo que en la tabla de `Peleas` se establecerá una clave foránea que haga referencia a la clave primaria de la tabla `Guerreros`.
 
     Primero, se crea la tabla **Guerreros** con un identificador único para cada guerrero:
 
@@ -446,7 +446,7 @@ CREATE TABLE nombre_tabla (
     );
     ```
 
-    Ahora, creamos la tabla Peleas, que incluye una columna para referenciar el guerrero que participa en cada pelea. Además, utilizamos la opción ON DELETE CASCADE para que, si se elimina un guerrero, automáticamente se borren todas sus peleas registradas.
+    Ahora, creamos la tabla Peleas, que incluye una columna para referenciar el guerrero que participa en cada pelea. Además, utilizamos la opción `ON DELETE CASCADE` para que, si se elimina un guerrero, automáticamente se borren todas sus peleas registradas.
 
     ```sql
     CREATE TABLE IF NOT EXISTS Peleas (
