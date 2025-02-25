@@ -328,8 +328,8 @@ CREATE TABLE [IF NOT EXISTS] nombre_de_la_tabla (
 ```
 - **`IF NOT EXISTS`**: Opcional, evita errores si la tabla ya existe.
 - **`nombre_de_la_tabla`**: Es el nombre que identificará a la tabla.
-- **`tipo_de_dato`**: Especifica el tipo de dato que se almacenará (por ejemplo, INT, VARCHAR, DATE, etc.).
-- **`restricciones`**: Pueden incluir NOT NULL, UNIQUE, DEFAULT, entre otras.
+- **`tipo_de_dato`**: Especifica el tipo de dato que se almacenará (por ejemplo, `INT`, `VARCHAR`, `DATE`, etc.).
+- **`restricciones`**: Pueden incluir `NOT NULL`, `UNIQUE`, `DEFAULT`, entre otras.
 - **`restricciones_adicionales`**: Especificaran otros tipos de restricciones como foraneidad, etc (se verá en el apartado 2.5. Creación de tablas con foraneidad).
 
 Considerando la base de datos de ejemplo **DragonBallZ**, imaginemos que queremos crear una tabla para almacenar información sobre personajes de la serie. La tabla podría incluir columnas para el identificador, el nombre del personaje, su raza y su nivel de poder. Primero, seleccionamos la base de datos:
@@ -389,7 +389,36 @@ En este ejemplo:
     ```
     En este ejemplo, se crea una tabla llamada `Personajes` que almacena información sobre los personajes de Dragon Ball. La tabla tiene columnas para el ID del personaje, nombre, raza, nivel de poder y planeta de origen.
 
-4. **Consideraciones Adicionales**
+4. **`SHOW CREATE TABLE`**
+    El comando `SHOW CREATE TABLE` proporciona la instrucción SQL utilizada para crear la tabla, incluyendo todas sus columnas, tipos de datos, restricciones y claves. Su sintaxis es la siguiente:
+
+    ```sql
+    SHOW CREATE TABLE nombre_de_la_tabla;
+    ```
+
+    Y en el ejemplo de la tabla anterior quedaría así:
+
+    ```sql
+    SHOW CREATE TABLE Personajes;
+    ```
+
+    Resultando lo siguiente:
+
+    ```sql
+        CREATE TABLE Personajes (
+        id_personaje INT PRIMARY KEY,
+        nombre VARCHAR(100),
+        raza VARCHAR(50),
+        nivel_poder INT,
+        planeta_origen VARCHAR(100)
+    )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+    ```
+
+    El comando `SHOW CREATE TABLE nombre_de_la_tabla` es muy interesante porque permite conocer la estructura exacta de una tabla, incluyendo todas sus restricciones, lo que facilita la comprensión de su diseño y reglas de integridad. Además, proporciona información detallada sobre el motor de almacenamiento utilizado y la codificación de caracteres aplicada, aspectos fundamentales para garantizar la compatibilidad y el rendimiento de la base de datos.
+
+    Este comando resulta especialmente útil cuando se necesita replicar tablas en otras bases de datos o generar respaldos de su estructura, asegurando que la definición original se mantenga intacta y pueda ser restaurada o reutilizada fácilmente.
+
+5. **Consideraciones Adicionales**
     - Antes de crear una tabla, es importante planificar la estructura de la misma, incluyendo todas las columnas necesarias y las restricciones aplicables.
     - Es posible modificar la estructura de una tabla existente utilizando la instrucción `ALTER TABLE`, que permite agregar, modificar o eliminar columnas, así como aplicar o quitar restricciones.
     - Al diseñar una base de datos, **es importante normalizar las tablas** para evitar la redundancia de datos y garantizar la integridad de los mismos.
@@ -471,3 +500,203 @@ CREATE TABLE nombre_tabla (
     - Integridad Referencial: Garantiza que los datos relacionados entre tablas sean consistentes. No se podrán insertar valores en la columna foránea que no existan en la tabla padre.
     - Mantenimiento Simplificado: Con acciones en cascada, las modificaciones o eliminaciones en la tabla principal se propagan automáticamente, evitando registros huérfanos.
     - Claridad en el Modelo de Datos: Definir relaciones explícitas ayuda a documentar el modelo de la base de datos, facilitando su comprensión y mantenimiento.
+
+## 2.6. Consulta de la estructura de una tabla 
+
+Cuando se trabaja con bases de datos, es fundamental poder inspeccionar la estructura de las tablas para conocer sus columnas, tipos de datos, claves y restricciones. MySQL proporciona varios comandos para obtener información detallada sobre la estructura de una tabla, lo que facilita la administración y el mantenimiento de la base de datos.
+
+A continuación, exploraremos las formas más comunes de consultar la estructura de una tabla en la base de datos **DragonBallZ**.
+
+1. **El comando `DESCRIBE` (`DESC`)**
+
+    El comando **`DESCRIBE`** (o su versión abreviada **`DESC`**) permite obtener información esencial sobre la estructura de una tabla, incluyendo los nombres de las columnas, tipos de datos, si permiten valores nulos, claves y valores predeterminados. Su sintaxis es la siguiente:
+
+    ```sql
+    DESCRIBE nombre_de_la_tabla;
+    ```
+
+    O de forma abreviada:
+
+    ```sql
+    DESC nombre_de_la_tabla;
+    ```
+
+    Por ejemplo, para observar la estructura de la tabla anterior `Guerreros`, se puede ejecutar:
+
+    ```sql
+    DESC Guerreros;
+    ```
+
+    Que tendrá la siguiente salida esperada:
+
+    ```bash
+    +--------+-------------+------+-----+---------+----------------+
+    | Field  | Type        | Null | Key | Default | Extra          |
+    +--------+-------------+------+-----+---------+----------------+
+    | id     | int         | NO   | PRI | NULL    | auto_increment |
+    | nombre | varchar(50) | NO   |     | NULL    |                |
+    | raza   | varchar(50) | YES  |     | NULL    |                |
+    | poder  | int         | YES  |     | NULL    |                |
+    +--------+-------------+------+-----+---------+----------------+
+    4 rows in set (0,00 sec)
+    ```
+
+    En este ejemplo, se muestra la estructura de la tabla `Guerreros`. La primera columna (`Field`) indica el nombre de la columna, seguida por el tipo de datos (`Type`), si la columna permite valores nulos (`Null`), si es una clave (`Key`), el valor predeterminado (`Default`) y cualquier información adicional (`Extra`).
+
+    La consulta `DESCRIBE` es útil para comprender la estructura de una tabla en una base de datos, lo que facilita la escritura de consultas y la manipulación de los datos almacenados en ella.
+
+    Es interesante además conocer que se puede preceder directamente la base de datos concatenándola con un punto, (obviando así el paso de `USE nombre_de_la_base_de_datos` antes) de la siguiente forma:
+
+    ```sql
+    DESCRIBE DragonBallZ.Personajes;
+    ```
+    
+    Donde `DragonBallZ` sería el nombre de la base de datos y `Guerreros` el de la tabla correspondiente.
+
+2. **El comando `SHOW COLUMNS`**
+
+    El comando `SHOW COLUMNS` proporciona información detallada sobre las columnas de una tabla, similar a `DESC`, pero con algunas diferencias en la forma en que presenta los datos. Su sintaxis es la siguiente:
+
+    ```sql
+    SHOW COLUMNS FROM nombre_de_la_tabla;
+    ```
+
+    Ejemplo:
+
+    ```sql
+    SHOW COLUMNS FROM Guerreros;
+    ```
+
+    La salida será similar a la obtenida con DESC, mostrando información detallada de cada columna en la tabla Guerreros.
+
+## 2.7. Modificación de tablas en MySQL
+
+A lo largo del ciclo de vida de una base de datos, es común que surja la necesidad de modificar la estructura de las tablas para adaptarlas a nuevos requisitos. MySQL permite realizar estos cambios mediante la instrucción **`ALTER TABLE`**, la cual facilita la adición, eliminación o modificación de columnas, la gestión de claves primarias y foráneas, así como el ajuste de restricciones.
+
+En este apartado, utilizando la base de datos **`DragonBallZ`** como ejemplo, exploraremos las distintas formas de modificar una tabla.
+
+1. **Agregar una nueva columna: `ADD COLUMN`**
+
+    Para agregar una nueva columna a una tabla existente, se utiliza la instrucción `ALTER TABLE` junto con la instrucción `ADD COLUMN` con siguiente sintaxis:
+
+    ```sql
+    ALTER TABLE nombre_tabla
+    ADD nombre_columna tipo_dato [restricciones];
+    ```
+
+    En nuestro ejemplo podría ser:
+
+    ```sql
+    ALTER TABLE Guerreros
+    ADD COLUMN nivel INT DEFAULT 1;
+    ````
+
+    Este comando añade la columna `nivel` con un valor por defecto de 1.
+
+    Por defecto, la nueva columna se añadirá al final de la tabla. Sin embargo, es posible modificar su ubicación según sea necesario. Para situarla en la primera posición, se puede añadir la cláusula `FIRST` al final del comando. Alternativamente, si se desea que la nueva columna aparezca inmediatamente después de una columna específica, se puede utilizar la cláusula `AFTER nombre_columna_previa`.
+
+    ```sql
+    ALTER TABLE Guerreros ADD COLUMN transformaciones INT AFTER raza;
+    ```
+
+2. **Modificar una columna existente: `MODIFY COLUMN`**
+
+    Si necesitamos cambiar el tipo de dato o las restricciones de una columna, utilizamos MODIFY COLUMN con la siguiente sintaxis:
+
+    ```sql
+    ALTER TABLE nombre_tabla
+    MODIFY COLUMN nombre_columna nuevo_tipo_dato [nuevas_restricciones];
+    ```
+
+    Por ejemplo, suponga que se quiere modificar la columna `nivel_poder` en la tabla `Personajes` para cambiar su tipo de datos de `INT` a `DECIMAL`.
+
+    ```sql
+    ALTER TABLE Personajes
+    MODIFY COLUMN nivel_poder DECIMAL(10,2);
+    ```
+
+    Resultado esperado:
+
+    ```sql
+    +----------------+---------------+------+-----+---------+-------+
+    | Field          | Type          | Null | Key | Default | Extra |
+    +----------------+---------------+------+-----+---------+-------+
+    | id_personaje   | int           | NO   | PRI | NULL    |       |
+    | nombre         | varchar(100)  | YES  |     | NULL    |       |
+    | raza           | varchar(50)   | YES  |     | NULL    |       |
+    | nivel_poder    | decimal(10,2) | YES  |     | NULL    |       |
+    | planeta_origen | varchar(100)  | YES  |     | NULL    |       |
+    +----------------+---------------+------+-----+---------+-------+
+    5 rows in set (0,00 sec)
+    ```
+
+    En este ejemplo, hemos modificado exitosamente la columna `nivel_poder` en la tabla Personajes para cambiar su tipo de datos a `DECIMAL` con una precisión de 10 dígitos y 2 decimales.
+
+    La instrucción `ALTER TABLE` ofrece flexibilidad para realizar cambios en la estructura de una tabla existente en MySQL, lo que permite adaptar la base de datos a medida que cambian los requisitos del sistema o las necesidades de almacenamiento de datos.
+
+3. **Cambiar el nombre de una columna: `CHANGE COLUMN`**
+
+    Para cambiar el nombre de una columna en MySQL, se utiliza la instrucción `ALTER TABLE` junto con la cláusula `CHANGE COLUMN`. Esta cláusula permite cambiar el nombre de una columna y, opcionalmente, especificar un nuevo tipo de datos y restricciones para la columna.
+
+    La sintaxis general para cambiar el nombre de una columna es la siguiente:
+
+    ```sql
+    ALTER TABLE nombre_tabla
+    CHANGE COLUMN nombre_columna_antiguo nombre_columna_nuevo tipo_dato [restricciones];
+    ```
+
+    En este comando:
+
+    - **nombre_tabla** representa el nombre de la tabla donde se encuentra la columna que se desea modificar.
+    - **nombre_columna_antiguo** es el nombre actual de la columna que se va a renombrar.
+    - **nombre_columna_nuevo** corresponde al nuevo nombre que se asignará a la columna.
+    - **tipo_dato** define el tipo de datos que almacenará la columna.
+    - **restricciones** son opciones adicionales que pueden aplicarse, como `NOT NULL`, `DEFAULT`, `UNIQUE`, entre otras, para garantizar la integridad y el correcto manejo de los datos.
+    Supongase como ejemplo práctico que se requiere cambiar el nombre de la columna `raza` a `especie` en la tabla `Personajes` de la base de datos de `DragonBallZ`.
+
+    ```sql
+    ALTER TABLE Personajes
+    CHANGE COLUMN raza especie VARCHAR(50);
+    ```
+    En este ejemplo, se cambia el nombre de la columna `raza` a `especie`y se mantiene el mismo tipo de datos `VARCHAR` con una longitud máxima de 50 caracteres.
+
+    ```sql
+    +----------------+---------------+------+-----+---------+-------+
+    | Field          | Type          | Null | Key | Default | Extra |
+    +----------------+---------------+------+-----+---------+-------+
+    | id_personaje   | int           | NO   | PRI | NULL    |       |
+    | nombre         | varchar(100)  | YES  |     | NULL    |       |
+    | especie        | varchar(50)   | YES  |     | NULL    |       |
+    | nivel_poder    | decimal(10,2) | YES  |     | NULL    |       |
+    | planeta_origen | varchar(100)  | YES  |     | NULL    |       |
+    +----------------+---------------+------+-----+---------+-------+
+    5 rows in set (0,01 sec)
+    ````
+
+    Como resultado, la columna raza ha sido renombrada y la estructura de la tabla ha sido actualizada correctamente.
+
+4. **Eliminar columna: `DROP COLUMN`**
+
+    En MySQL, la instrucción `DROP` se utiliza en la modificación de tablas para eliminar elementos de la estructura de una tabla. Esto puede incluir la eliminación de columnas, índices, restricciones, claves externas u otros objetos asociados a la tabla.
+
+    Para eliminar una columna de una tabla existente, se utiliza la instrucción `ALTER TABLE` junto con la cláusula `DROP COLUMN`. La sintaxis general para eliminar una columna es la siguiente:
+
+    ```sql
+    ALTER TABLE nombre_tabla
+    DROP COLUMN nombre_columna;
+    ````
+
+    En este comando:
+
+    - **nombre_tabla** representa el nombre de la tabla de la cual se eliminará la columna.  
+    - **nombre_columna** es el nombre de la columna que se desea eliminar.  
+
+    Como ejemplo práctico, supóngase que se desea eliminar la columna `planeta_origen`de la tabla `Personajes` en la base de datos `DragonBallZ`.
+
+    ```sql
+    ALTER TABLE Personajes
+    DROP COLUMN planeta_origen;
+    ```
+
+    Este comando eliminará la columna `planeta_origen` de la tabla `Personajes`.
+
