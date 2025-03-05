@@ -20,8 +20,7 @@ abstract: Sinopsis de la unidad 05
    2.6. [Consulta de la estructura de una tabla](#26-consulta-de-la-estructura-de-una-tabla)  
    2.7. [Modificación de tablas en MySQL](#27-modificación-de-tablas-en-mysql)  
    2.8. [Borrado de tablas en MySQL](#28-borrado-de-tablas-en-mysql)  
-   2.9. [Renombrado de tablas en MySQL](#29-renombrado-de-tablas-en-mysql)  
-   2.10. [Implementación de restricciones en MySQL](#210-implementación-de-restricciones-en-mysql)  
+   2.9. [Implementación de restricciones en MySQL](#29-implementación-de-restricciones-en-mysql)  
 3. [Lenguaje de Manipulación de Datos (DML) en MySQL](#3-lenguaje-de-manipulación-de-datos-dml-en-mysql)  
    3.1. [La sentencia INSERT](#31-la-sentencia-insert)  
    3.2. [La sentencia UPDATE](#32-la-sentencia-update)  
@@ -575,6 +574,41 @@ A lo largo del ciclo de vida de una base de datos, es común que surja la necesi
 
 En este apartado, utilizando la base de datos **`DragonBallZ`** como ejemplo, exploraremos las distintas formas de modificar una tabla.
 
+1. **Renombrar una tabla: `RENAME TABLE`**
+
+    En MySQL, se puede renombrar una tabla utilizando la instrucción `ALTER TABLE` seguida de la cláusula `RENAME TO`. Esto permite cambiar el nombre de una tabla existente sin perder los datos que contiene. Obsérvese la siguiente sintaxis:
+
+    ```sql
+    ALTER TABLE nombre_tabla_antiguo
+    RENAME TO nombre_tabla_nuevo;
+    ```
+
+    Donde `nombre_tabla_antiguo` es el nombre actual de la tabla y `nombre_tabla_nuevo` es el nuevo nombre que se desea asignar a la tabla.
+
+    supóngase que se quiere renombrar la tabla `Tecnicas` a `Ataques` en la base de datos de `DragonBallZ`.
+
+    ```sql
+    ALTER TABLE Tecnicas
+    RENAME TO Ataques;
+    ```
+
+    Después de ejecutar la instrucción `ALTER TABLE`, la tabla `Tecnicas` habrá sido renombrada a `Ataques`.
+
+    ```sql
+    SHOW TABLES;
+    +-----------------------+
+    | Tables_in_DragonBallZ |
+    +-----------------------+
+    | Personajes            |
+    | Ataques               |
+    | Torneos               |
+    | Razas                 |
+    +-----------------------+
+    ```
+
+    Como resultado, la tabla `Tecnicas` ahora se mostrará como `Ataques` en la lista de tablas de la base de datos `DragonBallZ`.
+
+
 1. **Agregar una nueva columna: `ADD COLUMN`**
 
     Para agregar una nueva columna a una tabla existente, se utiliza la instrucción `ALTER TABLE` junto con la instrucción `ADD COLUMN` con siguiente sintaxis:
@@ -699,4 +733,87 @@ En este apartado, utilizando la base de datos **`DragonBallZ`** como ejemplo, ex
     ```
 
     Este comando eliminará la columna `planeta_origen` de la tabla `Personajes`.
+
+
+# 2.8. Borrado de tablas en MySQL
+
+El borrado de una tabla en MySQL es una operación irreversible que elimina tanto la estructura como todos los datos almacenados en ella. MySQL proporciona varios comandos para eliminar tablas, dependiendo de si se desea conservar la estructura para futuras reutilizaciones o eliminarla por completo.
+
+A continuación, exploraremos las diferentes formas de borrar una tabla en la base de datos **`DragonBallZ`**, así como las consideraciones y precauciones que deben tomarse antes de ejecutar estos comandos.
+
+1. **Eliminación de una Tabla con `DROP TABLE`**
+
+    El comando **`DROP TABLE`** se usa para eliminar completamente una tabla de la base de datos, eliminando tanto su estructura como todos los registros almacenados en ella. La sintaxis general para eliminar una tabla es la siguiente:
+
+    ```sql
+    DROP TABLE nombre_tabla;
+    ```
+
+    Por ejemplo, suponga que en la base de datos `DragonBallZ` se quiere eliminar la tabla `Tecnicas`, que almacena las técnicas de combate de los guerreros:
+
+    ```sql
+    DROP TABLE Tecnicas;
+    ```
+
+    Además, es posible eliminar varias tablas con un solo comando `DROP TABLE` separando los nombres de las tablas con comas:
+
+    ```sql
+    DROP TABLE IF EXISTS Tecnicas, Peleas;
+    ```
+
+    Bajo este comando hay que tener las siguientes precauciones:
+    - Este comando elimina de manera permanente la tabla y **no se puede deshacer**.
+    - Todos los datos almacenados en la tabla también se perderán.
+    - Si la tabla eliminada estaba referenciada por una clave foránea en otra tabla, se generará un error a menos que se haya definido **`ON DELETE CASCADE`** en la relación.
+
+2. **Eliminación Segura con `DROP TABLE IF EXISTS`**
+
+    Si no se está seguro de si una tabla existe y se quiere evitar errores en la ejecución del comando, se puede usar `IF EXISTS`:
+
+    ```sql
+    DROP TABLE IF EXISTS Tecnicas;
+    ```
+
+    Este comando solo eliminará la tabla si existe en la base de datos, evitando errores en caso de que no esté definida.
+
+3. **Borrado de Datos sin Eliminar la Estructura con `TRUNCATE TABLE`**
+
+    Si solo se desean eliminar todos los datos de una tabla sin borrar su estructura, se puede utilizar `TRUNCATE TABLE`. A diferencia de `DROP TABLE`, este comando mantiene la estructura de la tabla para su posterior reutilización. Obsérvese el ejemplo siguiente:
+
+    ```SQL
+    TRUNCATE TABLE Tecnicas;
+    ```
+
+    | Característica            | DROP TABLE | TRUNCATE TABLE |
+    |--------------------------|------------|---------------|
+    | **Elimina los datos**    | Sí       | Sí          |
+    | **Elimina la estructura**| Sí       | No         |
+    | **Se puede revertir**    | No       | No         |
+    | **Reinicia AUTO_INCREMENT** | Sí    | Sí         |
+    | **Es más rápido**        | Depende del índice | Más rápido |
+
+
+4. **Eliminación de una Tabla con Claves Foráneas**
+
+    Si la tabla que se desea eliminar está referenciada por una clave foránea en otra tabla, MySQL impedirá su eliminación a menos que se haya definido la opción `ON DELETE CASCADE` en la relación.
+
+    Si se intenta eliminar una tabla referenciada sin considerar esto, MySQL generará un error similar a:
+
+    ```sql
+    ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails
+    ```
+
+    Para evitar este problema, se puede realizar lo siguiente:
+    - **Eliminar primero la clave foránea** en la tabla que la referencia:
+    ```sql
+    ALTER TABLE Peleas DROP FOREIGN KEY fk_id_tecnica;
+    ```
+    - **Luego eliminar la tabla referenciada:** 
+    ```sql
+    DROP TABLE Tecnicas;
+    ```    
+
+    Si la relación tenía `ON DELETE CASCADE`, la eliminación se propagará automáticamente y no será necesario eliminar manualmente la clave foránea.
+
+## 2.9. Implementación de restricciones en MySQL
 
