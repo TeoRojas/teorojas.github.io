@@ -817,3 +817,156 @@ A continuación, exploraremos las diferentes formas de borrar una tabla en la ba
 
 ## 2.9. Implementación de restricciones en MySQL
 
+Las **restricciones** en MySQL son reglas aplicadas a las columnas de una tabla para garantizar la integridad, coherencia y validez de los datos almacenados. Estas restricciones ayudan a evitar la duplicación de registros, asegurar la integridad referencial y restringir valores no válidos. 
+
+En este apartado, exploraremos cómo implementar restricciones en la base de datos **`DragonBallZ`**, aplicando diferentes tipos de reglas a estas tablas.
+
+Las principales restricciones que se pueden implementar en MySQL son:
+
+- **`NOT NULL`**: Evita que una columna acepte valores nulos.
+- **`PRIMARY KEY`**: Combina **`NOT NULL`** y **`UNIQUE`** para identificar de manera única cada fila.
+- **`FOREIGN KEY`**: Establece relaciones entre tablas para mantener la integridad referencial.
+- **`UNIQUE`**: Garantiza que los valores de una columna sean únicos en toda la tabla.
+- **`CHECK`**: Define condiciones que los valores de una columna deben cumplir.
+- **`DEFAULT`**: Asigna un valor predeterminado si no se especifica otro al insertar un registro.
+
+1. **Uso de `NOT NULL`**
+
+    La restricción **`NOT NULL`** impide que una columna acepte valores nulos, asegurando que cada registro tenga información válida en dicha columna.
+
+    ```sql
+    CREATE TABLE Guerreros (
+        id INT AUTO_INCREMENT,
+        nombre VARCHAR(50) NOT NULL,
+        raza VARCHAR(50) NOT NULL,
+        poder INT NOT NULL,
+        PRIMARY KEY (id)
+    );
+    ```
+
+    En este ejemplo, las columnas `nombre`, `raza` y `poder` no pueden contener valores nulos.
+
+2. **Uso de `PRIMARY KEY`**
+
+    La **clave primaria (`PRIMARY KEY`)** es una combinación de `NOT NULL` y `UNIQUE`, utilizada para identificar de manera única cada fila de una tabla.
+
+    ```sql
+    CREATE TABLE Tecnicas (
+        id INT AUTO_INCREMENT,
+        nombre VARCHAR(100) NOT NULL,
+        daño INT,
+        PRIMARY KEY (id)
+    );
+    ```
+
+    En este caso, `id` es la clave primaria de la tabla `Tecnicas`, asegurando que cada técnica tenga un identificador único.
+
+3. **Uso de `FOREING KEY`**
+
+    Las **claves foráneas (`FOREIGN KEY`)** permiten establecer relaciones entre tablas, garantizando que los valores en una columna de la tabla hija coincidan con los de la clave primaria en la tabla padre.
+
+    ```sql
+    CREATE TABLE Peleas (
+        id INT AUTO_INCREMENT,
+        fecha DATE NOT NULL,
+        id_guerrero INT NOT NULL,
+        PRIMARY KEY (id),
+        FOREIGN KEY (id_guerrero) REFERENCES Guerreros(id)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE
+    );
+    ```
+
+    Aquí, `id_guerrero` en la tabla Peleas hace referencia a id en la tabla `Guerreros`, asegurando que no se pueda insertar un combate con un guerrero inexistente.
+
+    - **`ON DELETE CASCADE`**: Si un guerrero es eliminado, todas sus peleas también se eliminarán.
+    - **`ON UPDATE CASCADE`**: Si el identificador de un guerrero cambia, se actualizará automáticamente en la tabla Peleas.
+
+4. **Uso de `UNIQUE`**
+
+    La restricción UNIQUE garantiza que los valores en una columna (o conjunto de columnas) sean únicos dentro de la tabla.
+    ```sql
+    CREATE TABLE Guerreros (
+        id INT AUTO_INCREMENT,
+        nombre VARCHAR(50) NOT NULL UNIQUE,
+        raza VARCHAR(50),
+        poder INT,
+        PRIMARY KEY (id)
+    );
+    ```
+    Aquí, ningún guerrero podrá tener el mismo nombre que otro.
+
+5. **Uso de `CHECK`**
+
+    La restricción **`CHECK`** permite definir condiciones que los valores de una columna deben cumplir.
+
+    ```sql
+    CREATE TABLE Transformaciones (
+        id INT AUTO_INCREMENT,
+        nombre VARCHAR(50) NOT NULL,
+        nivel INT CHECK (nivel >= 1 AND nivel <= 10),
+        PRIMARY KEY (id)
+    );
+    ```
+
+    En este ejemplo, la columna `nivel` solo aceptará valores entre 1 y 10.
+
+6. **Uso de `DEFAULT`**
+
+    La restricción **`DEFAULT`** asigna un valor predeterminado a una columna cuando no se especifica uno en la inserción.
+
+    ```sql
+    CREATE TABLE Objetos (
+        id INT AUTO_INCREMENT,
+        nombre VARCHAR(50) NOT NULL,
+        tipo VARCHAR(50) DEFAULT 'Desconocido',
+        PRIMARY KEY (id)
+    );
+    ```
+
+    Si al insertar un objeto no se proporciona un valor para tipo, se asignará automáticamente el valor '`Desconocido`'.
+
+7. **Modificación de restricciones con `ALTER TABLE`**
+
+    Si es necesario añadir, modificar o eliminar una restricción en una tabla existente, se puede utilizar `ALTER TABLE`.
+
+    1. **Añadir una Restricción**
+
+        - **Agregar `NOT NULL`**:
+        
+        ```sql
+        ALTER TABLE Guerreros
+        MODIFY COLUMN raza VARCHAR(50) NOT NULL;
+        ```
+
+        - **Agregar `UNIQUE`**:
+
+        ```sql
+        ALTER TABLE Guerreros
+        ADD CONSTRAINT unique_nombre UNIQUE (nombre);
+        ```
+
+        - **Agregar `FOREIGN KEY`**:
+
+        ```sql
+        ALTER TABLE Peleas
+        ADD CONSTRAINT fk_guerrero
+        FOREIGN KEY (id_guerrero) REFERENCES Guerreros(id)
+        ON DELETE CASCADE;
+        ```
+
+    2. **Eliminar una Restricción**
+
+        - **Eliminar `UNIQUE`**:
+
+        ```sql
+        ALTER TABLE Guerreros
+        DROP INDEX unique_nombre;
+        ```
+
+        - **Eliminar `FOREIGN KEY`**:
+
+        ```sql
+        ALTER TABLE Peleas
+        DROP FOREIGN KEY fk_guerrero;
+        ```
