@@ -1,10 +1,10 @@
 ---
 layout: default
-title: UD02. Diseño de Bases de Datos, el modelo conceptual. Ejercicios
+title: UD03. Los esquemas relacionales y su transformación. Ejercicios
 permalink: /bases-de-datos/ud03/ejercicios/
 author: Teo Rojas
 date: Enero 2025
-abstract: Sinopsis de la unidad 02
+abstract: Sinopsis de la unidad 03
 ---
 
 # Índice

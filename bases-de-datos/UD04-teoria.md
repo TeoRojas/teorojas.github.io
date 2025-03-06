@@ -115,44 +115,6 @@ A continuación, se explica paso a paso cómo instalar y configurar MySQL en un 
     ```
     Este comando lanza el cliente de MySQL e indica que iniciarás sesión como el usuario `root`. El parámetro -p solicita que ingreses la contraseña, que en este caso es '8888'.
 
-### 1.1.2. Instalación de phpMyAdmin en Linux: Guía Paso a Paso
-
-Estos son los pasos que seguiste para instalar y configurar phpMyAdmin utilizando solo cuatro comandos. Cada uno se explica detalladamente para que comprendas su función.
-
-1. **Instalar phpMyAdmin**
-    ```bash
-    sudo apt install phpmyadmin
-    ```
-    Este comando descarga e instala phpMyAdmin junto con las dependencias necesarias. Durante la instalación se te pedirá:
-    - Seleccionar apache2 como el servidor web (usa las teclas de flecha y presiona Enter).
-    - Si se te pregunta si deseas configurar phpMyAdmin con dbconfig-common, selecciona Sí.
-    - Configurar una contraseña para phpMyAdmin o utilizar la misma que configuraste para MySQL.
-
-2. **Copiar el archivo de configuración de phpMyAdmin a Apache**
-    ```bash
-    sudo cp /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
-    ```
-    Este comando copia el archivo de configuración predeterminado de phpMyAdmin a la carpeta de configuraciones disponibles de Apache (`/etc/apache2/conf-available/`). Esto permite que Apache reconozca y gestione correctamente phpMyAdmin como un servicio.
-
-3. **Habilitar la configuración de phpMyAdmin en Apache**
-    ```bash
-    sudo a2enconf phpmyadmin
-    ```
-    Este comando habilita el archivo de configuración de phpMyAdmin en Apache para que esté activo. Apache utilizará esta configuración para gestionar cómo sirve phpMyAdmin.
-
-4. **Recargar Apache**
-    ```bash
-    systemctl reload apache2
-    ```
-    Este comando recarga la configuración de Apache para que los cambios realizados (la habilitación de phpMyAdmin) surtan efecto.
-
-5. **Acceder a phpMyAdmin**
-    Para acceder a la interfaz web de phpMyAdmin:
-    1. Abre tu navegador y ve a: http://localhost/phpmyadmin
-    2. Inicia sesión con tus credenciales de MySQL:
-        - **Usuario**: root
-        - **Contraseña**: La que configuraste al instalar MySQL (por ejemplo, 8888)
-
 # 2. Lenguaje de Definición de Datos (DDL) en MySQL
 
 El Lenguaje de Definición de Datos (DDL) es un subconjunto de SQL que se utiliza para definir, modificar y eliminar la estructura de objetos en una base de datos. En MySQL, el DDL se emplea para crear bases de datos, tablas, índices, vistas y otros objetos, permitiendo establecer de forma precisa el diseño lógico y físico de la información. Con DDL se pueden:
@@ -970,3 +932,165 @@ Las principales restricciones que se pueden implementar en MySQL son:
         ALTER TABLE Peleas
         DROP FOREIGN KEY fk_guerrero;
         ```
+
+
+
+
+
+# 3. Lenguaje de Manipulación de Datos (DML) en MySQL
+
+El **Lenguaje de Manipulación de Datos (DML, Data Manipulation Language)** en MySQL permite realizar operaciones **sobre los datos** almacenados en una base de datos. A diferencia del **Lenguaje de Definición de Datos (DDL)**, que se centra en la estructura de la base de datos (operaciones sobre las tablas y bases de datos), el DML permite insertar, actualizar, eliminar y recuperar registros de las tablas.
+
+Las principales sentencias DML en MySQL son:
+- **INSERT**: Para insertar nuevos registros en una tabla.
+- **SELECT**: Para consultar información almacenada. (Debido a su complejidad, se tratará en el tema siguiente [UD05. El lenguaje de consulta de datos.](/bases-de-datos/ud05/teoria/)).
+- **UPDATE**: Para modificar datos existentes.
+- **DELETE**: Para eliminar registros.
+
+
+En este apartado, utilizaremos la base de datos **DragonBallZ** para ilustrar cada una de estas operaciones.
+
+## 3.1. La sentencia `INSERT`.
+
+El comando **`INSERT`** se utiliza para agregar nuevos registros a una tabla. Su sintaxis básica es:
+
+```sql
+INSERT INTO nombre_tabla (columna1, columna2, ...)
+VALUES (valor1, valor2, ...);
+```
+
+- **`INSERT INTO`**: Esta es la primera parte de la sintaxis y es obligatoria. Indica que estamos realizando una inserción de datos en una tabla específica.
+- **Nombre de la tabla**: Después de `INSERT INTO`, se debe especificar el nombre de la tabla en la que se insertarán los datos.
+- **Lista de columnas (opcional)**: A continuación del nombre de la tabla, opcionalmente se puede especificar una lista de columnas entre paréntesis. Esto indica en qué columnas se insertarán los valores. Si se omite esta parte, se insertarán valores en todas las columnas de la tabla en el orden en que se crearon.
+- **Valores a insertar**: Después de la lista de columnas (si se proporciona), se utiliza la palabra clave `VALUES` seguida de una lista de valores entre paréntesis. Estos valores deben coincidir en número y tipo con las columnas especificadas en la lista de columnas (si se proporciona) o con todas las columnas de la tabla en el orden en que se crearon.
+
+Como ejemplo práctico, imagínese que se está usando la base de datos `DragonBallZ` y se quiere insertar un guerrero sabiendo que las columnas de la tabla `Guerreros` son las siguientes:
+
+```bash
+mysql> DESCRIBE Guerreros;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int         | NO   | PRI | NULL    | auto_increment |
+| nombre | varchar(50) | NO   |     | NULL    |                |
+| raza   | varchar(50) | YES  |     | NULL    |                |
+| poder  | int         | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+```
+
+El comando para insertar un guerrero de nombre Goku, de tipo Saiyajin y con nivel de poder 9000, sería el siguiente:  
+
+```sql
+INSERT INTO Guerreros (nombre, raza, poder)
+VALUES ('Goku', 'Saiyajin', 9000);
+```
+
+El resultado esperado debería ser [^1]:
+
+```bash
+mysql> SELECT * FROM Guerreros;
++----+--------+----------+-------+
+| id | nombre | raza     | poder |
++----+--------+----------+-------+
+|  1 | Goku   | Saiyajin |  9000 |
++----+--------+----------+-------+
+```
+[^1]: Nótese que se está utilizando la sentencia `SELECT` para mostrar los datos de la tabla `Guerreros`, esta sentencia se explicará en profundidad en apartados posteriores.
+
+También se pueden insertar múltiples registros en con una sola sentencia `INSERT`de la siguiente forma:
+
+```sql
+INSERT INTO Guerreros (nombre, raza, poder) 
+VALUES 
+('Vegeta', 'Saiyajin', 8500),
+('Piccolo', 'Namekiano', 6000),
+('Frieza', 'Mutante', 10000);
+```
+Quedanto la tabla `Guerreros` de la siguiente forma:
+
+```bash
+mysql> SELECT * FROM Guerreros;
++----+---------+-----------+-------+
+| id | nombre  | raza      | poder |
++----+---------+-----------+-------+
+|  1 | Goku    | Saiyajin  |  9000 |
+|  2 | Vegeta  | Saiyajin  |  8500 |
+|  3 | Piccolo | Namekiano |  6000 |
+|  4 | Frieza  | Mutante   | 10000 |
++----+---------+-----------+-------+
+```
+
+Además, Si queremos insertar un registro sin especificar todas las columnas, se pueden omitir aquellas que tienen valores predeterminados:
+
+```sql
+INSERT INTO Guerreros (nombre, raza)
+VALUES ('Krilin', 'Humano');
+```
+
+Finalmente se obtiene el siguiente resultado:
+
+```bash
+mysql> SELECT * FROM Guerreros;
++----+---------+-----------+-------+
+| id | nombre  | raza      | poder |
++----+---------+-----------+-------+
+|  1 | Goku    | Saiyajin  |  9000 |
+|  2 | Vegeta  | Saiyajin  |  8500 |
+|  3 | Piccolo | Namekiano |  6000 |
+|  4 | Frieza  | Mutante   | 10000 |
+|  5 | Krilin  | Humano    |  NULL |
++----+---------+-----------+-------+
+```
+
+De esta manera queda demostrado que la sentencia `INSERT` permite agregar registros a una tabla de manera flexible, ya sea especificando todas las columnas o únicamente las necesarias. En los siguientes apartados se explorará cómo recuperar, actualizar y eliminar estos datos para gestionar la información de manera eficiente.
+
+
+
+
+
+
+
+
+
+
+---
+# 4. Control de datos y transacciones
+## 4.1. Transacciones y procesamiento de transacciones
+## 4.2. Políticas de bloqueo y control de concurrencia
+### 4.2.1. Instalación de phpMyAdmin en Linux: Guía Paso a Paso
+
+Estos son los pasos que seguiste para instalar y configurar phpMyAdmin utilizando solo cuatro comandos. Cada uno se explica detalladamente para que comprendas su función.
+
+1. **Instalar phpMyAdmin**
+    ```bash
+    sudo apt install phpmyadmin
+    ```
+    Este comando descarga e instala phpMyAdmin junto con las dependencias necesarias. Durante la instalación se te pedirá:
+    - Seleccionar apache2 como el servidor web (usa las teclas de flecha y presiona Enter).
+    - Si se te pregunta si deseas configurar phpMyAdmin con dbconfig-common, selecciona Sí.
+    - Configurar una contraseña para phpMyAdmin o utilizar la misma que configuraste para MySQL.
+
+2. **Copiar el archivo de configuración de phpMyAdmin a Apache**
+    ```bash
+    sudo cp /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
+    ```
+    Este comando copia el archivo de configuración predeterminado de phpMyAdmin a la carpeta de configuraciones disponibles de Apache (`/etc/apache2/conf-available/`). Esto permite que Apache reconozca y gestione correctamente phpMyAdmin como un servicio.
+
+3. **Habilitar la configuración de phpMyAdmin en Apache**
+    ```bash
+    sudo a2enconf phpmyadmin
+    ```
+    Este comando habilita el archivo de configuración de phpMyAdmin en Apache para que esté activo. Apache utilizará esta configuración para gestionar cómo sirve phpMyAdmin.
+
+4. **Recargar Apache**
+    ```bash
+    systemctl reload apache2
+    ```
+    Este comando recarga la configuración de Apache para que los cambios realizados (la habilitación de phpMyAdmin) surtan efecto.
+
+5. **Acceder a phpMyAdmin**
+    Para acceder a la interfaz web de phpMyAdmin:
+    1. Abre tu navegador y ve a: http://localhost/phpmyadmin
+    2. Inicia sesión con tus credenciales de MySQL:
+        - **Usuario**: root
+        - **Contraseña**: La que configuraste al instalar MySQL (por ejemplo, 8888)
