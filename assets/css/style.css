@@ -274,7 +274,7 @@ ul{
 
 code{
     font-size: 14px;
-
+    line-height: 1.7;
 }
 
 img {
@@ -422,6 +422,66 @@ nav ul li a:visited{
     }
 }
 
+
+
+
+
+/* Dark Mode */
+/*
+@media (prefers-color-scheme: dark) {
+    body{background:#191919;filter:invert(1);}
+    .highlight{border-color: grey !important;}
+    img,iframe,.highlight,a:hover,a:focus{filter:invert(1);}
+}
+*/
+
+  /* Columnas exactamente iguales */
+  .two-columns {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    line-height: 1.7;
+  }
+  
+  .two-columns > div {
+    width: calc(50% - 17px); /* La mitad exacta menos la mitad del ancho de la línea y margen */
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  /* Línea divisoria centrada con pseudo-elemento */
+  .two-columns > div:first-child {
+    border-right: 4px solid #333;
+    padding: 0 15px 15px 0; /* Espaciado adicional para separación visual */
+  }
+  
+  .two-columns > div:last-child {
+    padding: 0 0 15px 15px; /* Equilibra visualmente la separación */
+  }
+
+  .two-columns .rouge-gutter,
+.two-columns .rouge-gutter.gl {
+  display: none !important;
+}
+  
+  /* Responsive: Colapsa en móvil */
+  @media screen and (max-width: 768px) {
+    .two-columns {
+      flex-direction: column;
+    }
+  
+    .two-columns > div {
+      width: 100%; /* Ancho completo en móvil */
+      border-right: none; /* Elimina línea vertical */
+      border-bottom: 4px solid #333; /* Línea horizontal en móvil */
+      padding: 10px 0;
+    }
+  
+    .two-columns > div:last-child {
+      padding-left: 10px;
+    }
+  }
+
 @media print {
     table {
         max-width: 70%; /* Asegura que ninguna imagen exceda el ancho disponible */
@@ -435,16 +495,13 @@ nav ul li a:visited{
         width: 100%; /* Ajusta al ancho completo del folio */
     }  
 
+    .two-columns {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        gap: 30px !important; /* 🔥 Se mantiene el margen al imprimir */
+    }
+    .two-columns > div {
+        width: calc(50% - 15px) !important; /* 🔥 Ajuste preciso con margen */
+    }
+
 }
-
-
-
-
-/* Dark Mode */
-/*
-@media (prefers-color-scheme: dark) {
-    body{background:#191919;filter:invert(1);}
-    .highlight{border-color: grey !important;}
-    img,iframe,.highlight,a:hover,a:focus{filter:invert(1);}
-}
-*/

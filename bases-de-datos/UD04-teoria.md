@@ -1094,3 +1094,129 @@ Estos son los pasos que seguiste para instalar y configurar phpMyAdmin utilizand
     2. Inicia sesión con tus credenciales de MySQL:
         - **Usuario**: root
         - **Contraseña**: La que configuraste al instalar MySQL (por ejemplo, 8888)
+
+
+# 5. Chuletario Resumen de SQL
+
+
+<div class="two-columns">
+  <div markdown="1"> <!-- Columna izquierda  -->
+
+# Create
+Crear nueva Base de datos o tabla
+
+```sql
+CREATE DATABASE [IF NOT EXISTS] <nombre_bbdd>;
+CREATE TABLE [IF NOT EXISTS] <nombre_tabla>;
+```
+
+# Drop
+Eliminar una Base de datos o tabla existentes
+
+```sql
+DROP DATABASE [IF EXISTS] <nombre_bbdd>;
+DROP TABLE [IF EXISTS] <nombre_tabla>;
+```
+
+# Truncate
+Eliminar la información de una tabla pero no la tabla
+
+```sql
+TRUNCATE TABLE  <nombre_tabla>;
+```
+
+# Alter
+Añadir, modificar o eliminar restricciones o columnas en una tabla
+
+```sql
+ALTER TABLE <nombre_tabla>
+ADD <nombre_columna> <tipo_dato>;
+
+ALTER TABLE <nombre_tabla>
+ALTER COLUMN <nombre_columna> <tipo_dato>;
+
+ALTER TABLE <nombre_tabla>
+DROP COLUMN <nombre_columna>;
+```
+
+# Insert
+Insertar nuevos registros (tuplas) en una tabla
+
+```sql
+INSERT INTO <nombre_tabla> (nombre_col1, ...)
+VALUES (valor1, ...),
+VALUES (valorN, ...);
+```
+##### No se necesita especificar los nombres de las columnas si se van a añadir valores para todas las columnas
+
+# Select
+Seleccionar/Mostrar datos de una tabla
+
+```sql
+SELECT <lista_atributos> 
+FROM <nombre_tabla>;
+```
+##### Si se quieren mostrar todos los atributos poner un (*) en la lista_atributos
+
+
+
+
+
+  </div> 
+  <div markdown="1"> <!-- Columna derecha  -->
+    
+# Tipos de datos.
+
+- **Numéricos**: INT, SMALLINT, DECIMAL(i,j)
+- **String**: CHAR, CHAR(n), VARCHAR(n)
+- **Bit String**: BIT, BIT(n)
+- **Fecha y tiempo**: DATE, TIME, TIME(i)
+- **Timestamp**: TIMESTAMP
+
+# Delete
+Eliminar registros (tuplas) de una tabla
+
+```sql
+DELETE FROM <nombre_tabla> 
+WHERE <condicion>;
+```
+##### Si no se añade la clausula WHERE, todos los registros serán eliminados
+
+# Update
+
+```sql
+UPDATE <nombre_tabla> 
+SET <nombre_columna> = <nuevo_valor>
+WHERE <condicion>;
+```
+
+
+# In
+Filtrar resultados de una consulta comparando una columna con una lista de valores específicos
+
+```sql
+SELECT <lista_atributos> 
+FROM <nombre_tabla>
+WHERE columna1 IN (otro_select);
+```
+
+# Null
+Comprobar que un valor es desconocido/inexistente
+
+```sql
+<nombre_atributo> IN [NOT] NULL
+```
+
+# Order By
+Ordenar los resultados de una consulta
+
+```sql
+SELECT * FROM <nombre_tabla>
+ORDER BY <nombre_atributo> <ASC/DESC>
+```
+##### ASC para mostrar orden ascendente, DESC para mostrar orden descendente
+
+
+  </div>
+</div>
+
