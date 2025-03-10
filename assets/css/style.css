@@ -266,11 +266,12 @@ strong{
     font-family: 'CMB';
     letter-spacing: -0.75px;
 }
-
+/*
 ul{
-    /*margin-bottom: 20px; Al eliminarlo se arreglan los índices*/ 
+    // Al eliminarlo se arreglan los índices
+    margin-bottom: 20px; 
 }
-
+*/
 
 code{
     font-size: 14px;
