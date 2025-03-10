@@ -889,6 +889,8 @@ Las principales restricciones que se pueden implementar en MySQL son:
     - **`ON DELETE CASCADE`**: Si un guerrero es eliminado, todas sus peleas también se eliminarán.
     - **`ON UPDATE CASCADE`**: Si el identificador de un guerrero cambia, se actualizará automáticamente en la tabla Peleas.
 
+    > Nota importante: La tabla `Peleas` que contiene la clave foránea debe crearse después de la tabla a la que apunta `Guerreros`. De no hacerlo así, el sistema generará errores porque la tabla que contiene la clave primaria aún no existe.
+
 4. **Uso de `UNIQUE`**
 
     La restricción UNIQUE garantiza que los valores en una columna (o conjunto de columnas) sean únicos dentro de la tabla.
