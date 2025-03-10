@@ -328,6 +328,51 @@ En este ejemplo:
     - **Fechas y Tiempos**: `DATE`, `DATETIME`, `TIMESTAMP`, etc.
     - **Valores Booleanos**: `BOOL`, `BOOLEAN`.
 
+    - **Enteros**:
+        - `INT`: Número entero estándar, ocupa 4 bytes. Almacena valores entre -2.147.483.648 y 2.147.483.647. Se usa para números enteros sin decimales.
+        - `TINYINT`: Entero muy pequeño, generalmente usado para valores entre -128 y 127 o de 0 a 255 sin signo. Se utiliza frecuentemente para almacenar valores booleanos (0 y 1).
+        - `SMALLINT`: Entero pequeño, valores desde -32.768 a 32.767 (con signo).
+        - `MEDIUMINT`: Entero mediano, para valores entre -32,768 a 32,767 (aprox. 2 bytes).
+        - `INT`: Entero estándar (más amplio), típicamente -2,147,483,648 a 2,147,483,647.
+        - `BIGINT`: Entero muy grande, entre -9 quintillones a 9 quintillones aproximadamente.
+
+    - **Decimales**:
+        - `FLOAT`: Número con decimales de precisión sencilla. Apropiado para números aproximados o cálculos rápidos.
+        - `DOUBLE`: Número flotante de doble precisión. Mayor precisión que FLOAT pero menor precisión exacta que DECIMAL.
+        - `DECIMAL(M, D)`: Almacena números exactos con decimales. La precisión `M` es el número total de dígitos, y `D` es el número de decimales. Por ejemplo `precio DECIMAL(8,2) -- admitirá números como 999999.99`.   
+
+    - **Cadenas de caracteres**:
+        - `VARCHAR(n)`: El más común. Cadena de caracteres de longitud variable hasta un máximo `n`. Almacena solo el tamaño necesario.
+        - `CHAR(n)`: Cadena de longitud fija. Si el dato insertado es más corto que el valor definido, se rellena con espacios. Ideal para cadenas cortas y constantes.
+        - `TEXT`: Para textos largos de hasta 65,535 caracteres (64KB aprox.). Útil para almacenar párrafos o información textual extensa.
+        - `MEDIUMTEXT/LONGTEXT`: Versiones ampliadas de TEXT para almacenar datos mucho más grandes (hasta varios GB).        
+
+    - **Fechas y tiempos**:
+        - `DATE`: Almacena fechas en formato AAAA-MM-DD (año, mes, día), sin hora. Ejemplo: "2025-03-10".
+        - `DATETIME`: Almacena fecha y hora combinadas, por ejemplo: 2025-03-10 16:45:30. No se modifica al cambiar la zona horaria.
+        - `TIMESTAMP`: Similar a DATETIME pero basado en el huso horario del servidor. Se actualiza automáticamente en inserciones o modificaciones si se configura.
+        - `TIME`: Almacena únicamente horas, minutos y segundos (HH:MM:SS).
+        - `YEAR`: Almacena solamente el año en formato YYYY o YY.
+
+    - **Valores Booleanos**:
+        - `BOOL` y `BOOLEAN`: En realidad no son tipos de datos independientes, sino alias de `TINYINT(1)`. Almacenan los valores 0 (falso) o 1 (verdadero).    
+
+    - ***Ejemplo de uso**:
+        ```sql
+        CREATE TABLE guerrero_z (
+            id INT PRIMARY KEY AUTO_INCREMENT,             -- Identificador único de cada guerrero
+            nombre VARCHAR(50) NOT NULL,                   -- Nombre del personaje
+            raza CHAR(20) NOT NULL,                        -- Raza del personaje (Saiyan, Humano, Namek, etc.)
+            nivel_poder BIGINT UNSIGNED DEFAULT 0,         -- Nivel de poder actual
+            fecha_nacimiento DATE,                         -- Fecha de nacimiento del personaje
+            ultima_transformacion DATETIME,                -- Última transformación importante
+            creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Fecha de creación del registro
+            esta_vivo BOOLEAN DEFAULT TRUE,                -- Indica si el personaje sigue vivo o muerto
+            historia TEXT,                                 -- Breve historia o descripción
+            tiene_esferas BOOL DEFAULT FALSE               -- Indica si posee Esferas del Dragón
+        );
+        ```     
+
 2. **Tipos de restricciones**    
     Las restricciones se utilizan para aplicar reglas adicionales a las columnas de una tabla. Aunque se verán más adelante de forma más completa, como aperitivo debes saber algunas restricciones comunes:
 
