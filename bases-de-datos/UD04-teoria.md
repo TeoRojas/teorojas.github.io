@@ -1091,13 +1091,169 @@ mysql> SELECT * FROM Guerreros;
 
 De esta manera queda demostrado que la sentencia `INSERT` permite agregar registros a una tabla de manera flexible, ya sea especificando todas las columnas o únicamente las necesarias. En los siguientes apartados se explorará cómo recuperar, actualizar y eliminar estos datos para gestionar la información de manera eficiente.
 
+## 3.2. La sentencia `SELECT`.
+
+La sentencia `SELECT` es una de las instrucciones más importantes en SQL, ya que permite realizar consultas para extraer y mostrar datos almacenados en una base de datos.
+
+Su sintaxis básica es la siguiente:
 
 
+```sql
+SELECT columna1, columna2, ...
+FROM nombre_tabla;
+```
+
+- **`SELECT`**: Esta es la primera parte de la sintaxis y es obligatoria. Indica el inicio de la consulta.
+- **columna1, columna2, ...**: Especifican las columnas que se desean obtener. Se utiliza el símbolo asterisco (*) para seleccionar todas las columnas disponibles.
+- `FROM nombre_tabla`: Especifica la tabla desde la cual se extraen los datos.
+
+Con la sentencia `SELECT` se pueden realizar cálculos directamente en consultas, incluso sin necesidad de consultar una tabla existente. Esto es útil para realizar cálculos rápidos o pruebas en tiempo real:
+
+```bash
+mysql> SELECT 1 + 5 AS suma;
++------+
+| suma |
++------+
+|    6 |
++------+
+```
+
+Este ejemplo muestra cómo realizar una operación aritmética directamente dentro de la sentencia `SELECT`, creando una columna temporal para mostrar el resultado. Esta operación no requiere acceder a ninguna tabla física, demostrando que la sentencia `SELECT` también permite obtener resultados directamente desde expresiones matemáticas.
+
+También es posible utilizar alias para renombrar columnas y tablas en la consulta, facilitando la lectura, especialmente cuando se trabaja con consultas complejas o con múltiples tablas involucradas. Para ello obsérvese el siguiente ejemplo y el uso de `AS`:
+
+```bash
+mysql> SELECT g.nombre AS guerrero, g.raza AS especie
+    -> FROM Guerreros AS g;
++----------+--------------+
+| guerrero | especie      |
++----------+--------------+
+| Goku     | Saiyan       |
+| Vegeta   | Saiyan Elite |
+| Gohan    | Saiyan       |
++----------+--------------+
+```
+En este ejemplo, se utiliza un alias (g) para simplificar el nombre de la tabla y se crean alias para las columnas que mejoran la comprensión del resultado obtenido.
+
+```bash
+mysql> SELECT * FROM Guerreros;
++----+--------+--------------+-------------+
+| id | nombre | raza         | nivel_poder |
++----+--------+--------------+-------------+
+|  1 | Goku   | Saiyan       |        9500 |
+|  2 | Vegeta | Saiyan Elite |        9000 |
+|  3 | Gohan  | Saiyan       |        8000 |
++----+--------+--------------+-------------+
+```
 
 
+- 1. **Selección de columnas específicas**
 
+    Si se quisieran seleccionar columnas específicas en lugar de todas las columnas utilizando la sintaxis de la sentencia `SELECT`. Por ejemplo:
 
+    ```bash
+    mysql> SELECT nombre, raza
+        -> FROM Guerreros;
+    +--------+--------------+
+    | nombre | raza         |
+    +--------+--------------+
+    | Goku   | Saiyan       |
+    | Vegeta | Saiyan Elite |
+    | Gohan  | Saiyan       |
+    +--------+--------------+
+    ```
 
+    En este ejemplo, solo se seleccionan las columnas `nombre` y `raza` de la tabla `Guerreros`.
+
+- 2. **Concatenación de columnas**
+
+    Se parte de la siguiente tabla (`SuperSaiyan_Status`) en la que se indica si se ha alcanzado el estado SuperSaiyan:
+
+    ```bash
+    mysql> SELECT * FROM SuperSaiyan_Status;
+    +----+--------+--------------+-------+
+    | id | nombre | raza         | super |
+    +----+--------+--------------+-------+
+    |  1 | Goku   | Saiyan       | Super |
+    |  2 | Vegeta | Saiyan Elite |       |
+    |  3 | Gohan  | Saiyan       | Super |
+    +----+--------+--------------+-------+
+    ```
+
+    Se puede concatenar el resultado de una consulta y mostrarlo en la propia consulta `SELECT` (sin afectar a la tabla origen) para mostrar las columnas `nombre` y una concatenación de las columnas `super` y `raza`:
+
+    ```bash
+    mysql> SELECT nombre, CONCAT(super, '-', raza) AS super_raza_concatenado
+        -> FROM SuperSaiyan_Status;
+    +--------+------------------------+
+    | nombre | super_raza_concatenado |
+    +--------+------------------------+
+    | Goku   | Super-Saiyan           |
+    | Vegeta | -Saiyan Elite          |
+    | Gohan  | Super-Saiyan           |
+    +--------+------------------------+
+    ```
+
+    En este resultado, la columna `nombre` se muestra independientemente, mientras que la concatenación de las columnas `super` y `raza` se muestra en una sola columna llamada `super_raza_concatenado`.
+
+    o también si no se necesita el guión separador:
+
+    ```bash
+    mysql> SELECT nombre, CONCAT(super, raza) AS super_raza_concatenado
+        -> FROM SuperSaiyan_Status;
+    +--------+------------------------+
+    | nombre | super_raza_concatenado |
+    +--------+------------------------+
+    | Goku   | SuperSaiyan            |
+    | Vegeta | Saiyan Elite           |
+    | Gohan  | SuperSaiyan            |
+    +--------+------------------------+
+    ```
+
+    En este resultado, la columna `nombre` se muestra independientemente, mientras que la concatenación de las columnas `super` y `raza` se muestran en una sola columna pero ahora omitiendo el '-'.
+
+- 3. **Operaciones matemáticas**
+
+    Con la sentencia `SELECT` se pueden realizar cálculos directamente en consultas:
+
+    ```bash
+    mysql>SELECT 1 + 5 AS suma;
+    +-----------+
+    | resultado |
+    +-----------+
+    | 6         |
+    +-----------+
+    ```
+
+- 4. **Valores únicos con DISTINCT**
+
+    Para seleccionar valores únicos:
+
+    ```bash
+    mysql> SELECT DISTINCT raza FROM Guerreros;
+    +--------------+
+    | raza         |
+    +--------------+
+    | Saiyan       |
+    | Saiyan Elite |
+    | Namekiano    |
+    +--------------+
+    ```
+
+- 5. **Sintaxis completa de SELECT**
+
+    La sentencia `SELECT` puede enriquecerse con otras cláusulas para obtener resultados específicos:
+
+    ```sql
+    SELECT columnas
+    FROM tabla
+    WHERE condición
+    GROUP BY columna
+    HAVING condición
+    ORDER BY columna ASC|DESC;
+    ```
+
+    Cláusulas como WHERE, GROUP BY, HAVING o ORDER BY, se verán en el tema siguiente.
 
 
 ---

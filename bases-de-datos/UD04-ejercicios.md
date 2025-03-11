@@ -98,11 +98,13 @@ mysql> SELECT * FROM Constelaciones;
 +----+------------+----------------------------------------------------------------------------------------------------------------+
 ```
 
+<!--
 
 # Ejercicio N3: Detección de Errores en SQL
 
 Dado el siguiente [archivo](/ud04/ud04.ej3.sql) sql con errores, cárgalo en tu MySQL, e identifica cuántos y cuáles errores hay y sus posibles soluciones y arréglalo.
 
+-->
 
 # Ejercicio N4: Creación de Base de Datos para Pubs
 
@@ -128,7 +130,7 @@ mysql> show tables;
 +------------------+          +------------------+
 | (PK)DNI_EMPLEADO |          | (PK)COD_PUB      |
 | NOMBRE           |          | (PK)DNI_EMPLEADO |
-| DOMICILIO        |          | (PK)FUNCION      |
+| DOMICILIO        |          | FUNCION          |
 +------------------+          +------------------+
 
 +------------------+          +-----------------+
