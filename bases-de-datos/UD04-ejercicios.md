@@ -186,3 +186,67 @@ Las claves primarias vienen marcadas con el símbolo `(PK)`.
    - `fecha_inicio` en `Préstamo` con restricción `NOT NULL`.
 
 -->
+
+# Ejercicio N5: Base de Datos para Talleres
+
+
+1. Crea las siguientes tablas:
+
+
+Tabla COCHES:
+Esta tabla almacenará información sobre los coches que llegan al taller.
+
+mat: Matrícula del coche, una cadena de 8 caracteres, será la clave primaria de esta tabla.
+marca: Marca del coche, una cadena de hasta 15 caracteres.
+an_fab: Año de fabricación del coche, un número de 4 dígitos.
+modelo: Modelo del coche, una cadena de hasta 15 caracteres.
+Tabla MECANICOS:
+Esta tabla almacenará información sobre los mecánicos que trabajan en el taller.
+
+dni: Número de identificación del mecánico, una cadena de 9 caracteres, será la clave primaria de esta tabla.
+nombre: Nombre del mecánico, una cadena de hasta 15 caracteres.
+puesto: Puesto del mecánico en el taller, una cadena de hasta 15 caracteres.
+parcial: Indicador de si el mecánico trabaja a tiempo parcial, un solo carácter.
+Tabla TRABAJOS:
+Esta tabla registrará los trabajos realizados en los coches.
+
+mat: Matrícula del coche, será una clave externa que hace referencia a la tabla COCHES.
+dni: Número de identificación del mecánico, será una clave externa que hace referencia a la tabla MECANICOS.
+horas: Número de horas empleadas en el trabajo, debe ser mayor de 0.5.
+fecha_rep: Fecha en que se realizó el trabajo.
+Tabla CLIENTES:
+Esta tabla almacenará información sobre los clientes del taller.
+
+id_cliente: Identificador del cliente, una cadena de 10 caracteres, será la clave primaria de esta tabla.
+nombre: Nombre del cliente, una cadena de hasta 50 caracteres.
+telefono: Número de teléfono del cliente, una cadena de hasta 15 caracteres.
+Tabla PIEZAS:
+Esta tabla almacenará información sobre las piezas utilizadas en los trabajos del taller.
+
+id_pieza: Identificador de la pieza, una cadena de 10 caracteres, será la clave primaria de esta tabla.
+nombre: Nombre de la pieza, una cadena de hasta 50 caracteres.
+precio: Precio de la pieza, un valor decimal.
+Tabla FACTURAS:
+Esta tabla registrará información sobre las facturas emitidas a los clientes del taller.
+
+id_factura: Identificador de la factura, una cadena de 10 caracteres, será la clave primaria de esta tabla.
+id_cliente: Identificador del cliente, una clave externa que hace referencia a la tabla CLIENTES.
+fecha_emision: Fecha de emisión de la factura.
+total: Total de la factura, un valor decimal.
+
+
+2. Realiza las siguientes modificaciones sobre las tablas...
+
+Una vez que las tablas básicas estén creadas, necesitaremos realizar algunas modificaciones adicionales para mejorar la estructura de la base de datos.
+
+Añadir atributo modelo a la tabla COCHES:
+Agregaremos un atributo modelo a la tabla COCHES para registrar el modelo de cada coche.
+
+Establecer mat y dni como llaves primarias de TRABAJOS:
+Haremos que las columnas mat y dni en la tabla TRABAJOS formen una clave primaria compuesta, lo que asegurará que cada combinación de matrícula y número de identificación del mecánico sea única en la tabla.
+
+Establecer dni de TRABAJOS como llave ajena respecto a MECANICOS:
+Estableceremos la columna dni en la tabla TRABAJOS como una clave ajena que hace referencia a la columna dni en la tabla MECANICOS. Esto garantizará que solo se puedan asignar trabajos a mecánicos que estén registrados en la base de datos.
+
+Reducir a 2 la longitud del atributo an_fab de la tabla COCHES:
+Reducir la longitud del atributo an_fab en la tabla COCHES de 4 a 2 caracteres para permitir el almacenamiento de años con mayor precisión.
