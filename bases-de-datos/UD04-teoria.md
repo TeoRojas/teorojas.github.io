@@ -362,8 +362,7 @@ En este ejemplo:
     - **Tipos de datos `ENUM` (enumeraciones)**: 
         - El tipo de dato `ENUM` permite definir una columna que acepta únicamente un conjunto específico y limitado de valores predefinidos, garantizando que los datos almacenados sean válidos y coherentes. 
   
-
-    - ***Ejemplo de uso**:
+    - **Ejemplo de uso**:
         ```sql
         CREATE TABLE guerrero_z (
             id INT PRIMARY KEY AUTO_INCREMENT,             -- Identificador único de cada guerrero
