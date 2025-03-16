@@ -328,6 +328,7 @@ En este ejemplo:
     - **Cadenas de Caracteres**: `VARCHAR`, `CHAR`, `TEXT`, etc.
     - **Fechas y Tiempos**: `DATE`, `DATETIME`, `TIMESTAMP`, etc.
     - **Valores Booleanos**: `BOOL`, `BOOLEAN`.
+    - **Enumeraciones**: Selección entre datos previamente establecidos (enumerados).
 
     - **Enteros**:
         - `INT`: Número entero estándar, ocupa 4 bytes. Almacena valores entre -2.147.483.648 y 2.147.483.647. Se usa para números enteros sin decimales.
@@ -356,14 +357,18 @@ En este ejemplo:
         - `YEAR`: Almacena solamente el año en formato YYYY o YY.
 
     - **Valores Booleanos**:
-        - `BOOL` y `BOOLEAN`: En realidad no son tipos de datos independientes, sino alias de `TINYINT(1)`. Almacenan los valores 0 (falso) o 1 (verdadero).    
+        - `BOOL` y `BOOLEAN`: En realidad no son tipos de datos independientes, sino alias de `TINYINT(1)`. Almacenan los valores 0 (falso) o 1 (verdadero). 
+
+    - **Tipos de datos `ENUM` (enumeraciones)**: 
+        - El tipo de dato `ENUM` permite definir una columna que acepta únicamente un conjunto específico y limitado de valores predefinidos, garantizando que los datos almacenados sean válidos y coherentes. 
+  
 
     - ***Ejemplo de uso**:
         ```sql
         CREATE TABLE guerrero_z (
             id INT PRIMARY KEY AUTO_INCREMENT,             -- Identificador único de cada guerrero
             nombre VARCHAR(50) NOT NULL,                   -- Nombre del personaje
-            raza CHAR(20) NOT NULL,                        -- Raza del personaje (Saiyan, Humano, Namek, etc.)
+            raza ENUM('Saiyan', 'Saiyan Elite', 'Namekiano', 'Terrícola') NOT NULL,                                          -- Raza del personaje (Saiyan, Saiyan Elite, Namekiano o Terrícola)
             nivel_poder BIGINT UNSIGNED DEFAULT 0,         -- Nivel de poder actual
             fecha_nacimiento DATE,                         -- Fecha de nacimiento del personaje
             ultima_transformacion DATETIME,                -- Última transformación importante
@@ -1351,6 +1356,7 @@ DROP COLUMN <nombre_columna>;
 - **Bit String**: BIT, BIT(n)
 - **Fecha y tiempo**: DATE, TIME, TIME(i)
 - **Timestamp**: TIMESTAMP
+- **Predefinidos**: ENUM('opción1','opción2','etc')
 
 # Insert
 Insertar nuevos registros (tuplas) en una tabla
