@@ -11,8 +11,8 @@ abstract: Sinopsis de la unidad 04
 
 1. [Ejercicio N1: Restricciones en Base de Datos](#ejercicio-n1-restricciones-en-base-de-datos)  
 2. [Ejercicio N2: Registro de Caballeros del Zodiaco con Constelaciones](#ejercicio-n2-registro-de-caballeros-del-zodiaco-con-constelaciones)  
-3. [Ejercicio N3: Creación de Base de Datos para Pubs](#ejercicio-n4-creación-de-base-de-datos-para-pubs)  
-4. [Ejercicio N4: Base de Datos para Talleres](#ejercicio-n5-base-de-datos-para-talleres)
+3. [Ejercicio N3: Creación de Base de Datos para Pubs](#ejercicio-n3-creación-de-base-de-datos-para-pubs)  
+4. [Ejercicio N4: Base de Datos para Talleres](#ejercicio-n4-base-de-datos-para-talleres)
 
 <!--
 5. [Ejercicio N5: Base de Datos para Biblioteca](#ejercicio-n6-base-de-datos-para-biblioteca)  
