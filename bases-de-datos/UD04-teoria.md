@@ -367,7 +367,7 @@ En este ejemplo:
         CREATE TABLE guerrero_z (
             id INT PRIMARY KEY AUTO_INCREMENT,             -- Identificador único de cada guerrero
             nombre VARCHAR(50) NOT NULL,                   -- Nombre del personaje
-            raza ENUM('Saiyan', 'Saiyan Elite', 'Namekiano', 'Terrícola') NOT NULL,                                          -- Seleccionar raza
+            raza ENUM('Saiyan', 'Saiyan Elite', 'Namekiano', 'Terrícola') NOT NULL, -- Seleccionar raza
             nivel_poder BIGINT UNSIGNED DEFAULT 0,         -- Nivel de poder actual
             fecha_nacimiento DATE,                         -- Fecha de nacimiento del personaje
             ultima_transformacion DATETIME,                -- Última transformación importante
