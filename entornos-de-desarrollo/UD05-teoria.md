@@ -793,4 +793,202 @@ print(f"El profesor {profesor1.nombre} imparte los cursos: {[curso.titulo for cu
 # Output: El profesor Sr. Rojas imparte los cursos: ['1º DAM', 'Bases de Datos'].
 ```
 
-En este caso, la bidireccionalidad queda registrada porque `Profesor` conoce sus `Cursos` y `Curso` conoce a su `Profesor`.
+En este caso, la bidireccionalidad queda registrada porque `Profesor` conoce sus `Cursos` y `Curso` conoce a su `Profesor`. Esta definición quedaría representada por el siguiente diagrama UML:
+
+![Diagrama de clases profesor-curso-asociacion-bidireccional](/entornos-de-desarrollo/imgs/ud05/ud05_profesor-curso-asociacion-bidireccional.svg)
+
+Por último, la **asociación con multiplicidad** especifica cuántos objetos de una clase pueden estar relacionados con cuántos objetos de otra. Se representa con **números en los extremos de la relación**.
+
+| Notación UML | Significado                         |
+|-------------|-------------------------------------|
+| `1`         | Un solo objeto.                    |
+| `0..1`      | Cero o un objeto (opcional).       |
+| `*`         | Cero o más objetos.                |
+| `1..*`      | Al menos un objeto
+
+Obsérvese el siguiente ejemplo:
+
+```python
+class Estudiante:
+    def __init__(self, nombre: str):
+        self.nombre = nombre
+
+class Curso:
+    def __init__(self, titulo: str):
+        self.titulo = titulo
+        self.estudiantes = []  # Asociación *
+
+    def agregar_estudiante(self, estudiante: Estudiante):
+        self.estudiantes.append(estudiante)
+
+curso1 = Curso("1º DAM")
+estudiante1 = Estudiante("Melissa")
+estudiante2 = Estudiante("Carlos")
+
+curso1.agregar_estudiante(estudiante1)
+curso1.agregar_estudiante(estudiante2)
+
+print(f"El curso {curso1.titulo} tiene inscritos: {[est.nombre for est in curso1.estudiantes]}.")
+# Output: El curso 1º DAM tiene inscritos: ['Melissa', 'Carlos'].
+```
+
+Si se observa detenidamente el código anterior, se puede llegar a la conclusión de que un `curso` puede tener como mínimo cero `estudiantes`, y como máximo muchos. Por tanto en este caso quedaría reflejado con la notación del **asterisco más la flecha (`*------>`)**
+
+![Diagrama de clases estudiante-curso-asociacion-multiplicidad](/entornos-de-desarrollo/imgs/ud05/ud05_estudiante-curso-asociacion-multiplicidad.svg)
+
+### 3.3.2. Herencia
+
+La **herencia** es una de las relaciones más importantes en la Programación Orientada a Objetos y en UML. Se utiliza para definir una **relación "es un"** entre una clase padre (superclase) y una o varias clases hijas (subclases).  
+
+El objetivo de la herencia es **reutilizar código**, permitiendo que una subclase herede atributos y métodos de su superclase y, si es necesario, sobrescriba o amplíe su comportamiento.
+
+La herencia permite que una clase hija obtenga los atributos y métodos de una clase padre, facilitando la reutilización del código. La clase padre, también conocida como superclase, define las características y comportamientos generales, mientras que la clase hija, o subclase, hereda estas propiedades y puede extenderlas (agregar nuevos métodos y/o atributos en la subclase sin afectar al padre) o modificar su funcionalidad. En este proceso, las subclases pueden sobrescribir métodos de la superclase para ajustarlos a sus necesidades o agregar nuevos métodos y atributos sin alterar la estructura original de la superclase. De esta forma, la herencia favorece la extensibilidad del código y permite modelar relaciones jerárquicas entre entidades de manera más eficiente.
+
+En UML, la herencia se representa con una **línea con un triángulo blanco (`--------▷`) apuntando hacia la superclase**.
+
+- **Superclase** (Clase padre): Es la clase base de la que heredan otras clases.
+- **Subclase** (Clase hija): Es una clase que hereda atributos y métodos de la superclase.
+- **Sobreescritura de métodos**: Las subclases pueden redefinir métodos de la superclase para ajustarlos a sus necesidades.
+- **Extensibilidad**: Se pueden agregar nuevos métodos y atributos en la subclase sin modificar la superclase.
+
+Obsérvese el siguiente ejemplo:
+
+```python
+class Persona:
+    def __init__(self, nombre: str, edad: int):
+        self.nombre = nombre
+        self.edad = edad
+
+    def presentarse(self) -> str:
+        return f"Hola, soy {self.nombre} y tengo {self.edad} años."
+
+class Profesor(Persona):
+    def __init__(self, nombre: str, edad: int, especialidad: str):
+        super().__init__(nombre, edad)  # Hereda atributos de Persona
+        self.especialidad = especialidad
+
+    def enseñar(self) -> str:
+        return f"Soy {self.nombre} y enseño {self.especialidad}."
+
+class Estudiante(Persona):
+    def __init__(self, nombre: str, edad: int, curso: str):
+        super().__init__(nombre, edad)  # Hereda atributos de Persona
+        self.curso = curso
+
+    def estudiar(self) -> str:
+        return f"Soy {self.nombre} y estudio en {self.curso}."
+
+# Creación de objetos
+profesor1 = Profesor("Sr. Rojas", 40, "Bases de Datos")
+estudiante1 = Estudiante("Melissa", 19, "1º DAM")
+
+# Ejemplo de herencia en acción
+print(profesor1.presentarse())  # Output: Hola, soy Sr. Rojas y tengo 40 años.
+print(profesor1.enseñar())       # Output: Soy Sr. Rojas y enseño Bases de Datos.
+print(estudiante1.presentarse()) # Output: Hola, soy Melissa y tengo 19 años.
+print(estudiante1.estudiar())    # Output: Soy Melissa y estudio en 1º DAM.
+```
+
+En este código, `Profesor` y `Estudiante` **heredan** de `Persona`, por lo que comparten los atributos `nombre` y `edad`, así como el método `presentarse()`. Además `Profesor` tiene su propio atributo `especialidad` y el método `enseñar()`, mientras que `Estudiante` tiene `curso` y `estudiar()`. Esto quedaría reflejado con el siguiente diagrama UML:
+
+![Diagrama de clases persona-profesor-estudiante-herencia](/entornos-de-desarrollo/imgs/ud05/ud05_persona-profesor-estudiante-herencia.svg)
+
+Es importante destacar que las subclases pueden **sobreescribir métodos** de la superclase para modificar su comportamiento. En el siguiente ejemplo, `presentarse()` es redefinido en `Profesor` y `Estudiante`.
+
+```python
+class Persona:
+    def __init__(self, nombre: str, edad: int):
+        self.nombre = nombre
+        self.edad = edad
+
+    def presentarse(self) -> str:
+        return f"Hola, soy {self.nombre} y tengo {self.edad} años."
+
+class Profesor(Persona):
+    def presentarse(self) -> str:
+        return f"Soy el profesor {self.nombre}, tengo {self.edad} años y enseño en 1º DAM."
+
+class Estudiante(Persona):
+    def presentarse(self) -> str:
+        return f"Soy {self.nombre}, estudiante de 1º DAM y tengo {self.edad} años."
+
+profesor1 = Profesor("Sr. Rojas", 40)
+estudiante1 = Estudiante("Melissa", 19)
+
+print(profesor1.presentarse())  # Output: Soy el profesor Sr. Rojas, tengo 40 años y enseño en 1º DAM.
+print(estudiante1.presentarse()) # Output: Soy Melissa, estudiante de 1º DAM y tengo 19 años.
+```
+![Diagrama de clases persona-profesor-estudiante-herencia-sobreescrita](/entornos-de-desarrollo/imgs/ud05/ud05_persona-profesor-estudiante-herencia-sobreescrita.svg)
+
+### 3.3.3. Composición
+
+La **composición** es un tipo de relación entre clases en la que una **clase forma parte de otra y no puede existir sin ella**. En otras palabras, **una clase contiene instancias de otra clase y controla completamente su ciclo de vida**.  
+
+A diferencia de una asociación, donde los objetos pueden existir por separado, en una **composición** el objeto contenido **no puede existir sin** el objeto contenedor.
+
+Por ejemplo, en una asociación, un Profesor puede existir sin un Curso. En cambio, en una composición, un Coche no puede existir sin su Motor.
+
+En UML, la composición se representa con un **rombo relleno (`--------◆`)** en el extremo de la clase contenedora, indicando que si esta se elimina, los objetos que contiene también desaparecen.
+
+supóngase que se quiere modelar la relación entre un `Coche` y su `Motor`. Un coche **siempre** tiene un motor, y si el coche deja de existir, su motor también desaparecería.
+
+```python
+class Motor:
+    def __init__(self, tipo: str):
+        self.tipo = tipo
+
+class Coche:
+    def __init__(self, marca: str, modelo: str, tipo_motor: str):
+        self.marca = marca
+        self.modelo = modelo
+        self.motor = Motor(tipo_motor)  # Composición: el Coche "posee" el Motor
+
+    def descripcion(self) -> str:
+        return f"El {self.marca} {self.modelo} tiene un motor {self.motor.tipo}."
+
+# Creación de un coche (el motor se crea dentro del coche)
+coche1 = Coche("Toyota", "Corolla", "Gasolina")
+
+print(coche1.descripcion())
+# Output: El Toyota Corolla tiene un motor Gasolina.
+```
+
+En este ejemplo se entiende que un `Coche` **contiene** un `Motor` como parte de su estructura, de hecho el **rombo relleno** del diagrama indica **composición**, es decir, `Motor` no puede existir sin `Coche`.
+
+![Diagrama de clases motor-coche-composicion](/entornos-de-desarrollo/imgs/ud05/ud05_motor-coche-composicion.svg)
+
+### 3.3.4. Agregación
+
+La **agregación** es una relación entre clases en la que una clase contiene instancias de otra, pero a diferencia de la composición, los objetos pueden existir independientemente. En otras palabras, una clase "posee" objetos de otra clase, pero estos no dependen completamente de ella y pueden seguir existiendo si la clase contenedora es eliminada.
+
+En UML, la agregación se representa con un **rombo vacío (`--------◇`)** en el extremo de la clase contenedora, indicando que esta puede contener instancias de otra clase sin control total sobre su ciclo de vida.
+
+Supóngase que se quiere modelar la relación entre una `Escuela` y sus `Estudiantes`. Un estudiante **pertenece** a una escuela, pero si la escuela cierra, los estudiantes siguen existiendo y pueden cambiarse a otra escuela.
+
+```python
+class Estudiante:
+    def __init__(self, nombre: str):
+        self.nombre = nombre
+
+class Escuela:
+    def __init__(self, nombre: str):
+        self.nombre = nombre
+        self.estudiantes = []  # Relación de agregación
+
+    def agregar_estudiante(self, estudiante: Estudiante):
+        self.estudiantes.append(estudiante)
+
+escuela1 = Escuela("Instituto Central")
+estudiante1 = Estudiante("Melissa")
+estudiante2 = Estudiante("Carlos")
+
+escuela1.agregar_estudiante(estudiante1)
+escuela1.agregar_estudiante(estudiante2)
+
+print(f"La escuela {escuela1.nombre} tiene estudiantes como {[est.nombre for est in escuela1.estudiantes]}.")
+# Output: La escuela Instituto Central tiene estudiantes como ['Melissa', 'Carlos'].
+```
+
+En este caso, `Escuela` contiene una lista de `Estudiantes`, pero los estudiantes pueden seguir existiendo sin la escuela. Además, si `Escuela` se elimina, los `Estudiantes` no desaparecen (entre terribles sufrimientos), ya que pueden ser asignados a otra escuela. Esto representa una agregación, porque Estudiante puede existir sin Escuela.
+
+![Diagrama de clases estudiante-escuela-agregacion](/entornos-de-desarrollo/imgs/ud05/ud05_estudiante-escuela-agregacion.svg)

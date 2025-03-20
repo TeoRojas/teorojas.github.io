@@ -16,5 +16,5 @@ abstract: En Entornos de Desarrollo nos embarcaremos en una misión para domesti
 2. [Evaluación de entornos integrados de desarrollo](/entornos-de-desarrollo/ud02/teoria/)
 3. Diseño y realización de pruebas.
 4. [Optimización, control de versiones y documentación](/entornos-de-desarrollo/ud04/teoria/)
-5. [Elaboración de diagramas de clases](/entornos-de-desarrollo/ud05/teoria/)
+5. [Elaboración de diagramas de clases](/entornos-de-desarrollo/ud05/teoria/) / [Ejercicios Finales.](/entornos-de-desarrollo/ud05/ejercicios/)
 6. Elaboración de diagramas de comportamiento.
