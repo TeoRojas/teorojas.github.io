@@ -21,19 +21,19 @@ abstract:
 2. [Introducción a los Diagramas de Clases](#2-introducción-a-los-diagramas-de-clases)  
    2.1. [Importancia en el desarrollo de aplicaciones](#21-importancia-en-el-desarrollo-de-aplicaciones)  
    2.2. [Relación con otros diagramas UML](#22-relación-con-otros-diagramas-uml)  
-
+3. [Elementos de un Diagrama de Clases](#3-elementos-de-un-diagrama-de-clases)  
+   3.1. [Clases y objetos](#31-clases-y-objetos)  
+   3.2. [Atributos y métodos](#32-atributos-y-métodos)  
+   3.3. [Relaciones entre clases](#33-relaciones-entre-clases)  
+   &emsp;&emsp;3.3.1. [Asociación](#331-asociación)  
+   &emsp;&emsp;3.3.2. [Herencia](#332-herencia)  
+   &emsp;&emsp;3.3.3. [Composición](#333-composición)  
+   &emsp;&emsp;3.3.4. [Agregación](#334-agregación) 
 <!--   
-3. [Herramientas para la Creación de Diagramas de Clases](#3-herramientas-para-la-creación-de-diagramas-de-clases)  
-   3.1. [Herramientas CASE y su utilidad](#31-herramientas-case-y-su-utilidad)  
-   3.2. [Plugins y extensiones en entornos de desarrollo](#32-plugins-y-extensiones-en-entornos-de-desarrollo)  
-4. [Elementos de un Diagrama de Clases](#4-elementos-de-un-diagrama-de-clases)  
-   4.1. [Clases y objetos](#41-clases-y-objetos)  
-   4.2. [Atributos y métodos](#42-atributos-y-métodos)  
-   4.3. [Relaciones entre clases](#43-relaciones-entre-clases)  
-   &emsp;&emsp;4.3.1. [Asociación](#431-asociación)  
-   &emsp;&emsp;4.3.2. [Herencia](#432-herencia)  
-   &emsp;&emsp;4.3.3. [Composición](#433-composición)  
-   &emsp;&emsp;4.3.4. [Agregación](#434-agregación)  
+4. [Herramientas para la Creación de Diagramas de Clases](#4-herramientas-para-la-creación-de-diagramas-de-clases)  
+   4.1. [Herramientas CASE y su utilidad](#41-herramientas-case-y-su-utilidad)  
+   4.2. [Plugins y extensiones en entornos de desarrollo](#42-plugins-y-extensiones-en-entornos-de-desarrollo)  
+ 
 5. [Elaboración de Diagramas de Clases](#5-elaboración-de-diagramas-de-clases)  
    5.1. [Identificación de clases en un sistema](#51-identificación-de-clases-en-un-sistema)  
    5.2. [Modelado de atributos y métodos](#52-modelado-de-atributos-y-métodos)  
@@ -585,7 +585,7 @@ A continuación, se presenta el **diagrama de clases de un coche**, donde se def
 
 **Diagrama de Clases: Coche**
 
-![Muchos a Muchos](/entornos-de-desarrollo/imgs/ud05/ud05_classCoche.svg)
+![Diagrama de clases de coche](/entornos-de-desarrollo/imgs/ud05/ud05_classCoche.svg)
 
 ### **Ejemplo de código para PlantUML**
 Si utilizan PlantUML, pueden generar el diagrama escribiendo el siguiente código en su editor compatible con PlantUML:
@@ -602,3 +602,195 @@ class Coche {
 }
 @enduml
 ```
+
+# 3. Elementos de un Diagrama de Clases
+
+Los diagramas de clases son una de las representaciones más utilizadas en UML para modelar sistemas orientados a objetos. Permiten visualizar la estructura de un sistema, definiendo sus clases, atributos, métodos y las relaciones entre ellas. Estos diagramas son esenciales en la fase de diseño de software, ya que proporcionan una representación clara y organizada de los componentes del sistema y su interacción.
+
+En un diagrama de clases, cada clase se representa mediante un rectángulo dividido en tres secciones: el nombre de la clase en la parte superior, los atributos en la sección intermedia y los métodos en la parte inferior. Además, se pueden establecer relaciones entre las clases para modelar cómo interactúan dentro del sistema.
+
+A continuación, exploraremos los principales elementos que componen un diagrama de clases, empezando por la diferencia entre clases y objetos.
+
+## 3.1. Clases y objetos
+
+En la Programación Orientada a Objetos, una **clase** es una plantilla o modelo que define las propiedades y comportamientos de un conjunto de objetos similares. Una **clase** especifica atributos (datos o variables) y métodos (funciones) que sus objetos podrán utilizar.
+
+Un **objeto**, por otro lado, es una instancia concreta de una clase. Cada objeto tiene su propio conjunto de valores para los atributos definidos en la clase, lo que le permite diferenciarse de otros objetos de la misma clase.
+
+Volviendo al ejemplo visto en apartados anteriores y teniendo en cuenta el siguiente código:
+
+```python
+class Coche:
+    def __init__(self, marca, modelo, año):
+        self.marca = marca
+        self.modelo = modelo
+        self.año = año
+
+    def arrancar(self):
+        return f"El {self.marca} {self.modelo} está arrancando."
+
+    def frenar(self):
+        return f"El {self.marca} {self.modelo} ha frenado."
+
+    def acelerar(self, velocidad):
+        return f"El {self.marca} {self.modelo} está acelerando a {velocidad} km/h."
+
+# Creación de objetos (instancias de la clase Coche)
+coche1 = Coche("Toyota", "Corolla", 2022)
+coche2 = Coche("Ford", "Fiesta", 2019)
+
+print(coche1.arrancar())  # Output: El Toyota Corolla está arrancando.
+print(coche2.acelerar(100))  # Output: El Ford Fiesta está acelerando a 100 km/h.
+```
+
+En este ejemplo:
+- `Coche` es una **clase** que define atributos (`marca`, `modelo`, `año`) y métodos (`arrancar`, `frenar`, `acelerar`).
+- `coche1` y `coche2` son **objetos** que representan instancias concretas de la clase `Coche`.
+Cada objeto tiene valores propios para los atributos `marca`, `modelo` y `año`, pero comparten los mismos métodos definidos en la clase.
+
+Por lo tanto, el diagrama UML de la clase `Coche`, se representaría como se observó en el apartado anterior:
+
+![Diagrama de clases de coche](/entornos-de-desarrollo/imgs/ud05/ud05_classCoche.svg)
+
+Este diagrama indica que `Coche` tiene tres atributos (`marca`, `modelo`, `año`) y tres métodos (`arrancar()`, `frenar()`, `acelerar()`), siguiendo la estructura estándar de UML.
+
+## 3.2. Atributos y métodos
+
+Dentro de una clase en un diagrama de clases UML, se pueden definir dos tipos principales de elementos: **atributos** y **métodos**. 
+
+Los **atributos** son variables que pertenecen a una clase y almacenan información sobre el estado de sus objetos. Cada objeto tiene sus propios valores para estos atributos, lo que le permite diferenciarse de otros objetos de la misma clase.
+
+En UML, los atributos se representan dentro de la clase con la siguiente sintaxis:
+```scss
++ nombre_atributo: tipo
+```
+Donde:
+- `+/-/#` indica que el atributo es **público/privado/protegido**.
+- `nombre_atributo` es el nombre del atributo.
+- `tipo` indica el tipo de dato del atributo.
+
+Obsérvese el siguiente ejemplo:
+```python
+class Persona:
+    def __init__(self, nombre, edad, dni):
+        self.nombre = nombre
+        self.edad = edad
+        self.dni = dni
+
+persona1 = Persona("Juan", 30, "12345678A")
+print(persona1.nombre)  # Output: Juan
+print(persona1.edad)    # Output: 30
+```
+
+En este ejemplo, la clase `Persona` tiene los atributos `nombre`, `edad` y `dni`, que representan la información básica de cada objeto de tipo `Persona`. Por tanto el diagrama UML de esta clase `Persona`queda reflejado a continuación.
+
+![Diagrama de clases de persona1](/entornos-de-desarrollo/imgs/ud05/ud05_classPersona1.svg)
+
+Por otro lado, los **métodos** son funciones definidas dentro de una clase y describen los comportamientos que los objetos pueden ejecutar. Los métodos pueden modificar los atributos de la clase o interactuar con otros objetos.
+
+En UML, los métodos se representan de la siguiente manera:
+
+```scss
++ nombre_metodo(parametros): tipo_retorno
+```
+
+Donde:
+- `+` indica que el método es público.
+- `nombre_metodo` es el nombre del método.
+- `parametros` son los valores de entrada que el método puede recibir.
+- `tipo_retorno` indica el tipo de dato que devuelve el método (opcional en Python).
+
+Obsérvese el siguiente ejemplo:
+```python
+class Persona:
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+
+    def saludar(self):
+        return f"Hola, soy {self.nombre} y tengo {self.edad} años."
+
+persona1 = Persona("Ana", 25)
+print(persona1.saludar())  # Output: Hola, soy Ana y tengo 25 años.
+```
+
+Aquí, el método `saludar()` devuelve un mensaje personalizado con el nombre y la edad de la persona. Quedando su diagrama UML correspondiente de la siguiente forma:
+
+![Diagrama de clases de persona2](/entornos-de-desarrollo/imgs/ud05/ud05_classPersona2.svg)
+
+## 3.3. Relaciones entre clases
+
+En los diagramas de clases UML, las **relaciones entre clases** representan la forma en que los objetos interactúan entre sí en un sistema orientado a objetos. Estas relaciones permiten definir cómo una clase depende de otra y qué tipo de vínculo existe entre ellas.  
+
+Las principales relaciones entre clases en UML son:
+
+- **Asociación**
+- **Herencia**
+- **Composición**
+- **Agregación**
+
+Cada una de estas relaciones tiene un significado particular y se utiliza en diferentes contextos dentro del diseño de software.
+
+### 3.3.1. Asociación
+
+La **asociación** es la relación más común entre clases en UML y se usa cuando una clase **hace referencia** a otra dentro de su estructura. Esta relación indica que los objetos de una clase pueden interactuar con los de otra sin que necesariamente uno dependa completamente del otro. 
+
+Cuando se dice que una clase depende completamente de otra, hace referencia a que su existencia o funcionalidad está totalmente ligada a la otra clase.
+
+En el caso de la **asociación, no hay una dependencia completa**, ya que los objetos pueden existir de manera independiente y solo se vinculan para interactuar. Un ejemplo podría ser cuando aparece un dominio de un problema en el que un `Curso` puede existir aunque no tenga un `Profesor` asignado o viceversa.
+
+Es interesante conocer que, existen diferentes tipos de asociación según la cardinalidad y la dirección de la relación:
+
+1. **Asociación unidireccional**: Una clase conoce a otra, pero no al revés.
+2. **Asociación bidireccional**: Ambas clases se conocen entre sí.
+3. **Asociación con multiplicidad**: Se especifica cuántos objetos de una clase pueden estar asociados con cuántos objetos de otra.
+
+La **asociación unidireccional** se da cuando **una clase conoce a otra**, pero la segunda no conoce a la primera. Se representa en UML con una línea con una **flecha (`------->`)** que indica la dirección de la relación. Obsérvese el siguiente ejemplo:
+
+```python
+class Profesor:
+    def __init__(self, nombre: str):
+        self.nombre = nombre
+
+class Curso:
+    def __init__(self, titulo: str, profesor: Profesor):
+        self.titulo = titulo
+        self.profesor = profesor  # Asociación unidireccional
+
+profesor1 = Profesor("Sr. Rojas")
+curso1 = Curso("1º DAM", profesor1)
+
+print(f"El curso {curso1.titulo} es impartido por {curso1.profesor.nombre}.")
+# Output: El curso 1º DAM es impartido por Sr. Rojas.
+```
+
+En este código, `Curso` tiene una asociación unidireccional con `Profesor`, lo que significa que un `Curso` conoce a su `Profesor`, pero `Profesor` no conoce a `Curso`. Esta definición quedaría representada por el siguiente diagrama UML:
+
+![Diagrama de clases profesor-curso-asociacion-unidireccional](/entornos-de-desarrollo/imgs/ud05/ud05_profesor-curso-asociacion-unidireccional.svg)
+
+En la **asociación bidireccional**, ocurre que **ambas clases se conocen entre sí**. Se representa en UML con una línea sin flechas o con **flechas en ambos extremos (`<------>`)**. Obsérvese el siguiente ejemplo:
+
+```python
+class Profesor:
+    def __init__(self, nombre: str):
+        self.nombre = nombre
+        self.cursos = []  # Lista de cursos asociados
+
+    def agregar_curso(self, curso):
+        self.cursos.append(curso)
+
+class Curso:
+    def __init__(self, titulo: str, profesor: Profesor):
+        self.titulo = titulo
+        self.profesor = profesor
+        profesor.agregar_curso(self)  # Asociación bidireccional
+
+profesor1 = Profesor("Sr. Rojas")
+curso1 = Curso("1º DAM", profesor1)
+curso2 = Curso("Bases de Datos", profesor1)
+
+print(f"El profesor {profesor1.nombre} imparte los cursos: {[curso.titulo for curso in profesor1.cursos]}.")
+# Output: El profesor Sr. Rojas imparte los cursos: ['1º DAM', 'Bases de Datos'].
+```
+
+En este caso, la bidireccionalidad queda registrada porque `Profesor` conoce sus `Cursos` y `Curso` conoce a su `Profesor`.

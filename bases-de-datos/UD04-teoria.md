@@ -4,7 +4,7 @@ title: UD04. Definición, Manipulación y Control de Datos.
 permalink: /bases-de-datos/ud04/teoria/
 author: Teo Rojas
 date: Febrero 2025
-abstract: Sinopsis de la unidad 05
+abstract: Sinopsis de la unidad 04
 ---
 
 # Índice
