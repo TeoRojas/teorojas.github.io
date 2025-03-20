@@ -1251,14 +1251,231 @@ FROM SuperSaiyan_Status;
 
 La sentencia `SELECT` puede combinarse con otras cláusulas avanzadas como `WHERE`, `GROUP BY`, `HAVING`, `DISTINCT` u `ORDER BY`, aunque estos aspectos serán tratados en temas posteriores.
 
+## 3.3. La sentencia `UPDATE`.
 
----
+La sentencia **`UPDATE`** en SQL se utiliza para modificar los datos ya existentes en una tabla de la base de datos. A diferencia de `INSERT`, que añade nuevos registros, `UPDATE` permite cambiar la información almacenada previamente en uno o más registros específicos.
+
+La estructura básica de la sentencia UPDATE es la siguiente:
+
+```sql
+UPDATE nombre_tabla
+SET columna1 = valor1, columna2 = valor2, ...
+WHERE condición;
+```
+
+- **`UPDATE nombre_tabla`**: Indica la tabla que contiene los datos que se desean modificar.
+- **`SET columna = valor`**: Especifica las columnas que serán actualizadas y los nuevos valores que tomarán.
+- **`WHERE condición`**: Define qué registros específicos serán actualizados. Es extremadamente importante incluir esta cláusula para evitar la actualización accidental de todos los registros.
+
+Supóngase la siguiente tabla `Guerreros` y obsérvese el siguiente ejemplo:
+
+```bash
++----+--------+--------------+-------------+
+| id | nombre | raza         | nivel_poder |
++----+--------+--------------+-------------+
+|  1 | Goku   | Saiyan       | 9500        |
+|  2 | Vegeta | Saiyan Elite | 9000        |
+|  3 | Gohan  | Saiyan       | 8000        |
++----+--------+--------------+-------------+
+```
+
+Si se quisiera actualizar el nivel de poder de Goku de `9500` a `9800`, la consulta sería:
+
+```sql
+UPDATE Guerreros
+SET nivel_poder = 9800
+WHERE nombre = 'Goku';
+```
+
+Después de ejecutar esta consulta, la tabla se vería así:
+
+```bash
++----+--------+--------------+-------------+
+| id | nombre | raza         | nivel_poder |
++----+--------+--------------+-------------+
+|  1 | Goku   | Saiyan       | 9800        |
+|  2 | Vegeta | Saiyan Elite | 9000        |
+|  3 | Gohan  | Saiyan       | 8000        |
++----+--------+--------------+-------------+
+```
+
+Es interesante destacar que con la sentencia `UPDATE` también es posible actualizar múltiples columnas en un mismo registro. Por ejemplo, supóngase que se quiere modificar en el guerrero Gohan su raza a 'Saiyan Mestizo' y su nivel de poder a 8500. El comando sería:
+
+```sql
+UPDATE Guerreros
+SET raza = 'Saiyan Mestizo', nivel_poder = 8500
+WHERE nombre = 'Gohan';
+```
+
+Por otro lado, si se quiere modificar varios registros simultáneamente, solo se debe adaptar la condición en la cláusula `WHERE`. Por ejemplo, incrementar en 100 unidades el nivel de poder de todos los guerreros con raza 'Saiyan':
+
+```sql
+UPDATE Guerreros
+SET nivel_poder = nivel_poder + 100
+WHERE raza = 'Saiyan';
+```
+
+Es **muy importante** tener siempre en el punto de mira a la cláusula `WHERE` y comprobar su existencia o no dependiendo de las necesidades del problema. Téngase en cuenta que en el ejemplo anterior, si se omite la cláusula `WHERE`, todos los registros de la tabla serán actualizados con los valores indicados, lo que puede causar pérdida masiva de información útil. 
+
+Por tanto, **siempre se debe verificar cuidadosamente la condición utilizada en la cláusula `WHERE`** antes de ejecutar la consulta UPDATE.
+
+## 3.4. La sentencia DELETE
+
+La sentencia **`DELETE`** en SQL permite eliminar registros existentes en una tabla de una base de datos. A diferencia de la sentencia `DROP TABLE`, que elimina toda la estructura y datos de una tabla, la sentencia `DELETE` elimina únicamente registros específicos manteniendo intacta la estructura de la tabla.
+
+La sintaxis básica de la sentencia DELETE es:
+
+```sql
+DELETE FROM nombre_tabla
+WHERE condición;
+```
+
+- **`DELETE FROM nombre_tabla`**: Especifica la tabla de la cual se eliminarán los registros.
+- **`WHERE condición`**: Establece los criterios específicos para identificar qué registros serán eliminados. Esta cláusula es fundamental para evitar eliminar accidentalmente todos los registros de la tabla.
+
+Partiendo de la siguiente tabla `Guerreros`, obsérvese el siguiente ejemplo:
+
+```bash
++----+--------+---------------+-------------+
+| id | nombre | raza          | nivel_poder |
++----+--------+---------------+-------------+
+|  1 | Goku   | Saiyan        | 9800        |
+|  2 | Vegeta | Saiyan Elite  | 9000        |
+|  3 | Gohan  | Saiyan Mestizo| 8500        |
+|  4 | Raditz | Saiyan        | 4000        |
++----+--------+---------------+-------------+
+```
+
+Si se desea eliminar a Raditz debido a su bajo nivel de poder, la sentencia sería:
+
+```sql
+DELETE FROM Guerreros
+WHERE nombre = 'Raditz';
+```
+
+Después de ejecutar esta consulta, la tabla se mostraría así:
+
+```bash
++----+--------+---------------+-------------+
+| id | nombre | raza          | nivel_poder |
++----+--------+---------------+-------------+
+|  1 | Goku   | Saiyan        | 9800        |
+|  2 | Vegeta | Saiyan Elite  | 9000        |
+|  3 | Gohan  | Saiyan Mestizo| 8500        |
++----+--------+---------------+-------------+
+```
+
+Si la intención es eliminar varios registros al mismo tiempo, solo se debe ajustar la condición en la cláusula `WHERE`. Por ejemplo, eliminar todos los guerreros cuyo nivel de poder sea inferior a 9000:
+
+```sql
+DELETE FROM Guerreros
+WHERE nivel_poder < 9000;
+```
+
+Después de esta operación, la tabla quedaría así:
+
+```bash
++----+--------+--------------+-------------+
+| id | nombre | raza         | nivel_poder |
++----+--------+--------------+-------------+
+|  1 | Goku   | Saiyan       | 9800        |
+|  2 | Vegeta | Saiyan Elite | 9000        |
++----+--------+--------------+-------------+
+```
+
+De nuevo, es de vital importancia tener siempre muy en cuenta a la cláusula `WHERE`. **Si se omite la cláusula `WHERE`, la sentencia DELETE eliminará todos los registros contenidos en la tabla** especificada:
+
+```sql
+DELETE FROM Guerreros;
+```
+
+Esta instrucción eliminará todos los guerreros, dejando la tabla vacía pero conservando su estructura original. Por esta razón, es crucial revisar con precaución la condición usada en la cláusula `WHERE`.
+
+Aunque `DELETE` puede eliminar todos los registros sin condiciones, es más eficiente utilizar la sentencia `TRUNCATE TABLE` cuando se desea eliminar completamente el contenido de una tabla:
+
+- `DELETE FROM nombre_tabla`: elimina registros específicos y permite utilizar condiciones con `WHERE`.
+- `TRUNCATE TABLE nombre_tabla`: elimina todos los registros, reinicia valores AUTO_INCREMENT, es más rápida, pero no permite condiciones ni filtros específicos.
+
+Como buena práctica, siempre es recomendable realizar una copia de seguridad antes de ejecutar sentencias DELETE o TRUNCATE sobre tablas críticas o importantes.
+
+
 # 4. Control de datos y transacciones
-## 4.1. Transacciones y procesamiento de transacciones
-## 4.2. Políticas de bloqueo y control de concurrencia
-### 4.2.1. Instalación de phpMyAdmin en Linux: Guía Paso a Paso
 
-Estos son los pasos que seguiste para instalar y configurar phpMyAdmin utilizando solo cuatro comandos. Cada uno se explica detalladamente para que comprendas su función.
+El control adecuado de datos es esencial para asegurar la integridad, consistencia y validez de la información almacenada en una base de datos. Para ello, es fundamental comprender los conceptos de transacciones, procesamiento transaccional, control de concurrencia, políticas de bloqueo y el uso de herramientas gráficas que facilitan la edición y administración eficiente de los datos.
+
+## 4.1. Transacciones y procesamiento de transacciones
+
+Una transacción en bases de datos es una unidad lógica compuesta por una o varias sentencias SQL (como `INSERT`, `UPDATE`, `DELETE`) que deben ejecutarse en su totalidad, garantizando así la integridad de los datos. Una transacción tiene cuatro propiedades fundamentales conocidas como propiedades ACID:
+
+- **Atomicidad** (*Atomicity*): Todas las operaciones dentro de una transacción deben ejecutarse completamente o no ejecutarse en absoluto.
+- **Consistencia** (*Consistency*): La base de datos debe permanecer en un estado válido antes y después de ejecutar la transacción.
+- **Aislamiento** (*Isolation*): Cada transacción debe ejecutarse de forma aislada, sin interferir con otras transacciones simultáneas.
+- **Durabilidad** (*Durability*): Los cambios realizados por una transacción completada exitosamente deben ser permanentes y resistir fallos futuros.
+
+En MySQL, las transacciones se controlan principalmente con las siguientes sentencias:
+
+```sql
+BEGIN;            -- Inicia una nueva transacción
+COMMIT;           -- Guarda permanentemente los cambios efectuados por la transacción
+ROLLBACK;         -- Deshace los cambios efectuados por la transacción
+SAVEPOINT nombre; -- Marca un punto dentro de la transacción al que se puede revertir
+ROLLBACK TO nombre; -- Regresa al SAVEPOINT específico, deshaciendo operaciones posteriores
+```
+
+Ejemplo de una transacción:
+
+```sql
+BEGIN;
+UPDATE Guerreros SET nivel_poder = nivel_poder + 500 WHERE nombre = 'Vegeta';
+INSERT INTO Historial_Cambios (descripcion) VALUES ('Aumentado poder de Vegeta');
+COMMIT;
+```
+En este ejemplo, ambas operaciones se ejecutan como una única unidad lógica, asegurando que ambas se realicen correctamente o que ninguna de ellas se aplique.
+
+## 4.2. Políticas de bloqueo y control de concurrencia
+
+El control de concurrencia se refiere a la gestión adecuada de accesos simultáneos a una misma información, evitando problemas como la pérdida de actualizaciones o inconsistencias en la lectura de datos.
+
+Una de las estrategias más comunes en bases de datos es el uso de políticas de bloqueo (locking). Los bloqueos aseguran que mientras una transacción está usando ciertos registros, otras transacciones no puedan modificarlos simultáneamente hasta que la transacción actual libere dichos recursos.
+
+En MySQL existen dos tipos principales de bloqueos:
+
+- **Bloqueos compartidos (Shared locks)**: Utilizados para operaciones de lectura. Varias transacciones pueden compartir un bloqueo compartido sobre el mismo recurso.
+- **Bloqueos exclusivos (Exclusive locks)**: Utilizados para operaciones de escritura o actualización. Solo una transacción puede mantener un bloqueo exclusivo sobre un recurso específico en un momento dado.
+
+Obsérvese el siguiente ejemplo práctico de un bloque específico:
+
+```sql
+-- Transacción 1
+BEGIN;
+SELECT * FROM Guerreros WHERE id = 1 FOR UPDATE; -- bloqueo exclusivo
+UPDATE Guerreros SET nivel_poder = 9800 WHERE id = 1;
+COMMIT;
+```
+
+En este caso, la sentencia `SELECT ... FOR UPDATE` bloquea la fila seleccionada, evitando que otras transacciones modifiquen el registro hasta que se complete la transacción actual.
+
+MySQL gestiona automáticamente estos bloqueos, pero se puede intervenir manualmente para casos específicos y críticos mediante estas técnicas explícitas.
+
+## 4.3. Herramientas gráficas para la edición y control de datos
+
+Además del uso de comandos SQL, existen diversas herramientas gráficas que simplifican considerablemente la gestión, edición, monitoreo y control de los datos almacenados en bases de datos MySQL.
+
+Algunas de las herramientas gráficas más utilizadas son:
+
+- **phpMyAdmin**: Es una herramienta web gratuita que facilita la administración de bases de datos MySQL. Permite realizar operaciones básicas y avanzadas mediante una interfaz gráfica amigable. Ofrece funcionalidades para importar/exportar datos, visualizar y editar tablas, ejecutar consultas SQL directamente, gestionar usuarios y permisos.
+
+- **MySQL Workbench**: Aplicación oficial y gratuita de Oracle para administrar bases de datos MySQL. Permite modelar visualmente bases de datos, crear diagramas de entidad-relación, realizar ingeniería inversa, administrar usuarios y roles, y visualizar esquemas y tablas de forma gráfica. Cuenta con herramientas avanzadas para la monitorización de rendimiento, análisis de consultas, gestión de backups, y restauraciones.
+
+- **DBeaver**: Herramienta gráfica multiplataforma y gratuita, compatible con múltiples gestores de bases de datos, incluyendo MySQL. Soporta edición directa de tablas y registros, creación y ejecución de consultas SQL, importación y exportación de datos, así como generación automática de diagramas entidad-relación.
+
+- **HeidiSQL**: Cliente gráfico gratuito especialmente orientado a la gestión de MySQL y MariaDB. Ofrece gestión completa de bases de datos, consultas SQL intuitivas, edición gráfica de datos, monitoreo de conexiones y sesiones activas, y exportación sencilla en múltiples formatos.
+
+Estas herramientas gráficas facilitan el acceso visual e intuitivo a operaciones complejas sobre bases de datos, siendo altamente recomendables especialmente para usuarios menos experimentados en SQL o para tareas administrativas que requieran una visualización y gestión eficiente de grandes volúmenes de información.
+
+### 4.3.1. Instalación de phpMyAdmin en Linux: Guía Paso a Paso
+
+Estos son los pasos que deberías seguir para instalar y configurar phpMyAdmin utilizando solo cuatro comandos. Cada uno se explica detalladamente para que comprendas su función.
 
 1. **Instalar phpMyAdmin**
     ```bash
@@ -1293,6 +1510,48 @@ Estos son los pasos que seguiste para instalar y configurar phpMyAdmin utilizand
     2. Inicia sesión con tus credenciales de MySQL:
         - **Usuario**: root
         - **Contraseña**: La que configuraste al instalar MySQL (por ejemplo, 8888)
+
+
+### 4.3.2. Instalación de MySQL Workbench en Linux: Guía Paso a Paso
+
+Estos son los pasos detallados para instalar y configurar MySQL Workbench en sistemas Linux utilizando comandos desde la terminal. Cada comando incluye una breve explicación para entender claramente su función.
+
+1. **Actualizar la lista de paquetes disponibles**
+    ```bash
+    sudo apt update
+    ```
+    Este comando actualiza la base de datos local con la información más reciente sobre paquetes y actualizaciones disponibles en los repositorios oficiales del sistema operativo.
+
+2. **Instalar MySQL Workbench desde los repositorios**
+    ```bash
+    sudo apt install mysql-workbench
+    ```
+    Este comando descarga e instala MySQL Workbench junto con todas sus dependencias necesarias directamente desde los repositorios oficiales del sistema.
+
+3. **Verificar la instalación de MySQL Workbench**
+    ```bash
+    mysql-workbench --version
+    ```
+    Este comando verifica que MySQL Workbench se haya instalado correctamente, mostrando la versión instalada, lo que confirma la finalización exitosa del proceso.
+
+4. **Ejecutar MySQL Workbench**
+    ```bash
+    mysql-workbench
+    ```
+    Este comando inicia MySQL Workbench desde la terminal, permitiéndote acceder a la interfaz gráfica para gestionar bases de datos MySQL.
+
+5. **Configurar la conexión con MySQL Server en MySQL Workbench**
+    Para establecer una conexión inicial con tu servidor MySQL desde MySQL Workbench:
+    1. Abre MySQL Workbench.
+    2. Haz clic en el botón "**+**" para crear una nueva conexión.
+    3. Completa los datos requeridos:
+        - **Connection Name**: Ingresa un nombre para identificar la conexión (por ejemplo, "Localhost").
+        - **Hostname**: Generalmente es `localhost`.
+        - **Port**: `3306` (puerto por defecto de MySQL).
+        - **Username**: Generalmente es `root`.
+        - **Password**: Contraseña establecida durante la instalación de MySQL.
+    4. Haz clic en **Test Connection** para confirmar que los datos son correctos.
+    5. Finalmente, presiona **OK** para guardar y establecer la conexión.
 
 # 5. Chuletario Resumen de SQL
 
