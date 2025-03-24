@@ -74,11 +74,14 @@ SELECT * FROM guerreros_z;
 
 Este comando selecciona todos los campos (`*`) y todas las filas de la tabla `guerreros_z`. El sistema devolverá, por ejemplo, algo como esto:
 
-| id_guerrero | nombre   | raza      | nivel_poder |
-|-------------|----------|-----------|-------------|
-| 1           | Goku     | Saiyan    | 9500        |
-| 2           | Vegeta   | Saiyan    | 9000        |
-| 3           | Krilin   | Humano    | 4000        |
+| id_guerrero | nombre   | raza          | nivel_poder |
+|-------------|----------|---------------|-------------|
+|           1 | Goku    | Saiyan         |        9500 |
+|           2 | Vegeta  | Saiyan         |        9200 |
+|           3 | Gohan   | Saiyan-mestizo |        8700 |
+|           4 | Piccolo | Namek          |        7500 |
+|           5 | Krilin  | Humano         |        4000 |
+|           6 | Yamcha  | Humano         |        NULL |
 
 ### Buenas prácticas al ejecutar consultas:
 
@@ -109,13 +112,14 @@ SELECT * FROM nombre_tabla;
 
 Supongamos que tenemos una tabla llamada `guerreros_z` con información sobre los personajes principales de la saga:
 
-| id_guerrero | nombre   | raza    | nivel_poder |
-|-------------|----------|---------|-------------|
-| 1           | Goku     | Saiyan  | 9500        |
-| 2           | Vegeta   | Saiyan  | 9200        |
-| 3           | Gohan    | Saiyan-mestizo  | 8700        |
-| 4           | Piccolo  | Namek   | 7500        |
-| 5           | Krilin   | Humano  | 4000        |
+| id_guerrero | nombre   | raza          | nivel_poder |
+|-------------|----------|---------------|-------------|
+|           1 | Goku    | Saiyan         |        9500 |
+|           2 | Vegeta  | Saiyan         |        9200 |
+|           3 | Gohan   | Saiyan-mestizo |        8700 |
+|           4 | Piccolo | Namek          |        7500 |
+|           5 | Krilin  | Humano         |        4000 |
+|           6 | Yamcha  | Humano         |        NULL |
 
 La siguiente consulta selecciona todos los datos de la tabla:
 
@@ -162,13 +166,14 @@ La condición puede ser tan simple como una comparación numérica o textual, o 
 
 Imaginemos que trabajamos con la tabla `guerreros_z`:
 
-| id_guerrero | nombre   | raza           | nivel_poder |
-|-------------|----------|----------------|-------------|
-| 1           | Goku     | Saiyan         | 9500        |
-| 2           | Vegeta   | Saiyan         | 9200        |
-| 3           | Gohan    | Saiyan-mestizo | 8700        |
-| 4           | Piccolo  | Namek          | 7500        |
-| 5           | Krilin   | Humano         | 4000        |
+| id_guerrero | nombre   | raza          | nivel_poder |
+|-------------|----------|---------------|-------------|
+|           1 | Goku    | Saiyan         |        9500 |
+|           2 | Vegeta  | Saiyan         |        9200 |
+|           3 | Gohan   | Saiyan-mestizo |        8700 |
+|           4 | Piccolo | Namek          |        7500 |
+|           5 | Krilin  | Humano         |        4000 |
+|           6 | Yamcha  | Humano         |        NULL |
 
 Si se quiere consultar solo los guerreros con un nivel de poder superior a 9000, la consulta sería:
 
@@ -183,6 +188,7 @@ Resultado:
 | nombre | nivel_poder |
 |--------|-------------|
 | Goku   | 9500        |
+| Vegeta | 9200        |
 
 Si se quiere buscar únicamente a los guerreros de raza "Saiyan":
 
@@ -213,13 +219,14 @@ Los operadores lógicos permiten combinar múltiples condiciones dentro de una c
 
 Partimos de la tabla `guerreros_z`:
 
-| id_guerrero | nombre   | raza           | nivel_poder |
-|-------------|----------|----------------|-------------|
-| 1           | Goku     | Saiyan         | 9500        |
-| 2           | Vegeta   | Saiyan         | 9200        |
-| 3           | Gohan    | Saiyan-mestizo | 8700        |
-| 4           | Piccolo  | Namek          | 7500        |
-| 5           | Krilin   | Humano         | 4000        |
+| id_guerrero | nombre   | raza          | nivel_poder |
+|-------------|----------|---------------|-------------|
+|           1 | Goku    | Saiyan         |        9500 |
+|           2 | Vegeta  | Saiyan         |        9200 |
+|           3 | Gohan   | Saiyan-mestizo |        8700 |
+|           4 | Piccolo | Namek          |        7500 |
+|           5 | Krilin  | Humano         |        4000 |
+|           6 | Yamcha  | Humano         |        NULL |
 
 #### Operador `AND`
 
@@ -252,8 +259,10 @@ Resultado:
 
 | nombre  | raza  | nivel_poder |
 |---------|-------|-------------|
-| Krilin  | Humano| 4000        |
 | Piccolo | Namek | 7500        |
+| Krilin  | Humano| 4000        |
+
+> **Nota**: Obsérvese que *Yamcha* tiene un valor `NULL` en el campo `nivel_poder`, lo cual indica la ausencia de valor. Esto no significa que su valor sea 0 ni ningún número específico, sino simplemente que no se ha definido. Por este motivo, no aparece en esta lista con un identificador asignado.
 
 #### Operador `NOT`
 
@@ -272,6 +281,8 @@ Resultado:
 | Gohan   | Saiyan-mestizo |
 | Piccolo | Namek          |
 | Krilin  | Humano         |
+| Yamcha  | Humano         |
+
 
 El uso de operadores lógicos permite combinar múltiples condiciones en una misma consulta y construir filtros mucho más potentes y flexibles. En los próximos apartados veremos cómo añadir expresiones aún más específicas mediante operadores especiales y agrupaciones.
 
@@ -314,8 +325,9 @@ Resultado:
 |---------|----------------|
 | Goku    | Saiyan         |
 | Vegeta  | Saiyan         |
-| Gohan   | Saiyan-mestizo |
 | Krilin  | Humano         |
+| Yamcha  | Humano         |
+
 
 #### Operador `LIKE`
 
@@ -341,13 +353,7 @@ Resultado:
 
 #### Operador `IS NULL`
 
-Este operador se utiliza para comprobar si un valor está vacío (NULL). No se puede usar el signo `=` para comparar con NULL.
-
-Supongamos que algunos guerreros aún no tienen definido su nivel de poder:
-
-| id_guerrero | nombre  | raza   | nivel_poder |
-|-------------|---------|--------|-------------|
-| 6           | Yamcha  | Humano | NULL        |
+Este operador se utiliza para comprobar si un valor está vacío (`NULL`). No se puede usar el signo `=` para comparar con `NULL`.
 
 Consulta para obtener los guerreros sin nivel de poder asignado:
 
@@ -376,7 +382,7 @@ Se utilizan para comparar valores entre columnas y literales. Devuelven un resul
 Los más comunes son:
 
 - `=` igual a  
-- `<>` distinto de  
+- `<>` y `!=` significan distinto de  
 - `>` mayor que  
 - `<` menor que  
 - `>=` mayor o igual que  
@@ -389,6 +395,15 @@ SELECT nombre, nivel_poder
 FROM guerreros_z
 WHERE nivel_poder <> 9500;
 ```
+
+Resultado:
+
+| nombre  | nivel_poder |
+|---------|-------------|
+| Vegeta  |        9200 |
+| Gohan   |        8700 |
+| Piccolo |        7500 |
+| Krilin  |        4000 |
 
 ### Combinación con operadores lógicos
 
@@ -406,7 +421,7 @@ FROM guerreros_z
 WHERE raza = 'Saiyan' OR raza = 'Namek' AND nivel_poder > 8000;
 ```
 
-se evalúa como si escribiéramos:
+se evalúa como si se escribiese:
 
 ```sql
 SELECT nombre, raza, nivel_poder
@@ -414,9 +429,14 @@ FROM guerreros_z
 WHERE raza = 'Saiyan' OR (raza = 'Namek' AND nivel_poder > 8000);
 ```
 
+| nombre | raza   | nivel_poder |
+|--------|--------|-------------|
+| Goku   | Saiyan |        9500 |
+| Vegeta | Saiyan |        9200 |
+
 Para evitar errores o confusión, se recomienda siempre **usar paréntesis** para agrupar las condiciones según la lógica deseada.
 
-## Ejemplo práctico con Dragon Ball
+### Ejemplo práctico con Dragon Ball
 
 Supongamos la siguiente tabla `guerreros_z`:
 
@@ -517,6 +537,20 @@ La cláusula `CASE` se evalúa en orden: la primera condición que se cumple det
 
 Se parte de la tabla `guerreros_z`, con los siguientes campos: `nombre`, `raza`, `nivel_poder`, `cantidad_transformaciones`.
 
+| id_guerrero | nombre    | raza              | nivel_poder | cantidad_transformaciones |
+|-------------|-----------|-------------------|-------------|---------------------------|
+| 1           | Goku      | Saiyan            | 9500        | 6                         |
+| 2           | Vegeta    | Saiyan            | 9200        | 4                         |
+| 3           | Gohan     | Saiyan            | 8700        | 4                         |
+| 4           | Piccolo   | Namekiano         | 7500        | 1                         |
+| 5           | Trunks    | Saiyan            | 8600        | 2                         |
+| 6           | Freezer   | Emperador del Mal | 9400        | 5                         |
+| 7           | Cell      | Bio-Androide      | 9100        | 3                         |
+| 8           | Majin Buu | Majin             | 9300        | 3                         |
+| 9           | Goten     | Saiyan            | 8200        | 1                         |
+| 10          | Krilin    | Humano            | 4000        | 0                         |
+
+
 ### Mostrar una columna llamada `estado_transformacion` según los criterios:
 
 - Si la `cantidad_transformaciones` es mayor que 0 **y** la raza es 'Saiyan', se muestra `'¡Super Saiyan!'`
@@ -592,12 +626,20 @@ SELECT COUNT(*) AS total_guerreros
 FROM guerreros_z;
 ```
 
+| total_guerreros |
+|-----------------|
+|              10 |
+
 Contar cuántos guerreros tienen nivel de poder definido (excluyendo `NULL`):
 
 ```sql
 SELECT COUNT(nivel_poder) AS guerreros_con_poder
 FROM guerreros_z;
 ```
+
+| guerreros_con_poder |
+|---------------------|
+|                  10 |
 
 ### Función `SUM()`
 
@@ -610,6 +652,10 @@ SELECT SUM(nivel_poder) AS poder_total
 FROM guerreros_z;
 ```
 
+| poder_total |
+|-------------|
+|       83500 |
+
 ### Función `AVG()`
 
 La función `AVG()` devuelve el promedio (media aritmética) de los valores de una columna numérica.
@@ -620,6 +666,10 @@ Calcular el nivel medio de poder entre los guerreros registrados:
 SELECT AVG(nivel_poder) AS poder_medio
 FROM guerreros_z;
 ```
+
+| poder_medio |
+|-------------|
+|   8350.0000 |
 
 ### Función `MAX()` y `MIN()`
 
@@ -632,12 +682,20 @@ SELECT MAX(nivel_poder) AS poder_maximo
 FROM guerreros_z;
 ```
 
+| poder_maximo |
+|--------------|
+|         9500 |
+
 Obtener el nivel de poder más bajo (que no sea NULL):
 
 ```sql
 SELECT MIN(nivel_poder) AS poder_minimo
 FROM guerreros_z;
 ```
+
+| poder_minimo |
+|--------------|
+|         4000 |
 
 ### Advertencia habitual: error al combinar agregaciones con columnas no agregadas
 
@@ -712,10 +770,10 @@ Resultado:
 
 | raza           | poder_medio |
 |----------------|-------------|
-| Saiyan         | 9350.0      |
-| Saiyan-mestizo | 8700.0      |
-| Namek          | 7500.0      |
-| Humano         | 4000.0      |
+| Saiyan         |   9350.0000 |
+| Saiyan-mestizo |   8700.0000 |
+| Namek          |   7500.0000 |
+| Humano         |   4000.0000 |
 
 El valor `NULL` del guerrero Yamcha se omite automáticamente en los cálculos de la media, ya que las funciones de agregación no tienen en cuenta los valores nulos.
 
@@ -734,8 +792,8 @@ Resultado:
 
 | raza           | poder_medio |
 |----------------|-------------|
-| Saiyan         | 9350.0      |
-| Saiyan-mestizo | 8700.0      |
+| Saiyan         |   9350.0000 |
+| Saiyan-mestizo |   8700.0000 |
 
 A diferencia de `WHERE`, que se aplica antes de agrupar los datos, `HAVING` se aplica después, y solo puede utilizarse con columnas agregadas o presentes en el `GROUP BY`.
 
@@ -930,12 +988,12 @@ Esto agrupa a los guerreros por raza y, dentro de cada grupo, los ordena de mayo
 
 | nombre  | raza           | nivel_poder |
 |---------|----------------|-------------|
-| Krilin  | Humano         | 4000        |
-| Yamcha  | Humano         | NULL        |
-| Piccolo | Namek          | 7500        |
-| Gohan   | Saiyan-mestizo | 8700        |
-| Goku    | Saiyan         | 9500        |
-| Vegeta  | Saiyan         | 9200        |
+| Krilin  | Humano         |        4000 |
+| Yamcha  | Humano         |        NULL |
+| Piccolo | Namek          |        7500 |
+| Goku    | Saiyan         |        9500 |
+| Vegeta  | Saiyan         |        9200 |
+| Gohan   | Saiyan-mestizo |        8700 |
 
 ## Consideraciones
 
