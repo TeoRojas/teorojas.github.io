@@ -29,18 +29,19 @@ abstract:
    &emsp;&emsp;3.3.2. [Herencia](#332-herencia)  
    &emsp;&emsp;3.3.3. [Composición](#333-composición)  
    &emsp;&emsp;3.3.4. [Agregación](#334-agregación) 
-<!--   
 4. [Herramientas para la Creación de Diagramas de Clases](#4-herramientas-para-la-creación-de-diagramas-de-clases)  
    4.1. [Herramientas CASE y su utilidad](#41-herramientas-case-y-su-utilidad)  
    4.2. [Plugins y extensiones en entornos de desarrollo](#42-plugins-y-extensiones-en-entornos-de-desarrollo)  
- 
 5. [Elaboración de Diagramas de Clases](#5-elaboración-de-diagramas-de-clases)  
    5.1. [Identificación de clases en un sistema](#51-identificación-de-clases-en-un-sistema)  
    5.2. [Modelado de atributos y métodos](#52-modelado-de-atributos-y-métodos)  
-   5.3. [Aplicación de patrones de diseño en diagramas de clases](#53-aplicación-de-patrones-de-diseño-en-diagramas-de-clases)  
+   5.3. [Aplicación de patrones de diseño en diagramas de clases](#53-aplicación-de-patrones-de-diseño-en-diagramas-de-clases) 
 6. [Validación y Optimización de Diagramas de Clases](#6-validación-y-optimización-de-diagramas-de-clases)  
    6.1. [Revisión de coherencia y redundancias](#61-revisión-de-coherencia-y-redundancias)  
    6.2. [Optimización de relaciones entre clases](#62-optimización-de-relaciones-entre-clases)  
+
+
+<!--  
 7. [Uso de Diagramas de Clases en el Desarrollo de Aplicaciones](#7-uso-de-diagramas-de-clases-en-el-desarrollo-de-aplicaciones)  
    7.1. [Generación de código a partir de diagramas](#71-generación-de-código-a-partir-de-diagramas)  
    7.2. [Integración con bases de datos](#72-integración-con-bases-de-datos)  
@@ -992,3 +993,110 @@ print(f"La escuela {escuela1.nombre} tiene estudiantes como {[est.nombre for est
 En este caso, `Escuela` contiene una lista de `Estudiantes`, pero los estudiantes pueden seguir existiendo sin la escuela. Además, si `Escuela` se elimina, los `Estudiantes` no desaparecen (entre terribles sufrimientos), ya que pueden ser asignados a otra escuela. Esto representa una agregación, porque Estudiante puede existir sin Escuela.
 
 ![Diagrama de clases estudiante-escuela-agregacion](/entornos-de-desarrollo/imgs/ud05/ud05_estudiante-escuela-agregacion.svg)
+
+
+# 4. Herramientas para la Creación de Diagramas de Clases
+
+La creación de diagramas de clases UML es una tarea clave en el análisis y diseño de sistemas orientados a objetos. Para facilitar este proceso, existen diversas herramientas que automatizan la generación de estos diagramas y permiten documentar visualmente la estructura del software. A continuación, se presentan los dos enfoques más comunes: el uso de herramientas CASE y el uso de extensiones o complementos en entornos de desarrollo integrados (IDEs).
+
+## 4.1. Herramientas CASE y su utilidad
+
+Las herramientas **CASE** (*Computer-Aided Software Engineering*) son aplicaciones diseñadas para asistir al desarrollo del software en sus distintas fases, incluyendo la planificación, análisis, diseño, codificación, pruebas y mantenimiento.
+
+En lo que respecta a los diagramas de clases UML, estas herramientas permiten crear, editar y visualizar diagramas con facilidad, automatizando parte del trabajo y garantizando la coherencia entre diseño y código.
+
+Algunas de sus utilidades principales son:
+
+- Proporcionan una **interfaz visual amigable**, que permite arrastrar y soltar elementos para construir diagramas.
+- Permiten **mantener la trazabilidad** entre diferentes artefactos del software, como clases, métodos y relaciones.
+- Ayudan a **documentar el sistema** de forma clara y estandarizada.
+- En muchos casos, permiten la **generación de código** a partir del diagrama o la **ingeniería inversa**, es decir, la creación automática del diagrama a partir del código fuente.
+
+Entre las herramientas CASE más conocidas se encuentran:
+
+- **StarUML**: potente, multiplataforma, con soporte para múltiples tipos de diagramas UML.
+- **Enterprise Architect**: muy utilizada en entornos empresariales.
+- **Visual Paradigm**: destaca por su integración con metodologías ágiles y herramientas de modelado de base de datos.
+- **Draw.io** (actualmente **diagrams.net**): aunque no es una herramienta CASE en sentido estricto, ofrece plantillas UML y es muy accesible.
+
+Estas herramientas son especialmente útiles en entornos académicos y profesionales donde se requiere una planificación detallada del sistema.
+
+## 4.2. Plugins y extensiones en entornos de desarrollo
+
+Muchos entornos de desarrollo actuales, como **Visual Studio Code**, **Eclipse** o **IntelliJ IDEA**, ofrecen extensiones que permiten trabajar directamente con diagramas UML desde el propio editor de código.
+
+Algunas características destacables de estos plugins son:
+
+- Posibilidad de **generar diagramas UML a partir del código fuente** (ingeniería inversa).
+- Permiten **mantener sincronizado** el modelo visual con el código en tiempo real.
+- Algunos incluyen soporte para lenguajes de marcado como **PlantUML**, que permiten describir diagramas mediante texto plano.
+
+Por ejemplo:
+
+- **PlantUML** puede integrarse en múltiples editores y generar diagramas a partir de un sencillo script, lo que resulta ideal para control de versiones.
+- En **Visual Studio Code**, existen extensiones como `PlantUML` o `Draw.io Integration`, que permiten diseñar diagramas sin salir del entorno de desarrollo.
+- En **Eclipse**, se dispone del plugin `Papyrus`, que añade capacidades UML completas.
+
+Este tipo de herramientas resulta especialmente útil cuando se trabaja en proyectos reales donde se busca **agilidad**, integración con el flujo de trabajo y **automatización**.
+
+
+# 4. Herramientas para la Creación de Diagramas de Clases
+
+La creación de diagramas de clases UML es una parte fundamental en el diseño y análisis de sistemas orientados a objetos. Para facilitar esta tarea, se dispone de diversas herramientas que permiten representar visualmente la estructura del software de forma clara, estandarizada y automatizada. Estas herramientas se pueden clasificar principalmente en dos enfoques: las herramientas CASE y los *plugins* o complementos integrados en entornos de desarrollo.
+
+## 4.1. Herramientas CASE y su utilidad
+
+Las herramientas CASE, acrónimo de *Computer-Aided Software Engineering*, están diseñadas para asistir en el desarrollo del software a lo largo de todas sus fases, incluyendo el análisis, diseño, codificación, pruebas y mantenimiento. En el contexto de los diagramas de clases UML, este tipo de herramientas permiten construir modelos visuales de las clases, sus atributos, métodos y relaciones de una forma eficiente y precisa.
+
+Una de las principales ventajas de las herramientas CASE es su interfaz visual, que permite arrastrar y soltar los elementos del diagrama sin necesidad de codificar manualmente la estructura. Además, muchas de estas herramientas permiten mantener la coherencia entre el diseño y el código, facilitando la trazabilidad y la documentación del sistema. Otra funcionalidad habitual es la generación automática de código a partir del modelo diseñado, así como la posibilidad inversa: generar el modelo visual a partir del código fuente existente, lo que se conoce como ingeniería inversa.
+
+Entre las herramientas más utilizadas en esta categoría se encuentran StarUML, Enterprise Architect, Visual Paradigm y Draw.io (ahora conocido como diagrams.net). Aunque esta última no es una herramienta CASE en sentido estricto, ofrece plantillas específicas para UML y es ampliamente utilizada por su accesibilidad, integración con plataformas en la nube y facilidad de uso. Todas ellas permiten modelar de forma estandarizada los sistemas, y resultan especialmente útiles en entornos educativos o profesionales donde se exige una planificación detallada del software.
+
+## 4.2. Plugins y extensiones en entornos de desarrollo
+
+Además de las herramientas CASE independientes, muchos entornos de desarrollo modernos incorporan extensiones o plugins que permiten trabajar con diagramas UML directamente desde el editor de código. Esta integración mejora la productividad al evitar el cambio constante entre aplicaciones y permite mantener sincronizados el diseño visual y el código fuente.
+
+En entornos como Visual Studio Code, Eclipse o IntelliJ IDEA, es posible instalar extensiones que ofrecen funcionalidades avanzadas para trabajar con UML. Algunas de estas herramientas permiten generar automáticamente diagramas a partir del código, facilitando la documentación técnica del proyecto sin esfuerzo adicional. Otras, como las que integran PlantUML, permiten escribir diagramas utilizando texto estructurado que se transforma en imágenes, lo que resulta ideal para entornos con control de versiones, ya que el diagrama puede mantenerse junto al código y versionarse como cualquier otro archivo.
+
+PlantUML es un ejemplo destacable de esta filosofía. Gracias a su compatibilidad con múltiples editores y su simplicidad sintáctica, se ha convertido en una herramienta habitual en proyectos de software reales. También existen extensiones para integrar Draw.io directamente en Visual Studio Code, o el plugin Papyrus en Eclipse, que proporciona un entorno UML completo dentro del propio IDE.
+
+Es importante destacar que, aunque PlantUML permite crear diagramas UML, no debe considerarse una herramienta CASE. Se trata más bien de un plugin o herramienta auxiliar, enfocada exclusivamente en la generación de diagramas a partir de texto, y no en la gestión completa del ciclo de vida del software como sí hacen las herramientas CASE tradicionales. Por ello, debe clasificarse dentro de las extensiones para entornos de desarrollo y no como herramienta CASE.
+
+Estas soluciones integradas son especialmente prácticas cuando se busca agilidad, integración con el flujo de trabajo diario y automatización en la documentación del diseño. Permiten incorporar el modelado visual dentro del ciclo habitual de desarrollo sin necesidad de herramientas externas, lo que mejora la eficiencia y la coherencia del proyecto.
+
+# 5. Elaboración de Diagramas de Clases
+
+Una vez comprendidos los elementos y tipos de relaciones entre clases, el siguiente paso es poner en práctica estos conocimientos mediante la elaboración de diagramas de clases aplicados a sistemas concretos. Este proceso implica analizar el dominio del problema, identificar los elementos clave del sistema y estructurarlos en clases, atributos, métodos y relaciones que reflejen el comportamiento del software a diseñar. La calidad del análisis previo y la claridad en la estructuración de las clases determinan en gran medida la utilidad del diagrama como herramienta de planificación, modelado, comunicación técnica y validación del diseño antes del desarrollo.
+
+Los diagramas de clases permiten visualizar la arquitectura del sistema de forma estructurada, identificar responsabilidades, anticipar problemas de acoplamiento o redundancia, y servir como base para la generación de código o para la creación de pruebas unitarias. Esta fase del desarrollo es especialmente importante en proyectos grandes o colaborativos, donde múltiples personas deben comprender el sistema desde una misma perspectiva visual. Además, el diseño orientado a objetos no solo se aplica al código, sino que comienza desde el modelado conceptual, donde se definen las entidades que dan forma al software. Por ello, una correcta elaboración del diagrama de clases tiene impacto directo en la mantenibilidad y calidad del sistema final.
+
+## 5.1. Identificación de clases en un sistema
+
+El primer paso en la elaboración de un diagrama de clases es identificar las entidades relevantes del dominio que pueden representarse como clases. Este proceso, conocido como análisis orientado a objetos, se basa en examinar detenidamente los requerimientos del sistema y extraer de ellos los elementos clave. Para ello, es útil leer atentamente los enunciados o descripciones funcionales del sistema y subrayar los sustantivos, ya que suelen corresponderse con posibles clases.
+
+Por ejemplo, en un sistema para la gestión de una biblioteca, aparecen términos como "libro", "usuario", "préstamo", "bibliotecario" o "catálogo". Todos ellos son buenos candidatos a convertirse en clases. Sin embargo, no basta con detectar sustantivos: es necesario valorar si esas entidades tienen atributos propios, comportamientos específicos o si forman parte de una relación relevante con otras entidades. Las clases deben representar conceptos con significado propio dentro del sistema. También se debe evitar sobrecargar el modelo con clases que no tienen identidad propia o cuya función puede cubrirse con atributos u objetos auxiliares.
+
+Además de los sustantivos, los verbos y acciones pueden ayudar a identificar métodos que formarán parte de esas clases. Una vez identificadas las clases candidatas, es posible clasificarlas, agruparlas jerárquicamente, establecer relaciones entre ellas y descartar aquellas que no aporten valor. En este punto, también se recomienda aplicar principios como el de responsabilidad única (SRP), que permite dividir clases muy complejas en otras más simples y cohesionadas. Un buen criterio para definir una clase es que sea capaz de responder por sí misma a un conjunto limitado de responsabilidades claramente relacionadas.
+
+## 5.2. Modelado de atributos y métodos
+
+Después de identificar las clases principales del sistema, se procede a definir los atributos y métodos de cada una de ellas. Los atributos representan el estado interno de un objeto y suelen corresponderse con características o propiedades. Por su parte, los métodos reflejan el comportamiento de los objetos, es decir, las acciones que pueden realizar o que se pueden ejecutar sobre ellos.
+
+La elección de atributos y métodos debe estar basada en el análisis del dominio. Es recomendable partir de ejemplos concretos y formular preguntas como: ¿qué información debe almacenar esta clase?, ¿qué operaciones tiene sentido que realice?, ¿qué comportamiento se espera de ella en el sistema? Cuanto más específico y concreto sea el análisis, más preciso y útil será el diagrama.
+
+Por ejemplo, una clase `Libro` puede tener atributos como `titulo`, `autor` y `ISBN`, y métodos como `prestar()`, `devolver()` o `reservar()`. Además, debe decidirse la visibilidad de cada elemento (`+` público, `-` privado, `#` protegido) y representarla adecuadamente en el diagrama. También puede indicarse el tipo de dato (`str`, `int`, `bool`, `etc`.) y si un atributo es estático, constante o derivado.
+
+Un buen modelado de atributos y métodos no solo facilita la comprensión del sistema, sino que también permite mantener la cohesión y la responsabilidad única de cada clase, principios fundamentales del diseño orientado a objetos. Asimismo, permite prever los puntos de extensión futura y anticiparse a la reutilización de componentes en otros sistemas similares. Las clases bien modeladas reflejan con fidelidad la lógica del negocio y se convierten en el esqueleto funcional del software.
+
+## 5.3. Aplicación de patrones de diseño en diagramas de clases
+
+En sistemas más complejos, es común emplear patrones de diseño para resolver problemas recurrentes en la estructuración de clases y objetos. Estos patrones son soluciones probadas y reutilizables que mejoran la mantenibilidad, flexibilidad y escalabilidad del software. Además, aportan un lenguaje compartido entre desarrolladores, facilitando la comprensión del diseño incluso antes de revisar el código.
+
+Los patrones de diseño más comunes, como `Singleton`, `Factory`, `Observer`, `Strategy` o `Decorator`, tienen representaciones específicas en diagramas de clases UML. Aplicar un patrón no significa seguirlo al pie de la letra, sino adaptar su estructura al contexto del sistema. Lo importante es entender el problema que resuelve y la lógica subyacente que lo hace eficaz.
+
+Por ejemplo, el patrón `Observer` implica una relación uno a muchos entre una clase `Observable` y múltiples `Observers`, que deben actualizarse cuando el estado del objeto observado cambia. Este patrón se representa en UML mediante una clase sujeto que mantiene una lista de observadores y métodos como `attach()` y `notify()`. Otro ejemplo es el patrón `Factory`, que permite delegar la creación de objetos en una clase especializada, aislando la lógica de instanciación del resto del sistema.
+
+El uso adecuado de patrones permite anticipar necesidades de evolución del software y mejorar la comunicación entre desarrolladores, ya que estos esquemas son ampliamente conocidos y documentados. En un diagrama de clases, es habitual incluir los nombres de los patrones aplicados para facilitar su identificación y comprensión. Incluso pueden combinarse varios patrones en un mismo sistema, siempre que se mantenga la claridad del modelo.
+
+En definitiva, los patrones de diseño aportan una capa de abstracción que enriquece los diagramas de clases, ayudando a resolver problemas de diseño con soluciones reconocidas por la comunidad de desarrollo. Su aplicación adecuada permite crear sistemas más robustos, extensibles y alineados con las buenas prácticas de la ingeniería del software moderna.
+
