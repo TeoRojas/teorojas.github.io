@@ -52,12 +52,11 @@ La notación de los diagramas de clases en UML establece una forma estandarizada
 
 Este lenguaje visual permite describir cómo se organiza el sistema, cómo se conectan las distintas clases y qué tipo de vínculos existen entre ellas. A través de esta notación se puede entender el modelo conceptual sin necesidad de ver el código fuente, lo que facilita la comunicación entre los miembros del equipo de desarrollo.
 
-Para ilustrar esta notación básica, obsérvese el siguiente ejemplo: una clase `Coche` se relaciona con una clase `Motor` mediante una asociación unidireccional. Esta relación indica que un coche está compuesto por un motor, o depende de él, sin necesidad de representar aún detalles internos como atributos o métodos:
+Para ilustrar esta notación básica, obsérvese el siguiente ejemplo: una clase `Conductor` se relaciona con una clase `Coche` mediante una asociación unidireccional `conduce`. Esta relación refleja que un conductor utiliza un coche, sin necesidad de representar aún detalles internos como atributos o métodos:
 
-![Diagrama de clases de coche-motor](/entornos-de-desarrollo/imgs/ud05/ud05_cocheMotor.svg)
+![Diagrama de clases de conductor conduce coche](/entornos-de-desarrollo/imgs/ud05/ud05_conductorConduceCoche.svg)
 
-En este apartado se introducirá la estructura general de los diagramas y la simbología que se utilizará en el resto del tema. En los apartados siguientes se abordará en detalle cómo se definen y representan las clases, atributos, métodos y su visibilidad, así como los distintos tipos de relaciones entre clases. y la simbología que se utilizará en el resto del tema. En los apartados siguientes se abordará en detalle cómo se definen y representan las clases, atributos, métodos y su visibilidad, así como los distintos tipos de relaciones entre clases.
-
+En los apartados siguientes se abordará en detalle cómo se definen y representan las clases, atributos, métodos y su visibilidad, así como los distintos tipos de relaciones entre clases. y la simbología que se utilizará en el resto del tema. 
 
 ## 2.1. Clases: atributos, métodos y visibilidad
 
@@ -109,4 +108,80 @@ Representar estas relaciones en los diagramas de clases es clave para comprender
 
 En los siguientes apartados se explicarán en detalle los distintos tipos de relaciones entre clases y su notación específica en UML.
 
+## 3.1. Asociación
 
+La **asociación** es una de las relaciones más básicas y frecuentes en los diagramas de clases UML. Representa una **conexión estructural** entre dos o más clases, indicando que los objetos de una clase están relacionados con objetos de otra. Esta relación no implica necesariamente dependencia fuerte ni propiedad, sino simplemente una conexión entre entidades que necesitan conocerse para interactuar.
+
+Se representa mediante una **línea recta** que conecta dos clases. En caso de ser **unidireccional**, se añade una flecha en el extremo que indica qué clase conoce a la otra.
+
+Por ejemplo, en el siguiente diagrama se muestra que la clase `Conductor` se asocia con la clase `Coche` mediante la relación `conduce`. Esta es una asociación unidireccional: el conductor necesita conocer el coche que conduce, pero el coche no tiene por qué conocer al conductor.
+
+![Asociación simple entre Conductor y Coche](/entornos-de-desarrollo/imgs/ud05/ud05_conductorConduceCoche.svg)
+
+Este tipo de asociación es muy habitual en sistemas orientados a objetos donde una clase necesita interactuar con otra sin que exista necesariamente una relación de jerarquía o composición.
+
+En este tipo de asociaciones, suele existir un **rol** para describir la función que cada clase desempeña **dentro de esa relación**. Los roles se colocan junto a los extremos de la línea de asociación, indicando el papel que cumple cada clase dentro del vínculo.
+
+En el siguiente ejemplo, `Conductor` tiene el rol de **usuario**, mientras que `Coche` adopta el rol de **vehículo**. La flecha indica que es el conductor el que conduce al vehículo. Esta representación añade claridad al diagrama, sobre todo cuando las clases participan en múltiples asociaciones.
+
+![Asociación con roles entre Conductor y Coche](/entornos-de-desarrollo/imgs/ud05/ud05_conductorConduceCocheRoles.svg)
+
+Los **roles no son instancias**, sino **etiquetas semánticas** que aclaran cómo se comporta cada clase en esa asociación concreta.
+
+Es posible también que una clase pueda estar asociada con varias clases diferentes. Esto ocurre cuando múltiples clases tienen una relación semejante con una misma entidad. En este ejemplo, `Conductor`, `Pasajero` y `Técnico` están todos asociados con la clase `Coche`, cada uno cumpliendo un rol distinto:
+
+- El `Conductor` **conduce** el coche (rol: `usuario`).
+- El `Pasajero` **viaja** en el coche (rol: `ocupante`).
+- El `Técnico` **arregla** al coche (rol: `mecánico` o `responsable`).
+
+![Asociación múltiple con roles](/entornos-de-desarrollo/imgs/ud05/ud05_ConductorPasajeroTecnicoCocheRoles.svg)
+
+Estas asociaciones múltiples pueden facilitar la comprensión del modelo en situaciones reales donde una misma clase (como `Coche`) se relaciona con varios actores desde distintos enfoques funcionales.
+
+### 3.1.1. Multiplicidades en las asociaciones
+
+En UML, las asociaciones pueden especificar **multiplicidades** en sus extremos para indicar cuántos objetos de una clase pueden estar relacionados con cuántos objetos de la otra. Esta información aparece junto a los extremos de la línea de asociación.
+
+Las multiplicidades más comunes incluyen:
+
+- `1`: exactamente un objeto.
+- `0..1`: cero o uno (es opcional).
+- `*`: cero o más objetos.
+- `1..*`: uno o más objetos.
+- `n..m`: un número dentro de un rango específico.
+
+Por ejemplo, si se desea representar que **un coche puede ser arreglado por uno o varios técnicos**, se usaría la multiplicidad `1..*` en el extremo del `Técnico`. Esto indicaría que, aunque siempre debe haber al menos un técnico asociado, puede haber muchos:
+
+![Asociación múltiplicidad](/entornos-de-desarrollo/imgs/ud05/ud05_tecnicosArreglanVehiculo.svg)
+
+Esta notación permite expresar restricciones importantes en el diseño del sistema, asegurando que ciertas relaciones existan siempre o tengan una cantidad mínima o máxima de instancias involucradas.
+
+
+### 3.1.2. Restricciones en asociaciones múltiples
+
+En ciertos casos, una clase puede estar asociada con varias clases posibles, pero debe cumplirse la condición de que **solo una de esas asociaciones pueda activarse a la vez**. Esto se denomina **restricción de exclusividad**.
+
+Un ejemplo podría ser el caso de una clase `Conductor` que puede conducir tres tipos de vehículos: `Coche`, `Camión`o `Motocicleta`, pero **nunca a más de uno al mismo tiempo**. Aunque la clase `Conductor` se asocia con las tres clases de vehículo, se establece una restricción que impide que un mismo conductor conduzca varios tipos simultáneamente. Esta situación puede representarse en UML mediante una **línea discontinua con la etiqueta `{or}`**, que indica la exclusividad entre asociaciones.
+
+![Asociación con restricciones](/entornos-de-desarrollo/imgs/ud05/ud05_asociacionConRestriccion.svg)
+
+
+Este tipo de restricción resulta útil en contextos donde se deben modelar decisiones o asignaciones mutuamente excluyentes, como en sistemas logísticos o de asignación de recursos.
+
+### 3.1.3. Clase asociación
+
+En ciertas ocasiones, la relación entre dos clases no puede representarse únicamente mediante una línea de asociación, ya que dicha relación incluye información adicional que no pertenece de forma exclusiva a ninguna de las dos clases. En estos casos, se recurre a la figura de la **clase de asociación**.
+
+Una clase de asociación es una clase especial que se utiliza para **modelar una relación que posee atributos propios**. Este tipo de clase permite capturar detalles adicionales sobre la conexión entre dos entidades. Se representa gráficamente con una **línea discontinua** que la une a la asociación entre las clases implicadas.
+
+Para ilustrar este concepto, puede considerarse el caso de una autoescuela en la que se desea modelar la relación entre los objetos de tipo `Conductor` (alumnos) y `Coche`. Aunque inicialmente podría parecer suficiente con una asociación directa, se identifican detalles adicionales como la **fecha de la práctica**, la **duración** de la sesión o el **tipo de conducción** (urbana, interurbana, nocturna…). Estos datos no pertenecen únicamente a `Conductor` ni a `Coche`, sino a la relación concreta entre ambos en un contexto específico.
+
+En este caso, es apropiado introducir una clase de asociación llamada `ClasePractica`. Esta nueva clase contendría atributos como `fecha`, `duracion` o `tipo`, que por simplicidad de diagrama no se representarán, y se relaciona mediante una línea discontinua con la asociación entre `Conductor` y `Coche`.
+
+![Asociación con clase asociación](/entornos-de-desarrollo/imgs/ud05/ud05_claseAsociacion.svg)
+
+Gracias a esta estructura, es posible representar situaciones como que un mismo conductor realice varias clases prácticas en diferentes coches, o que un mismo coche sea utilizado por diferentes conductores en distintas sesiones. De este modo, se enriquece el modelo y se obtiene un diseño más fiel a la realidad.
+
+El uso de clases de asociación resulta especialmente útil cuando en la implementación se requeriría una tabla intermedia con atributos propios, tal como ocurre habitualmente en bases de datos relacionales.
+
+Este recurso, aunque menos frecuente que las asociaciones simples o con multiplicidad, permite representar relaciones complejas de forma más completa y precisa dentro de los diagramas de clases UML.
