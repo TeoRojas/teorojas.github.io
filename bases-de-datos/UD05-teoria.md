@@ -29,17 +29,13 @@ abstract: Sinopsis de la unidad 05
    8.2. [Subconsultas correlacionadas](#82-subconsultas-correlacionadas)  
    8.3. [Subconsultas en FROM y SELECT](#83-subconsultas-en-from-y-select)  
    8.4. [Rendimiento de subconsultas](#84-rendimiento-de-subconsultas)  
-9. [Operadores de conjunto](#9-operadores-de-conjunto)  
-   9.1. [UNION y UNION ALL](#91-union-y-union-all)  
-   9.2. [INTERSECT y EXCEPT (limitaciones en MySQL)](#92-intersect-y-except-limitaciones-en-mysql)  
 10. [Consultas multitabla](#10-consultas-multitabla)  
+    10.1. Composición interna
+    10.2. Composición externa
     10.1. [INNER JOIN](#101-inner-join)  
     10.2. [LEFT JOIN y RIGHT JOIN](#102-left-join-y-right-join)  
     10.3. [OUTER JOIN (emulación en MySQL)](#103-outer-join-emulación-en-mysql)  
     10.4. [CROSS JOIN](#104-cross-join)  
-11. [Consultas con alias y funciones escalares](#11-consultas-con-alias-y-funciones-escalares)  
-    11.1. [Funciones matemáticas, de cadena, fecha y conversión](#111-funciones-matemáticas-de-cadena-fecha-y-conversión)  
-12. [Vistas y consultas anidadas](#12-vistas-y-consultas-anidadas)  
 13. [Optimización y rendimiento de consultas](#13-optimización-y-rendimiento-de-consultas)  
 14. [Práctica guiada: consulta avanzada sobre esquema relacional de ejemplo](#14-práctica-guiada-consulta-avanzada-sobre-esquema-relacional-de-ejemplo)
 
@@ -932,6 +928,8 @@ La cláusula `HAVING` es esencial cuando se necesita refinar los resultados agru
 
 # 7. Ordenación de resultados
 
+<!--
+
 En SQL, la cláusula `ORDER BY` permite ordenar los resultados de una consulta según los valores de una o varias columnas. Esta ordenación puede realizarse en orden ascendente (`ASC`) o descendente (`DESC`). Por defecto, si no se indica nada, se aplicará orden ascendente.
 
 Esta funcionalidad resulta especialmente útil cuando se quiere presentar la información de forma clara, ordenada por nombre, nivel de poder, fecha, puntuación, etc. Su sintaxis es la siguiente:
@@ -942,7 +940,31 @@ FROM tabla
 ORDER BY columna1 [ASC|DESC], columna2 [ASC|DESC];
 ```
 
-## Ejemplo con Dragon Ball
+
+
+-->
+
+En muchas ocasiones, no basta con obtener datos de una tabla: es necesario que estos aparezcan **ordenados** según ciertos criterios. Por ejemplo, al consultar los guerreros con mayor nivel de poder o los registros más recientes de una tabla de eventos, el orden de los resultados aporta significado y utilidad.
+
+El lenguaje SQL permite definir el orden de las filas devueltas mediante la cláusula `ORDER BY`, y además limitar la cantidad de resultados mostrados mediante la cláusula `LIMIT`. Ambas herramientas combinadas permiten elaborar consultas eficientes y adaptadas a las necesidades reales de presentación o rendimiento.
+
+A continuación, se estudian estas dos cláusulas fundamentales.
+
+## 7.1. ORDER BY: uso con ASC y DESC
+
+La cláusula `ORDER BY` permite ordenar los resultados de una consulta en función de uno o varios campos. Por defecto, el orden es ascendente, aunque puede especificarse de forma explícita si se desea lo contrario.
+
+La sintaxis general es:
+
+```sql
+SELECT columnas
+FROM tabla
+ORDER BY columna [ASC | DESC];
+```
+- `ASC` indica orden ascendente (menor a mayor, alfabéticamente de la A a la Z).
+- `DESC` indica orden descendente (mayor a menor, de la Z a la A).
+
+### Ejemplo con Dragon Ball
 
 Dada la tabla `guerreros_z`:
 
@@ -995,7 +1017,7 @@ Esto agrupa a los guerreros por raza y, dentro de cada grupo, los ordena de mayo
 | Vegeta  | Saiyan         |        9200 |
 | Gohan   | Saiyan-mestizo |        8700 |
 
-## Consideraciones
+### Consideraciones
 
 - Es posible ordenar por columnas que no están incluidas en la cláusula `SELECT`, aunque no es una práctica habitual.
 - También se puede ordenar por el número de posición de la columna (`ORDER BY 2 DESC`), aunque es menos legible.
@@ -1006,258 +1028,292 @@ Esto agrupa a los guerreros por raza y, dentro de cada grupo, los ordena de mayo
 La correcta aplicación de `ORDER BY` mejora la claridad de los resultados y permite presentar los datos con mayor utilidad según el contexto.
 
 
+## 7.2. LIMIT: limitar el número de resultados
 
+La cláusula `LIMIT` se utiliza para restringir la cantidad de filas devueltas por una consulta. Es útil cuando solo se quieren mostrar los primeros resultados o se está implementando paginación.
 
+La sintaxis básica es:
 
+```sql
+SELECT columnas
+FROM tabla
+LIMIT cantidad;
+```
 
+También se puede añadir un desplazamiento (`OFFSET`), que indica desde qué fila empezar:
 
+```sql
+SELECT columnas
+FROM tabla
+LIMIT inicio, cantidad;
+```
 
+- `LIMIT 10` devuelve las primeras 10 filas.
+- `LIMIT 5, 10` omite las 5 primeras y devuelve las 10 siguientes.
 
+### Ejemplo con Dragon Ball
 
+Dada la tabla `guerreros_z`:
 
+| id_guerrero | nombre   | raza           | nivel_poder |
+|-------------|----------|----------------|-------------|
+| 1           | Goku     | Saiyan         | 9500        |
+| 2           | Vegeta   | Saiyan         | 9200        |
+| 3           | Gohan    | Saiyan-mestizo | 8700        |
+| 4           | Piccolo  | Namek          | 7500        |
+| 5           | Krilin   | Humano         | 4000        |
+| 6           | Yamcha   | Humano         | NULL        |
 
+### Obtener los 3 guerreros con mayor nivel de poder.
 
+```sql
+SELECT nombre, nivel_poder
+FROM guerreros_z
+ORDER BY nivel_poder DESC
+LIMIT 3;
+```
+Resultado:
 
+| nombre | nivel_poder |
+|--------|-------------|
+| Goku   |        9500 |
+| Vegeta |        9200 |
+| Gohan  |        8700 |
 
+### Obtener los guerreros del 4.º al 6.º lugar en nivel de poder.
 
+```sql
+SELECT nombre, nivel_poder
+FROM guerreros_z
+ORDER BY nivel_poder DESC
+LIMIT 3, 3;
+```
 
+Resultado:
 
+| nombre  | nivel_poder |
+|---------|-------------|
+| Piccolo |        7500 |
+| Krilin  |        4000 |
+| Yamcha  |        NULL |
+
+Se debe de tener en cuenta las siguientes consideraciones finales:
+- `ORDER BY` y `LIMIT` se colocan al final de la consulta.
+- Si no se incluye `ORDER BY`, `LIMIT` puede devolver resultados en un orden arbitrario.
+- Estas cláusulas son fundamentales para optimizar la experiencia del usuario y el rendimiento del sistema, sobre todo en aplicaciones con grandes volúmenes de datos.
+
+# 8. Subconsultas
+
+Una subconsulta es una "consulta dentro de otra consulta". Es como buscar información en un libro, pero antes se necesita consultar otro libro para encontrar la información que se desea. La consulta externa utiliza los resultados de la consulta interna para tomar decisiones o filtrar resultados.
+
+La sintaxis básica de una subconsulta es la siguiente:
+
+```sql
+SELECT columna
+FROM tabla
+WHERE condicion IN (
+    SELECT columna
+    FROM otra_tabla
+    WHERE otra_condicion
+);
+```
+
+Donde cada parte de la sintaxis hace lo siguiente:
+
+- `SELECT columna`: Especifica la columna que se quiere seleccionar de la tabla principal.
+- `FROM tabla`: Indica la tabla principal de la que se seleccionarán los datos.
+- `WHERE condicion`: Define la condición que deben cumplir las filas de la tabla principal para ser seleccionadas.
+- `IN (SELECT ...)`: Esta es la subconsulta. Se ejecuta primero y devuelve un conjunto de resultados que se utilizan como parte de la condición de la consulta principal. Puede contener su propia cláusula `SELECT`, `FROM` y `WHERE` para filtrar los datos. El uso de `IN` no es obligatorio, también pueden usarse operadores relacionales como `<`, `>`, `=`, etc.
+
+### Ejemplo con Dragon Ball
+
+Dada la siguiente tabla:
+
+Dada la tabla `guerreros_z`:
+
+| id_guerrero | nombre   | raza           | nivel_poder |
+|-------------|----------|----------------|-------------|
+| 1           | Goku     | Saiyan         | 9500        |
+| 2           | Vegeta   | Saiyan         | 9200        |
+| 3           | Gohan    | Saiyan-mestizo | 8700        |
+| 4           | Piccolo  | Namek          | 7500        |
+| 5           | Krilin   | Humano         | 4000        |
+| 6           | Yamcha   | Humano         | NULL        |
+
+Se desea encontrar guerreros cuyo nivel de poder sea inferior al de Vegeta. La consulta se escribiría así:
+
+```sql
+SELECT nombre, nivel_poder
+FROM guerreros_z
+WHERE nivel_poder < (
+    SELECT nivel_poder
+    FROM guerreros_z
+    WHERE nombre = 'Vegeta'
+);
+```
+
+Resultado:
+
+| nombre  | nivel_poder |
+|---------|-------------|
+| Gohan   |        8700 |
+| Piccolo |        7500 |
+| Krilin  |        4000 |
+
+En esta consulta, la subconsulta `SELECT nivel_poder FROM Guerreros WHERE nombre = 'Vegeta'` obtiene el nivel de poder de Vegeta. Luego, la consulta externa selecciona los guerreros cuyo nivel de poder es menor que ese valor.
+
+También es posible anidar múltiples subconsultas. Por ejemplo, para obtener los guerreros con poder mayor al de Vegeta pero menor al de Goku:
+
+```sql
+SELECT nombre, nivel_poder
+FROM guerreros_z
+WHERE nivel_poder > (
+    SELECT nivel_poder
+    FROM guerreros_z
+    WHERE nombre = 'Vegeta'
+)
+AND nivel_poder < (
+    SELECT nivel_poder
+    FROM guerreros_z
+    WHERE nombre = 'Goku'
+);
+```
+
+Resultado:
+
+```sql
+Empty set (0.00 sec)
+```
+
+Esto indica que no hay guerreros cuyo nivel de poder esté entre esos dos valores.
+
+Es importante tener en cuenta que las subconsultas que utilizan operadores como `>`, `<`, `>=`, etc., deben devolver un único valor. De lo contrario, se producirá un error.
+
+Cuando se necesita comparar un valor con múltiples resultados, se pueden usar instrucciones especiales:
+
+- `ANY`: Compara un valor con cualquier valor devuelto por la subconsulta. La condición se cumple si al menos una comparación es verdadera.
+- `ALL`: Compara un valor con todos los valores devueltos por la subconsulta. La condición se cumple si todas las comparaciones son verdaderas.
+- `IN`: Verifica si un valor está presente en el conjunto devuelto por la subconsulta.
+- `NOT IN`: Verifica si un valor no está presente en el conjunto devuelto por la subconsulta.
+
+Por ejemplo, para obtener el guerrero con mayor nivel de poder:
+
+```sql
+SELECT nombre, nivel_poder
+FROM guerreros_z
+WHERE nivel_poder >= ALL (
+    SELECT nivel_poder
+    FROM guerreros_z
+    WHERE nivel_poder IS NOT NULL
+);
+```
+
+Resultado:
+
+| nombre | nivel_poder |
+|--------|-------------|
+| Goku   |        9500 |
+
+> **Nota:** Cuando se utiliza `ALL` con una subconsulta que devuelve algún valor `NULL`, el resultado puede no ser el esperado. En concreto, si la subconsulta contiene un `NULL`, la comparación con `ALL` devolverá **falso o vacío**, porque `NULL` no se puede comparar directamente con otros valores. Por eso, para poder hacer uso correcto de `ALL` en esta consulta, es necesario añadir la última línea `WHERE nivel_poder IS NOT NULL`.
+
+## 8.1. Ubicación y anidación de subconsultas
 
 <!--
 
+Una subconsulta puede colocarse en diferentes partes de una sentencia SQL. Su ubicación determinará cómo se evalúa y qué tipo de resultado se espera. Además, las subconsultas pueden anidarse, es decir, una subconsulta puede contener a su vez otra subconsulta en su interior, lo que permite resolver consultas más complejas de forma escalonada.
+
+### Subconsulta en la cláusula WHERE
+
+Es el uso más habitual, ya visto anteriormente. Sirve para filtrar filas de la consulta principal en función de los resultados devueltos por otra consulta.
+
+```sql
+SELECT nombre, nivel_poder
+FROM guerreros_z
+WHERE nivel_poder < (
+    SELECT nivel_poder
+    FROM guerreros_z
+    WHERE nombre = 'Vegeta'
+);
+```
+
+### Subconsulta en la cláusula FROM
+
+Permite tratar una subconsulta como si fuera una tabla temporal. Es útil cuando se necesita procesar un conjunto intermedio de datos antes de aplicar filtros o agrupaciones.
+
+```sql
+SELECT nombre, poder_doble
+FROM (
+    SELECT nombre, nivel_poder * 2 AS poder_doble
+    FROM guerreros_z
+) AS subconsulta_poder;
+```
+
+Resultado:
+
+| nombre  | poder_doble |
+|---------|-------------|
+| Goku    |       19000 |
+| Vegeta  |       18400 |
+| Gohan   |       17400 |
+| Piccolo |       15000 |
+| Krilin  |        8000 |
+| Yamcha  |        NULL |
 
 
----
----
----
+### Subconsulta en la cláusula SELECT
 
-<div style="display: flex; align-items: center; gap: 40px;">
-    <div>
-        <img src="/bases-de-datos/imgs/ud05/ud05_innerJoin.svg" alt="Inner Join" />
-    </div>
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre><span class="k">SELECT</span> <span class="o">*</span>
-<span class="k">FROM</span> <span class="n">A</span>
-<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">B</span> <span class="k">ON</span> <span class="n">A</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="n">B</span><span class="p">.</span><span class="k">key</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-</div>
+Se utiliza para obtener un valor escalar por fila. Cada subconsulta se ejecuta una vez por cada fila del resultado de la consulta externa.
 
+```sql
+SELECT nombre,
+       (SELECT raza FROM guerreros_z WHERE guerreros_z.nombre = 'Goku') AS raza_goku
+FROM guerreros_z;
+```
 
-<div style="display: flex; align-items: center; gap: 40px;">
-    <div>
-        <img src="/bases-de-datos/imgs/ud05/ud05_fullJoin.svg" alt="Full Join" />
-    </div>
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre><span class="k">SELECT</span> <span class="o">*</span>
-<span class="k">FROM</span> <span class="n">A</span>
-<span class="k">FULL</span> <span class="k">JOIN</span> <span class="n">B</span> <span class="k">ON</span> <span class="n">A</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="n">B</span><span class="p">.</span><span class="k">key</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-</div>
+En este ejemplo, aunque no tiene mucha utilidad práctica, se demuestra que puede colocarse una subconsulta dentro de `SELECT` y devolver una columna adicional con un valor fijo o calculado.
 
+### Subconsulta en la cláusula HAVING
 
-<div style="display: flex; align-items: center; gap: 40px;">
-    <div>
-        <img src="/bases-de-datos/imgs/ud05/ud05_fullJoinNull.svg" alt="Full Join Null" />
-    </div>
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-</pre></td><td class="rouge-code"><pre><span class="k">SELECT</span> <span class="o">*</span>
-<span class="k">FROM</span> <span class="n">A</span>
-<span class="k">FULL</span> <span class="k">JOIN</span> <span class="n">B</span> <span class="k">ON</span> <span class="n">A</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="n">B</span><span class="p">.</span><span class="k">key</span>
-<span class="k">WHERE</span> <span class="n">A</span><span class="p">.</span><span class="k">key</span> <span class="k">IS</span> <span class="k">NULL</span> <span class="k">OR</span>
-<span class="n">B</span><span class="p">.</span> <span class="k">key</span> <span class="k">IS</span> <span class="k">NULL</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-</div>
+También se puede usar en la cláusula `HAVING` para filtrar resultados después de aplicar `GROUP BY`.
 
-<div style="display: flex; align-items: center; gap: 40px;">
-    <div>
-        <img src="/bases-de-datos/imgs/ud05/ud05_leftJoin.svg" alt="Left Join" />
-    </div>
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre><span class="k">SELECT</span> <span class="o">*</span>
-<span class="k">FROM</span> <span class="n">A</span>
-<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">B</span> <span class="k">ON</span> <span class="n">A</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="n">B</span><span class="p">.</span><span class="k">key</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-</div>
+```sql
+SELECT raza, COUNT(*) AS total
+FROM guerreros_z
+GROUP BY raza
+HAVING COUNT(*) > (
+    SELECT COUNT(*)
+    FROM guerreros_z
+    WHERE raza = 'Humano'
+);
+```
 
-<div style="display: flex; align-items: center; gap: 40px;">
-    <div>
-        <img src="/bases-de-datos/imgs/ud05/ud05_leftJoinNull.svg" alt="Left Join Null" />
-    </div>
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-</pre></td><td class="rouge-code"><pre><span class="k">SELECT</span> <span class="o">*</span>
-<span class="k">FROM</span> <span class="n">A</span>
-<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">B</span> <span class="k">ON</span> <span class="n">A</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="n">B</span><span class="p">.</span><span class="k">key</span>
-<span class="k">WHERE</span> <span class="n">B</span><span class="p">.</span><span class="k">Key</span> <span class="k">IS</span> <span class="k">NULL</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-</div>
+### Subconsultas anidadas
 
-<div style="display: flex; align-items: center; gap: 40px;">
-    <div>
-        <img src="/bases-de-datos/imgs/ud05/ud05_rightJoin.svg" alt="Right Join" />
-    </div>
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-</pre></td><td class="rouge-code"><pre><span class="k">SELECT</span> <span class="o">*</span>
-<span class="k">FROM</span> <span class="n">A</span>
-<span class="k">RIGHT</span> <span class="k">JOIN</span> <span class="n">B</span> <span class="k">ON</span> <span class="n">A</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="n">B</span><span class="p">.</span><span class="k">key</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-</div>
+Es posible anidar múltiples niveles de subconsultas. El motor SQL evalúa primero la subconsulta más interna y va resolviendo hacia afuera.
 
-<div style="display: flex; align-items: center; gap: 40px;">
-    <div>
-        <img src="/bases-de-datos/imgs/ud05/ud05_rightJoinNull.svg" alt="Right Join Null" />
-    </div>
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-</pre></td><td class="rouge-code"><pre><span class="k">SELECT</span> <span class="o">*</span>
-<span class="k">FROM</span> <span class="n">A</span>
-<span class="k">RIGHT</span>
-<span class="k">JOIN</span> <span class="n">B</span> <span class="k">ON</span> <span class="n">A</span><span class="p">.</span><span class="k">key</span> <span class="o">=</span> <span class="n">B</span><span class="p">.</span><span class="k">key</span>
-<span class="k">WHERE</span> <span class="n">B</span><span class="p">.</span><span class="k">key</span> <span class="k">IS</span> <span class="k">NULL</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-</div>
+```sql
+SELECT nombre
+FROM guerreros_z
+WHERE nivel_poder > (
+    SELECT AVG(nivel_poder)
+    FROM guerreros_z
+    WHERE nivel_poder > (
+        SELECT MIN(nivel_poder)
+        FROM guerreros_z
+        WHERE nivel_poder IS NOT NULL
+    )
+);
+```
+
+En este ejemplo se filtran los guerreros cuyo nivel de poder es mayor que la media de los guerreros cuyo nivel de poder es mayor que el mínimo.
+
+### Consideraciones
+
+- El número de niveles de subconsultas anidadas puede afectar al rendimiento.
+- Algunas subconsultas deben devolver un único valor (por ejemplo, si se usan con operadores como `=`, `<`, `>`, etc.).
+- En otros casos, se permiten conjuntos de resultados (como con `IN` o `EXISTS`).
+
+Este tipo de estructura permite construir consultas complejas dividiendo el problema en pasos más pequeños, manteniendo la claridad y evitando operaciones intermedias innecesarias.
+```
 
 -->
-
-# XX. Chuletario Resumen de SQL
-
-
-<div class="two-columns">
-  <div markdown="1"> <!-- Columna izquierda  -->
-
-# Create
-Crear nueva Base de datos o tabla
-
-```sql
-CREATE DATABASE [IF NOT EXISTS] <nombre_bbdd>;
-CREATE TABLE [IF NOT EXISTS] <nombre_tabla>;
-```
-
-# Drop
-Eliminar una Base de datos o tabla existentes
-
-```sql
-DROP DATABASE [IF EXISTS] <nombre_bbdd>;
-DROP TABLE [IF EXISTS] <nombre_tabla>;
-```
-
-# Truncate
-Eliminar la información de una tabla pero no la tabla
-
-```sql
-TRUNCATE TABLE  <nombre_tabla>;
-```
-
-# Alter
-Añadir, modificar o eliminar restricciones o columnas en una tabla
-
-```sql
-ALTER TABLE <nombre_tabla>
-ADD <nombre_columna> <tipo_dato>;
-
-ALTER TABLE <nombre_tabla>
-ALTER COLUMN <nombre_columna> <tipo_dato>;
-
-ALTER TABLE <nombre_tabla>
-DROP COLUMN <nombre_columna>;
-```
-
-# Insert
-Insertar nuevos registros (tuplas) en una tabla
-
-```sql
-INSERT INTO <nombre_tabla> (nombre_col1, ...)
-VALUES (valor1, ...),
-VALUES (valorN, ...);
-```
-##### No se necesita especificar los nombres de las columnas si se van a añadir valores para todas las columnas
-
-# Select
-Seleccionar/Mostrar datos de una tabla
-
-```sql
-SELECT <lista_atributos> 
-FROM <nombre_tabla>;
-```
-##### Si se quieren mostrar todos los atributos poner un (*) en la lista_atributos
-
-
-
-
-
-  </div> 
-  <div markdown="1"> <!-- Columna derecha  -->
-    
-# Tipos de datos.
-
-- **Numéricos**: INT, SMALLINT, DECIMAL(i,j)
-- **String**: CHAR, CHAR(n), VARCHAR(n)
-- **Bit String**: BIT, BIT(n)
-- **Fecha y tiempo**: DATE, TIME, TIME(i)
-- **Timestamp**: TIMESTAMP
-
-# Delete
-Eliminar registros (tuplas) de una tabla
-
-```sql
-DELETE FROM <nombre_tabla> 
-WHERE <condicion>;
-```
-##### Si no se añade la clausula WHERE, todos los registros serán eliminados
-
-# Update
-
-```sql
-UPDATE <nombre_tabla> 
-SET <nombre_columna> = <nuevo_valor>
-WHERE <condicion>;
-```
-
-
-# In
-Filtrar resultados de una consulta comparando una columna con una lista de valores específicos
-
-```sql
-SELECT <lista_atributos> 
-FROM <nombre_tabla>
-WHERE columna1 IN (otro_select);
-```
-
-# Null
-Comprobar que un valor es desconocido/inexistente
-
-```sql
-<nombre_atributo> IN [NOT] NULL
-```
-
-# Order By
-Ordenar los resultados de una consulta
-
-```sql
-SELECT * FROM <nombre_tabla>
-ORDER BY <nombre_atributo> <ASC/DESC>
-```
-##### ASC para mostrar orden ascendente, DESC para mostrar orden descendente
-
-
-  </div>
-</div>
-
-
