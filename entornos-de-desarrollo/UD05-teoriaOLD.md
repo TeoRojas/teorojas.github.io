@@ -1,7 +1,7 @@
 ---
 layout: default
 title: UD05. Elaboración de diagramas de clases.
-permalink: /entornos-de-desarrollo/ud05/teoria/
+permalink: /entornos-de-desarrollo/ud05/teoriaOLD/
 author: Teo Rojas
 date: Febrero 2025
 abstract:
