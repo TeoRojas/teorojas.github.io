@@ -11,7 +11,7 @@ abstract: Sinopsis de la unidad 05
 
 1. [Ejercicio N1: Cálculos aritméticos](#ejercicio-n1-cálculos-aritméticos)  
 2. [Ejercicio N2: Gestión de Inventario con cláusulas IS NULL, LIKE, IN y BETWEEN](#ejercicio-n2-gestión-de-inventario-con-cláusulas-is-null-like-in-y-between)  
-3. [Ejercicio N3: Subconsultas I](#ejercicio-n3-dragonball-subconsultas)  
+3. [Ejercicio N3: DragonBall Subconsultas](#ejercicio-n3-dragonball-subconsultas)  
 
 # Ejercicio N1: Cálculos aritméticos
 
