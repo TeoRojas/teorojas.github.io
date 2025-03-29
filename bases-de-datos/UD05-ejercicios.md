@@ -84,7 +84,7 @@ Imagina que estás trabajando en una empresa de logística y te han asignado la 
 13. Encuentra la categoría con el menor valor total de stock.  
 14. Encuentra el número total de productos en cada categoría.  
 15. Encuentra todos los productos que tienen el mismo precio unitario que otro producto.  
-16. Encuentra todos los productos cuyo nombre contiene al menos tres vocales.  
+16. Encuentra todos los productos cuyo nombre contiene una 'a' y una 'e' (en cualquier orden).
 17. Encuentra todos los productos que tienen el mismo nombre de categoría que otro producto.  
 18. Encuentra todos los productos cuyo nombre es más largo que su categoría.  
 19. Encuentra todos los productos cuyo precio unitario es un número entero.  

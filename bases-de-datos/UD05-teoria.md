@@ -26,16 +26,14 @@ abstract: Sinopsis de la unidad 05
 7. [Ordenación de resultados](#7-ordenación-de-resultados)  
 8. [Subconsultas](#8-subconsultas)  
    8.1. [Ubicación y anidación de subconsultas](#81-ubicación-y-anidación-de-subconsultas)  
-   8.2. [Subconsultas correlacionadas](#82-subconsultas-correlacionadas)  
-   8.3. [Subconsultas en FROM y SELECT](#83-subconsultas-en-from-y-select)  
-   8.4. [Rendimiento de subconsultas](#84-rendimiento-de-subconsultas)  
-10. [Consultas multitabla](#10-consultas-multitabla)  
-    10.1. Composición interna
-    10.2. Composición externa
-    10.1. [INNER JOIN](#101-inner-join)  
-    10.2. [LEFT JOIN y RIGHT JOIN](#102-left-join-y-right-join)  
-    10.3. [OUTER JOIN (emulación en MySQL)](#103-outer-join-emulación-en-mysql)  
-    10.4. [CROSS JOIN](#104-cross-join)  
+   8.2. [Rendimiento de subconsultas](#82-rendimiento-de-subconsultas)  
+9. [Consultas multitabla](#10-consultas-multitabla)  
+    9.1. Composición interna
+    9.2. Composición externa
+    9.3. [INNER JOIN](#93-inner-join)  
+    9.4. [LEFT JOIN y RIGHT JOIN](#94-left-join-y-right-join)  
+    9.5. [OUTER JOIN (emulación en MySQL)](#95-outer-join-emulación-en-mysql)  
+    9.6. [CROSS JOIN](#96-cross-join)  
 13. [Optimización y rendimiento de consultas](#13-optimización-y-rendimiento-de-consultas)  
 14. [Práctica guiada: consulta avanzada sobre esquema relacional de ejemplo](#14-práctica-guiada-consulta-avanzada-sobre-esquema-relacional-de-ejemplo)
 
@@ -1218,59 +1216,51 @@ Resultado:
 
 ## 8.1. Ubicación y anidación de subconsultas
 
-<!--
-
-Una subconsulta puede colocarse en diferentes partes de una sentencia SQL. Su ubicación determinará cómo se evalúa y qué tipo de resultado se espera. Además, las subconsultas pueden anidarse, es decir, una subconsulta puede contener a su vez otra subconsulta en su interior, lo que permite resolver consultas más complejas de forma escalonada.
-
-### Subconsulta en la cláusula WHERE
-
-Es el uso más habitual, ya visto anteriormente. Sirve para filtrar filas de la consulta principal en función de los resultados devueltos por otra consulta.
-
-```sql
-SELECT nombre, nivel_poder
-FROM guerreros_z
-WHERE nivel_poder < (
-    SELECT nivel_poder
-    FROM guerreros_z
-    WHERE nombre = 'Vegeta'
-);
-```
+Una subconsulta puede colocarse en diferentes partes de una sentencia SQL. Su ubicación determina cómo se evalúa y qué tipo de resultado se espera. Además, las subconsultas pueden anidarse, es decir, una subconsulta puede contener a su vez otra subconsulta, lo que permite resolver consultas más complejas de forma escalonada.
 
 ### Subconsulta en la cláusula FROM
 
-Permite tratar una subconsulta como si fuera una tabla temporal. Es útil cuando se necesita procesar un conjunto intermedio de datos antes de aplicar filtros o agrupaciones.
+Permite tratar una subconsulta como si fuera una tabla temporal. Es útil cuando se necesita procesar un conjunto intermedio de datos antes de aplicar filtros o agrupaciones. En este ejemplo, se obtiene una tabla con el promedio de poder por raza y luego se filtran únicamente aquellas razas cuyo poder medio supera los 8000 puntos:
 
 ```sql
-SELECT nombre, poder_doble
+SELECT raza, poder_medio
 FROM (
-    SELECT nombre, nivel_poder * 2 AS poder_doble
+    SELECT raza, AVG(nivel_poder) AS poder_medio
     FROM guerreros_z
-) AS subconsulta_poder;
+    WHERE nivel_poder IS NOT NULL
+    GROUP BY raza
+) AS promedio_por_raza
+WHERE poder_medio > 8000;
 ```
 
-Resultado:
+Resultado esperado:
 
-| nombre  | poder_doble |
-|---------|-------------|
-| Goku    |       19000 |
-| Vegeta  |       18400 |
-| Gohan   |       17400 |
-| Piccolo |       15000 |
-| Krilin  |        8000 |
-| Yamcha  |        NULL |
+| raza           | poder_medio |
+|----------------|-------------|
+| Saiyan         |   9350.0000 |
+| Saiyan-mestizo |   8700.0000 |
 
+En este caso, la subconsulta permite aislar la operación de agrupación y promedio para luego aplicar un filtro adicional sobre el resultado de ese cálculo intermedio.
 
 ### Subconsulta en la cláusula SELECT
 
-Se utiliza para obtener un valor escalar por fila. Cada subconsulta se ejecuta una vez por cada fila del resultado de la consulta externa.
+Se utiliza para obtener un valor escalar por fila. Cada subconsulta se ejecuta una vez por cada fila del resultado de la consulta externa. Un ejemplo más significativo que devuelve la media general del poder de combate junto a cada guerrero sería:
 
 ```sql
-SELECT nombre,
-       (SELECT raza FROM guerreros_z WHERE guerreros_z.nombre = 'Goku') AS raza_goku
+SELECT nombre, nivel_poder - 
+       (SELECT AVG(nivel_poder) FROM guerreros_z WHERE nivel_poder IS NOT NULL) AS poder_vs_media
 FROM guerreros_z;
 ```
+Esto permite comparar el nivel de poder de cada guerrero con la media total:
 
-En este ejemplo, aunque no tiene mucha utilidad práctica, se demuestra que puede colocarse una subconsulta dentro de `SELECT` y devolver una columna adicional con un valor fijo o calculado.
+| nombre  | poder_vs_media |
+|---------|----------------|
+| Goku    |      1720.0000 |
+| Vegeta  |      1420.0000 |
+| Gohan   |       920.0000 |
+| Piccolo |      -280.0000 |
+| Krilin  |     -3780.0000 |
+| Yamcha  |           NULL |
 
 ### Subconsulta en la cláusula HAVING
 
@@ -1280,14 +1270,21 @@ También se puede usar en la cláusula `HAVING` para filtrar resultados después
 SELECT raza, COUNT(*) AS total
 FROM guerreros_z
 GROUP BY raza
-HAVING COUNT(*) > (
+HAVING COUNT(*) >= (
     SELECT COUNT(*)
     FROM guerreros_z
     WHERE raza = 'Humano'
 );
 ```
 
-### Subconsultas anidadas
+Como se puede observar en la tabla, solo hay dos razas que tengan la misma o más cantidad de guerreros que `Humano`, resultado:
+
+| raza   | total |
+|--------|-------|
+| Saiyan |     2 |
+| Humano |     2 |
+
+### Subconsulta en la cláusula WHERE/anidadas:
 
 Es posible anidar múltiples niveles de subconsultas. El motor SQL evalúa primero la subconsulta más interna y va resolviendo hacia afuera.
 
@@ -1295,25 +1292,41 @@ Es posible anidar múltiples niveles de subconsultas. El motor SQL evalúa prime
 SELECT nombre
 FROM guerreros_z
 WHERE nivel_poder > (
-    SELECT AVG(nivel_poder)
-    FROM guerreros_z
-    WHERE nivel_poder > (
-        SELECT MIN(nivel_poder)
+    SELECT MAX(poder_medio)
+    FROM (
+        SELECT AVG(nivel_poder) AS poder_medio
         FROM guerreros_z
         WHERE nivel_poder IS NOT NULL
-    )
+        GROUP BY raza
+    ) AS medias_por_raza
 );
 ```
 
-En este ejemplo se filtran los guerreros cuyo nivel de poder es mayor que la media de los guerreros cuyo nivel de poder es mayor que el mínimo.
+En este ejemplo se seleccionan los guerreros cuyo nivel de poder supera al promedio de la raza con el mayor promedio general. La subconsulta más interna calcula los promedios por raza, la intermedia obtiene el máximo de esos promedios, y la externa filtra los guerreros que superan ese umbral. Resultado:
 
-### Consideraciones
+| nombre |
+|--------|
+| Goku   |
 
-- El número de niveles de subconsultas anidadas puede afectar al rendimiento.
-- Algunas subconsultas deben devolver un único valor (por ejemplo, si se usan con operadores como `=`, `<`, `>`, etc.).
-- En otros casos, se permiten conjuntos de resultados (como con `IN` o `EXISTS`).
+> **Nota**: El número de niveles de subconsultas anidadas puede afectar al rendimiento. Además, se debe tener en cuenta que algunas subconsultas pueden devolver un único valor, especialmente cuando se utilizan con operadores de comparación como `=`, `<` o `>`.
 
-Este tipo de estructura permite construir consultas complejas dividiendo el problema en pasos más pequeños, manteniendo la claridad y evitando operaciones intermedias innecesarias.
+## 8.2. Rendimiento de subconsultas
+
+El uso de subconsultas permite construir consultas más potentes y expresivas en SQL, pero también puede conllevar problemas de rendimiento si no se diseñan adecuadamente. Al evaluar el impacto en el rendimiento, se deben considerar aspectos como el volumen de datos, el número de ejecuciones de la subconsulta y la existencia de índices adecuados en las columnas implicadas.
+
+Cuando se utiliza una subconsulta en una cláusula `WHERE` o `HAVING`, el motor de base de datos evalúa primero la subconsulta para luego aplicar su resultado a la consulta principal. Si la subconsulta es sencilla y devuelve un único valor, el coste suele ser bajo. Sin embargo, si la subconsulta es compleja, devuelve muchos registros o se ejecuta una vez por cada fila de la consulta externa, el impacto puede ser considerable.
+
+Una de las situaciones más costosas ocurre cuando se usan subconsultas en la cláusula `SELECT` y éstas se ejecutan por cada fila del resultado. Por ejemplo:
+
+```sql
+SELECT nombre,
+       (SELECT AVG(nivel_poder)
+        FROM guerreros_z
+        WHERE raza = g.raza) AS media_por_raza
+FROM guerreros_z AS g;
 ```
 
--->
+Aunque este ejemplo es útil para mostrar el promedio de poder por raza junto a cada guerrero, MySQL debe ejecutar la subconsulta para cada fila del resultado. En tablas con muchos registros, esto puede ralentizar drásticamente el rendimiento.
+
+> Nota: Las subconsultas complejas o repetitivas pueden sustituirse por soluciones alternativas como el uso de vistas temporales o consultas previamente agregadas cuando se quiera mejorar el rendimiento y legibilidad del código SQL.
+
