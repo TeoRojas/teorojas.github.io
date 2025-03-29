@@ -1326,7 +1326,11 @@ SELECT nombre,
 FROM guerreros_z AS g;
 ```
 
-Aunque este ejemplo es útil para mostrar el promedio de poder por raza junto a cada guerrero, MySQL debe ejecutar la subconsulta para cada fila del resultado. En tablas con muchos registros, esto puede ralentizar drásticamente el rendimiento.
+Aunque este ejemplo es útil para mostrar el promedio de poder por raza junto a cada guerrero, MySQL debe ejecutar la subconsulta una vez por cada fila del resultado. En tablas pequeñas esto puede no representar un problema, pero cuando se trabaja con decenas o cientos de miles de registros, este tipo de subconsulta puede generar una carga considerable y ralentizar drásticamente la ejecución de la consulta.
 
-> Nota: Las subconsultas complejas o repetitivas pueden sustituirse por soluciones alternativas como el uso de vistas temporales o consultas previamente agregadas cuando se quiera mejorar el rendimiento y legibilidad del código SQL.
+Una alternativa más eficiente, en muchos casos, consiste en transformar la subconsulta en una consulta agregada externa que calcule previamente los valores necesarios y luego se relacione con la tabla principal mediante una unión. En versiones modernas de MySQL, el optimizador puede en algunos casos detectar patrones de subconsultas ineficientes y reescribir internamente la consulta para mejorar el rendimiento, pero esta reescritura no siempre es posible ni garantizada.
+
+También es importante considerar que las subconsultas que utilizan operadores como `IN`, `ANY` o `ALL` deben evaluarse con especial cuidado, ya que si la subconsulta devuelve un conjunto grande de resultados o incluye valores `NULL`, puede dar lugar a un rendimiento deficiente o incluso a resultados incorrectos si no se controlan bien las condiciones.
+
+> Nota:  Las subconsultas complejas o repetitivas pueden sustituirse por soluciones alternativas como el uso de vistas temporales, tablas derivadas, expresiones comunes con WITH o consultas previamente agregadas cuando se quiera mejorar el rendimiento y legibilidad del código SQL. Estas alternativas permiten a menudo ejecutar la subconsulta una sola vez y reutilizar sus resultados de forma eficiente.
 
