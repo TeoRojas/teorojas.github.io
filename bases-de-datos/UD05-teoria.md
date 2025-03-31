@@ -1442,7 +1442,7 @@ En otras palabras, solo se muestran los resultados cuando existe una corresponde
 
 Para ilustrar mejor este comportamiento, a continuación se muestra una imagen que representa visualmente cómo se lleva a cabo esta operación de intersección entre tablas. Se puede observar cómo solo se conservan los registros donde se cumple la relación definida:
 
-![Inner Join](/bases-de-datos/imgs/ud05/ud05_InnerJoin.svg)
+![Inner Join](/bases-de-datos/imgs/ud05/ud05_innerJoin.svg)
 
 Una forma de realizar esta composición es mediante el uso de la cláusula `WHERE`, especificando que los valores de `id_guerrero` deben coincidir en ambas tablas:
 
