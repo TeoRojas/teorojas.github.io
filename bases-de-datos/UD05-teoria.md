@@ -28,14 +28,10 @@ abstract: Sinopsis de la unidad 05
    8.1. [Ubicación y anidación de subconsultas](#81-ubicación-y-anidación-de-subconsultas)  
    8.2. [Rendimiento de subconsultas](#82-rendimiento-de-subconsultas)  
 9. [Consultas multitabla](#10-consultas-multitabla)  
-    9.1. Composición interna
-    9.2. Composición externa
-    9.3. [INNER JOIN](#93-inner-join)  
-    9.4. [LEFT JOIN y RIGHT JOIN](#94-left-join-y-right-join)  
-    9.5. [OUTER JOIN (emulación en MySQL)](#95-outer-join-emulación-en-mysql)  
-    9.6. [CROSS JOIN](#96-cross-join)  
-13. [Optimización y rendimiento de consultas](#13-optimización-y-rendimiento-de-consultas)  
-14. [Práctica guiada: consulta avanzada sobre esquema relacional de ejemplo](#14-práctica-guiada-consulta-avanzada-sobre-esquema-relacional-de-ejemplo)
+    9.1. Composición interna, INNER JOIN
+    9.2. Composición externa, LEFT JOIN, RIGHT JOIN, OUTER JOIN.
+10. [Optimización y rendimiento de consultas](#13-optimización-y-rendimiento-de-consultas)  
+
 
 
 # 1. Introducción y objetivos del lenguaje de consulta
@@ -1333,4 +1329,168 @@ Una alternativa más eficiente, en muchos casos, consiste en transformar la subc
 También es importante considerar que las subconsultas que utilizan operadores como `IN`, `ANY` o `ALL` deben evaluarse con especial cuidado, ya que si la subconsulta devuelve un conjunto grande de resultados o incluye valores `NULL`, puede dar lugar a un rendimiento deficiente o incluso a resultados incorrectos si no se controlan bien las condiciones.
 
 > Nota:  Las subconsultas complejas o repetitivas pueden sustituirse por soluciones alternativas como el uso de vistas temporales, tablas derivadas, expresiones comunes con WITH o consultas previamente agregadas cuando se quiera mejorar el rendimiento y legibilidad del código SQL. Estas alternativas permiten a menudo ejecutar la subconsulta una sola vez y reutilizar sus resultados de forma eficiente.
+
+# 9. Consultas multitabla
+
+En bases de datos relacionales, la información suele dividirse en varias tablas relacionadas para evitar redundancias y asegurar la integridad de los datos. Para recuperar esta información de forma coherente, es necesario combinar registros de diferentes tablas mediante consultas multitabla.
+
+Estas consultas especifican en la cláusula FROM qué tablas intervienen y cómo se relacionan entre sí. Una forma básica de hacerlo es mediante la **composición cruzada** o **producto cartesiano**, que genera **todas las combinaciones posibles** entre los registros de dos tablas. Por ejemplo:
+
+```sql
+SELECT *
+FROM guerreros_z, tecnicas;
+```
+
+Con esta consulta, si se tiene una base de datos [`dragonball`](/bases-de-datos/ud05/dragonball.sql) con las siguientes tablas:
+
+
+<div class="two-columns">
+  <div markdown="1"> <!-- Columna izquierda  -->
+
+- Tabla `guerreros_z`
+
+| id_guerrero | nombre   | raza          | nivel_poder |
+|-------------|----------|---------------|-------------|
+|           1 | Goku    | Saiyan         |        9500 |
+|           2 | Vegeta  | Saiyan         |        9200 |
+|           3 | Gohan   | Saiyan-mestizo |        8700 |
+|           4 | Piccolo | Namek          |        7500 |
+|           5 | Krilin  | Humano         |        4000 |
+|           6 | Yamcha  | Humano         |        NULL |
+
+  </div> 
+  <div markdown="1"> <!-- Columna derecha  -->
+
+- Tabla `tecnicas`
+
+| id_tecnica | nombre_tecnica     | id_guerrero |
+|------------|--------------------|-------------|
+| 1          | Kamehameha         | 1           |
+| 2          | Genki-Dama         | 1           |
+| 3          | Final Flash        | 2           |
+| 4          | Big Bang Attack    | 2           |
+| 5          | Masenko            | 3           |
+| 6          | Makankosappo       | 4           |
+| 7          | Destructo Disc     | 5           |  
+
+  </div>
+</div>
+
+Se obtendría el siguiente resultado:
+
+```bash
++-------------+---------+----------------+-------------+------------+-----------------+-------------+
+| id_guerrero | nombre  | raza           | nivel_poder | id_tecnica | nombre_tecnica  | id_guerrero |
++-------------+---------+----------------+-------------+------------+-----------------+-------------+
+|           6 | Yamcha  | Humano         |        NULL |          1 | Kamehameha      |           1 |
+|           5 | Krilin  | Humano         |        4000 |          1 | Kamehameha      |           1 |
+|           4 | Piccolo | Namek          |        7500 |          1 | Kamehameha      |           1 |
+|           3 | Gohan   | Saiyan-mestizo |        8700 |          1 | Kamehameha      |           1 |
+|           2 | Vegeta  | Saiyan         |        9200 |          1 | Kamehameha      |           1 |
+|           1 | Goku    | Saiyan         |        9500 |          1 | Kamehameha      |           1 |
+|           6 | Yamcha  | Humano         |        NULL |          2 | Genki-Dama      |           1 |
+|           5 | Krilin  | Humano         |        4000 |          2 | Genki-Dama      |           1 |
+|           4 | Piccolo | Namek          |        7500 |          2 | Genki-Dama      |           1 |
+|           3 | Gohan   | Saiyan-mestizo |        8700 |          2 | Genki-Dama      |           1 |
+|           2 | Vegeta  | Saiyan         |        9200 |          2 | Genki-Dama      |           1 |
+|           1 | Goku    | Saiyan         |        9500 |          2 | Genki-Dama      |           1 |
+|           6 | Yamcha  | Humano         |        NULL |          3 | Final Flash     |           2 |
+|           5 | Krilin  | Humano         |        4000 |          3 | Final Flash     |           2 |
+|           4 | Piccolo | Namek          |        7500 |          3 | Final Flash     |           2 |
+|           3 | Gohan   | Saiyan-mestizo |        8700 |          3 | Final Flash     |           2 |
+|           2 | Vegeta  | Saiyan         |        9200 |          3 | Final Flash     |           2 |
+|           1 | Goku    | Saiyan         |        9500 |          3 | Final Flash     |           2 |
+|           6 | Yamcha  | Humano         |        NULL |          4 | Big Bang Attack |           2 |
+|           5 | Krilin  | Humano         |        4000 |          4 | Big Bang Attack |           2 |
+|           4 | Piccolo | Namek          |        7500 |          4 | Big Bang Attack |           2 |
+|           3 | Gohan   | Saiyan-mestizo |        8700 |          4 | Big Bang Attack |           2 |
+|           2 | Vegeta  | Saiyan         |        9200 |          4 | Big Bang Attack |           2 |
+|           1 | Goku    | Saiyan         |        9500 |          4 | Big Bang Attack |           2 |
+|           6 | Yamcha  | Humano         |        NULL |          5 | Masenko         |           3 |
+|           5 | Krilin  | Humano         |        4000 |          5 | Masenko         |           3 |
+|           4 | Piccolo | Namek          |        7500 |          5 | Masenko         |           3 |
+|           3 | Gohan   | Saiyan-mestizo |        8700 |          5 | Masenko         |           3 |
+|           2 | Vegeta  | Saiyan         |        9200 |          5 | Masenko         |           3 |
+|           1 | Goku    | Saiyan         |        9500 |          5 | Masenko         |           3 |
+|           6 | Yamcha  | Humano         |        NULL |          6 | Makankosappo    |           4 |
+|           5 | Krilin  | Humano         |        4000 |          6 | Makankosappo    |           4 |
+|           4 | Piccolo | Namek          |        7500 |          6 | Makankosappo    |           4 |
+|           3 | Gohan   | Saiyan-mestizo |        8700 |          6 | Makankosappo    |           4 |
+|           2 | Vegeta  | Saiyan         |        9200 |          6 | Makankosappo    |           4 |
+|           1 | Goku    | Saiyan         |        9500 |          6 | Makankosappo    |           4 |
+|           6 | Yamcha  | Humano         |        NULL |          7 | Destructo Disc  |           5 |
+|           5 | Krilin  | Humano         |        4000 |          7 | Destructo Disc  |           5 |
+|           4 | Piccolo | Namek          |        7500 |          7 | Destructo Disc  |           5 |
+|           3 | Gohan   | Saiyan-mestizo |        8700 |          7 | Destructo Disc  |           5 |
+|           2 | Vegeta  | Saiyan         |        9200 |          7 | Destructo Disc  |           5 |
+|           1 | Goku    | Saiyan         |        9500 |          7 | Destructo Disc  |           5 |
++-------------+---------+----------------+-------------+------------+-----------------+-------------+
+```
+
+Este enfoque no considera ninguna relación entre los datos, por lo que puede generar un número muy alto de combinaciones sin sentido. Para obtener resultados útiles, se deben aplicar filtros que relacionen lógicamente las tablas.
+
+En los siguientes apartados se estudiarán dos métodos más eficaces para combinar datos: la composición interna, que solo muestra coincidencias entre tablas, y la composición externa, que también incluye registros sin correspondencia.
+
+
+## 9.1. Composición interna, INNER JOIN
+
+Aunque el producto cartesiano nos permite combinar todos los registros posibles entre dos tablas, rara vez resulta útil en la práctica si no se aplica un filtro que relacione los datos de forma lógica. Para obtener información verdaderamente significativa, como por ejemplo un listado de guerreros junto a las técnicas que poseen, es necesario aplicar una condición que relacione ambas tablas a través de una columna común.
+
+Este proceso se conoce como **composición interna** y consiste en combinar únicamente los registros de ambas tablas que cumplen una condición de igualdad en una columna compartida, como puede ser `id_guerrero`. De este modo, se evitan resultados irrelevantes o combinaciones aleatorias, y se obtienen únicamente los datos que guardan una relación lógica entre sí.
+
+En otras palabras, solo se muestran los resultados cuando existe una correspondencia directa entre los elementos de ambas tablas. En nuestro caso, esa correspondencia se establece gracias a la columna `id_guerrero`, presente tanto en la tabla `guerreros_z` como en la tabla `tecnicas`. Esta coincidencia permite al sistema vincular automáticamente a cada guerrero con las técnicas que tiene registradas, excluyendo del resultado aquellos guerreros sin técnicas asociadas.
+
+Para ilustrar mejor este comportamiento, a continuación se muestra una imagen que representa visualmente cómo se lleva a cabo esta operación de intersección entre tablas. Se puede observar cómo solo se conservan los registros donde se cumple la relación definida:
+
+![Inner Join](/bases-de-datos/imgs/ud05/ud05_InnerJoin.svg)
+
+Una forma de realizar esta composición es mediante el uso de la cláusula `WHERE`, especificando que los valores de `id_guerrero` deben coincidir en ambas tablas:
+
+
+```sql
+SELECT *
+FROM guerreros_z, tecnicas
+WHERE guerreros_z.id_guerrero = tecnicas.id_guerrero;
+```
+
+
+
+El resultado de esta consulta mostrará solo las filas donde haya una coincidencia en el `id_guerrero` entre ambas tablas, es decir, solo mostrará las técnicas que pertenecen a cada guerrero.
+
+```bash
++-------------+---------+----------------+-------------+------------+-----------------+-------------+
+| id_guerrero | nombre  | raza           | nivel_poder | id_tecnica | nombre_tecnica  | id_guerrero |
++-------------+---------+----------------+-------------+------------+-----------------+-------------+
+|           1 | Goku    | Saiyan         |        9500 |          1 | Kamehameha      |           1 |
+|           1 | Goku    | Saiyan         |        9500 |          2 | Genki-Dama      |           1 |
+|           2 | Vegeta  | Saiyan         |        9200 |          3 | Final Flash     |           2 |
+|           2 | Vegeta  | Saiyan         |        9200 |          4 | Big Bang Attack |           2 |
+|           3 | Gohan   | Saiyan-mestizo |        8700 |          5 | Masenko         |           3 |
+|           4 | Piccolo | Namek          |        7500 |          6 | Makankosappo    |           4 |
+|           5 | Krilin  | Humano         |        4000 |          7 | Destructo Disc  |           5 |
++-------------+---------+----------------+-------------+------------+-----------------+-------------+
+```
+Téngase en cuenta que con la **operación de intersección** solo se obtendrán aquellos elementos que existan en ambos conjuntos. En el caso de la tabla `guerreros_z`, si un guerrero como Yamcha no tiene ninguna técnica asociada en la tabla `tecnicas`, no aparecerá en el resultado de la composición interna. Esto se debe a que no hay coincidencia entre las tablas, y por tanto Yamcha queda excluido de la consulta.
+
+Una alternativa más moderna y legible para realizar la composición interna es utilizando la cláusula `JOIN` o `INNER JOIN`. MySQL permite definir explícitamente la condición de unión mediante la palabra clave ON, que indica cómo deben relacionarse las tablas:
+
+```sql
+SELECT *
+FROM guerreros_z
+JOIN tecnicas 
+ON guerreros_z.id_guerrero = tecnicas.id_guerrero;
+```
+
+Esta consulta es funcionalmente equivalente a la anterior, pero mejora la legibilidad y facilita la escritura de consultas más complejas. También mostrará únicamente los guerreros que tienen técnicas asociadas, y las técnicas correspondientes a cada uno.
+
+> Nota: Si se omite la cláusula `ON`, se obtendrá nuevamente el producto cartesiano de ambas tablas, lo cual genera un número muy elevado de combinaciones no filtradas.
+
+```sql
+SELECT *
+FROM guerreros_z
+JOIN tecnicas;
+```
+
+El resultado de esta consulta incluirá todas las combinaciones posibles entre los registros de ambas tablas, incluso si no existe relación entre ellos, lo que normalmente no es útil y puede llevar a confusión.
+
 
