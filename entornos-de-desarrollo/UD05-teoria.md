@@ -257,6 +257,93 @@ Si el coche se elimina del sistema, sus ruedas o su sistema de frenos dejan tamb
 | Representación UML       | Rombo blanco (`◇`)                  | Rombo negro (`◆`)                   |
 | Ejemplo                  | `Coche` con `Remolque`, `GPS`       | `Coche` con `Ruedas`, `Chasis`      |
 
+# 4. Herramientas para la Creación de Diagramas de Clases
 
+La creación de diagramas de clases UML es una parte fundamental en el diseño y análisis de sistemas orientados a objetos. Para facilitar esta tarea, se dispone de diversas herramientas que permiten representar visualmente la estructura del software de forma clara, estandarizada y automatizada. Estas herramientas se pueden clasificar principalmente en dos enfoques: las herramientas CASE y los *plugins* o complementos integrados en entornos de desarrollo.
 
+## 4.1. Herramientas CASE y su utilidad
 
+Las herramientas CASE, acrónimo de *Computer-Aided Software Engineering*, están diseñadas para asistir en el desarrollo del software a lo largo de todas sus fases, incluyendo el análisis, diseño, codificación, pruebas y mantenimiento. En el contexto de los diagramas de clases UML, este tipo de herramientas permiten construir modelos visuales de las clases, sus atributos, métodos y relaciones de una forma eficiente y precisa.
+
+Una de las principales ventajas de las herramientas CASE es su interfaz visual, que permite arrastrar y soltar los elementos del diagrama sin necesidad de codificar manualmente la estructura. Además, muchas de estas herramientas permiten mantener la coherencia entre el diseño y el código, facilitando la trazabilidad y la documentación del sistema. Otra funcionalidad habitual es la generación automática de código a partir del modelo diseñado, así como la posibilidad inversa: generar el modelo visual a partir del código fuente existente, lo que se conoce como ingeniería inversa.
+
+Entre las herramientas más utilizadas en esta categoría se encuentran StarUML, Enterprise Architect, Visual Paradigm y Draw.io (ahora conocido como diagrams.net). Aunque esta última no es una herramienta CASE en sentido estricto, ofrece plantillas específicas para UML y es ampliamente utilizada por su accesibilidad, integración con plataformas en la nube y facilidad de uso. Todas ellas permiten modelar de forma estandarizada los sistemas, y resultan especialmente útiles en entornos educativos o profesionales donde se exige una planificación detallada del software.
+
+## 4.2. Plugins y extensiones en entornos de desarrollo
+
+Además de las herramientas CASE independientes, muchos entornos de desarrollo modernos incorporan extensiones o plugins que permiten trabajar con diagramas UML directamente desde el editor de código. Esta integración mejora la productividad al evitar el cambio constante entre aplicaciones y permite mantener sincronizados el diseño visual y el código fuente.
+
+En entornos como Visual Studio Code, Eclipse o IntelliJ IDEA, es posible instalar extensiones que ofrecen funcionalidades avanzadas para trabajar con UML. Algunas de estas herramientas permiten generar automáticamente diagramas a partir del código, facilitando la documentación técnica del proyecto sin esfuerzo adicional. Otras, como las que integran PlantUML, permiten escribir diagramas utilizando texto estructurado que se transforma en imágenes, lo que resulta ideal para entornos con control de versiones, ya que el diagrama puede mantenerse junto al código y versionarse como cualquier otro archivo.
+
+PlantUML es un ejemplo destacable de esta filosofía. Gracias a su compatibilidad con múltiples editores y su simplicidad sintáctica, se ha convertido en una herramienta habitual en proyectos de software reales. También existen extensiones para integrar Draw.io directamente en Visual Studio Code, o el plugin Papyrus en Eclipse, que proporciona un entorno UML completo dentro del propio IDE.
+
+Es importante destacar que, aunque PlantUML permite crear diagramas UML, no debe considerarse una herramienta CASE. Se trata más bien de un plugin o herramienta auxiliar, enfocada exclusivamente en la generación de diagramas a partir de texto, y no en la gestión completa del ciclo de vida del software como sí hacen las herramientas CASE tradicionales. Por ello, debe clasificarse dentro de las extensiones para entornos de desarrollo y no como herramienta CASE.
+
+Estas soluciones integradas son especialmente prácticas cuando se busca agilidad, integración con el flujo de trabajo diario y automatización en la documentación del diseño. Permiten incorporar el modelado visual dentro del ciclo habitual de desarrollo sin necesidad de herramientas externas, lo que mejora la eficiencia y la coherencia del proyecto.
+
+# 5. Generación de Código y Diagramas
+
+Una de las grandes ventajas de utilizar herramientas de modelado como los diagramas de clases UML es la posibilidad de **automatizar tareas** en el desarrollo de software. Entre estas tareas, destacan dos procesos complementarios: la **generación de código a partir de diagramas** y la **generación de diagramas a partir de código existente**.
+
+Estas capacidades permiten ahorrar tiempo, reducir errores y mantener una coherencia directa entre el diseño y la implementación. En el caso de equipos grandes o proyectos complejos, esta sincronización resulta especialmente útil para documentar y mantener el sistema actualizado a lo largo de su ciclo de vida.
+
+En los siguientes apartados se explorarán ambos procesos, con ejemplos y herramientas que permiten pasar fácilmente de un modelo UML a un código fuente funcional, y viceversa.
+
+## 5.1. Generación de código a partir de diagramas de clases
+
+Una funcionalidad muy útil presente en muchas herramientas de modelado es la generación automática de código a partir de diagramas de clases. Este proceso, conocido como *forward engineering*, permite transformar un modelo UML en la estructura base del código fuente, respetando nombres de clases, atributos, métodos y, en algunos casos, relaciones de herencia o asociación.
+
+Por ejemplo, si en el diseño se ha definido una clase `Coche` con atributos como `marca` y `modelo`, y métodos como `arrancar()` y `frenar()`, una herramienta CASE puede generar un archivo con esa estructura ya escrita en el lenguaje de programación deseado. Esto ahorra tiempo en la fase de implementación inicial y permite mantener coherencia entre lo diseñado y lo programado.
+
+Un ejemplo sencillo de cómo se vería ese código generado a partir de un diagrama podría ser el siguiente en Python:
+
+```python
+class Coche:
+   def __init__(self, marca: str, modelo: str):
+      self.marca = marca
+      self.modelo = modelo
+
+   def arrancar(self):
+      print("El coche ha arrancado.")
+
+   def frenar(self):
+      print("El coche está frenando.")
+```
+
+Este tipo de código puede ser generado automáticamente por herramientas como **StarUML**, **Enterprise Architect** o **Modelio**. En particular, **Modelio** es una opción gratuita, multiplataforma y con soporte para Linux, que permite diseñar diagramas de clases y exportarlos a código en diferentes lenguajes, incluyendo Java y C++. Aunque su soporte para Python es limitado, sigue siendo una alternativa potente para explorar este tipo de automatizaciones.
+
+Por otro lado, herramientas como **PlantUML**, que se integran como plugin en editores como Visual Studio Code, no están orientadas a generar código desde el diagrama, sino más bien al revés: permiten generar diagramas a partir de descripciones textuales. Son muy útiles para documentación técnica, pero no se consideran herramientas CASE.
+
+La generación de código a partir de diagramas no implica que el programa esté completamente funcional, ya que la lógica de negocio deberá implementarse manualmente. Sin embargo, permite establecer una estructura inicial clara y coherente con el diseño, especialmente útil en fases tempranas del desarrollo o en entornos colaborativos donde varios miembros deben trabajar sobre una misma base común.
+
+## 5.2. Generación de diagramas de clases a partir del código
+
+Además de poder generar código a partir de diagramas, muchas herramientas permiten realizar el proceso inverso: **analizar el código existente** y generar automáticamente un diagrama de clases que represente su estructura. Este proceso se conoce como *reverse engineering* y resulta especialmente útil para documentar proyectos ya desarrollados o para comprender código fuente ajeno.
+
+El análisis inverso permite visualizar las clases definidas en un proyecto, sus atributos, métodos y relaciones entre ellas, como herencia o asociaciones. Así, se obtiene una representación visual que facilita la comprensión del sistema, la identificación de errores de diseño o la detección de dependencias no deseadas.
+
+Por ejemplo, si se tiene un archivo de Python como el siguiente:
+
+```python
+class Vehiculo:
+   def __init__(self, marca: str):
+      self.marca = marca
+
+class Coche(Vehiculo):
+   def __init__(self, marca: str, modelo: str):
+      super().__init__(marca)
+      self.modelo = modelo
+```
+
+Una herramienta con capacidades de ingeniería inversa podría detectar que `Coche` hereda de `Vehiculo`, y que ambas clases contienen atributos y constructores, generando automáticamente el diagrama de clases correspondiente.
+
+Existen múltiples herramientas que permiten generar diagramas a partir del código, tanto gratuitas como comerciales. Algunas de las más conocidas son:
+
+- **ObjectAid** (plugin para Eclipse), muy usado en entornos Java.
+- **Visual Paradigm** (versión Community y comercial), compatible con múltiples lenguajes.
+- **Pyreverse** (incluido en Pylint), permite generar diagramas UML a partir de código Python.
+- **PlantUML** (en combinación con plugins), aunque requiere trabajo manual para integrar con el análisis de código.
+
+Este tipo de herramientas es muy útil en proyectos heredados o en entornos donde no se trabajó previamente con diseño UML. Permite reconstruir la arquitectura visual del sistema y utilizarla como soporte para refactorización, ampliaciones o documentación.
+
+La ingeniería inversa no siempre produce diagramas perfectos, ya que depende de la calidad del código fuente y de la cantidad de información que pueda extraerse. Aun así, es una herramienta poderosa para mantener el sistema alineado con su representación visual y para fomentar el análisis estructurado en fases de mantenimiento o evolución del software.
