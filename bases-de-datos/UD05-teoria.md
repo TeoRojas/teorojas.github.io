@@ -27,10 +27,10 @@ abstract: Sinopsis de la unidad 05
 8. [Subconsultas](#8-subconsultas)  
    8.1. [Ubicación y anidación de subconsultas](#81-ubicación-y-anidación-de-subconsultas)  
    8.2. [Rendimiento de subconsultas](#82-rendimiento-de-subconsultas)  
-9. [Consultas multitabla](#10-consultas-multitabla)  
-    9.1. Composición interna, INNER JOIN
-    9.2. Composición externa, LEFT JOIN, RIGHT JOIN, OUTER JOIN.
-10. [Optimización y rendimiento de consultas](#13-optimización-y-rendimiento-de-consultas)  
+9. [Consultas multitabla](#9-consultas-multitabla)  
+    9.1. [Composición interna, INNER JOIN](#91-composición-interna-inner-join)  
+    9.2. [Composición externa, LEFT JOIN, RIGHT JOIN, OUTER JOIN](#92-composición-externa-left-join-right-join-outer-join)  
+10. [Optimización y rendimiento de consultas](#10-optimización-y-rendimiento-de-consultas)  
 
 
 
@@ -1493,4 +1493,134 @@ JOIN tecnicas;
 
 El resultado de esta consulta incluirá todas las combinaciones posibles entre los registros de ambas tablas, incluso si no existe relación entre ellos, lo que normalmente no es útil y puede llevar a confusión.
 
+## 9.2. Composición externa, LEFT JOIN, RIGHT JOIN, OUTER JOIN
+
+En el apartado anterior vimos cómo la composición interna (`INNER JOIN`) permite obtener únicamente los registros coincidentes entre dos tablas. Sin embargo, existen situaciones en las que es necesario mostrar también los elementos de una de las tablas, aunque no tengan correspondencia en la otra. Para cubrir estos casos, SQL ofrece los llamados **JOIN externos**.
+
+Este tipo de combinaciones permite incluir en el resultado final todos los registros de una de las tablas, complementándolos con información de la otra solo cuando exista coincidencia. En caso contrario, se rellenan los datos ausentes con valores `NULL`.
+
+### LEFT JOIN
+
+La **composición externa por la izquierda** (`LEFT JOIN`) devuelve todos los registros de la tabla situada a la izquierda de la cláusula `JOIN`, y los complementa con los registros coincidentes de la tabla de la derecha. Si no se encuentra coincidencia, las columnas de la tabla derecha aparecen con valores `NULL`.
+
+![Left Join](/bases-de-datos/imgs/ud05/ud05_leftJoin.svg)
+
+Como se puede observar en la imagen, la intersección se realiza igual que en un `INNER JOIN`, pero además se incluyen los registros no coincidentes de la tabla izquierda (`guerreros_z`), rellenando con `NULL` los campos de la tabla derecha (`tecnicas`) en caso de no existir correspondencia. Por lo tanto, esto resulta especialmente útil, por ejemplo, si se desea obtener una lista completa de guerreros **aunque no tengan técnicas registradas**.
+
+```sql
+SELECT *
+FROM guerreros_z
+LEFT JOIN tecnicas
+ON guerreros_z.id_guerrero = tecnicas.id_guerrero;
+```
+
+Esta consulta muestra todos los guerreros, y en aquellos casos en los que no se haya registrado ninguna técnica, las columnas correspondientes a la tabla `tecnicas` aparecerán como `NULL`.
+
+| id_guerrero | nombre  | raza           | nivel_poder | id_tecnica | nombre_tecnica  | id_guerrero |
+|-------------|---------|----------------|-------------|------------|-----------------|-------------|
+|           1 | Goku    | Saiyan         |        9500 |          2 | Genki-Dama      |           1 |
+|           1 | Goku    | Saiyan         |        9500 |          1 | Kamehameha      |           1 |
+|           2 | Vegeta  | Saiyan         |        9200 |          4 | Big Bang Attack |           2 |
+|           2 | Vegeta  | Saiyan         |        9200 |          3 | Final Flash     |           2 |
+|           3 | Gohan   | Saiyan-mestizo |        8700 |          5 | Masenko         |           3 |
+|           4 | Piccolo | Namek          |        7500 |          6 | Makankosappo    |           4 |
+|           5 | Krilin  | Humano         |        4000 |          7 | Destructo Disc  |           5 |
+|           6 | Yamcha  | Humano         |        NULL |       NULL | NULL            |        NULL |
+
+Como se puede observar en la imagen anterior, la intersección se realiza igual que en un `INNER JOIN`, pero además se incluyen los registros no coincidentes de la tabla izquierda (`guerreros_z`), rellenando con `NULL` los campos de la tabla derecha (`tecnicas`) en caso de no existir correspondencia.
+
+### RIGHT JOIN
+
+La **composición externa por la derecha** (`RIGHT JOIN`) devuelve todos los registros de la tabla situada a la derecha de la cláusula `JOIN`, y los complementa con los registros coincidentes de la tabla de la izquierda. Si no se encuentra coincidencia, las columnas de la tabla izquierda aparecen con valores `NULL`.
+
+![Right Join](/bases-de-datos/imgs/ud05/ud05_rightJoin.svg)
+
+Tal como se observa en la imagen, este tipo de composición funciona como una intersección entre ambas tablas, pero **preserva además todos los registros de la tabla derecha** (`tecnicas`). Cuando no se encuentra un guerrero correspondiente en la tabla `guerreros_z`, los campos de esta última se rellenan con `NULL`. Esto resulta útil, por ejemplo, si se desea obtener un listado completo de técnicas, **aunque no estén asignadas a ningún guerrero**.
+
+```sql
+SELECT *
+FROM guerreros_z
+RIGHT JOIN tecnicas
+ON guerreros_z.id_guerrero = tecnicas.id_guerrero;
+```
+
+Esta consulta devuelve todas las técnicas, y en los casos en los que no haya ningún guerrero asociado, las columnas correspondientes a la tabla `guerreros_z` aparecerán como `NULL`.
+
+| id_guerrero | nombre  | raza           | nivel_poder | id_tecnica | nombre_tecnica  | id_guerrero |
+|-------------|---------|----------------|-------------|------------|-----------------|-------------|
+|           1 | Goku    | Saiyan         |        9500 |          1 | Kamehameha      |           1 |
+|           1 | Goku    | Saiyan         |        9500 |          2 | Genki-Dama      |           1 |
+|           2 | Vegeta  | Saiyan         |        9200 |          3 | Final Flash     |           2 |
+|           2 | Vegeta  | Saiyan         |        9200 |          4 | Big Bang Attack |           2 |
+|           3 | Gohan   | Saiyan-mestizo |        8700 |          5 | Masenko         |           3 |
+|           4 | Piccolo | Namek          |        7500 |          6 | Makankosappo    |           4 |
+|           5 | Krilin  | Humano         |        4000 |          7 | Destructo Disc  |           5 |
+
+En este ejemplo no aparece ninguna fila con valores `NULL` porque todas las técnicas tienen un guerrero asignado. Sin embargo, si se insertara una técnica sin guerrero relacionado, el `RIGHT JOIN` permitiría visualizarla igualmente, con los campos correspondientes a `guerreros_z` en `NULL`.
+
+Por ejemplo, si se inserta una técnica llamada `Kaio-Ken Fantasma` en la tabla `tecnicas` que no esté asociada a ningún guerrero:
+
+```sql
+INSERT INTO tecnicas (id_tecnica, nombre_tecnica, id_guerrero)
+VALUES (8, 'Kaio-Ken Fantasma', NULL);
+```
+
+Si se vuelve a realizar la misma consulta, se obtendrá lo siguiente:
+
+| id_guerrero | nombre  | raza           | nivel_poder | id_tecnica | nombre_tecnica    | id_guerrero |
+|-------------|---------|----------------|-------------|------------|-------------------|-------------|
+|           1 | Goku    | Saiyan         |        9500 |          1 | Kamehameha        |           1 |
+|           1 | Goku    | Saiyan         |        9500 |          2 | Genki-Dama        |           1 |
+|           2 | Vegeta  | Saiyan         |        9200 |          3 | Final Flash       |           2 |
+|           2 | Vegeta  | Saiyan         |        9200 |          4 | Big Bang Attack   |           2 |
+|           3 | Gohan   | Saiyan-mestizo |        8700 |          5 | Masenko           |           3 |
+|           4 | Piccolo | Namek          |        7500 |          6 | Makankosappo      |           4 |
+|           5 | Krilin  | Humano         |        4000 |          7 | Destructo Disc    |           5 |
+|        NULL | NULL    | NULL           |        NULL |          8 | Kaio-Ken Fantasma |        NULL |
+
+> Nota: Este tipo de unión es especialmente útil cuando se quiere asegurar que todos los elementos de la tabla derecha aparezcan en los resultados, independientemente de si tienen coincidencias en la tabla izquierda.
+
+### FULL OUTER JOIN
+
+El **`FULL OUTER JOIN`** es una combinación que incluye **todos los registros** de ambas tablas: tanto los que tienen coincidencia como los que no. En otras palabras, es la suma del `LEFT JOIN` y el `RIGHT JOIN`: se devuelven todos los datos de ambas tablas, emparejando los registros cuando existe una relación, y dejando valores `NULL` cuando no la hay. Para representar gráficamente un `FULL OUTER JOIN`, se podría usar un diagrama similar a los anteriores, donde se conserve **la totalidad de ambas tablas** y se señalen las coincidencias en la intersección. Algo así:
+
+![FULL OUTER JOIN](/bases-de-datos/imgs/ud05/ud05_fullJoin.svg)
+
+Esta operación es muy útil cuando se quiere obtener **una visión completa** de los datos, sin perder información de ninguna de las dos tablas implicadas.
+
+#### Sintaxis y compatibilidad
+
+No todos los sistemas gestores de bases de datos soportan el `FULL OUTER JOIN` de forma nativa. **MySQL, por ejemplo, no lo permite directamente**. Sin embargo, se puede emular combinando un `LEFT JOIN` y un `RIGHT JOIN` mediante la cláusula `UNION`, que elimina duplicados automáticamente:
+
+```sql
+SELECT *
+FROM guerreros_z
+LEFT JOIN tecnicas ON guerreros_z.id_guerrero = tecnicas.id_guerrero
+UNION
+SELECT *
+FROM guerreros_z
+RIGHT JOIN tecnicas ON guerreros_z.id_guerrero = tecnicas.id_guerrero;
+```
+
+Esta consulta devuelve:
+
+- Guerreros con técnicas asociadas (como en un `INNER JOIN`).
+- Guerreros sin técnicas (`LEFT JOIN`).
+- Técnicas no asociadas a ningún guerrero (`RIGHT JOIN`).
+
+#### Ejemplo de salida
+
+| id_guerrero | nombre  | raza           | nivel_poder | id_tecnica | nombre_tecnica      | id_guerrero |
+|-------------|---------|----------------|-------------|------------|---------------------|-------------|
+|           1 | Goku    | Saiyan         |        9500 |          1 | Kamehameha          |           1 |
+|           1 | Goku    | Saiyan         |        9500 |          2 | Genki-Dama          |           1 |
+|           2 | Vegeta  | Saiyan         |        9200 |          3 | Final Flash         |           2 |
+|           2 | Vegeta  | Saiyan         |        9200 |          4 | Big Bang Attack     |           2 |
+|           3 | Gohan   | Saiyan-mestizo |        8700 |          5 | Masenko             |           3 |
+|           4 | Piccolo | Namek          |        7500 |          6 | Makankosappo        |           4 |
+|           5 | Krilin  | Humano         |        4000 |          7 | Destructo Disc      |           5 |
+|           6 | Yamcha  | Humano         |        NULL |       NULL | NULL                |        NULL |
+|        NULL | NULL    | NULL           |        NULL |          8 | Kaio-Ken Fantasma   |        NULL |
+
+Como puede verse, aparecen tanto **Yamcha**, que no tiene técnicas registradas, como la técnica `"Kaio-Ken Fantasma"`, que no está asociada a ningún guerrero.
 
