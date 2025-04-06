@@ -1529,6 +1529,28 @@ Esta consulta muestra todos los guerreros, y en aquellos casos en los que no se 
 
 Como se puede observar en la imagen anterior, la intersección se realiza igual que en un `INNER JOIN`, pero además se incluyen los registros no coincidentes de la tabla izquierda (`guerreros_z`), rellenando con `NULL` los campos de la tabla derecha (`tecnicas`) en caso de no existir correspondencia.
 
+Esta capacidad de conservar los registros sin coincidencia en la tabla derecha puede aprovecharse no solo para incluirlos, sino también para **identificarlos y trabajar específicamente con ellos**. Por ejemplo, es posible que se quiera obtener únicamente aquellos guerreros que **no tienen ninguna técnica asociada**. El siguiente diagrama ayuda a visualizar este comportamiento: 
+
+![Left Join Null](/bases-de-datos/imgs/ud05/ud05_leftJoinNull.svg)
+
+Para lograr esto, se puede añadir una cláusula `WHERE` que filtre los resultados y conserve únicamente los casos donde **la relación entre las tablas no se ha cumplido**, es decir, donde los valores correspondientes a la tabla `tecnicas` sean `NULL`.
+
+```sql
+SELECT *
+FROM guerreros_z
+LEFT JOIN tecnicas
+ON guerreros_z.id_guerrero = tecnicas.id_guerrero
+WHERE tecnicas.id_guerrero IS NULL;
+```
+
+Esta consulta devolverá exclusivamente aquellos guerreros que no tienen ninguna técnica registrada. La condición `IS NULL` en la cláusula `WHERE` actúa como un filtro que descarta todas las coincidencias encontradas por el `LEFT JOIN`, dejando únicamente los registros de la tabla izquierda sin relación.
+
+| id_guerrero | nombre | raza   | nivel_poder | id_tecnica | nombre_tecnica | id_guerrero |
+|-------------|--------|--------|-------------|------------|----------------|-------------|
+|           6 | Yamcha | Humano |        NULL |       NULL | NULL           |        NULL |
+
+Este tipo de consultas es especialmente útil en tareas de control de calidad de datos, auditoría o mantenimiento de registros, donde se necesita localizar elementos sin correspondencias, como guerreros olvidados o no asignados.
+
 ### RIGHT JOIN
 
 La **composición externa por la derecha** (`RIGHT JOIN`) devuelve todos los registros de la tabla situada a la derecha de la cláusula `JOIN`, y los complementa con los registros coincidentes de la tabla de la izquierda. Si no se encuentra coincidencia, las columnas de la tabla izquierda aparecen con valores `NULL`.
@@ -1580,6 +1602,27 @@ Si se vuelve a realizar la misma consulta, se obtendrá lo siguiente:
 
 > Nota: Este tipo de unión es especialmente útil cuando se quiere asegurar que todos los elementos de la tabla derecha aparezcan en los resultados, independientemente de si tienen coincidencias en la tabla izquierda.
 
+Esta capacidad de conservar los registros sin coincidencia en la tabla izquierda también puede aprovecharse para **localizar específicamente aquellos elementos que no tienen correspondencia**. Por ejemplo, se puede obtener un listado de técnicas que **no están asociadas a ningún guerrero**. Lo que correspondería al siguiente diagrama:
+
+![Right Join Null](/bases-de-datos/imgs/ud05/ud05_rightJoinNull.svg)
+
+
+Para ello, se puede aplicar una cláusula `WHERE` que filtre los resultados en función de los valores `NULL` en los campos de `guerreros_z`. De esta manera, se excluyen todas las coincidencias, y se conservan únicamente las técnicas sin guerrero asignado:
+
+```sql
+SELECT *
+FROM guerreros_z
+RIGHT JOIN tecnicas
+ON guerreros_z.id_guerrero = tecnicas.id_guerrero
+WHERE guerreros_z.id_guerrero IS NULL;
+```
+
+Esta consulta devolverá exclusivamente aquellas técnicas que no están vinculadas a ningún guerrero, como se puede observar a continuación:
+
+| id_guerrero | nombre | raza | nivel_poder | id_tecnica | nombre_tecnica    | id_guerrero |
+|-------------|--------|------|-------------|------------|-------------------|-------------|
+|        NULL | NULL   | NULL |        NULL |          8 | Kaio-Ken Fantasma |        NULL |
+
 ### FULL OUTER JOIN
 
 El **`FULL OUTER JOIN`** es una combinación que incluye **todos los registros** de ambas tablas: tanto los que tienen coincidencia como los que no. En otras palabras, es la suma del `LEFT JOIN` y el `RIGHT JOIN`: se devuelven todos los datos de ambas tablas, emparejando los registros cuando existe una relación, y dejando valores `NULL` cuando no la hay. Para representar gráficamente un `FULL OUTER JOIN`, se podría usar un diagrama similar a los anteriores, donde se conserve **la totalidad de ambas tablas** y se señalen las coincidencias en la intersección. Algo así:
@@ -1624,3 +1667,31 @@ Esta consulta devuelve:
 
 Como puede verse, aparecen tanto **Yamcha**, que no tiene técnicas registradas, como la técnica `"Kaio-Ken Fantasma"`, que no está asociada a ningún guerrero.
 
+Si lo que se desea es mostrar únicamente los registros que no tienen coincidencias en la tabla contraria, también se puede lograr con un FULL OUTER JOIN (o su equivalente con UNION). En estos casos, el objetivo no es ver todos los datos, sino detectar aquellos que están solos.
+
+Para ilustrar este comportamiento, se presenta el siguiente diagrama, donde se observa claramente cómo se excluyen los registros coincidentes y se mantienen únicamente los elementos sin correspondencia en ninguna de las dos tablas:
+
+![FULL OUTER JOIN](/bases-de-datos/imgs/ud05/ud05_fullJoinNull.svg)
+
+Para obtener este resultado, se debe aplicar un filtro con IS NULL que seleccione solo las filas no relacionadas, tanto por parte de los guerreros como de las técnicas:
+
+```sql
+SELECT *
+FROM guerreros_z
+LEFT JOIN tecnicas ON guerreros_z.id_guerrero = tecnicas.id_guerrero
+WHERE tecnicas.id_guerrero IS NULL
+
+UNION
+
+SELECT *
+FROM guerreros_z
+RIGHT JOIN tecnicas ON guerreros_z.id_guerrero = tecnicas.id_guerrero
+WHERE guerreros_z.id_guerrero IS NULL;
+```
+
+Esta consulta devolverá exclusivamente aquellos guerreros que no tienen técnicas y aquellas técnicas que no están asociadas a ningún guerrero, ignorando las coincidencias. Es decir, muestra solo los elementos no emparejados.
+
+| id_guerrero | nombre | raza   | nivel_poder | id_tecnica | nombre_tecnica    | id_guerrero |
+|-------------|--------|--------|-------------|------------|-------------------|-------------|
+|           6 | Yamcha | Humano |        NULL |       NULL | NULL              |        NULL |
+|        NULL | NULL   | NULL   |        NULL |          8 | Kaio-Ken Fantasma |        NULL |
