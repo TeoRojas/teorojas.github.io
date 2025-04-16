@@ -1332,17 +1332,17 @@ SET ubicacion = LOWER(ubicacion);
 
 Así se consigue que valores como “West City”, “WEST CITY” o “west city” queden uniformados, lo que facilita búsquedas, filtros y evita problemas de duplicidad lógica.
 
-Otra función muy habitual es `CONCAT()`, que permite unir varias cadenas de texto. Si se combina con `LOWER()`, se pueden generar direcciones de correo unificadas para los personajes de la tabla `guerreros_z`:
+Otra función muy habitual es `CONCAT()`, que permite unir varias cadenas de texto. Si se combina con `LOWER()`, se pueden generar direcciones de correo unificadas para los personajes de la tabla `Guerreros`:
 
 ```sql
-UPDATE guerreros_z
+UPDATE Guerreros
 SET correo = LOWER(CONCAT(nombre, '@capsulecorp.com'));
 ```
 
 También existen otras funciones útiles como `UPPER()`, que convierte el texto a mayúsculas, y `LENGTH()`, que devuelve la longitud de una cadena. Por ejemplo, para comprobar cuántos caracteres tiene cada nombre y utilizar esa información en una actualización condicional, se podrían combinar estas funciones con `WHERE`:
 
 ```sql
-UPDATE guerreros_z
+UPDATE Guerreros
 SET nombre = UPPER(nombre)
 WHERE LENGTH(nombre) < 5;
 ```
