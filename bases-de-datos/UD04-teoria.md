@@ -1319,6 +1319,39 @@ Es **muy importante** tener siempre en el punto de mira a la cláusula `WHERE` y
 
 Por tanto, **siempre se debe verificar cuidadosamente la condición utilizada en la cláusula `WHERE`** antes de ejecutar la consulta UPDATE.
 
+### 3.3.1. Uso de funciones de texto en actualizaciones
+
+En muchas situaciones es útil aplicar transformaciones a los textos almacenados en la base de datos antes de actualizarlos. Estas transformaciones permiten unificar el formato de los datos, evitar duplicidades lógicas o preparar los valores para futuras búsquedas o comparaciones. Para ello, MySQL proporciona funciones escalares de texto que operan sobre columnas de tipo texto y devuelven un único valor para cada fila procesada.
+
+Una de las funciones más utilizadas es `LOWER()`, que convierte cualquier cadena a minúsculas. Esto resulta especialmente práctico cuando se trabaja con nombres, ubicaciones o correos electrónicos que pueden haber sido introducidos en mayúsculas, minúsculas o una mezcla de ambas. Por ejemplo, si se quiere normalizar la columna `ubicacion` en la tabla `torneos`, asegurando que todas las ciudades estén en minúsculas, se puede utilizar la siguiente sentencia:
+
+```sql
+UPDATE torneos
+SET ubicacion = LOWER(ubicacion);
+```
+
+Así se consigue que valores como “West City”, “WEST CITY” o “west city” queden uniformados, lo que facilita búsquedas, filtros y evita problemas de duplicidad lógica.
+
+Otra función muy habitual es `CONCAT()`, que permite unir varias cadenas de texto. Si se combina con `LOWER()`, se pueden generar direcciones de correo unificadas para los personajes de la tabla `guerreros_z`:
+
+```sql
+UPDATE guerreros_z
+SET correo = LOWER(CONCAT(nombre, '@capsulecorp.com'));
+```
+
+También existen otras funciones útiles como `UPPER()`, que convierte el texto a mayúsculas, y `LENGTH()`, que devuelve la longitud de una cadena. Por ejemplo, para comprobar cuántos caracteres tiene cada nombre y utilizar esa información en una actualización condicional, se podrían combinar estas funciones con `WHERE`:
+
+```sql
+UPDATE guerreros_z
+SET nombre = UPPER(nombre)
+WHERE LENGTH(nombre) < 5;
+```
+
+Estas funciones pueden utilizarse no solo en actualizaciones, sino también al consultar los datos mediante `SELECT`, ofreciendo así una gran versatilidad tanto para visualizar como para modificar información de forma coherente.
+
+En resumen, el uso de funciones escalares como `LOWER()`, `UPPER()`, `LENGTH()` o `CONCAT()` permite transformar y estandarizar los textos en la base de datos, mejorando su calidad, su mantenimiento y la coherencia general del sistema.
+
+
 ## 3.4. La sentencia DELETE
 
 La sentencia **`DELETE`** en SQL permite eliminar registros existentes en una tabla de una base de datos. A diferencia de la sentencia `DROP TABLE`, que elimina toda la estructura y datos de una tabla, la sentencia `DELETE` elimina únicamente registros específicos manteniendo intacta la estructura de la tabla.
