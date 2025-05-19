@@ -31,3 +31,115 @@ MySQL es uno de los sistemas de gestión de bases de datos más populares que so
 Además, MySQL dispone de un potente mecanismo para el manejo de errores y excepciones que permite realizar acciones alternativas o recuperarse adecuadamente ante situaciones inesperadas. El control de flujo avanzado, combinado con el manejo robusto de excepciones, hace que la programación en MySQL sea muy versátil y eficaz para diversas necesidades empresariales y técnicas.
 
 En esta unidad didáctica se profundizará en cada uno de estos elementos, ofreciendo ejemplos prácticos y detallados para ilustrar cómo implementar soluciones eficientes y seguras mediante la programación embebida en bases de datos, especialmente en el contexto de MySQL.
+
+# 6.2. Procedimientos almacenados
+
+En los temas anteriores se han visto distintas instrucciones SQL ejecutadas de forma aislada, lo cual es suficiente para comprender su funcionamiento individual. Sin embargo, en entornos reales, las aplicaciones no se comunican con la base de datos lanzando consultas sueltas, sino que ejecutan secuencias de instrucciones: validaciones, actualizaciones, cálculos, inserciones condicionales… Esto implica una interacción constante entre el software cliente (por ejemplo, una aplicación de escritorio o una web) y el servidor de base de datos, generando múltiples viajes de ida y vuelta, especialmente en redes remotas.
+
+Para evitar esta dependencia y reducir el tráfico entre la aplicación y el servidor, existen los procedimientos almacenados. Se trata de bloques de código SQL que se crean una sola vez y se almacenan en el servidor, listos para ejecutarse cuando se necesiten. Estos procedimientos encapsulan toda la lógica necesaria para llevar a cabo una operación compleja, como insertar un registro validado, actualizar varios valores en cadena o devolver un resultado específico tras ejecutar varias consultas internas. Su uso es habitual en arquitecturas modernas, donde se busca separar la lógica de negocio (almacenada en la base de datos) del código cliente.
+
+MySQL, al igual que otros SGBD, permite definir procedimientos mediante una sintaxis propia, compatible con el estándar SQL/PSM. Un procedimiento se crea con la instrucción `CREATE PROCEDURE`, y puede tener parámetros de entrada, salida o ambos. Su ejecución se realiza con `CALL`.
+
+A continuación, se presentan varios ejemplos prácticos aplicados a la base de datos `dragonball`, utilizando la tabla `guerreros_z` y otras tablas auxiliares si fuera necesario.
+
+Como primer ejemplo, puede crearse un procedimiento simple llamado `mostrar_guerreros`, que no recibe parámetros y simplemente muestra el contenido básico de la tabla `guerreros_z`:
+
+```sql
+DELIMITER //
+
+CREATE PROCEDURE mostrar_guerreros()
+BEGIN
+    SELECT nombre, raza, nivel_poder
+    FROM guerreros_z;
+END //
+
+DELIMITER ;
+```
+
+Este procedimiento puede ejecutarse desde MySQL con una simple llamada:
+
+```sql
+CALL mostrar_guerreros();
+```
+
+En otras ocasiones, puede ser útil que el procedimiento reciba un parámetro para personalizar su ejecución. Por ejemplo, si se desea buscar todos los guerreros de una determinada raza, se puede definir un procedimiento con un parámetro de entrada:
+
+```sql
+DELIMITER //
+
+CREATE PROCEDURE buscar_por_raza(IN raza_buscada VARCHAR(50))
+BEGIN
+    SELECT nombre, nivel_poder
+    FROM guerreros_z
+    WHERE raza = raza_buscada;
+END //
+
+DELIMITER ;
+```
+
+La llamada a este procedimiento podría ser:
+
+```sql
+CALL buscar_por_raza('Saiyan');
+```
+
+Los procedimientos también permiten realizar operaciones de escritura, como inserciones o actualizaciones. Supongamos que se ha creado una tabla `combates`, con los campos `guerrero`, `enemigo`, `resultado` y `fecha`. Puede definirse un procedimiento `registrar_combate` que inserte automáticamente un nuevo combate:
+
+```sql
+CREATE TABLE IF NOT EXISTS combates (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    guerrero VARCHAR(50),
+    enemigo VARCHAR(50),
+    resultado VARCHAR(20),
+    fecha DATE
+);
+
+DELIMITER //
+
+CREATE PROCEDURE registrar_combate(
+    IN g_z VARCHAR(50),
+    IN enemigo VARCHAR(50),
+    IN resultado VARCHAR(20),
+    IN fecha DATE
+)
+BEGIN
+    INSERT INTO combates (guerrero, enemigo, resultado, fecha)
+    VALUES (g_z, enemigo, resultado, fecha);
+END //
+
+DELIMITER ;
+```
+
+De esta manera, desde el cliente se puede registrar un nuevo combate con una única orden:
+
+```sql
+CALL registrar_combate('Goku', 'Freezer', 'Victoria', '2025-04-16');
+```
+
+Otra posibilidad interesante es utilizar parámetros de salida. En el siguiente procedimiento, se devuelve el nivel de poder de un guerrero concreto en una variable que se puede consultar desde fuera:
+
+```sql
+DELIMITER //
+
+CREATE PROCEDURE obtener_nivel_poder(
+    IN nombre_guerrero VARCHAR(50),
+    OUT poder INT
+)
+BEGIN
+    SELECT nivel_poder INTO poder
+    FROM guerreros_z
+    WHERE nombre = nombre_guerrero;
+END //
+
+DELIMITER ;
+```
+
+Este procedimiento se ejecuta en dos pasos: primero se declara una variable en el cliente, y después se llama al procedimiento:
+
+```sql
+SET @poder_resultado = 0;
+CALL obtener_nivel_poder('Gohan', @poder_resultado);
+SELECT @poder_resultado;
+```
+
+En definitiva, los procedimientos almacenados permiten encapsular lógica de forma eficiente y segura, reduciendo la dependencia del código externo y mejorando la organización de las operaciones con la base de datos. MySQL permite eliminar procedimientos con `DROP PROCEDURE` y consultar su definición con `SHOW CREATE PROCEDURE nombre;`. Su uso es clave en el desarrollo profesional, especialmente cuando se quiere garantizar integridad, rendimiento y mantenimiento en aplicaciones con alta interacción con datos.
